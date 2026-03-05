@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Play | BistroX Engine</title>
+    <link rel="icon" href="../imgs/web-banners/logo.png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600;700;800&display=swap');
 
@@ -392,6 +393,7 @@
 
         /* Responsive */
         @media (max-width: 1024px) {
+            .menu-container { gap: 4rem; }
             .play-layout { grid-template-columns: 1fr 300px; }
         }
         @media (max-width: 768px) {
@@ -449,7 +451,7 @@
             <button class="action-btn primary" onclick="switchScreen('screen-recipes'); document.getElementById('gameOverlay').classList.remove('active');">Continue Journey</button>
         </div>
 
-        <!-- SCREEN 1: MAIN MENU (Cinematic Side-by-Side Layout) -->
+        <!-- SCREEN 1: MAIN MENU (Cinematic Left-Aligned Layout) -->
         <div id="screen-main" class="game-screen main-menu active">
             <div class="menu-gradient-overlay"></div>
             
@@ -463,7 +465,7 @@
                     </div>
                 </div>
 
-                <!-- Right Side Menu Buttons (Still on the left half of screen) -->
+                <!-- Right Side Menu Buttons (Still on the left half) -->
                 <div class="menu-list-block reveal">
                     <div class="menu-list">
                         <button class="menu-btn" onclick="startGame()">Start</button>
@@ -605,7 +607,7 @@
                     <p>BistroX is architected as a pure, client-side web application. This means the engine operates entirely within the confines of your browser's local memory.</p>
                     <ul>
                         <li><strong>No Backend Servers:</strong> Your game states, recipe progression, and configuration settings are never transmitted across the network.</li>
-                        <li><strong>Cloud Database API:</strong> We now utilize secure, per-user Cloud database storage mapping to your unique user ID instead of local browser caching. Your progress follows you on any device.</li>
+                        <li><strong>Local Secure Storage:</strong> We sync completely with the `bx_currentUser` login system from your other pages. Each player's progress is stored under their unique username profile.</li>
                         <li><strong>Zero Analytics:</strong> There are no tracking scripts, advertising pixels, or telemetry modules embedded in this software.</li>
                     </ul>
 
@@ -658,102 +660,47 @@
 
     </main>
 
-    <!-- GAME SCRIPT LOGIC (Upgraded to Module + Firestore) -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        let maxUnlockedLevel = 1; // Default to 1
+    <!-- GAME SCRIPT LOGIC (Synced with Native Local Storage Auth) -->
+    <script>
+        
+        let maxUnlockedLevel = 1; 
         let currentUser = null;
-        let db = null;
-        let auth = null;
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
 
-        /* --- Standard Setup Scripts (Preloader & Firebase Auth) --- */
-        window.addEventListener('load', async () => {
+        /* --- Standard Setup Scripts --- */
+        window.addEventListener('load', () => {
             const loader = document.getElementById('globalLoader');
+            if (loader) loader.classList.add('hidden');
             
-            // Trigger animation on main menu
             setTimeout(() => {
                 document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
             }, 300);
 
-            // Initialize Firebase first before hiding loader
-            await initFirebase();
+            // Connects natively to your existing website's 'bx_currentUser' local storage mechanism
+            loadUserProgress();
+            generateLevels();
             applySettings();
-            
-            if (loader) loader.classList.add('hidden');
         });
 
         window.addEventListener('pageshow', (e) => { if (e.persisted) document.getElementById('globalLoader')?.classList.add('hidden'); });
 
-        async function initFirebase() {
-            return new Promise(async (resolve) => {
-                if (typeof __firebase_config === 'undefined') {
-                    // Fallback for isolated testing where Firebase config doesn't exist
-                    generateLevels();
-                    resolve();
-                    return;
-                }
-
-                const firebaseConfig = JSON.parse(__firebase_config);
-                const app = initializeApp(firebaseConfig);
-                auth = getAuth(app);
-                db = getFirestore(app);
-
-                const initAuth = async () => {
-                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                        await signInWithCustomToken(auth, __initial_auth_token);
-                    } else {
-                        await signInAnonymously(auth);
-                    }
-                };
-                
-                await initAuth();
-
-                let isResolved = false;
-                onAuthStateChanged(auth, async (user) => {
-                    if (user) {
-                        currentUser = user;
-                        await loadProgress();
-                        generateLevels();
-                    } else {
-                        currentUser = null;
-                    }
-                    if (!isResolved) {
-                        isResolved = true;
-                        resolve();
-                    }
-                });
-            });
-        }
-
-        async function loadProgress() {
-            if (!currentUser || !db) return;
-            try {
-                // Read individually secured user profile path
-                const progressRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'progress', 'main');
-                const docSnap = await getDoc(progressRef);
-                if (docSnap.exists()) {
-                    maxUnlockedLevel = docSnap.data().maxUnlockedLevel || 1;
-                } else {
-                    maxUnlockedLevel = 1;
-                    await saveProgress();
-                }
-            } catch (err) {
-                console.error("Error loading progress", err);
+        function loadUserProgress() {
+            currentUser = localStorage.getItem('bx_currentUser');
+            if (currentUser) {
+                // Load specific progress for the logged-in user
+                maxUnlockedLevel = parseInt(localStorage.getItem('bx_progress_' + currentUser)) || 1;
+            } else {
+                // If guest, default to level 1 and alert them
+                maxUnlockedLevel = parseInt(localStorage.getItem('bx_progress_guest')) || 1;
+                setTimeout(() => notify("Playing as Guest. Log in via Home to save personal progress!"), 1500);
             }
         }
 
-        async function saveProgress() {
-            if (!currentUser || !db) return;
-            try {
-                // Write securely to individual user's progress path
-                const progressRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'progress', 'main');
-                await setDoc(progressRef, { maxUnlockedLevel: maxUnlockedLevel }, { merge: true });
-            } catch (err) {
-                console.error("Error saving progress", err);
+        function saveUserProgress() {
+            if (currentUser) {
+                // Save specifically to this user's profile key
+                localStorage.setItem('bx_progress_' + currentUser, maxUnlockedLevel);
+            } else {
+                localStorage.setItem('bx_progress_guest', maxUnlockedLevel);
             }
         }
 
@@ -1128,11 +1075,11 @@
             if (!success) { notify("Theory failed. Incorrect mix of elements or tools."); }
         }
 
-        async function checkWinCondition(resultId) {
+        function checkWinCondition(resultId) {
             if (resultId === targetLevel) {
                 if (currentPlayingLevelNum === maxUnlockedLevel) {
                     maxUnlockedLevel++;
-                    await saveProgress(); // Await Firebase saving progress securely
+                    saveUserProgress(); // Updates specific user's level in localStorage
                     generateLevels(); // Refresh Menu UI behind the scenes
                 }
 
@@ -1154,17 +1101,6 @@
                 notify("Experiment with your tools and ingredients!");
             }
         }
-
-        // Expose necessary functions globally for HTML inline onclick listeners
-        window.switchScreen = switchScreen;
-        window.startGame = startGame;
-        window.changeSetting = changeSetting;
-        window.switchDifficultyTab = switchDifficultyTab;
-        window.loadLevel = loadLevel;
-        window.clearStaging = clearStaging;
-        window.performAction = performAction;
-        window.showHint = showHint;
-        window.notify = notify;
 
     </script>
 </body>

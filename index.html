@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BistroX | Image-Based Cooking Game</title>
+    <link rel="icon" href="./imgs/web-banners/logo.png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Jost:wght@400;500;600;700&display=swap');
 
@@ -250,6 +251,9 @@
             letter-spacing: 2px;
             text-transform: uppercase;
             z-index: 1002;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .logo span {
@@ -285,7 +289,7 @@
             transition: var(--transition);
         }
 
-        nav a:hover {
+        nav a:hover, nav a.active {
             color: var(--primary);
         }
 
@@ -440,7 +444,7 @@
         .user-icon-btn {
             width: 40px;
             height: 40px;
-            background: var(--primary);
+            background: var(--secondary);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1185,7 +1189,9 @@
             font-size: 1.8rem;
             font-weight: 900;
             margin-bottom: 1rem;
-            display: block;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             text-decoration: none;
             letter-spacing: 2px;
         }
@@ -1495,12 +1501,18 @@
     </div>
 
     <header>
-        <a href="index.html" class="logo">BISTRO<span>X</span></a>
+        <a href="index.html" class="logo">
+            <img src="./imgs/web-banners/logo.png" alt="BistroX Logo" style="width: 28px; height: 28px; object-fit: contain;">
+            <div class="logo-text">BISTRO<span>X</span></div>
+        </a>
         
         <nav id="mainNav">
             <div class="mobile-nav-top desktop-hidden">
                 <div class="mobile-nav-header">
-                    <a href="#" class="logo">BISTRO<span>X</span></a>
+                    <a href="#" class="logo">
+                        <img src="./imgs/web-banners/logo.png" alt="BistroX Logo" style="width: 24px; height: 24px; object-fit: contain;">
+                        <div class="logo-text">BISTRO<span>X</span></div>
+                    </a>
                     <button class="mobile-close" onclick="closeMobileMenu()">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                     </button>
@@ -1510,7 +1522,7 @@
             <ul id="navList">
                 <li class="nav-item-dropdown">
                     <div class="nav-link-wrap">
-                        <a href="#hero">Home <span class="desktop-arrow">&blacktriangledown;</span></a>
+                        <a href="#hero" class="active">Home <span class="desktop-arrow">&blacktriangledown;</span></a>
                         <svg class="chevron desktop-hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     </div>
                     <div class="dropdown-menu">
@@ -1697,35 +1709,35 @@
         <div class="carousel-container reveal" id="carouselWrapper">
             <div class="carousel-track" id="ingredientTrack">
                 <div class="carousel-item">
-                    <img src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=400&q=80" alt="Tomato">
+                    <img src="./imgs/ingredients/tomato.png" alt="Tomato">
                     <h4>Fresh Tomato</h4>
                 </div>
                 <div class="carousel-item">
-                    <img src="https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?auto=format&fit=crop&w=400&q=80" alt="Onion">
+                    <img src="./imgs/ingredients/white-onion.png" alt="Onion">
                     <h4>White Onion</h4>
                 </div>
                 <div class="carousel-item">
-                    <img src="https://images.unsplash.com/photo-1540148426945-14733325b5ae?auto=format&fit=crop&w=400&q=80" alt="Garlic">
+                    <img src="./imgs/ingredients/garlic.png" alt="Garlic">
                     <h4>Clove of Garlic</h4>
                 </div>
                 <div class="carousel-item">
-                    <img src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=400&q=80" alt="Olive Oil">
+                    <img src="./imgs/ingredients/olive-oil.png" alt="Olive Oil">
                     <h4>Olive Oil</h4>
                 </div>
                 <div class="carousel-item">
-                    <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=400&q=80" alt="Beef Steak">
+                    <img src="./imgs/ingredients/beef-steak.png" alt="Beef Steak">
                     <h4>Raw Beef Cut</h4>
                 </div>
                 <div class="carousel-item">
-                    <img src="https://images.unsplash.com/photo-1615486171448-4af626e25d2b?auto=format&fit=crop&w=400&q=80" alt="Basil">
+                    <img src="./imgs/ingredients/basil.png" alt="Basil">
                     <h4>Fresh Basil</h4>
                 </div>
                 <div class="carousel-item">
-                    <img src="https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?auto=format&fit=crop&w=400&q=80" alt="Cheese">
+                    <img src="./imgs/ingredients/cheese.png" alt="Cheese">
                     <h4>Aged Cheese</h4>
                 </div>
                 <div class="carousel-item">
-                    <img src="https://images.unsplash.com/photo-1587486913049-53fc88980cfc?auto=format&fit=crop&w=400&q=80" alt="Egg">
+                    <img src="./imgs/ingredients/egg.png" alt="Egg">
                     <h4>Farm Egg</h4>
                 </div>
             </div>
@@ -1744,7 +1756,7 @@
         
         <div class="recipe-grid">
             <div class="recipe-card reveal">
-                <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=600&q=80" alt="Mohinga">
+                <img src="./imgs/menu/mohinga.png" alt="Mohinga">
                 <div class="recipe-overlay">
                     <h3>Mohinga</h3>
                     <p>Myanmar's beloved rice noodle and fish soup, enriched with lemongrass and crispy fritters.</p>
@@ -1753,7 +1765,7 @@
             </div>
             
             <div class="recipe-card reveal">
-                <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80" alt="Lahpet Thoke">
+                <img src="./imgs/menu/lahpet thoke.png" alt="Lahpet Thoke">
                 <div class="recipe-overlay">
                     <h3>Lahpet Thoke</h3>
                     <p>A unique, savory fermented tea leaf salad mixed with crunchy roasted peanuts and fried garlic.</p>
@@ -1762,7 +1774,7 @@
             </div>
             
             <div class="recipe-card reveal">
-                <img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=600&q=80" alt="BISTROX Signature Soup">
+                <img src="./imgs/menu/bistrox-signature.png" alt="BISTROX Signature Soup">
                 <div class="recipe-overlay">
                     <h3>BISTROX's Signature Soup</h3>
                     <p>Our exclusive, closely-guarded recipe featuring a perfect blend of rich, comforting flavors.</p>
@@ -1771,7 +1783,7 @@
             </div>
             
             <div class="recipe-card reveal">
-                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80" alt="Grilled Ribeye">
+                <img src="./imgs/menu/steak.png" alt="Grilled Ribeye">
                 <div class="recipe-overlay">
                     <h3>Garlic Butter Steak</h3>
                     <p>Premium beef cut elevated with crushed garlic, butter, and high heat.</p>
@@ -1854,10 +1866,10 @@
             <div>
                 <h4 class="footer-title">Game Info</h4>
                 <ul class="footer-links">
-                    <li><a href="javascript:void(0)" onclick="toggleAuthMode('register')">Register to Play</a></li>
-                    <li><a href="javascript:void(0)" onclick="handleLogin()">Log In</a></li>
-                    <li><a href="#">Recipe Theories</a></li>
-                    <li><a href="#">Ingredients List</a></li>
+                    <li><a href="#" onclick="openAuthModal('register')">Register to Play</a></li>
+                    <li><a href="#" onclick="openAuthModal('login')">Log In</a></li>
+                    <li><a href="./learn/learn.html#recipes">Recipe Theories</a></li>
+                    <li><a href="#ingredients">Ingredients List</a></li>
                     <li><a href="#contact">Submit Idea</a></li>
                 </ul>
             </div>
@@ -1865,10 +1877,10 @@
             <div>
                 <h4 class="footer-title">Privacy</h4>
                 <ul class="footer-links">
-                    <li><a href="#">Terms of Use</a></li>
-                    <li><a href="#">Data Privacy</a></li>
-                    <li><a href="#">Local Storage Info</a></li>
-                    <li><a href="#">Browser Cookies</a></li>
+                    <li><a href="./terms-conditions/terms-conditions.html#terms">Terms of Use</a></li>
+                    <li><a href="./terms-conditions/terms-conditions.html#privacy">Data Privacy</a></li>
+                    <li><a href="./terms-conditions/terms-conditions.html#local-storage">Local Storage Info</a></li>
+                    <li><a href="./terms-conditions/terms-conditions.html#cookies">Browser Cookies</a></li>
                 </ul>
             </div>
 
@@ -1876,12 +1888,17 @@
                 <h4 class="footer-title">Links</h4>
                 <ul class="footer-links">
                     <li><a href="https://www.htetzawpaing.site" target="_blank">Developer</a></li>
-                    <li><a href="#">How to Play Guide</a></li>
+                    <li><a href="../learn/learn.html">How to Play Guide</a></li>
+                    <li><a href="../faqs/faqs.html">FAQ's</a></li>
+                    <li><a href="../credits/credits.html">Credits</a></li>
                 </ul>
             </div>
 
             <div class="footer-logo-block">
-                <a href="#" class="footer-logo">BISTRO<span>X</span></a>
+                <a href="#" class="footer-logo">
+                    <img src="./imgs/web-banners/logo.png" alt="BistroX Logo" style="width: 32px; height: 32px; object-fit: contain;">
+                    <div class="logo-text">BISTRO<span>X</span></div>
+                </a>
                 <p class="footer-slogan">"Master the ingredients. Discover the recipe."</p>
                 <p class="footer-desc">An interactive image-based cooking game. Save your combinations locally and master every recipe.</p>
                 
@@ -2107,7 +2124,6 @@
         }
 
         function toggleAuthMode(mode) {
-            mode.preventDefault();
             const loginF = document.getElementById('loginForm');
             const regF = document.getElementById('registerForm');
             if (mode === 'register') {
@@ -2126,6 +2142,13 @@
             const terms = document.getElementById('regTerms').checked;
 
             if (!user || !pass) return notify('Username and password are required.');
+            
+            // Password strength validation
+            if (pass.length < 8) return notify('Password too weak: Must be at least 8 characters.');
+            if (!/(?=.*[a-z])/.test(pass)) return notify('Password too weak: Must contain a lowercase letter.');
+            if (!/(?=.*[A-Z])/.test(pass)) return notify('Password too weak: Must contain an uppercase letter.');
+            if (!/(?=.*[0-9])/.test(pass)) return notify('Password too weak: Must contain a number.');
+
             if (pass !== confirm) return notify('Passwords do not match.');
             if (!terms) return notify('Please accept the Terms of Use.');
 

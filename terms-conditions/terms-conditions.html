@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms & Documentation | BistroX</title>
-    <style>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Terms & Documentation | BistroX</title>
+        <link rel="icon" href="../imgs/web-banners/logo.png">
+        <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Jost:wght@400;500;600;700&display=swap');
 
         /* --- Formal Design System --- */
@@ -122,13 +123,13 @@
             justify-content: space-between; align-items: center; background: var(--glass);
             backdrop-filter: blur(15px); z-index: 1000; border-bottom: 1px solid #EEEEEE;
         }
-        .logo { font-family: var(--font-main); font-size: 1.6rem; font-weight: 900; color: var(--secondary); text-decoration: none; letter-spacing: 2px; text-transform: uppercase; z-index: 1002; }
+        .logo { font-family: var(--font-main); font-size: 1.6rem; font-weight: 900; color: var(--secondary); text-decoration: none; letter-spacing: 2px; text-transform: uppercase; z-index: 1002; display: flex; align-items: center; gap: 8px; }
         .logo span { color: var(--primary); }
         nav { flex-grow: 1; display: flex; justify-content: center; }
         nav ul { display: flex; list-style: none; gap: 2.5rem; align-items: center; }
         .nav-link-wrap { display: flex; align-items: center; }
         nav a { font-family: var(--font-main); text-decoration: none; color: var(--secondary); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; transition: var(--transition); }
-        nav a:hover { color: var(--primary); }
+        nav a:hover, nav a.active { color: var(--primary); }
         .mobile-only { display: none !important; }
 
         .nav-item-dropdown { position: relative; }
@@ -163,7 +164,7 @@
 
         /* --- User Menu --- */
         .user-menu { position: relative; display: none; }
-        .user-icon-btn { width: 40px; height: 40px; background: var(--primary); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); border: none; border-radius: 50%; }
+        .user-icon-btn { width: 40px; height: 40px; background: var(--secondary); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); border: none; border-radius: 50%; }
         .user-icon-btn svg { width: 20px; height: 20px; fill: white; }
         .user-dropdown { position: absolute; top: 120%; right: 0; width: 220px; background: white; border: 1px solid #EEE; box-shadow: 0 15px 40px rgba(0,0,0,0.1); display: none; flex-direction: column; padding: 0.5rem 0; z-index: 1001; }
         .user-dropdown.active { display: flex; animation: fadeIn 0.3s ease; }
@@ -364,7 +365,7 @@
         .social-icon:hover { background: var(--primary); border-color: var(--primary); transform: translateY(-3px); }
         .social-icon:hover svg { fill: var(--white); }
         .footer-logo-block { display: flex; flex-direction: column; }
-        .footer-logo { font-family: var(--font-main); color: var(--secondary); font-size: 1.8rem; font-weight: 900; margin-bottom: 1rem; display: block; text-decoration: none; letter-spacing: 2px; }
+        .footer-logo { font-family: var(--font-main); color: var(--secondary); font-size: 1.8rem; font-weight: 900; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; text-decoration: none; letter-spacing: 2px; }
         .footer-logo span { color: var(--primary); }
         .footer-slogan { font-family: var(--font-main); color: #222222; font-weight: 500; margin-bottom: 1.5rem; font-size: 1rem; }
         .footer-desc { font-family: var(--font-geo); font-weight: 400; color: #666; margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.8; max-width: 600px; }
@@ -461,338 +462,546 @@
         }
 
     </style>
-</head>
-<body data-auth="guest">
+    </head>
+    <body data-auth="guest">
 
-    <!-- Fullscreen Preloader -->
-    <div id="globalLoader" class="loader-container">
-        <div class="pan-wrapper">
-            <div class="pan">
-                <div class="pan-handle"></div>
-                <div class="pan-base"></div>
+        <!-- Fullscreen Preloader -->
+        <div id="globalLoader" class="loader-container">
+            <div class="pan-wrapper">
+                <div class="pan">
+                    <div class="pan-handle"></div>
+                    <div class="pan-base"></div>
+                </div>
+                <div class="food"></div>
             </div>
-            <div class="food"></div>
+            <h2 class="loader-slogan">Please wait patiently,<br>we are
+                <span>cooking...</span></h2>
         </div>
-        <h2 class="loader-slogan">Please wait patiently,<br>we are <span>cooking...</span></h2>
-    </div>
 
-    <!-- Scroll To Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" onclick="scrollToTop()">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="12" y1="19" x2="12" y2="5"></line>
-            <polyline points="5 12 12 5 19 12"></polyline>
-        </svg>
-    </button>
+        <!-- Scroll To Top Button -->
+        <button id="scrollTopBtn" class="scroll-top-btn"
+            onclick="scrollToTop()">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="19" x2="12" y2="5"></line>
+                <polyline points="5 12 12 5 19 12"></polyline>
+            </svg>
+        </button>
 
-    <!-- Toast Container -->
-    <div id="toastContainer"></div>
+        <!-- Toast Container -->
+        <div id="toastContainer"></div>
 
-    <!-- Auth Modal -->
-    <div class="modal-overlay" id="authOverlay">
-        <div class="auth-modal">
-            <span class="modal-close-auth" onclick="closeAuthModal()">&times;</span>
-            <div id="loginForm" class="auth-form">
-                <span class="detail-tag" style="color:var(--primary); font-family:var(--font-geo); font-size:0.85rem; font-weight:700; text-transform:uppercase; letter-spacing:3px; margin-bottom:1rem; display:block;">Welcome Back</span>
-                <h2>Login to Kitchen</h2>
-                <p style="color: var(--text-muted); margin-bottom: 2.5rem;">Access your recipes and saved combinations.</p>
-                <div class="input-group">
-                    <label>Username</label>
-                    <input type="text" id="loginUser" placeholder="Enter your username">
+        <!-- Auth Modal -->
+        <div class="modal-overlay" id="authOverlay">
+            <div class="auth-modal">
+                <span class="modal-close-auth"
+                    onclick="closeAuthModal()">&times;</span>
+                <div id="loginForm" class="auth-form">
+                    <span class="detail-tag"
+                        style="color:var(--primary); font-family:var(--font-geo); font-size:0.85rem; font-weight:700; text-transform:uppercase; letter-spacing:3px; margin-bottom:1rem; display:block;">Welcome
+                        Back</span>
+                    <h2>Login to Kitchen</h2>
+                    <p
+                        style="color: var(--text-muted); margin-bottom: 2.5rem;">Access
+                        your recipes and saved combinations.</p>
+                    <div class="input-group">
+                        <label>Username</label>
+                        <input type="text" id="loginUser"
+                            placeholder="Enter your username">
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="loginPass"
+                            placeholder="Enter password">
+                    </div>
+                    <button class="cta-btn auth-submit"
+                        onclick="handleLogin()">Log In</button>
+                    <div class="auth-toggle">New Chef? <span
+                            onclick="toggleAuthMode('register')">Create an
+                            account</span></div>
                 </div>
-                <div class="input-group">
-                    <label>Password</label>
-                    <input type="password" id="loginPass" placeholder="Enter password">
+                <div id="registerForm" class="auth-form" style="display: none;">
+                    <span class="detail-tag"
+                        style="color:var(--primary); font-family:var(--font-geo); font-size:0.85rem; font-weight:700; text-transform:uppercase; letter-spacing:3px; margin-bottom:1rem; display:block;">Join
+                        BistroX</span>
+                    <h2>Create Profile</h2>
+                    <p
+                        style="color: var(--text-muted); margin-bottom: 2.5rem;">Start
+                        discovering new image-based recipes.</p>
+                    <div class="input-group">
+                        <label>Username</label>
+                        <input type="text" id="regUser"
+                            placeholder="Choose a username">
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="regPass"
+                            placeholder="Choose a password">
+                    </div>
+                    <div class="input-group">
+                        <label>Confirm Password</label>
+                        <input type="password" id="regPassConfirm"
+                            placeholder="Repeat your password">
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="regTerms">
+                        <label for="regTerms">I agree to the <a href="#terms"
+                                onclick="closeAuthModal()"
+                                style="color: var(--primary); font-weight: 700;">Terms</a>
+                            and browser local storage usage.</label>
+                    </div>
+                    <button class="cta-btn auth-submit"
+                        onclick="handleRegister()">Register</button>
+                    <div class="auth-toggle">Already a member? <span
+                            onclick="toggleAuthMode('login')">Login
+                            here</span></div>
                 </div>
-                <button class="cta-btn auth-submit" onclick="handleLogin()">Log In</button>
-                <div class="auth-toggle">New Chef? <span onclick="toggleAuthMode('register')">Create an account</span></div>
-            </div>
-            <div id="registerForm" class="auth-form" style="display: none;">
-                <span class="detail-tag" style="color:var(--primary); font-family:var(--font-geo); font-size:0.85rem; font-weight:700; text-transform:uppercase; letter-spacing:3px; margin-bottom:1rem; display:block;">Join BistroX</span>
-                <h2>Create Profile</h2>
-                <p style="color: var(--text-muted); margin-bottom: 2.5rem;">Start discovering new image-based recipes.</p>
-                <div class="input-group">
-                    <label>Username</label>
-                    <input type="text" id="regUser" placeholder="Choose a username">
-                </div>
-                <div class="input-group">
-                    <label>Password</label>
-                    <input type="password" id="regPass" placeholder="Choose a password">
-                </div>
-                <div class="input-group">
-                    <label>Confirm Password</label>
-                    <input type="password" id="regPassConfirm" placeholder="Repeat your password">
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="regTerms">
-                    <label for="regTerms">I agree to the <a href="#terms" onclick="closeAuthModal()" style="color: var(--primary); font-weight: 700;">Terms</a> and browser local storage usage.</label>
-                </div>
-                <button class="cta-btn auth-submit" onclick="handleRegister()">Register</button>
-                <div class="auth-toggle">Already a member? <span onclick="toggleAuthMode('login')">Login here</span></div>
             </div>
         </div>
-    </div>
 
-    <!-- HEADER -->
-    <header>
-        <a href="index.html" class="logo">BISTRO<span>X</span></a>
-        
-        <nav id="mainNav">
-            <div class="mobile-nav-top desktop-hidden">
-                <div class="mobile-nav-header">
-                    <a href="index.html" class="logo">BISTRO<span>X</span></a>
-                    <button class="mobile-close" onclick="closeMobileMenu()">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        <!-- HEADER -->
+        <header>
+            <a href="index.html" class="logo">
+                <img src="../imgs/web-banners/logo.png" alt="BistroX Logo"
+                    style="width: 28px; height: 28px; object-fit: contain;">
+                <div class="logo-text">BISTRO<span>X</span></div>
+            </a>
+
+            <nav id="mainNav">
+                <div class="mobile-nav-top desktop-hidden">
+                    <div class="mobile-nav-header">
+                        <a href="index.html" class="logo">
+                            <img src="../imgs/web-banners/logo.png"
+                                alt="BistroX Logo"
+                                style="width: 24px; height: 24px; object-fit: contain;">
+                            <div class="logo-text">BISTRO<span>X</span></div>
+                        </a>
+                        <button class="mobile-close"
+                            onclick="closeMobileMenu()">
+                            <svg viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"><line x1="18" y1="6"
+                                    x2="6" y2="18"></line><line x1="6" y1="6"
+                                    x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <ul id="navList">
+                    <li class="nav-item-dropdown">
+                        <div class="nav-link-wrap">
+                            <a href="../index.html">Home <span
+                                    class="desktop-arrow">&blacktriangledown;</span></a>
+                            <svg class="chevron desktop-hidden"
+                                viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"><polyline
+                                    points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
+                        <div class="dropdown-menu">
+                            <a href="../index.html#mechanics">Gameplay</a>
+                            <a href="../index.html#ingredients">Ingredients</a>
+                            <a href="../index.html#recipes">Masterpieces</a>
+                            <a href="../index.html#dev">Developer</a>
+                            <a href="../index.html#contact">Help</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item-dropdown">
+                        <div class="nav-link-wrap">
+                            <a href="../about/about.html">About <span
+                                    class="desktop-arrow">&blacktriangledown;</span></a>
+                            <svg class="chevron desktop-hidden"
+                                viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"><polyline
+                                    points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
+                        <div class="dropdown-menu">
+                            <a href="../about.html#about-game">game</a>
+                            <a href="../about.html#dev">developer</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item-dropdown">
+                        <div class="nav-link-wrap">
+                            <a href="../learn/learn.html">Learn <span
+                                    class="desktop-arrow">&blacktriangledown;</span></a>
+                            <svg class="chevron desktop-hidden"
+                                viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"><polyline
+                                    points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
+                        <div class="dropdown-menu">
+                            <a href="../learn/learn.html#recipes">Recipes</a>
+                            <a href="../learn/learn.html#game">Game</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="nav-link-wrap">
+                            <a href="../support/support.html">Support</a>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="mobile-utils desktop-hidden">
+                    <div class="mobile-util-item show-on-guest-flex"
+                        id="mobGuestLogin" onclick="openAuthModal('login')">
+                        <span>Login</span>
+                        <svg viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"><path
+                                d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle
+                                cx="12" cy="7" r="4"></circle></svg>
+                    </div>
+                    <div class="mobile-util-item show-on-guest-flex"
+                        id="mobGuestReg" onclick="openAuthModal('register')">
+                        <span>Register</span>
+                        <svg viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"><path
+                                d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle
+                                cx="8.5" cy="7" r="4"></circle><line x1="20"
+                                y1="8" x2="20" y2="14"></line><line x1="23"
+                                y1="11" x2="17" y2="11"></line></svg>
+                    </div>
+                    <div class="mobile-util-item show-on-user-flex"
+                        id="mobUserLabel">
+                        <span id="mobUserName">User: ...</span>
+                        <svg viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"><path
+                                d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle
+                                cx="12" cy="7" r="4"></circle></svg>
+                    </div>
+                    <div class="mobile-util-item show-on-user-flex"
+                        id="mobLogout" onclick="handleLogout()">
+                        <span style="color: #d93025;">Log Out</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#d93025"
+                            stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round"><path
+                                d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline
+                                points="16 17 21 12 16 7"></polyline><line
+                                x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="header-actions">
+                <div id="guestActions" class="show-on-guest-flex desktop-only"
+                    style="gap: 0.5rem; align-items: center;">
+                    <button class="cta-btn btn-text"
+                        onclick="openAuthModal('login')">
+                        <svg viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"><path
+                                d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle
+                                cx="12" cy="7" r="4"></circle></svg>
+                        Login
+                    </button>
+                    <button class="cta-btn btn-outline"
+                        onclick="openAuthModal('register')">
+                        <svg viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"><path
+                                d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle
+                                cx="8.5" cy="7" r="4"></circle><line x1="20"
+                                y1="8" x2="20" y2="14"></line><line x1="23"
+                                y1="11" x2="17" y2="11"></line></svg>
+                        Register
                     </button>
                 </div>
-            </div>
-
-            <ul id="navList">
-                <li class="nav-item-dropdown">
-                    <div class="nav-link-wrap">
-                        <a href="../index.html">Home <span
-                                class="desktop-arrow">&blacktriangledown;</span></a>
-                        <svg class="chevron desktop-hidden"
-                            viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"><polyline
-                                points="9 18 15 12 9 6"></polyline></svg>
+                <button class="cta-btn" id="playBtn"
+                    onclick="handlePlayNow()">Play Now</button>
+                <div class="user-menu show-on-user desktop-only" id="userMenu">
+                    <button class="user-icon-btn"
+                        onclick="toggleUserDropdown()">
+                        <svg viewBox="0 0 24 24"><path
+                                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" /></svg>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-dropdown-header"><p
+                                id="displayUser">User: Loading...</p></div>
+                        <a href="#" class="dropdown-link logout-btn"
+                            onclick="handleLogout()">Log Out</a>
                     </div>
-                    <div class="dropdown-menu">
-                        <a href="../index.html#mechanics">Gameplay</a>
-                        <a href="../index.html#ingredients">Ingredients</a>
-                        <a href="../index.html#recipes">Masterpieces</a>
-                        <a href="../index.html#dev">Developer</a>
-                        <a href="../index.html#contact">Help</a>
-                    </div>
-                </li>
-                
-                <li class="nav-item-dropdown">
-                    <div class="nav-link-wrap">
-                        <a href="about.html">About <span class="desktop-arrow">&blacktriangledown;</span></a>
-                        <svg class="chevron desktop-hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </div>
-                    <div class="dropdown-menu">
-                        <a href="about.html#about-game">the game</a>
-                        <a href="about.html#dev">the developer</a>
-                    </div>
-                </li>
-                
-                <li class="nav-item-dropdown">
-                    <div class="nav-link-wrap">
-                        <a href="learn.html">Learn <span class="desktop-arrow">&blacktriangledown;</span></a>
-                        <svg class="chevron desktop-hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </div>
-                    <div class="dropdown-menu">
-                        <a href="learn.html#recipes">Recipes</a>
-                        <a href="learn.html#game">Game</a>
-                    </div>
-                </li>
-                <li><div class="nav-link-wrap"><a href="support.html">Support</a></div></li>
-            </ul>
-
-            <div class="mobile-utils desktop-hidden">
-                <div class="mobile-util-item show-on-guest-flex" id="mobGuestLogin" onclick="openAuthModal('login')">
-                    <span>Login</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 </div>
-                <div class="mobile-util-item show-on-guest-flex" id="mobGuestReg" onclick="openAuthModal('register')">
-                    <span>Register</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
-                </div>
-                <div class="mobile-util-item show-on-user-flex" id="mobUserLabel">
-                    <span id="mobUserName">User: ...</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                </div>
-                <div class="mobile-util-item show-on-user-flex" id="mobLogout" onclick="handleLogout()">
-                    <span style="color: #d93025;">Log Out</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#d93025" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                <div class="hamburger" id="hamburgerBtn">
+                    <span></span><span></span><span></span>
                 </div>
             </div>
-        </nav>
+        </header>
 
-        <div class="header-actions">
-            <div id="guestActions" class="show-on-guest-flex desktop-only" style="gap: 0.5rem; align-items: center;">
-                <button class="cta-btn btn-text" onclick="openAuthModal('login')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                    Login
-                </button>
-                <button class="cta-btn btn-outline" onclick="openAuthModal('register')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
-                    Register
-                </button>
+        <!-- LEGAL MAIN WRAPPER -->
+        <main class="legal-wrapper">
+
+            <div class="legal-header reveal">
+                <span class="legal-last-updated">Last Updated: March 2026</span>
+                <h1>Legal & Documentation</h1>
+                <p>Comprehensive information regarding your usage, privacy, and
+                    data on the BistroX digital cooking platform. We believe in
+                    complete transparency and a pure, tracker-free web
+                    experience.</p>
             </div>
-            <button class="cta-btn" id="playBtn" onclick="handlePlayNow()">Play Now</button>
-            <div class="user-menu show-on-user desktop-only" id="userMenu">
-                <button class="user-icon-btn" onclick="toggleUserDropdown()">
-                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                </button>
-                <div class="user-dropdown" id="userDropdown">
-                    <div class="user-dropdown-header"><p id="displayUser">User: Loading...</p></div>
-                    <a href="#" class="dropdown-link logout-btn" onclick="handleLogout()">Log Out</a>
+
+            <div class="legal-container">
+
+                <!-- Sticky Sidebar Navigation (Desktop) -->
+                <aside class="legal-sidebar desktop-only reveal">
+                    <nav id="legalNav">
+                        <a href="#terms" class="active">Terms of Use</a>
+                        <a href="#privacy">Data Privacy</a>
+                        <a href="#local-storage">Local Storage Info</a>
+                        <a href="#cookies">Browser Cookies</a>
+                    </nav>
+                </aside>
+
+                <!-- Detailed Content -->
+                <div class="legal-content reveal">
+
+                    <!-- SECTION: TERMS OF USE -->
+                    <section id="terms" class="legal-section">
+                        <h2>Terms of Use</h2>
+                        <p>Welcome to BistroX. By accessing or using our
+                            image-based cooking game, you agree to be bound by
+                            these Terms of Use. If you disagree with any part of
+                            these terms, you may not access the service.</p>
+
+                        <h3>1. Nature of the Service</h3>
+                        <p>BistroX is a fully frontend, browser-based simulation
+                            game designed for educational and entertainment
+                            purposes. It simulates the culinary arts through
+                            visual interactions and logic-based mechanics. The
+                            recipes and combinations presented in the game are
+                            stylized interpretations and should be executed in
+                            real life with appropriate culinary care and food
+                            safety standards.</p>
+
+                        <h3>2. Intellectual Property Rights</h3>
+                        <p>The service and its original content, features, and
+                            functionality are and will remain the exclusive
+                            property of Htet Zaw Paing and its licensors. The
+                            visual assets, including all SVG illustrations,
+                            structural code (HTML/CSS/JS), and proprietary game
+                            logic are protected by copyright laws.</p>
+                        <ul>
+                            <li><strong>Permitted Use:</strong> You are granted
+                                a limited, non-exclusive, non-transferable
+                                license to play the game and interact with the
+                                interface for personal, non-commercial use.</li>
+                            <li><strong>Restrictions:</strong> You may not
+                                reverse-engineer, clone, distribute, or create
+                                derivative works from our specific code
+                                structure or design system without explicit
+                                permission.</li>
+                        </ul>
+
+                        <h3>3. User Conduct & Accounts</h3>
+                        <p>While BistroX does not utilize a remote backend
+                            server, you have the ability to create "Accounts"
+                            via your browser's local environment. You are solely
+                            responsible for maintaining the security of your
+                            local device. We are not liable for any lost
+                            progress resulting from browser cache clears or
+                            device changes.</p>
+                    </section>
+
+                    <!-- SECTION: DATA PRIVACY -->
+                    <section id="privacy" class="legal-section">
+                        <h2>Data Privacy Policy</h2>
+                        <p>At BistroX, we take a radical approach to your
+                            privacy: <strong>We do not collect it.</strong>
+                            Because our application is engineered as a pure
+                            frontend experience, your data fundamentally never
+                            leaves your device.</p>
+
+                        <h3>1. Information We Do Not Collect</h3>
+                        <p>Unlike traditional web applications, BistroX operates
+                            without a centralized database. Therefore, we
+                            absolutely <strong>do not</strong> harvest,
+                            transmit, or store:</p>
+                        <ul>
+                            <li>Your IP Address</li>
+                            <li>Your Geolocation data</li>
+                            <li>Personal Identifiable Information (PII)</li>
+                            <li>Cross-site browsing history</li>
+                            <li>Email addresses or phone numbers</li>
+                        </ul>
+
+                        <h3>2. External Links and APIs</h3>
+                        <p>Our platform may contain links to external sites
+                            (such as GitHub, LinkedIn, or Unsplash for
+                            placeholder images). If you click on a third-party
+                            link, you will be directed to that site. We strongly
+                            advise you to review the Privacy Policy of these
+                            external sites, as we have no control over their
+                            practices.</p>
+
+                        <div class="info-box">
+                            <p><strong>The Privacy Guarantee:</strong> When you
+                                play BistroX, the game logic executes entirely
+                                within the RAM and CPU of your own computer or
+                                mobile device. No data is sent to a BistroX
+                                server during gameplay.</p>
+                        </div>
+                    </section>
+
+                    <!-- SECTION: LOCAL STORAGE INFO -->
+                    <section id="local-storage" class="legal-section">
+                        <h2>Local Storage Information</h2>
+                        <p>To provide you with a seamless, persistent gaming
+                            experience without requiring a backend database,
+                            BistroX heavily utilizes the <strong>HTML5 Web
+                                Storage API</strong> (specifically
+                            `localStorage`). This section details exactly how
+                            and why we use it.</p>
+
+                        <h3>1. What is Local Storage?</h3>
+                        <p>Local Storage is an industry-standard web technology
+                            that allows websites to store text-based data
+                            locally within your web browser. This data persists
+                            even after you close the browser window or restart
+                            your computer, allowing you to return to your game
+                            exactly where you left off.</p>
+
+                        <h3>2. How BistroX Uses Your Local Storage</h3>
+                        <p>We use local storage strictly for functional gameplay
+                            purposes. Specifically, we store:</p>
+                        <ul>
+                            <li><strong>`bx_users`:</strong> An encrypted array
+                                containing the usernames and passwords you
+                                create locally to access your profile.</li>
+                            <li><strong>`bx_currentUser`:</strong> A simple
+                                string indicating which chef profile is
+                                currently "logged in" to the session.</li>
+                            <li><strong>Game State Data:</strong> Arrays
+                                tracking which specific ingredients you have
+                                unlocked, which recipes you have mastered, and
+                                your current inventory.</li>
+                        </ul>
+
+                        <h3>3. Managing Your Storage</h3>
+                        <p>Because this data lives on your device, you have
+                            total control over it. You can delete your BistroX
+                            data at any time by clearing your browser's site
+                            data or cache. <strong>Warning:</strong> Doing so
+                            will permanently erase your created profiles,
+                            unlocked recipes, and game progress, as we have no
+                            remote backup to restore from.</p>
+                    </section>
+
+                    <!-- SECTION: BROWSER COOKIES -->
+                    <section id="cookies" class="legal-section">
+                        <h2>Browser Cookies</h2>
+                        <p>Transparency regarding tracking is a core philosophy
+                            of the BistroX development team. We have designed
+                            our system to operate entirely independently of
+                            traditional HTTP cookies.</p>
+
+                        <h3>1. Zero Tracking Policy</h3>
+                        <p>BistroX does <strong>not</strong> use cookies for
+                            tracking, analytics, advertising, or remarketing.
+                            When you visit our website, we do not drop tracking
+                            pixels or third-party analytical scripts (like
+                            Google Analytics or Meta Pixel) onto your
+                            machine.</p>
+
+                        <h3>2. Functional vs. Tracking</h3>
+                        <p>Many modern websites use cookies to track user
+                            behavior across the internet to serve targeted
+                            advertisements. Because BistroX relies on the
+                            aforementioned `localStorage` for maintaining your
+                            session state (like keeping you logged in as a
+                            specific Chef), we have successfully eliminated the
+                            need for standard session cookies entirely.</p>
+
+                        <div class="info-box">
+                            <p><strong>Summary:</strong> You can browse, play,
+                                and interact with BistroX with complete peace of
+                                mind. Your culinary journey is a private
+                                experience between you and your browser.</p>
+                        </div>
+                    </section>
+
                 </div>
             </div>
-            <div class="hamburger" id="hamburgerBtn">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-    </header>
+        </main>
 
-    <!-- LEGAL MAIN WRAPPER -->
-    <main class="legal-wrapper">
-        
-        <div class="legal-header reveal">
-            <span class="legal-last-updated">Last Updated: March 2026</span>
-            <h1>Legal & Documentation</h1>
-            <p>Comprehensive information regarding your usage, privacy, and data on the BistroX digital cooking platform. We believe in complete transparency and a pure, tracker-free web experience.</p>
-        </div>
-
-        <div class="legal-container">
-            
-            <!-- Sticky Sidebar Navigation (Desktop) -->
-            <aside class="legal-sidebar desktop-only reveal">
-                <nav id="legalNav">
-                    <a href="#terms" class="active">Terms of Use</a>
-                    <a href="#privacy">Data Privacy</a>
-                    <a href="#local-storage">Local Storage Info</a>
-                    <a href="#cookies">Browser Cookies</a>
-                </nav>
-            </aside>
-
-            <!-- Detailed Content -->
-            <div class="legal-content reveal">
-                
-                <!-- SECTION: TERMS OF USE -->
-                <section id="terms" class="legal-section">
-                    <h2>Terms of Use</h2>
-                    <p>Welcome to BistroX. By accessing or using our image-based cooking game, you agree to be bound by these Terms of Use. If you disagree with any part of these terms, you may not access the service.</p>
-                    
-                    <h3>1. Nature of the Service</h3>
-                    <p>BistroX is a fully frontend, browser-based simulation game designed for educational and entertainment purposes. It simulates the culinary arts through visual interactions and logic-based mechanics. The recipes and combinations presented in the game are stylized interpretations and should be executed in real life with appropriate culinary care and food safety standards.</p>
-
-                    <h3>2. Intellectual Property Rights</h3>
-                    <p>The service and its original content, features, and functionality are and will remain the exclusive property of Htet Zaw Paing and its licensors. The visual assets, including all SVG illustrations, structural code (HTML/CSS/JS), and proprietary game logic are protected by copyright laws.</p>
-                    <ul>
-                        <li><strong>Permitted Use:</strong> You are granted a limited, non-exclusive, non-transferable license to play the game and interact with the interface for personal, non-commercial use.</li>
-                        <li><strong>Restrictions:</strong> You may not reverse-engineer, clone, distribute, or create derivative works from our specific code structure or design system without explicit permission.</li>
+        <!-- FOOTER -->
+        <footer>
+            <div class="footer-grid">
+                <div>
+                    <h4 class="footer-title">Game Info</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="openAuthModal('register')">Register to Play</a></li>
+                        <li><a href="#" onclick="openAuthModal('login')">Log In</a></li>
+                        <li><a href="../index.html#">Recipe Theories</a></li>
+                        <li><a href="../index.html#ingredients">Ingredients List</a></li>
+                        <li><a href="../index.html#contact">Submit Idea</a></li>
                     </ul>
-
-                    <h3>3. User Conduct & Accounts</h3>
-                    <p>While BistroX does not utilize a remote backend server, you have the ability to create "Accounts" via your browser's local environment. You are solely responsible for maintaining the security of your local device. We are not liable for any lost progress resulting from browser cache clears or device changes.</p>
-                </section>
-
-                <!-- SECTION: DATA PRIVACY -->
-                <section id="privacy" class="legal-section">
-                    <h2>Data Privacy Policy</h2>
-                    <p>At BistroX, we take a radical approach to your privacy: <strong>We do not collect it.</strong> Because our application is engineered as a pure frontend experience, your data fundamentally never leaves your device.</p>
-
-                    <h3>1. Information We Do Not Collect</h3>
-                    <p>Unlike traditional web applications, BistroX operates without a centralized database. Therefore, we absolutely <strong>do not</strong> harvest, transmit, or store:</p>
-                    <ul>
-                        <li>Your IP Address</li>
-                        <li>Your Geolocation data</li>
-                        <li>Personal Identifiable Information (PII)</li>
-                        <li>Cross-site browsing history</li>
-                        <li>Email addresses or phone numbers</li>
+                </div>
+                <div>
+                    <h4 class="footer-title">Privacy</h4>
+                    <ul class="footer-links">
+                        <li><a href="#terms">Terms of Use</a></li>
+                        <li><a href="#privacy">Data Privacy</a></li>
+                        <li><a href="#local-storage">Local Storage Info</a></li>
+                        <li><a href="#cookies">Browser Cookies</a></li>
                     </ul>
-
-                    <h3>2. External Links and APIs</h3>
-                    <p>Our platform may contain links to external sites (such as GitHub, LinkedIn, or Unsplash for placeholder images). If you click on a third-party link, you will be directed to that site. We strongly advise you to review the Privacy Policy of these external sites, as we have no control over their practices.</p>
-
-                    <div class="info-box">
-                        <p><strong>The Privacy Guarantee:</strong> When you play BistroX, the game logic executes entirely within the RAM and CPU of your own computer or mobile device. No data is sent to a BistroX server during gameplay.</p>
-                    </div>
-                </section>
-
-                <!-- SECTION: LOCAL STORAGE INFO -->
-                <section id="local-storage" class="legal-section">
-                    <h2>Local Storage Information</h2>
-                    <p>To provide you with a seamless, persistent gaming experience without requiring a backend database, BistroX heavily utilizes the <strong>HTML5 Web Storage API</strong> (specifically `localStorage`). This section details exactly how and why we use it.</p>
-
-                    <h3>1. What is Local Storage?</h3>
-                    <p>Local Storage is an industry-standard web technology that allows websites to store text-based data locally within your web browser. This data persists even after you close the browser window or restart your computer, allowing you to return to your game exactly where you left off.</p>
-
-                    <h3>2. How BistroX Uses Your Local Storage</h3>
-                    <p>We use local storage strictly for functional gameplay purposes. Specifically, we store:</p>
-                    <ul>
-                        <li><strong>`bx_users`:</strong> An encrypted array containing the usernames and passwords you create locally to access your profile.</li>
-                        <li><strong>`bx_currentUser`:</strong> A simple string indicating which chef profile is currently "logged in" to the session.</li>
-                        <li><strong>Game State Data:</strong> Arrays tracking which specific ingredients you have unlocked, which recipes you have mastered, and your current inventory.</li>
+                </div>
+                <div>
+                    <h4 class="footer-title">Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://www.htetzawpaing.site" target="_blank">Developer</a></li>
+                        <li><a href="../learn/learn.html">How to Play Guide</a></li>
+                        <li><a href="../faqs/faqs.html">FAQ's</a></li>
+                        <li><a href="../credits/credits.html">Credits</a></li>
                     </ul>
+                </div>
+                <div class="footer-logo-block">
+                    <a href="index.html" class="footer-logo">
+                        <img src="../imgs/web-banners/logo.png"
+                            alt="BistroX Logo"
+                            style="width: 32px; height: 32px; object-fit: contain;">
+                        <div class="logo-text">BISTRO<span>X</span></div>
+                    </a>
+                    <p
+                        class="footer-slogan">"Master the ingredients. Discover the recipe."</p>
+                    <p class="footer-desc">An interactive image-based cooking
+                        game. Save your combinations locally and master every
+                        recipe.</p>
 
-                    <h3>3. Managing Your Storage</h3>
-                    <p>Because this data lives on your device, you have total control over it. You can delete your BistroX data at any time by clearing your browser's site data or cache. <strong>Warning:</strong> Doing so will permanently erase your created profiles, unlocked recipes, and game progress, as we have no remote backup to restore from.</p>
-                </section>
-
-                <!-- SECTION: BROWSER COOKIES -->
-                <section id="cookies" class="legal-section">
-                    <h2>Browser Cookies</h2>
-                    <p>Transparency regarding tracking is a core philosophy of the BistroX development team. We have designed our system to operate entirely independently of traditional HTTP cookies.</p>
-
-                    <h3>1. Zero Tracking Policy</h3>
-                    <p>BistroX does <strong>not</strong> use cookies for tracking, analytics, advertising, or remarketing. When you visit our website, we do not drop tracking pixels or third-party analytical scripts (like Google Analytics or Meta Pixel) onto your machine.</p>
-
-                    <h3>2. Functional vs. Tracking</h3>
-                    <p>Many modern websites use cookies to track user behavior across the internet to serve targeted advertisements. Because BistroX relies on the aforementioned `localStorage` for maintaining your session state (like keeping you logged in as a specific Chef), we have successfully eliminated the need for standard session cookies entirely.</p>
-
-                    <div class="info-box">
-                        <p><strong>Summary:</strong> You can browse, play, and interact with BistroX with complete peace of mind. Your culinary journey is a private experience between you and your browser.</p>
-                    </div>
-                </section>
-
-            </div>
-        </div>
-    </main>
-
-    <!-- FOOTER -->
-    <footer>
-        <div class="footer-grid">
-            <div>
-                <h4 class="footer-title">Game Info</h4>
-                <ul class="footer-links">
-                    <li><a href="../terms-conditions/terms-conditions.html" onclick="toggleAuthMode('register')">Register to Play</a></li>
-                    <li><a href="" onclick="toggleAuthMode('login')">Log In</a></li>
-                    <li><a href="index.html#">Recipe Theories</a></li>
-                    <li><a href="index.html#ingredients">Ingredients List</a></li>
-                    <li><a href="index.html#contact">Submit Idea</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="footer-title">Privacy</h4>
-                <ul class="footer-links">
-                    <li><a href="#terms">Terms of Use</a></li>
-                    <li><a href="#privacy">Data Privacy</a></li>
-                    <li><a href="#local-storage">Local Storage Info</a></li>
-                    <li><a href="#cookies">Browser Cookies</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="footer-title">Links</h4>
-                <ul class="footer-links">
-                    <li><a href="learn.html">Game Info</a></li>
-                    <li><a href="https://www.htetzawpaing.site" target="_blank">Developer Info</a></li>
-                </ul>
-            </div>
-            <div class="footer-logo-block">
-                <a href="index.html" class="footer-logo">BISTRO<span>X</span></a>
-                <p class="footer-slogan">"Master the ingredients. Discover the recipe."</p>
-                <p class="footer-desc">An interactive image-based cooking game. Save your combinations locally and master every recipe.</p>
-                
-                <h4 class="footer-title" style="margin-bottom: 1rem; margin-top: 1rem;">Follow Us</h4>
-                <div class="social-icons">
-                    <a href="https://github.com" target="_blank" class="social-icon"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
-                    <a href="https://linkedin.com" target="_blank" class="social-icon"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-                    <a href="#" target="_blank" class="social-icon"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+                    <h4 class="footer-title"
+                        style="margin-bottom: 1rem; margin-top: 1rem;">Follow
+                        Us</h4>
+                        <div class="social-icons">
+                            <a href="https://github.com" target="_blank" class="social-icon">
+                                <!-- GitHub Icon -->
+                                <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                            </a>
+                            <a href="https://linkedin.com" target="_blank" class="social-icon">
+                                <!-- LinkedIn Icon -->
+                                <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                            </a>
+                            <a href="#" target="_blank" class="social-icon">
+                                <!-- Twitter/X Icon -->
+                                <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                            </a>
+                        </div>
                 </div>
             </div>
-        </div>
-        <div class="copyright-flex">
-            <div>&copy; 2026 BistroX Systems. All Rights Reserved.</div>
-        </div>
-    </footer>
+            <div class="copyright-flex">
+                <div>&copy; 2026 BistroX Systems. All Rights Reserved.</div>
+            </div>
+        </footer>
 
-    <!-- Core Scripts -->
-    <script>
+        <!-- Core Scripts -->
+        <script>
         // --- REAL-TIME ASSET PRELOADER ENGINE ---
         window.addEventListener('load', () => {
             const loader = document.getElementById('globalLoader');
@@ -899,6 +1108,9 @@
         function closeAuthModal() { document.getElementById('authOverlay').style.display = 'none'; }
 
         function toggleAuthMode(mode) {
+            if (typeof mode === 'object' && mode.preventDefault) {
+                mode.preventDefault();
+            }
             const loginF = document.getElementById('loginForm');
             const regF = document.getElementById('registerForm');
             if (mode === 'register') { loginF.style.display = 'none'; regF.style.display = 'block'; }
@@ -912,6 +1124,13 @@
             const terms = document.getElementById('regTerms').checked;
 
             if (!user || !pass) return notify('Username and password are required.');
+            
+            // Password strength validation
+            if (pass.length < 8) return notify('Password too weak: Must be at least 8 characters.');
+            if (!/(?=.*[a-z])/.test(pass)) return notify('Password too weak: Must contain a lowercase letter.');
+            if (!/(?=.*[A-Z])/.test(pass)) return notify('Password too weak: Must contain an uppercase letter.');
+            if (!/(?=.*[0-9])/.test(pass)) return notify('Password too weak: Must contain a number.');
+
             if (pass !== confirm) return notify('Passwords do not match.');
             if (!terms) return notify('Please accept the Terms of Use.');
 
@@ -948,8 +1167,17 @@
         function toggleUserDropdown() { document.getElementById('userDropdown').classList.toggle('active'); }
 
         function handlePlayNow() {
-            if (localStorage.getItem('bx_currentUser')) { window.location.href = 'index.html'; }
-            else { openAuthModal('login'); }
+            if (localStorage.getItem('bx_currentUser')) {
+                notify('Kitchen loading... Preparing ingredients.');
+        
+                // Wait 1.5 seconds so user can see notification
+                setTimeout(() => {
+                    window.location.href = '../play/play.html';
+                }, 1500);
+        
+            } else {
+                openAuthModal('login');
+            }
         }
 
         function initMobileMenu() {
@@ -1049,5 +1277,5 @@
             });
         }
     </script>
-</body>
+    </body>
 </html>
