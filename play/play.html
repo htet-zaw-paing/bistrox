@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Play | BistroX Engine</title>
     <link rel="icon" href="../imgs/web-banners/logo.png">
     <style>
@@ -35,6 +35,7 @@
         }
 
         h1, h2, h3, h4 { font-family: var(--font-geo); font-weight: 700; letter-spacing: 1px; margin: 0; }
+        button { font-family: inherit; outline: none; }
 
         /* --- Global Elements (Toast, Loader) --- */
         #toastContainer { position: fixed; bottom: 40px; right: 40px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
@@ -58,223 +59,58 @@
         .loader-slogan span { color: var(--primary); font-weight: 700; }
         @keyframes pulseText { 0% { opacity: 0.5; } 100% { opacity: 1; } }
 
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #D1CBBB; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
         /* --- GAME ENGINE CSS --- */
-        
-        .game-app {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-            background: var(--game-bg);
-            overflow: hidden;
-        }
+        .game-app { position: relative; width: 100vw; height: 100vh; background: var(--game-bg); overflow: hidden; }
 
         /* Screen Management */
-        .game-screen {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            display: none;
-            flex-direction: column;
-            background: var(--game-bg);
-            animation: fadeIn 0.5s ease-out forwards;
-        }
+        .game-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; flex-direction: column; background: var(--game-bg); animation: fadeIn 0.5s ease-out forwards; }
         .game-screen.active { display: flex; }
 
-        .game-header {
-            padding: 2rem 4rem;
-            background: rgba(255, 255, 255, 0.95);
-            border-bottom: 1px solid var(--game-border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 10;
-        }
-
+        .game-header { padding: 2rem 4rem; background: rgba(255, 255, 255, 0.95); border-bottom: 1px solid var(--game-border); display: flex; justify-content: space-between; align-items: center; z-index: 10; }
         .game-header h2 { font-size: 1.2rem; color: var(--secondary); text-transform: uppercase; letter-spacing: 4px; font-weight: 600;}
-        .game-close-btn { 
-            background: transparent; border: 1px solid var(--game-border); color: var(--secondary); 
-            cursor: pointer; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 3px; 
-            font-family: var(--font-geo); transition: var(--transition); padding: 0.8rem 2rem; border-radius: 4px;
-            font-weight: 600;
-        }
+        .game-close-btn { background: transparent; border: 1px solid var(--game-border); color: var(--secondary); cursor: pointer; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 3px; font-family: var(--font-geo); transition: var(--transition); padding: 0.8rem 2rem; border-radius: 4px; font-weight: 600; }
         .game-close-btn:hover { color: var(--white); background: var(--secondary); border-color: var(--secondary); }
 
         /* --- NEW CINEMATIC FULLSCREEN MAIN MENU --- */
-        .main-menu {
-            display: flex;
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: flex-start; 
-            padding-left: 8%;
-            background: url('https://images.unsplash.com/photo-1495521821757-a1efb6729352?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
-        }
-
-        .menu-gradient-overlay {
-            position: absolute; top:0; left:0; width:100%; height:100%;
-            background: linear-gradient(to right, rgba(253,251,247,0.98) 0%, rgba(253,251,247,0.9) 35%, rgba(253,251,247,0.1) 65%, transparent 100%);
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .menu-container {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            flex-direction: row; 
-            align-items: center;
-            justify-content: flex-start;
-            gap: 8rem; 
-            max-width: 1200px;
-        }
-
-        .menu-brand-block {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            max-width: 450px;
-        }
-
-        .brand-tag {
-            display: inline-block;
-            border: 1px solid var(--primary);
-            padding: 0.4rem 1.5rem;
-            border-radius: 4px;
-            font-family: var(--font-geo);
-            font-size: 0.65rem;
-            color: var(--primary);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 2rem;
-            background: rgba(197, 160, 89, 0.1);
-            backdrop-filter: blur(5px);
-            width: fit-content;
-            font-weight: 700;
-        }
-
-        .menu-brand h1 { 
-            font-family: var(--font-geo);
-            font-size: 6.5rem; 
-            color: var(--secondary); 
-            line-height: 1.1; 
-            font-weight: 300;
-            margin-bottom: 1.5rem;
-            letter-spacing: -2px;
-        }
-        
+        .main-menu { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-left: 8%; background: url('https://images.unsplash.com/photo-1495521821757-a1efb6729352?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat; }
+        .menu-gradient-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(to right, rgba(253,251,247,0.98) 0%, rgba(253,251,247,0.9) 35%, rgba(253,251,247,0.1) 65%, transparent 100%); z-index: 1; pointer-events: none; }
+        .menu-container { position: relative; z-index: 2; display: flex; flex-direction: row; align-items: center; justify-content: flex-start; gap: 8rem; max-width: 1200px; }
+        .menu-brand-block { display: flex; flex-direction: column; width: 100%; max-width: 450px; }
+        .brand-tag { display: inline-block; border: 1px solid var(--primary); padding: 0.4rem 1.5rem; border-radius: 4px; font-family: var(--font-geo); font-size: 0.65rem; color: var(--primary); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 2rem; background: rgba(197, 160, 89, 0.1); backdrop-filter: blur(5px); width: fit-content; font-weight: 700; }
+        .menu-brand h1 { font-family: var(--font-geo); font-size: 6.5rem; color: var(--secondary); line-height: 1.1; font-weight: 300; margin-bottom: 1.5rem; letter-spacing: -2px; }
         .menu-brand h1 strong { font-weight: 800; display: block; color: var(--primary); letter-spacing: 0; }
-
-        .menu-brand p { 
-            font-family: var(--font-main); 
-            color: var(--game-text-muted); 
-            font-size: 1.05rem; 
-            line-height: 1.8;
-            font-weight: 400;
-            margin-bottom: 0;
-        }
-
-        .menu-list-block {
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center;
-        }
-
-        .menu-list { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 0.8rem; 
-        }
-
-        .menu-btn {
-            background: transparent;
-            border: none;
-            color: var(--game-text-muted);
-            padding: 0.8rem 0;
-            font-family: var(--font-geo);
-            font-size: 0.95rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            cursor: pointer;
-            transition: var(--transition);
-            text-align: left;
-            position: relative;
-            width: fit-content;
-        }
-
-        .menu-btn::before {
-            content: '';
-            position: absolute;
-            left: -30px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: var(--transition);
-        }
-
-        .menu-btn:hover { 
-            color: var(--primary); 
-            padding-left: 20px;
-        }
-        
-        .menu-btn:hover::before {
-            width: 15px;
-            left: -5px;
-        }
-        
+        .menu-brand p { font-family: var(--font-main); color: var(--game-text-muted); font-size: 1.05rem; line-height: 1.8; font-weight: 400; margin-bottom: 0; }
+        .menu-list-block { display: flex; flex-direction: column; justify-content: center; }
+        .menu-list { display: flex; flex-direction: column; gap: 0.8rem; }
+        .menu-btn { background: transparent; border: none; color: var(--game-text-muted); padding: 0.8rem 0; font-family: var(--font-geo); font-size: 0.95rem; font-weight: 600; text-transform: uppercase; letter-spacing: 4px; cursor: pointer; transition: var(--transition); text-align: left; position: relative; width: fit-content; }
+        .menu-btn::before { content: ''; position: absolute; left: -30px; top: 50%; transform: translateY(-50%); width: 0; height: 2px; background: var(--primary); transition: var(--transition); }
+        .menu-btn:hover { color: var(--primary); padding-left: 20px; }
+        .menu-btn:hover::before { width: 15px; left: -5px; }
         .menu-btn.quit-btn { margin-top: 1.5rem; color: #a33b3b; }
         .menu-btn.quit-btn:hover { color: #d93025; }
         .menu-btn.quit-btn::before { background: #d93025; }
 
         /* --- RECIPE / LEVEL SCREEN --- */
-        .recipe-layout {
-            display: flex; flex-direction: column; flex: 1;
-            padding: 2rem 4rem; background: var(--game-bg);
-        }
-
-        .difficulty-tabs {
-            display: flex; gap: 2rem; margin-bottom: 3rem;
-            border-bottom: 2px solid var(--game-border); padding-bottom: 1rem;
-        }
-
-        .diff-tab {
-            background: transparent; border: none; color: var(--game-text-muted);
-            font-family: var(--font-geo); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 3px;
-            cursor: pointer; transition: var(--transition); padding: 0.5rem 1rem; position: relative; font-weight: 500;
-        }
-
-        .diff-tab::after {
-            content: ''; position: absolute; bottom: -1.15rem; left: 0; width: 0; height: 3px; background: var(--primary); transition: var(--transition);
-        }
-
+        .recipe-layout { display: flex; flex-direction: column; flex: 1; padding: 2rem 4rem; background: var(--game-bg); }
+        .difficulty-tabs { display: flex; gap: 2rem; margin-bottom: 3rem; border-bottom: 2px solid var(--game-border); padding-bottom: 1rem; flex-wrap: wrap;}
+        .diff-tab { background: transparent; border: none; color: var(--game-text-muted); font-family: var(--font-geo); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 3px; cursor: pointer; transition: var(--transition); padding: 0.5rem 1rem; position: relative; font-weight: 500; }
+        .diff-tab::after { content: ''; position: absolute; bottom: -1.15rem; left: 0; width: 0; height: 3px; background: var(--primary); transition: var(--transition); }
         .diff-tab:hover { color: var(--secondary); }
         .diff-tab.active { color: var(--secondary); font-weight: 800; }
         .diff-tab.active::after { width: 100%; }
 
-        .recipe-grid-container {
-            flex: 1; overflow-y: auto; padding-right: 1rem; padding-bottom: 8rem;
-        }
-        
-        .recipe-grid-container::-webkit-scrollbar { width: 6px; }
-        .recipe-grid-container::-webkit-scrollbar-track { background: transparent; }
-        .recipe-grid-container::-webkit-scrollbar-thumb { background: #D1CBBB; border-radius: 10px; }
-
-        .recipe-grid {
-            display: none; 
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 2.5rem;
-            animation: fadeIn 0.4s ease-out;
-        }
+        .recipe-grid-container { flex: 1; overflow-y: auto; padding-right: 1rem; padding-bottom: 8rem; }
+        .recipe-grid { display: none; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 2.5rem; animation: fadeIn 0.4s ease-out; }
         .recipe-grid.active { display: grid; }
 
-        .level-card {
-            background: var(--game-panel); border: 1px solid var(--game-border);
-            border-radius: 4px; padding: 2.5rem 1.5rem; text-align: center; cursor: pointer;
-            transition: var(--transition); position: relative; overflow: hidden;
-            display: flex; flex-direction: column; align-items: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.02);
-        }
+        .level-card { background: var(--game-panel); border: 1px solid var(--game-border); border-radius: 4px; padding: 2.5rem 1.5rem; text-align: center; cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; box-shadow: 0 10px 20px rgba(0,0,0,0.02); }
         .level-card:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 15px 30px rgba(197, 160, 89, 0.15); }
-        
         .level-card.locked { opacity: 0.6; cursor: not-allowed; background: #F5F3EC;}
         .level-card.locked:hover { transform: none; border-color: var(--game-border); box-shadow: 0 10px 20px rgba(0,0,0,0.02); }
         .lock-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.15; }
@@ -288,85 +124,81 @@
         .level-card p { font-family: var(--font-main); font-size: 0.75rem; color: var(--game-text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600;}
 
         /* --- PLAY INTERFACE --- */
-        .play-layout { display: grid; grid-template-columns: 1fr 400px; flex: 1; height: calc(100vh - 90px); }
+        .play-layout { display: flex; flex: 1; height: calc(100vh - 90px); }
 
-        .cooking-zone { padding: 3rem 4rem 8rem; display: flex; flex-direction: column; border-right: 1px solid var(--game-border); background: var(--game-bg);}
+        .cooking-zone { flex: 1.5; padding: 3rem 4rem 8rem; display: flex; flex-direction: column; border-right: 1px solid var(--game-border); background: var(--game-bg); overflow-y: auto;}
 
-        .goal-display {
-            padding: 1.5rem 2rem; border: 1px solid var(--game-border); border-radius: 4px;
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem;
-            background: var(--white); box-shadow: 0 5px 20px rgba(0,0,0,0.02);
-        }
+        .goal-display { background: var(--white); padding: 1.5rem 2rem; border: 1px solid var(--game-border); border-radius: 4px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; box-shadow: 0 5px 20px rgba(0,0,0,0.02); }
         .goal-display h4 { color: var(--game-text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 0.5rem; font-weight: 600;}
         .goal-display p { font-size: 1.8rem; color: var(--secondary); margin: 0; font-family: var(--font-geo); font-weight: 800; letter-spacing: 1px;}
 
-        .staging-area {
-            flex: 1; border: 2px dashed var(--primary); border-radius: 4px;
-            display: flex; align-items: center; justify-content: center; gap: 2rem; padding: 2rem;
-            background: rgba(197, 160, 89, 0.03); position: relative; margin-bottom: 3rem; flex-wrap: wrap;
-            transition: var(--transition);
-        }
+        .staging-area { flex: 1; border: 2px dashed var(--primary); border-radius: 4px; display: flex; align-content: flex-start; justify-content: center; gap: 1rem; padding: 2.5rem 2rem; background: rgba(197, 160, 89, 0.03); position: relative; margin-bottom: 2rem; flex-wrap: wrap; transition: var(--transition); min-height: 250px;}
+        .staging-area::before { content: 'STAGING BOARD'; position: absolute; top: 1rem; left: 1rem; font-family: var(--font-geo); font-size: 0.7rem; color: var(--primary); letter-spacing: 4px; font-weight: 700; opacity: 0.5;}
+
+        .game-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
         
-        .staging-area::before { content: 'STAGING BOARD'; position: absolute; top: 1.5rem; left: 1.5rem; font-family: var(--font-geo); font-size: 0.7rem; color: var(--primary); letter-spacing: 4px; font-weight: 700; opacity: 0.5;}
-
-        .game-actions { display: flex; gap: 1rem; justify-content: flex-end; flex-wrap: wrap; }
-
-        .action-btn {
-            background: var(--white); border: 1px solid var(--game-border); color: var(--secondary);
-            padding: 1rem 1.5rem; font-family: var(--font-geo); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px;
-            cursor: pointer; transition: var(--transition); border-radius: 4px; display: flex; align-items: center; gap: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
-        }
+        /* Base action button styling - applies universally */
+        .action-btn { background: var(--white); border: 1px solid var(--game-border); color: var(--secondary); padding: 1rem 1.5rem; font-family: var(--font-geo); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: var(--transition); border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
         .action-btn:hover { background: var(--game-bg); border-color: var(--primary); color: var(--primary);}
         .action-btn.primary { background: var(--primary); border-color: var(--primary); color: var(--white); box-shadow: 0 5px 15px rgba(197, 160, 89, 0.3);}
         .action-btn.primary:hover { background: var(--secondary); border-color: var(--secondary); transform: translateY(-2px); }
         .action-btn.clear { background: var(--game-bg); }
         .action-btn.clear:hover { background: rgba(217, 48, 37, 0.1); border-color: #d93025; color: #d93025; }
+        
+        /* Specifically target dock buttons to fill width */
+        .game-actions .action-btn { flex: 1; min-width: 100px; }
 
-        .inventory-panel { background: var(--white); padding: 2rem 2rem 8rem; display: flex; flex-direction: column; overflow-y: auto; border-left: 1px solid var(--game-border);}
-        .inventory-panel h3 { font-size: 0.8rem; font-weight: 600; color: var(--secondary); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--game-border);}
+        /* Inventory Panel with Search & Categories */
+        .inventory-panel { flex: 1; max-width: 450px; background: var(--white); border-left: 1px solid var(--game-border); display: flex; flex-direction: column; }
+        
+        .pantry-header { padding: 2rem; border-bottom: 1px solid var(--game-border); background: var(--game-panel); }
+        .pantry-search { width: 100%; padding: 1rem 1.5rem; background: var(--game-bg); border: 1px solid var(--game-border); border-radius: 30px; color: var(--secondary); font-family: var(--font-main); font-size: 0.9rem; outline: none; transition: var(--transition); margin-bottom: 1.5rem;}
+        .pantry-search:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.1); }
+        
+        .pantry-categories { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.5rem; scrollbar-width: none; }
+        .cat-btn { background: transparent; border: 1px solid var(--game-border); color: var(--game-text-muted); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; transition: var(--transition); cursor: pointer;}
+        .cat-btn.active, .cat-btn:hover { background: rgba(197, 160, 89, 0.1); color: var(--primary); border-color: var(--primary); }
 
-        .inventory-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+        .inventory-grid { flex: 1; overflow-y: auto; padding: 2rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 1rem; align-content: flex-start; }
 
-        .item-slot {
-            background: var(--game-bg); border: 1px solid var(--game-border); border-radius: 4px;
-            aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            cursor: pointer; transition: var(--transition); position: relative; padding: 15px;
-        }
-        .item-slot:hover { border-color: var(--primary); background: var(--white); transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        .item-slot img { width: 50%; height: 50%; object-fit: contain; margin-bottom: 1rem; transition: var(--transition);}
-        .item-slot:hover img { transform: scale(1.1); }
-        .item-slot span { font-family: var(--font-geo); font-size: 0.7rem; color: var(--secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; text-align: center; }
+        .item-slot { background: var(--game-bg); border: 1px solid var(--game-border); border-radius: 4px; aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); position: relative; padding: 10px; user-select: none;}
+        .item-slot:hover { border-color: var(--primary); background: var(--white); transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.05); z-index: 2;}
+        .item-slot img { width: 45%; height: 45%; object-fit: contain; margin-bottom: 8px; transition: transform 0.3s; }
+        .item-slot:hover img { transform: scale(1.15); }
+        .item-slot span { font-family: var(--font-geo); font-size: 0.65rem; color: var(--secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; text-align: center; line-height: 1.2;}
+
+        .staging-area .item-slot { width: 100px; height: 100px; }
+
+        /* --- HINT MODAL (Light Theme) --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; opacity: 0; transition: opacity 0.3s; }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-box { background: var(--white); border: 1px solid var(--game-border); border-radius: 8px; width: 100%; max-width: 500px; padding: 3rem; text-align: center; transform: translateY(20px); transition: transform 0.3s; box-shadow: 0 25px 50px rgba(0,0,0,0.15);}
+        .modal-overlay.active .modal-box { transform: translateY(0); }
+        
+        .modal-box h2 { font-size: 1.8rem; color: var(--secondary); margin-bottom: 1rem; font-family: var(--font-geo); text-transform: uppercase; letter-spacing: 2px;}
+        
+        .hint-list { text-align: left; background: var(--game-bg); padding: 1.5rem; border-radius: 4px; border: 1px solid var(--game-border); margin-bottom: 2rem; max-height: 300px; overflow-y: auto; list-style: none;}
+        .hint-list li { margin-bottom: 1rem; color: var(--game-text-muted); font-size: 0.95rem; padding-left: 1.5rem; position: relative; font-family: var(--font-main); line-height: 1.5;}
+        .hint-list li::before { content: '>'; position: absolute; left: 0; color: var(--primary); font-weight: bold; font-family: var(--font-geo);}
+        .hint-list li:last-child { margin-bottom: 0; }
 
         /* --- DOCUMENTS / SETTINGS (Minimalist Strict Content Design) --- */
         .doc-scroll { flex: 1; overflow-y: auto; padding: 4rem 10% 8rem; display: flex; justify-content: center; background: var(--game-bg); }
         .doc-content { width: 100%; max-width: 800px; background: transparent; }
-        
         .doc-content h2 { font-size: 2.8rem; font-weight: 800; color: var(--secondary); margin-bottom: 1rem; font-family: var(--font-geo); letter-spacing: -1px;}
         .doc-content > p.lead { font-size: 1.2rem; color: var(--game-text-muted); margin-bottom: 3rem; line-height: 1.6; border-left: 3px solid var(--primary); padding-left: 1.5rem;}
-        
         .doc-content h3 { font-size: 1.5rem; font-weight: 700; color: var(--secondary); margin-bottom: 1rem; margin-top: 3.5rem; border-bottom: 1px solid var(--game-border); padding-bottom: 0.8rem; font-family: var(--font-main); letter-spacing: 0;}
         .doc-content h4 { font-size: 1.1rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.8rem; margin-top: 2rem; font-family: var(--font-main); }
-        
         .doc-content p, .doc-content li { color: var(--game-text-muted); margin-bottom: 1.2rem; line-height: 1.9; font-size: 1rem; font-family: var(--font-main); font-weight: 400;}
         .doc-content ul { padding-left: 1.5rem; margin-bottom: 2rem;}
         .doc-content strong { color: var(--secondary); font-weight: 600; }
         
-        /* Modern Switch Controls */
         .setting-group { margin-bottom: 1.5rem; background: transparent; border: 1px solid var(--game-border); padding: 1.5rem 2rem; border-radius: 4px; transition: var(--transition); display: flex; flex-direction: column; gap: 1rem;}
         .setting-group:hover { border-color: var(--secondary); }
         .setting-group label { display: flex; justify-content: space-between; font-family: var(--font-main); text-transform: uppercase; letter-spacing: 1px; color: var(--secondary); font-size: 0.85rem; font-weight: 700; align-items: center;}
         
-        .switch-control {
-            display: flex; align-items: center; justify-content: space-between;
-            background: var(--game-bg); border: 1px solid var(--game-border);
-            border-radius: 4px; overflow: hidden;
-        }
-        .switch-control button {
-            background: transparent; border: none; padding: 1rem 1.5rem;
-            color: var(--secondary); cursor: pointer; transition: var(--transition);
-            font-size: 1rem; display: flex; align-items: center; justify-content: center;
-        }
+        .switch-control { display: flex; align-items: center; justify-content: space-between; background: var(--game-bg); border: 1px solid var(--game-border); border-radius: 4px; overflow: hidden; }
+        .switch-control button { background: transparent; border: none; padding: 1rem 1.5rem; color: var(--secondary); cursor: pointer; transition: var(--transition); font-size: 1rem; display: flex; align-items: center; justify-content: center; }
         .switch-control button:hover { background: rgba(197, 160, 89, 0.1); color: var(--primary); }
         .switch-control span { font-family: var(--font-main); font-size: 0.95rem; font-weight: 600; color: var(--secondary); flex: 1; text-align: center; }
 
@@ -374,60 +206,103 @@
         .setting-group input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: var(--secondary); border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: var(--transition);}
         .setting-group input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
         
-        /* Game Feedback Overlay */
-        .game-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(253, 251, 247, 0.95); z-index: 100; display: none;
-            flex-direction: column; align-items: center; justify-content: center; text-align: center;
-            backdrop-filter: blur(10px);
-        }
+        /* Game Feedback Overlay (Restored Original Win Screen) */
+        .game-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(253, 251, 247, 0.95); z-index: 100; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; backdrop-filter: blur(10px); }
         .game-overlay.active { display: flex; animation: fadeIn 0.6s cubic-bezier(0.19, 1, 0.22, 1); }
         .overlay-msg { font-size: 4rem; font-weight: 800; color: var(--secondary); margin-bottom: 0.5rem; letter-spacing: -1px;}
         .overlay-sub { font-family: var(--font-geo); font-size: 1.2rem; color: var(--primary); margin-bottom: 3rem; text-transform: uppercase; letter-spacing: 4px; font-weight: 600; }
         
-        /* Dynamic settings classes */
         .font-size-small { font-size: 14px; }
         .font-size-medium { font-size: 16px; }
         .font-size-large { font-size: 18px; }
         .gfx-low * { box-shadow: none !important; animation: none !important; transition: none !important; backdrop-filter: none !important;}
 
-        /* Responsive */
+        /* --- RESPONSIVE MOBILE ADJUSTMENTS --- */
         @media (max-width: 1024px) {
             .menu-container { gap: 4rem; }
-            .play-layout { grid-template-columns: 1fr 300px; }
+            .play-layout { flex-direction: column; overflow-y: auto; }
+            .cooking-zone { flex: none; height: auto; border-right: none; border-bottom: 1px solid var(--game-border); padding: 2rem; }
+            .pantry-panel { flex: none; max-width: 100%; height: 500px; border-left: none; }
         }
+        
         @media (max-width: 768px) {
             html { font-size: 14px; }
             .main-menu { padding-left: 0; justify-content: center;}
             .menu-container { flex-direction: column; gap: 3rem; text-align: center; align-items: center; width: 100%; padding: 0 2rem;}
-            .menu-gradient-overlay { background: rgba(253,251,247,0.9); }
-            
             .menu-brand-block { max-width: 100%; align-items: center; transform: none; }
             .menu-brand h1 { font-size: 4.5rem; text-align: center; }
             .menu-brand p { margin: 0 auto; text-align: center; }
-            
             .menu-list-block { align-items: center; }
             .menu-list { align-items: center; }
             .menu-btn { text-align: center; padding: 0.8rem 0; font-size: 0.9rem;}
             .menu-btn:hover { padding-left: 0; transform: scale(1.05); }
             .menu-btn::before { display: none; }
             
-            .play-layout { grid-template-columns: 1fr; grid-template-rows: auto 1fr; overflow-y: auto;}
-            .cooking-zone { border-right: none; border-bottom: 1px solid var(--game-border); padding: 2rem; height: auto;}
-            .inventory-panel { height: auto; padding: 2rem; border-left: none;}
-            .inventory-grid { grid-template-columns: repeat(4, 1fr); }
-            .game-actions { flex-wrap: wrap; justify-content: center;}
+            .game-header { padding: 1.5rem; flex-direction: column; gap: 1rem; align-items: flex-start;}
+            .recipe-layout { padding: 1.5rem; }
+            .recipe-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
             
-            .recipe-layout { padding: 2rem; }
-            .difficulty-tabs { flex-wrap: wrap; gap: 1rem; }
-            .doc-scroll { padding: 2rem; }
-        }
-        @media (max-width: 500px) {
-            .inventory-grid { grid-template-columns: repeat(3, 1fr); }
-            .recipe-grid { grid-template-columns: 1fr; }
-            .game-header { padding: 1.5rem; flex-direction: column; gap: 1.5rem; align-items: flex-start;}
+            .target-dashboard { flex-direction: column; align-items: flex-start; gap: 1rem; }
+            .staging-area { padding: 1rem; gap: 0.5rem;}
+            .staging-area .item-slot { width: 80px; height: 80px; }
+            .game-actions { gap: 0.5rem; }
+            .game-actions .action-btn { padding: 0.8rem 1rem; font-size: 0.75rem; min-width: 80px;}
+            
+            .pantry-header { padding: 1.5rem; }
+            .inventory-grid { padding: 1.5rem; grid-template-columns: repeat(4, 1fr); }
+            .modal-box { padding: 2rem; }
         }
 
+        @media (max-width: 480px) {
+            .recipe-grid { grid-template-columns: 1fr; }
+            .inventory-grid { grid-template-columns: repeat(3, 1fr); gap: 0.8rem; padding: 1rem; }
+            .overlay-msg { font-size: 2.5rem; }
+            .game-actions .action-btn { min-width: calc(50% - 0.5rem); padding: 0.8rem; font-size: 0.7rem; }
+            .staging-area { padding: 1rem; min-height: 200px; }
+            .staging-area .item-slot { width: 75px; height: 75px; }
+            .menu-brand h1 { font-size: 3.5rem; }
+        }
+
+        /* Smartwatch & Ultra Small Devices */
+        @media (max-width: 360px) {
+            html { font-size: 12px; }
+            .game-header { padding: 1rem; flex-direction: column; align-items: stretch; gap: 0.8rem; }
+            .game-header h2 { font-size: 1rem; text-align: center; }
+            .header-actions { justify-content: center; }
+            .menu-container { padding: 0 1rem; gap: 2rem; }
+            .menu-brand h1 { font-size: 2.8rem; margin-bottom: 0.5rem; }
+            .menu-brand p { font-size: 0.95rem; line-height: 1.5; }
+            .menu-btn { font-size: 0.85rem; padding: 0.6rem 0; }
+            
+            .target-dashboard { padding: 1rem; flex-direction: column; align-items: center; text-align: center; gap: 0.8rem; }
+            .target-dashboard .target-info h2 { font-size: 1.2rem; }
+            
+            .staging-area { min-height: 150px; padding: 0.5rem; gap: 0.4rem; }
+            .staging-area .item-slot { width: 60px; height: 60px; padding: 5px; }
+            
+            .game-actions { flex-direction: column; gap: 0.4rem; }
+            .game-actions .action-btn { width: 100%; min-width: 100%; }
+            
+            .pantry-header { padding: 1rem; }
+            .pantry-search { padding: 0.8rem 1rem; font-size: 0.85rem; margin-bottom: 1rem; }
+            .cat-btn { padding: 0.4rem 0.8rem; font-size: 0.65rem; }
+            
+            .inventory-grid { grid-template-columns: repeat(2, 1fr); padding: 0.8rem; gap: 0.6rem; }
+            
+            .modal-box { padding: 1.5rem 1rem; }
+            .modal-box h2 { font-size: 1.4rem; }
+            .hint-list { padding: 1rem; max-height: 200px; }
+            .hint-list li { font-size: 0.85rem; }
+            
+            .overlay-msg { font-size: 1.8rem; }
+            .overlay-sub { font-size: 0.8rem; margin-bottom: 2rem; }
+        }
+
+        @media (max-width: 280px) {
+            .menu-brand h1 { font-size: 2.2rem; }
+            .inventory-grid { grid-template-columns: 1fr; }
+            .staging-area .item-slot { width: 50px; height: 50px; }
+        }
     </style>
 </head>
 <body>
@@ -441,31 +316,40 @@
     <!-- Toast Container -->
     <div id="toastContainer"></div>
 
+    <!-- Multi-step Hint Modal -->
+    <div id="hintModal" class="modal-overlay">
+        <div class="modal-box">
+            <h2>Chef's Guide</h2>
+            <ul id="hintContent" class="hint-list"></ul>
+            <button class="action-btn primary" style="flex: none; width: auto; border-radius: 30px; padding: 1rem 3rem;" onclick="document.getElementById('hintModal').classList.remove('active')">Understood</button>
+        </div>
+    </div>
+
     <!-- FULLSCREEN GAME APP -->
     <main id="gameApp" class="game-app font-size-medium gfx-high">
         
-        <!-- WIN/LOSE OVERLAY -->
+        <!-- ORIGINAL WIN/LOSE OVERLAY -->
         <div id="gameOverlay" class="game-overlay">
             <h2 id="overlayTitle" class="overlay-msg">Masterpiece Created.</h2>
             <p id="overlaySub" class="overlay-sub">Timeline Unlocked</p>
-            <button class="action-btn primary" onclick="switchScreen('screen-recipes'); document.getElementById('gameOverlay').classList.remove('active');">Continue Journey</button>
+            <button class="action-btn primary" style="flex: none; padding: 1.2rem 3rem; border-radius: 30px; width: auto; font-size: 0.95rem;" onclick="switchScreen('screen-recipes'); document.getElementById('gameOverlay').classList.remove('active');">Continue Journey</button>
         </div>
 
-        <!-- SCREEN 1: MAIN MENU (Cinematic Left-Aligned Layout) -->
+        <!-- SCREEN 1: MAIN MENU (Restored Cinematic Layout) -->
         <div id="screen-main" class="game-screen main-menu active">
             <div class="menu-gradient-overlay"></div>
             
             <div class="menu-container">
                 <!-- Left Side Brand -->
                 <div class="menu-brand-block reveal">
-                    <span class="brand-tag">Visual Cooking Engine • Build 1.0.0</span>
+                    <span class="brand-tag">Visual Cooking Engine • Build 2.0.0</span>
                     <div class="menu-brand">
                         <h1>BISTRO<br><strong>X</strong></h1>
                         <p>An interactive image-based cooking game. Select visual ingredients, experiment with real cooking methods, and discover new dishes based entirely on your choices.</p>
                     </div>
                 </div>
 
-                <!-- Right Side Menu Buttons (Still on the left half) -->
+                <!-- Right Side Menu Buttons -->
                 <div class="menu-list-block reveal">
                     <div class="menu-list">
                         <button class="menu-btn" onclick="startGame()">Start</button>
@@ -480,7 +364,7 @@
             </div>
         </div>
 
-        <!-- SCREEN 2: RECIPE MENU (Cinematic Tabs & Grid) -->
+        <!-- SCREEN 2: RECIPE MENU -->
         <div id="screen-recipes" class="game-screen">
             <div class="game-header">
                 <h2>Recipe Menu</h2>
@@ -496,7 +380,6 @@
                 </div>
 
                 <div class="recipe-grid-container">
-                    <!-- Javascript will inject 4 grids (10 levels each) here -->
                     <div id="grid-easy" class="recipe-grid active"></div>
                     <div id="grid-medium" class="recipe-grid"></div>
                     <div id="grid-hard" class="recipe-grid"></div>
@@ -505,44 +388,54 @@
             </div>
         </div>
 
-        <!-- SCREEN 3: PLAY / COOKING ZONE -->
+        <!-- SCREEN 3: PLAY / KITCHEN -->
         <div id="screen-play" class="game-screen">
             <div class="game-header">
                 <h2>The Kitchen</h2>
                 <div style="display: flex; gap: 1rem;">
-                    <button class="game-close-btn" onclick="showHint()">Tips</button>
-                    <button class="game-close-btn" onclick="switchScreen('screen-recipes')">Abandon</button>
+                    <button class="game-close-btn" onclick="document.getElementById('hintModal').classList.add('active')">Tips</button>
+                    <button class="game-close-btn" style="color:var(--danger); border-color:var(--danger);" onclick="switchScreen('screen-recipes')">Abandon</button>
                 </div>
             </div>
+            
             <div class="play-layout">
+                <!-- Left: Cooking Zone -->
                 <div class="cooking-zone">
                     <div class="goal-display">
                         <div>
                             <h4>Target Masterpiece</h4>
                             <p id="targetDishName">Fried Onion</p>
                         </div>
-                        <div style="text-align: right;">
-                            <h4>Required Profile</h4>
-                            <p style="font-size:0.85rem; color:var(--game-text-muted); font-family:var(--font-main);">Apply specific theory</p>
-                        </div>
                     </div>
                     
-                    <div class="staging-area" id="stagingArea">
-                        <!-- Placed items go here -->
-                    </div>
-
-                    <div class="game-actions">
-                        <button class="action-btn clear" onclick="loadLevel(currentPlayingLevelNum, targetLevel)">Reset Game</button>
-                        <button class="action-btn clear" onclick="clearStaging()">Clear Board</button>
-                        <button class="action-btn" onclick="performAction('slice')">Slice</button>
-                        <button class="action-btn" onclick="performAction('boil')">Boil</button>
-                        <button class="action-btn" onclick="performAction('mix')">Mix</button>
-                        <button class="action-btn primary" onclick="performAction('cook')">Cook</button>
+                    <div class="board-wrapper">
+                        <div class="staging-area" id="stagingArea">
+                            <!-- Staged items go here -->
+                        </div>
+                        
+                        <div class="game-actions">
+                            <button class="action-btn clear" onclick="clearStaging()">Clear Board</button>
+                            <button class="action-btn" onclick="performAction('slice')">Slice</button>
+                            <button class="action-btn" onclick="performAction('boil')">Boil</button>
+                            <button class="action-btn" onclick="performAction('mix')">Mix</button>
+                            <button class="action-btn primary" onclick="performAction('cook')">Cook/Fry</button>
+                        </div>
                     </div>
                 </div>
                 
+                <!-- Right: Inventory / Pantry -->
                 <div class="inventory-panel">
-                    <h3>Pantry & Equipment</h3>
+                    <div class="pantry-header">
+                        <input type="text" id="pantrySearch" class="pantry-search" placeholder="Search ingredients & tools..." onkeyup="renderPantry()">
+                        <div class="pantry-categories">
+                            <button class="cat-btn active" onclick="setCategory('all')">All</button>
+                            <button class="cat-btn" onclick="setCategory('tools')">Tools</button>
+                            <button class="cat-btn" onclick="setCategory('pantry')">Pantry</button>
+                            <button class="cat-btn" onclick="setCategory('raw_veg')">Veggies</button>
+                            <button class="cat-btn" onclick="setCategory('raw_meat')">Meats</button>
+                            <button class="cat-btn" onclick="setCategory('prepped')" style="border-color:var(--primary); color:var(--primary);">Prepped</button>
+                        </div>
+                    </div>
                     <div class="inventory-grid" id="inventoryGrid">
                         <!-- JS injects items here -->
                     </div>
@@ -550,7 +443,7 @@
             </div>
         </div>
 
-        <!-- SCREEN 4: SETTINGS -->
+        <!-- SCREEN 4: SETTINGS (Restored) -->
         <div id="screen-settings" class="game-screen">
             <div class="game-header">
                 <h2>Settings</h2>
@@ -592,7 +485,7 @@
             </div>
         </div>
 
-        <!-- SCREEN 5: TERMS & ENGINE DOCS -->
+        <!-- SCREEN 5: TERMS (Restored) -->
         <div id="screen-terms" class="game-screen">
             <div class="game-header">
                 <h2>Terms</h2>
@@ -612,11 +505,10 @@
                     </ul>
 
                     <h3>2. Gameplay Abstraction</h3>
-                    <p>BistroX is a logic-puzzle game themed around culinary arts. The mechanics rely on abstract string matching (e.g., combining the string ID <code>onion</code> with the string ID <code>knife</code> via the <code>slice</code> method).</p>
-                    <p>While the theories presented are inspired by real-world cooking logic, they are drastically simplified. Please do not attempt to learn genuine culinary health and safety protocols from this software.</p>
+                    <p>BistroX is a logic-puzzle game themed around culinary arts. The mechanics rely on abstract string matching. While the theories presented are inspired by real-world cooking logic, they are drastically simplified.</p>
 
                     <h3>3. Licensing & Fair Use</h3>
-                    <p>Access to the BistroX engine is provided free of charge for personal entertainment. The structural code, styling, and specific game logic matrix remain the intellectual property of the developer. Reproduction or commercial resale of the software framework is prohibited without consent.</p>
+                    <p>Access to the BistroX engine is provided free of charge for personal entertainment. Reproduction or commercial resale of the software framework is prohibited without consent.</p>
                     
                     <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--game-border);">
                         <button class="action-btn" onclick="window.location.href='terms-conditions.html'" style="display: inline-flex;">View Extensive Legal Documentation</button>
@@ -625,7 +517,7 @@
             </div>
         </div>
 
-        <!-- SCREEN 6: CREDITS -->
+        <!-- SCREEN 6: CREDITS (Restored) -->
         <div id="screen-credits" class="game-screen">
             <div class="game-header">
                 <h2>Credit</h2>
@@ -638,7 +530,7 @@
 
                     <h3>Lead Architecture & Engineering</h3>
                     <h4>Htet Zaw Paing</h4>
-                    <p>Serving as the sole architect, developer, and UI/UX designer. The core philosophy was to build a highly responsive, cinematic game interface entirely natively without relying on heavy external framework dependencies like React or Unity.</p>
+                    <p>Serving as the sole architect, developer, and UI/UX designer. The core philosophy was to build a highly responsive, cinematic game interface entirely natively.</p>
 
                     <h4>Edinburgh Napier University</h4>
                     <p>Developed in correlation with advanced studies in Computer Science and software engineering principles.</p>
@@ -646,36 +538,31 @@
                     <h3>Asset Pipeline & Sourcing</h3>
                     <p>Creating a beautiful visual experience requires high-fidelity assets. We credit the following sources for making this possible:</p>
                     <ul>
-                        <li><strong>Photography:</strong> High-resolution cinematic background photography is dynamically sourced via the <a href="https://unsplash.com" target="_blank" style="color:var(--secondary); text-decoration: underline; font-weight: 600;">Unsplash API</a>. Specific thanks to independent culinary photographers.</li>
-                        <li><strong>Vector Graphics:</strong> Game ingredient items (e.g., onions, beef, tools) utilize algorithmically generated SVG data-URIs to maintain zero-latency loading and infinite scaling.</li>
-                        <li><strong>Typography:</strong> The interface leverages 'Inter' for highly legible system text and 'Jost' for geometric, cinematic headers, provided by Google Fonts.</li>
-                        <li><strong>Icons:</strong> Menu and action icons are sourced from open-source feather icon libraries.</li>
+                        <li><strong>Photography:</strong> High-resolution cinematic background photography is dynamically sourced via the Unsplash API.</li>
+                        <li><strong>Vector Graphics:</strong> Game ingredient items utilize custom algorithmically generated SVG data-URIs to maintain zero-latency loading and infinite scaling.</li>
+                        <li><strong>Typography:</strong> The interface leverages 'Inter' and 'Jost' provided by Google Fonts.</li>
                     </ul>
-
-                    <h3>Future Implementation</h3>
-                    <p>Currently, the BistroX engine focuses on visual and logical processing. In future builds, a native Web Audio API wrapper is planned to introduce atmospheric kitchen soundscapes and interactive slicing/searing sound effects.</p>
                 </div>
             </div>
         </div>
 
     </main>
 
-    <!-- GAME SCRIPT LOGIC (Synced with Native Local Storage Auth) -->
+    <!-- GAME SCRIPT LOGIC (Upgraded) -->
     <script>
         
         let maxUnlockedLevel = 1; 
         let currentUser = null;
+        let currentPlayingLevelNum = 1;
+        let targetLevelId = null;
 
         /* --- Standard Setup Scripts --- */
         window.addEventListener('load', () => {
             const loader = document.getElementById('globalLoader');
             if (loader) loader.classList.add('hidden');
             
-            setTimeout(() => {
-                document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
-            }, 300);
+            setTimeout(() => { document.querySelectorAll('.reveal').forEach(el => el.classList.add('active')); }, 300);
 
-            // Connects natively to your existing website's 'bx_currentUser' local storage mechanism
             loadUserProgress();
             generateLevels();
             applySettings();
@@ -686,22 +573,16 @@
         function loadUserProgress() {
             currentUser = localStorage.getItem('bx_currentUser');
             if (currentUser) {
-                // Load specific progress for the logged-in user
                 maxUnlockedLevel = parseInt(localStorage.getItem('bx_progress_' + currentUser)) || 1;
             } else {
-                // If guest, default to level 1 and alert them
                 maxUnlockedLevel = parseInt(localStorage.getItem('bx_progress_guest')) || 1;
-                setTimeout(() => notify("Playing as Guest. Log in via Home to save personal progress!"), 1500);
+                setTimeout(() => notify("Guest Mode. Login via Home to save progress."), 1500);
             }
         }
 
         function saveUserProgress() {
-            if (currentUser) {
-                // Save specifically to this user's profile key
-                localStorage.setItem('bx_progress_' + currentUser, maxUnlockedLevel);
-            } else {
-                localStorage.setItem('bx_progress_guest', maxUnlockedLevel);
-            }
+            if (currentUser) { localStorage.setItem('bx_progress_' + currentUser, maxUnlockedLevel); } 
+            else { localStorage.setItem('bx_progress_guest', maxUnlockedLevel); }
         }
 
         function notify(message) {
@@ -711,8 +592,7 @@
             setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(50px)'; setTimeout(() => toast.remove(), 500); }, 3500);
         }
 
-        /* --- BISTROX GAME ENGINE LOGIC --- */
-        
+        /* --- UI NAVIGATION & SETTINGS --- */
         function switchScreen(screenId) {
             document.querySelectorAll('.game-screen').forEach(s => s.classList.remove('active'));
             document.getElementById(screenId).classList.add('active');
@@ -729,7 +609,6 @@
             s.index += dir;
             if(s.index < 0) s.index = s.options.length - 1;
             if(s.index >= s.options.length) s.index = 0;
-            
             document.getElementById(key + '-display').textContent = s.options[s.index].label;
             applySettings();
         }
@@ -741,60 +620,6 @@
             app.classList.add(`gfx-${sysSettings.gfx.options[sysSettings.gfx.index].val}`);
         }
 
-        /* --- The 40 Levels Master Manifest --- */
-        const levelsManifest = [
-            // Easy (1-10)
-            { id: 'fried_onion', name: 'Fried Onion', inv: ['onion', 'knife', 'oil', 'pan'] },
-            { id: 'seared_beef', name: 'Seared Beef', inv: ['beef', 'oil', 'pan'] },
-            { id: 'boiled_egg', name: 'Boiled Egg', inv: ['egg', 'pot', 'water'] },
-            { id: 'sliced_potato', name: 'Sliced Potato', inv: ['potato', 'knife'] },
-            { id: 'french_fries', name: 'French Fries', inv: ['potato', 'knife', 'pan', 'oil'] },
-            { id: 'tomato_soup', name: 'Tomato Soup', inv: ['tomato', 'knife', 'pot', 'water'] },
-            { id: 'fried_egg', name: 'Fried Egg', inv: ['egg', 'pan', 'oil'] },
-            { id: 'chopped_garlic', name: 'Chopped Garlic', inv: ['garlic', 'knife'] },
-            { id: 'sauteed_mushroom', name: 'Sautéed Mushroom', inv: ['mushroom', 'knife', 'pan', 'oil'] },
-            { id: 'boiled_rice', name: 'Boiled Rice', inv: ['rice', 'pot', 'water'] },
-            
-            // Medium (11-20)
-            { id: 'beef_stew', name: 'Beef Stew', inv: ['beef', 'potato', 'pot', 'water', 'knife', 'pan', 'oil'] },
-            { id: 'chicken_soup', name: 'Chicken Soup', inv: ['chicken', 'onion', 'knife', 'pan', 'oil', 'pot', 'water'] },
-            { id: 'mashed_potatoes', name: 'Mashed Potatoes', inv: ['potato', 'pot', 'water', 'bowl'] },
-            { id: 'omelette', name: 'Omelette', inv: ['egg', 'bowl', 'pan', 'oil'] },
-            { id: 'side_salad', name: 'Side Salad', inv: ['lettuce', 'tomato', 'knife', 'bowl'] },
-            { id: 'pasta', name: 'Boiled Pasta', inv: ['pasta_dry', 'pot', 'water'] },
-            { id: 'garlic_bread', name: 'Garlic Bread', inv: ['bread', 'garlic', 'knife', 'pan', 'oil'] },
-            { id: 'fried_rice', name: 'Fried Rice', inv: ['rice', 'egg', 'pot', 'water', 'bowl', 'pan', 'oil'] },
-            { id: 'grilled_cheese', name: 'Grilled Cheese', inv: ['bread', 'cheese', 'knife', 'pan', 'oil'] },
-            { id: 'fish_fillet', name: 'Fish Fillet', inv: ['fish', 'knife', 'pan', 'oil'] },
-
-            // Hard (21-30)
-            { id: 'hamburger', name: 'Hamburger', inv: ['beef', 'bread', 'knife', 'pan', 'oil'] },
-            { id: 'chicken_salad', name: 'Chicken Salad', inv: ['chicken', 'lettuce', 'tomato', 'knife', 'pan', 'oil', 'bowl'] },
-            { id: 'pasta_bolognese', name: 'Pasta Bolognese', inv: ['pasta_dry', 'tomato', 'beef', 'pot', 'water', 'pan', 'oil', 'knife'] },
-            { id: 'fish_soup', name: 'Fish Soup', inv: ['fish', 'tomato', 'knife', 'pan', 'oil', 'pot', 'water'] },
-            { id: 'mushroom_risotto', name: 'Mushroom Risotto', inv: ['rice', 'mushroom', 'knife', 'pan', 'oil', 'pot', 'water'] },
-            { id: 'beef_stir_fry', name: 'Beef Stir Fry', inv: ['beef', 'onion', 'garlic', 'knife', 'pan', 'oil'] },
-            { id: 'cheese_omelette', name: 'Cheese Omelette', inv: ['egg', 'cheese', 'bowl', 'pan', 'oil'] },
-            { id: 'french_onion_soup', name: 'French Onion Soup', inv: ['onion', 'cheese', 'bread', 'knife', 'pan', 'oil', 'pot', 'water'] },
-            { id: 'chicken_sandwich', name: 'Chicken Sandwich', inv: ['chicken', 'bread', 'lettuce', 'knife', 'pan', 'oil', 'bowl'] },
-            { id: 'steak_frites', name: 'Steak Frites', inv: ['beef', 'potato', 'knife', 'pan', 'oil', 'bowl'] },
-
-            // Impossible (31-40)
-            { id: 'fish_and_chips', name: 'Fish and Chips', inv: ['fish', 'potato', 'knife', 'pan', 'oil', 'bowl'] },
-            { id: 'meatball_pasta', name: 'Meatball Pasta', inv: ['pasta_dry', 'tomato', 'beef', 'knife', 'pot', 'water', 'pan', 'oil'] },
-            { id: 'cheesy_garlic_bread', name: 'Cheesy Garlic Bread', inv: ['bread', 'cheese', 'garlic', 'knife', 'pan', 'oil'] },
-            { id: 'ultimate_burger', name: 'Ultimate Burger', inv: ['beef', 'bread', 'cheese', 'lettuce', 'tomato', 'knife', 'pan', 'oil', 'bowl'] },
-            { id: 'chicken_parmesan', name: 'Chicken Parmesan', inv: ['chicken', 'cheese', 'tomato', 'knife', 'pan', 'oil', 'pot', 'water', 'bowl'] },
-            { id: 'mushroom_pasta', name: 'Mushroom Pasta', inv: ['pasta_dry', 'mushroom', 'garlic', 'knife', 'pot', 'water', 'pan', 'oil'] },
-            { id: 'seafood_paella', name: 'Seafood Paella', inv: ['rice', 'fish', 'tomato', 'knife', 'pot', 'water', 'pan', 'oil'] },
-            { id: 'complete_breakfast', name: 'Complete Breakfast', inv: ['egg', 'bread', 'potato', 'knife', 'pan', 'oil'] },
-            { id: 'chefs_salad', name: 'Chef\'s Salad', inv: ['lettuce', 'tomato', 'egg', 'cheese', 'chicken', 'knife', 'bowl', 'pot', 'water', 'pan', 'oil'] },
-            { id: 'bistrox_masterpiece', name: 'BistroX Masterpiece', inv: ['beef', 'chicken', 'fish', 'potato', 'lettuce', 'tomato', 'knife', 'pan', 'oil', 'bowl'] }
-        ];
-
-        const categories = [ { id: 'easy' }, { id: 'medium' }, { id: 'hard' }, { id: 'impossible' } ];
-        let currentPlayingLevelNum = 1;
-
         function switchDifficultyTab(diffId) {
             document.querySelectorAll('.diff-tab').forEach(tab => tab.classList.remove('active'));
             event.target.classList.add('active');
@@ -802,303 +627,387 @@
             document.getElementById(`grid-${diffId}`).classList.add('active');
         }
 
-        /* --- Generative Core Database Engine --- */
-        const theDatabase = { items: {}, theories: [] };
+        /* --- NEW GAME DATABASE (Graphical & Strict) --- */
+        const db = { items: {}, theories: [] };
 
-        // Dynamic SVG Generation for Items
-        function makeSVG(color, type) {
+        // Advanced Graphical SVGs
+        function getSVG(color, shape, detail='') {
             const c = encodeURIComponent(color);
-            let path = `<circle cx='50' cy='50' r='30' fill='${c}'/>`; // Circle Default
-            if (type === 'tool') path = `<path d='M20,80 L80,20 L85,25 L25,85 Z' fill='${c}'/>`;
-            if (type === 'rect') path = `<rect x='25' y='30' width='50' height='40' rx='5' fill='${c}'/>`;
-            if (type === 'slice') path = `<path d='M30,30 L70,30 M30,50 L70,50 M30,70 L70,70' stroke='${c}' stroke-width='8' fill='none'/>`;
-            if (type === 'liquid') path = `<path d='M30,80 L70,80 L80,20 L20,20 Z' fill='${c}' opacity='0.8'/>`;
-            if (type === 'bowl') path = `<path d='M10,40 Q50,90 90,40 Z' fill='${c}'/>`;
-            if (type === 'pot') path = `<rect x='20' y='40' width='60' height='40' rx='5' fill='${c}'/><path d='M10,40 L90,40' stroke='${c}' stroke-width='8'/>`;
-            if (type === 'pan') path = `<circle cx='50' cy='60' r='35' fill='${c}'/><rect x='10' y='55' width='40' height='10' fill='%23444'/>`;
-            if (type === 'mix') path = `<circle cx='50' cy='50' r='35' fill='none' stroke='${c}' stroke-width='8' stroke-dasharray='10,10'/>`;
-            if (type === 'complex') path = `<circle cx='40' cy='40' r='20' fill='${c}'/><rect x='45' y='45' width='30' height='30' fill='${c}' opacity='0.8'/>`;
-            return `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>${path}</svg>`;
+            let s = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>`;
+            if (shape === 'knife') s += `<path d='M10,80 L80,20 Q90,30 85,40 L25,90 Z' fill='#E0E0E0'/><rect x='10' y='75' width='30' height='15' fill='#555' transform='rotate(-45 25 80)'/>`;
+            else if (shape === 'pan') s += `<circle cx='50' cy='50' r='40' fill='#222' stroke='#444' stroke-width='4'/><rect x='85' y='45' width='40' height='10' fill='#111' rx='5'/>`;
+            else if (shape === 'pot') s += `<rect x='15' y='30' width='70' height='55' fill='#444' rx='10'/><path d='M10,30 L90,30' stroke='#666' stroke-width='8' stroke-linecap='round'/><rect x='40' y='15' width='20' height='10' fill='#222' rx='3'/>`;
+            else if (shape === 'bowl') s += `<path d='M10,40 Q50,100 90,40 Z' fill='#EAEAEA' stroke='#CCC' stroke-width='3'/>`;
+            else if (shape === 'bottle') s += `<rect x='35' y='30' width='30' height='60' fill='${c}' rx='5' opacity='0.9'/><rect x='42' y='10' width='16' height='20' fill='#333'/><path d='M35,50 L65,50' stroke='#FFF' stroke-width='2' opacity='0.5'/>`;
+            else if (shape === 'drop') s += `<path d='M50,15 Q20,60 20,75 A30,30 0 0,0 80,75 Q80,60 50,15 Z' fill='${c}' opacity='0.8'/>`;
+            else if (shape === 'round') s += `<circle cx='50' cy='55' r='35' fill='${c}'/>${detail}`;
+            else if (shape === 'oval') s += `<ellipse cx='50' cy='50' rx='40' ry='25' fill='${c}'/>${detail}`;
+            else if (shape === 'block') s += `<rect x='20' y='30' width='60' height='40' fill='${c}' rx='8'/>${detail}`;
+            else if (shape === 'sliced_round') s += `<circle cx='50' cy='55' r='35' fill='none' stroke='${c}' stroke-width='8' stroke-dasharray='15,10'/>`;
+            else if (shape === 'sliced_block') s += `<rect x='20' y='30' width='60' height='40' fill='none' stroke='${c}' stroke-width='8' stroke-dasharray='15,10' rx='8'/>`;
+            else if (shape === 'mixed') s += `<circle cx='50' cy='50' r='40' fill='${c}' opacity='0.9'/><circle cx='30' cy='40' r='10' fill='#FFF' opacity='0.3'/><circle cx='70' cy='60' r='15' fill='#000' opacity='0.1'/>`;
+            else if (shape === 'plate') s += `<ellipse cx='50' cy='50' rx='45' ry='30' fill='#FFF' stroke='#DDD' stroke-width='2'/><circle cx='50' cy='50' r='20' fill='${c}' opacity='0.9'/>`;
+            s += `</svg>`; return `data:image/svg+xml;utf8,${s}`;
         }
 
-        const itemDefs = [
-            ['knife', 'Chef Knife', '#AAA', 'tool'], ['pan', 'Frying Pan', '#111', 'pan'], ['pot', 'Cooking Pot', '#555', 'pot'],
-            ['bowl', 'Mixing Bowl', '#DDD', 'bowl'], ['oil', 'Olive Oil', '#D4C04B', 'liquid'], ['water', 'Water', '#A8DADC', 'liquid'],
-            ['onion', 'Onion', '#DED3C3', 'circle'], ['beef', 'Raw Beef', '#B23A3A', 'rect'], ['potato', 'Potato', '#E6C280', 'circle'],
-            ['egg', 'Egg', '#FFFDD0', 'circle'], ['tomato', 'Tomato', '#E63946', 'circle'], ['chicken', 'Chicken', '#F4A261', 'rect'],
-            ['rice', 'Rice', '#F1FAEE', 'circle'], ['cheese', 'Cheese', '#FFD166', 'rect'], ['lettuce', 'Lettuce', '#2A9D8F', 'circle'],
-            ['bread', 'Bread', '#E0A96D', 'rect'], ['pasta_dry', 'Dry Pasta', '#E9C46A', 'slice'], ['fish', 'Fish', '#8ECAE6', 'rect'],
-            ['garlic', 'Garlic', '#F8F9FA', 'circle'], ['mushroom', 'Mushroom', '#D4A373', 'circle'],
-            // Processed Elements
-            ['sliced_onion', 'Sliced Onion', '#DED3C3', 'slice'], ['sliced_beef', 'Sliced Beef', '#B23A3A', 'slice'], 
-            ['sliced_potato', 'Sliced Potato', '#E6C280', 'slice'], ['sliced_tomato', 'Sliced Tomato', '#E63946', 'slice'], 
-            ['chopped_garlic', 'Chopped Garlic', '#F8F9FA', 'slice'], ['sliced_mushroom', 'Sliced Mushroom', '#D4A373', 'slice'], 
-            ['sliced_chicken', 'Sliced Chicken', '#F4A261', 'slice'], ['sliced_lettuce', 'Sliced Lettuce', '#2A9D8F', 'slice'], 
-            ['sliced_bread', 'Sliced Bread', '#E0A96D', 'slice'], ['sliced_fish', 'Sliced Fish', '#8ECAE6', 'slice'],
-            // Cooked Elements
-            ['fried_onion', 'Fried Onion', '#C5A059', 'slice'], ['seared_beef', 'Seared Beef', '#5c1a1a', 'rect'],
-            ['seared_sliced_beef', 'Seared Sliced Beef', '#5c1a1a', 'slice'], ['fried_egg', 'Fried Egg', '#FFD166', 'circle'],
-            ['french_fries', 'French Fries', '#C5A059', 'slice'], ['sauteed_mushroom', 'Sautéed Mushroom', '#8b5a2b', 'slice'],
-            ['cooked_fish', 'Cooked Fish', '#e0b0ff', 'rect'], ['cooked_chicken', 'Cooked Chicken', '#d2691e', 'rect'],
-            // Boiled / Mixed Elements
-            ['boiled_egg', 'Boiled Egg', '#FFFFFF', 'circle'], ['tomato_soup', 'Tomato Soup', '#d93025', 'liquid'],
-            ['boiled_rice', 'Boiled Rice', '#FFFFFF', 'circle'], ['boiled_potato', 'Boiled Potato', '#FFE4B5', 'circle'],
-            ['pasta', 'Boiled Pasta', '#F4D03F', 'mix'], ['mashed_potatoes', 'Mashed Potatoes', '#FFE4B5', 'mix'],
-            ['mixed_egg', 'Mixed Egg', '#FFD166', 'liquid'], ['side_salad', 'Side Salad', '#2A9D8F', 'mix'],
-            ['cheese_omelette_raw', 'Raw Cheese Omelette', '#FFD166', 'liquid'],
-            // Final Dishes
-            ['beef_stir_fry', 'Beef Stir Fry', '#5c1a1a', 'complex'], ['beef_stew', 'Beef Stew', '#8b4513', 'liquid'],
-            ['chicken_soup', 'Chicken Soup', '#F4A261', 'liquid'], ['omelette', 'Omelette', '#FFD166', 'rect'],
-            ['garlic_bread', 'Garlic Bread', '#C5A059', 'rect'], ['fried_rice', 'Fried Rice', '#F4D03F', 'complex'],
-            ['grilled_cheese', 'Grilled Cheese', '#C5A059', 'rect'], ['fish_fillet', 'Fish Fillet', '#e0b0ff', 'rect'],
-            ['hamburger', 'Hamburger', '#8b4513', 'complex'], ['chicken_salad', 'Chicken Salad', '#2A9D8F', 'complex'],
-            ['pasta_bolognese', 'Pasta Bolognese', '#d93025', 'complex'], ['fish_soup', 'Fish Soup', '#e0b0ff', 'liquid'],
-            ['mushroom_risotto', 'Mushroom Risotto', '#D4A373', 'complex'], ['cheese_omelette', 'Cheese Omelette', '#FFD166', 'rect'],
-            ['french_onion_soup', 'French Onion Soup', '#8b4513', 'liquid'], ['chicken_sandwich', 'Chicken Sandwich', '#E0A96D', 'complex'],
-            ['steak_frites', 'Steak Frites', '#5c1a1a', 'complex'], ['fish_and_chips', 'Fish & Chips', '#C5A059', 'complex'],
-            ['meatball_pasta', 'Meatball Pasta', '#d93025', 'complex'], ['cheesy_garlic_bread', 'Cheesy Garlic Bread', '#FFD166', 'complex'],
-            ['ultimate_burger', 'Ultimate Burger', '#8b4513', 'complex'], ['chicken_parmesan', 'Chicken Parmesan', '#d93025', 'complex'],
-            ['mushroom_pasta', 'Mushroom Pasta', '#D4A373', 'complex'], ['seafood_paella', 'Seafood Paella', '#F4D03F', 'complex'],
-            ['complete_breakfast', 'Complete Breakfast', '#FFD166', 'complex'], ['chefs_salad', 'Chef\'s Salad', '#2A9D8F', 'complex'],
-            ['bistrox_masterpiece', 'BistroX Masterpiece', '#C5A059', 'complex']
-        ];
-        
-        itemDefs.forEach(d => { theDatabase.items[d[0]] = { id: d[0], name: d[1], img: makeSVG(d[2], d[3]) }; });
+        const leaf = `<path d='M50,20 Q60,5 70,20 Q60,25 50,20 Z' fill='#2A9D8F'/>`;
+        const meatLines = `<path d='M30,40 L70,40 M30,60 L70,60' stroke='#8B0000' stroke-width='3' opacity='0.4'/>`;
 
-        /* Logic Definitions - Tools (pan, pot, oil, bowl, water) are deliberately NOT consumed! */
-        const theoryDefs = [
-            // SLICE Theory
-            [['onion', 'knife'], 'slice', 'sliced_onion', ['onion'], 'Precision cut applied.'],
-            [['beef', 'knife'], 'slice', 'sliced_beef', ['beef'], 'Meat portioned.'],
-            [['potato', 'knife'], 'slice', 'sliced_potato', ['potato'], 'Tuber sliced.'],
+        const masterItems = [
+            // Base Tools & Pantry
+            { id: 'knife', name: 'Chef Knife', cat: 'tools', img: getSVG('', 'knife') },
+            { id: 'pan', name: 'Frying Pan', cat: 'tools', img: getSVG('', 'pan') },
+            { id: 'pot', name: 'Cooking Pot', cat: 'tools', img: getSVG('', 'pot') },
+            { id: 'bowl', name: 'Mixing Bowl', cat: 'tools', img: getSVG('', 'bowl') },
+            { id: 'oil', name: 'Olive Oil', cat: 'pantry', img: getSVG('#D4C04B', 'bottle') },
+            { id: 'water', name: 'Water', cat: 'pantry', img: getSVG('#A8DADC', 'drop') },
+            { id: 'pasta_dry', name: 'Dry Pasta', cat: 'pantry', img: getSVG('#E9C46A', 'sliced_block') },
+            { id: 'rice', name: 'Raw Rice', cat: 'pantry', img: getSVG('#F1FAEE', 'oval') },
+            { id: 'cheese', name: 'Cheese Block', cat: 'pantry', img: getSVG('#FFD166', 'block') },
+            { id: 'bread', name: 'Loaf of Bread', cat: 'pantry', img: getSVG('#E0A96D', 'block') },
+            // Base Veg & Meat
+            { id: 'onion', name: 'Onion', cat: 'raw_veg', img: getSVG('#DED3C3', 'round') },
+            { id: 'potato', name: 'Potato', cat: 'raw_veg', img: getSVG('#E6C280', 'oval') },
+            { id: 'tomato', name: 'Tomato', cat: 'raw_veg', img: getSVG('#E63946', 'round', leaf) },
+            { id: 'lettuce', name: 'Lettuce Head', cat: 'raw_veg', img: getSVG('#2A9D8F', 'round') },
+            { id: 'garlic', name: 'Garlic Bulb', cat: 'raw_veg', img: getSVG('#F8F9FA', 'round') },
+            { id: 'mushroom', name: 'Mushroom', cat: 'raw_veg', img: getSVG('#D4A373', 'round') },
+            { id: 'beef', name: 'Raw Beef', cat: 'raw_meat', img: getSVG('#B23A3A', 'block', meatLines) },
+            { id: 'chicken', name: 'Raw Chicken', cat: 'raw_meat', img: getSVG('#F4A261', 'oval') },
+            { id: 'fish', name: 'Raw Fish', cat: 'raw_meat', img: getSVG('#8ECAE6', 'oval') },
+            { id: 'egg', name: 'Raw Egg', cat: 'raw_meat', img: getSVG('#FFFDD0', 'oval') },
+            // Prepped (Generated in game)
+            { id: 'sliced_onion', name: 'Sliced Onion', cat: 'prepped', img: getSVG('#DED3C3', 'sliced_round') },
+            { id: 'sliced_potato', name: 'Sliced Potato', cat: 'prepped', img: getSVG('#E6C280', 'sliced_oval') },
+            { id: 'sliced_tomato', name: 'Sliced Tomato', cat: 'prepped', img: getSVG('#E63946', 'sliced_round') },
+            { id: 'sliced_lettuce', name: 'Chopped Lettuce', cat: 'prepped', img: getSVG('#2A9D8F', 'sliced_round') },
+            { id: 'chopped_garlic', name: 'Minced Garlic', cat: 'prepped', img: getSVG('#F8F9FA', 'sliced_round') },
+            { id: 'sliced_mushroom', name: 'Sliced Mushroom', cat: 'prepped', img: getSVG('#D4A373', 'sliced_round') },
+            { id: 'sliced_bread', name: 'Bread Slice', cat: 'prepped', img: getSVG('#E0A96D', 'sliced_block') },
+            { id: 'sliced_beef', name: 'Beef Strips', cat: 'prepped', img: getSVG('#B23A3A', 'sliced_block') },
+            { id: 'sliced_chicken', name: 'Diced Chicken', cat: 'prepped', img: getSVG('#F4A261', 'sliced_oval') },
+            { id: 'sliced_fish', name: 'Fish Fillet', cat: 'prepped', img: getSVG('#8ECAE6', 'sliced_oval') },
+            { id: 'fried_onion', name: 'Fried Onion', cat: 'prepped', img: getSVG('#8b5a2b', 'mixed') },
+            { id: 'seared_beef', name: 'Seared Beef', cat: 'prepped', img: getSVG('#5c1a1a', 'block') },
+            { id: 'boiled_egg', name: 'Boiled Egg', cat: 'prepped', img: getSVG('#FFFFFF', 'oval') },
+            { id: 'french_fries', name: 'French Fries', cat: 'prepped', img: getSVG('#C5A059', 'sliced_block') },
+            { id: 'tomato_soup', name: 'Tomato Soup', cat: 'prepped', img: getSVG('#E63946', 'mixed') },
+            { id: 'fried_egg', name: 'Fried Egg', cat: 'prepped', img: getSVG('#FFD166', 'plate') },
+            { id: 'sauteed_mushroom', name: 'Sautéed Mushroom', cat: 'prepped', img: getSVG('#8b5a2b', 'mixed') },
+            { id: 'boiled_rice', name: 'Fluffy Rice', cat: 'prepped', img: getSVG('#FFFFFF', 'mixed') },
+            { id: 'mixed_egg', name: 'Beaten Egg', cat: 'prepped', img: getSVG('#FFD166', 'mixed') },
+            { id: 'boiled_potato', name: 'Boiled Potato', cat: 'prepped', img: getSVG('#FFE4B5', 'oval') },
+            { id: 'pasta', name: 'Cooked Pasta', cat: 'prepped', img: getSVG('#F4D03F', 'mixed') },
+            { id: 'mashed_potatoes', name: 'Mashed Potatoes', cat: 'prepped', img: getSVG('#FFE4B5', 'mixed') },
+            { id: 'side_salad', name: 'Side Salad', cat: 'prepped', img: getSVG('#2A9D8F', 'mixed') },
+            { id: 'garlic_bread', name: 'Garlic Bread', cat: 'prepped', img: getSVG('#C5A059', 'sliced_block') },
+            { id: 'grilled_cheese', name: 'Grilled Cheese', cat: 'prepped', img: getSVG('#C5A059', 'block') },
+            { id: 'cooked_chicken', name: 'Roasted Chicken', cat: 'prepped', img: getSVG('#d2691e', 'oval') },
+            { id: 'cooked_fish', name: 'Seared Fish', cat: 'prepped', img: getSVG('#e0b0ff', 'oval') },
+            { id: 'beef_stew', name: 'Beef Stew', cat: 'prepped', img: getSVG('#8b4513', 'mixed') },
+            { id: 'chicken_soup', name: 'Chicken Soup', cat: 'prepped', img: getSVG('#F4A261', 'mixed') },
+            { id: 'omelette', name: 'Omelette', cat: 'prepped', img: getSVG('#FFD166', 'plate') },
+            { id: 'fried_rice', name: 'Fried Rice', cat: 'prepped', img: getSVG('#C5A059', 'mixed') },
+            { id: 'hamburger', name: 'Hamburger', cat: 'prepped', img: getSVG('#8b4513', 'plate') },
+            { id: 'pasta_bolognese', name: 'Pasta Bolognese', cat: 'prepped', img: getSVG('#d93025', 'plate') },
+            { id: 'steak_frites', name: 'Steak Frites', cat: 'prepped', img: getSVG('#5c1a1a', 'plate') },
+            { id: 'fish_and_chips', name: 'Fish & Chips', cat: 'prepped', img: getSVG('#C5A059', 'plate') },
+            { id: 'meatball_pasta', name: 'Meatball Pasta', cat: 'prepped', img: getSVG('#d93025', 'plate') },
+            { id: 'bistrox_masterpiece', name: 'BistroX Masterpiece', cat: 'prepped', img: getSVG('#C5A059', 'plate') }
+        ];
+
+        masterItems.forEach(i => db.items[i.id] = i);
+
+        const theories = [
+            // SLICE (Requires Knife, consumes item)
+            [['onion', 'knife'], 'slice', 'sliced_onion', ['onion'], 'Onion perfectly sliced.'],
+            [['potato', 'knife'], 'slice', 'sliced_potato', ['potato'], 'Potato sliced.'],
             [['tomato', 'knife'], 'slice', 'sliced_tomato', ['tomato'], 'Tomato chopped.'],
+            [['lettuce', 'knife'], 'slice', 'sliced_lettuce', ['lettuce'], 'Lettuce shredded.'],
             [['garlic', 'knife'], 'slice', 'chopped_garlic', ['garlic'], 'Garlic minced.'],
-            [['mushroom', 'knife'], 'slice', 'sliced_mushroom', ['mushroom'], 'Mushroom prepped.'],
-            [['chicken', 'knife'], 'slice', 'sliced_chicken', ['chicken'], 'Poultry cut.'],
-            [['lettuce', 'knife'], 'slice', 'sliced_lettuce', ['lettuce'], 'Greens chopped.'],
-            [['bread', 'knife'], 'slice', 'sliced_bread', ['bread'], 'Bread sliced.'],
+            [['mushroom', 'knife'], 'slice', 'sliced_mushroom', ['mushroom'], 'Mushroom sliced.'],
+            [['bread', 'knife'], 'slice', 'sliced_bread', ['bread'], 'Bread portioned.'],
+            [['beef', 'knife'], 'slice', 'sliced_beef', ['beef'], 'Beef cut into strips.'],
+            [['chicken', 'knife'], 'slice', 'sliced_chicken', ['chicken'], 'Chicken diced.'],
             [['fish', 'knife'], 'slice', 'sliced_fish', ['fish'], 'Fish filleted.'],
 
-            // COOK Theory (Pan + Oil retained)
-            [['sliced_onion', 'oil', 'pan'], 'cook', 'fried_onion', ['sliced_onion'], 'Onions caramelized.'],
-            [['beef', 'oil', 'pan'], 'cook', 'seared_beef', ['beef'], 'Beef perfectly seared.'],
-            [['sliced_beef', 'oil', 'pan'], 'cook', 'seared_sliced_beef', ['sliced_beef'], 'Beef strips cooked.'],
-            [['egg', 'oil', 'pan'], 'cook', 'fried_egg', ['egg'], 'Sunny side up.'],
-            [['sliced_potato', 'oil', 'pan'], 'cook', 'french_fries', ['sliced_potato'], 'Fries are crispy.'],
-            [['mushroom', 'oil', 'pan'], 'cook', 'sauteed_mushroom', ['mushroom'], 'Earthy flavors released.'],
-            [['sliced_mushroom', 'oil', 'pan'], 'cook', 'sauteed_mushroom', ['sliced_mushroom'], 'Earthy flavors released.'],
-            [['fish', 'oil', 'pan'], 'cook', 'cooked_fish', ['fish'], 'Fish skin crisped.'],
-            [['sliced_fish', 'oil', 'pan'], 'cook', 'cooked_fish', ['sliced_fish'], 'Fish cooked.'],
-            [['chicken', 'oil', 'pan'], 'cook', 'cooked_chicken', ['chicken'], 'Chicken roasted.'],
-            [['sliced_chicken', 'oil', 'pan'], 'cook', 'cooked_chicken', ['sliced_chicken'], 'Chicken seared.'],
+            // BOIL (Requires Pot, consumes water + item)
+            [['egg', 'water', 'pot'], 'boil', 'boiled_egg', ['egg', 'water'], 'Egg hard boiled.'],
+            [['potato', 'water', 'pot'], 'boil', 'boiled_potato', ['potato', 'water'], 'Potato softened.'],
+            [['rice', 'water', 'pot'], 'boil', 'boiled_rice', ['rice', 'water'], 'Rice cooked fluffy.'],
+            [['pasta_dry', 'water', 'pot'], 'boil', 'pasta', ['pasta_dry', 'water'], 'Pasta al dente.'],
+            [['sliced_tomato', 'water', 'pot'], 'boil', 'tomato_soup', ['sliced_tomato', 'water'], 'Tomato soup simmered.'],
+            [['seared_beef', 'boiled_potato', 'water', 'pot'], 'boil', 'beef_stew', ['seared_beef', 'boiled_potato', 'water'], 'Stew reduced.'],
+            [['cooked_chicken', 'fried_onion', 'water', 'pot'], 'boil', 'chicken_soup', ['cooked_chicken', 'fried_onion', 'water'], 'Soup broth rich.'],
+            [['pasta', 'tomato_soup', 'seared_beef', 'water', 'pot'], 'boil', 'pasta_bolognese', ['pasta', 'tomato_soup', 'seared_beef', 'water'], 'Bolognese simmered.'],
+            [['pasta', 'tomato_soup', 'seared_beef', 'water', 'pot'], 'boil', 'meatball_pasta', ['pasta', 'tomato_soup', 'seared_beef', 'water'], 'Meatballs stewed.'],
 
-            // BOIL Theory (Pot + Water retained)
-            [['egg', 'water', 'pot'], 'boil', 'boiled_egg', ['egg'], 'Egg hard boiled.'],
-            [['sliced_tomato', 'water', 'pot'], 'boil', 'tomato_soup', ['sliced_tomato'], 'Soup simmering.'],
-            [['rice', 'water', 'pot'], 'boil', 'boiled_rice', ['rice'], 'Rice is fluffy.'],
-            [['potato', 'water', 'pot'], 'boil', 'boiled_potato', ['potato'], 'Potatoes softened.'],
-            [['pasta_dry', 'water', 'pot'], 'boil', 'pasta', ['pasta_dry'], 'Pasta al dente.'],
-
-            // MIX Theory (Bowl retained)
-            [['boiled_potato', 'bowl'], 'mix', 'mashed_potatoes', ['boiled_potato'], 'Potatoes mashed.'],
-            [['egg', 'bowl'], 'mix', 'mixed_egg', ['egg'], 'Eggs beaten.'],
+            // COOK / FRY (Requires Pan, consumes oil + item)
+            [['sliced_onion', 'oil', 'pan'], 'cook', 'fried_onion', ['sliced_onion', 'oil'], 'Onions caramelized.'],
+            [['beef', 'oil', 'pan'], 'cook', 'seared_beef', ['beef', 'oil'], 'Beef seared medium rare.'],
+            [['egg', 'oil', 'pan'], 'cook', 'fried_egg', ['egg', 'oil'], 'Sunny side up egg.'],
+            [['sliced_potato', 'oil', 'pan'], 'cook', 'french_fries', ['sliced_potato', 'oil'], 'Fries golden crisp.'],
+            [['sliced_mushroom', 'oil', 'pan'], 'cook', 'sauteed_mushroom', ['sliced_mushroom', 'oil'], 'Mushrooms sautéed.'],
+            [['chicken', 'oil', 'pan'], 'cook', 'cooked_chicken', ['chicken', 'oil'], 'Chicken roasted.'],
+            [['fish', 'oil', 'pan'], 'cook', 'cooked_fish', ['fish', 'oil'], 'Fish cooked perfectly.'],
+            [['mixed_egg', 'oil', 'pan'], 'cook', 'omelette', ['mixed_egg', 'oil'], 'Omelette folded.'],
+            [['sliced_bread', 'chopped_garlic', 'oil', 'pan'], 'cook', 'garlic_bread', ['sliced_bread', 'chopped_garlic', 'oil'], 'Garlic bread toasted.'],
+            [['sliced_bread', 'cheese', 'oil', 'pan'], 'cook', 'grilled_cheese', ['sliced_bread', 'cheese', 'oil'], 'Cheese melted beautifully.'],
+            [['seared_beef', 'sliced_bread', 'oil', 'pan'], 'cook', 'hamburger', ['seared_beef', 'sliced_bread', 'oil'], 'Burger assembled and warmed.'],
+            [['boiled_rice', 'mixed_egg', 'oil', 'pan'], 'cook', 'fried_rice', ['boiled_rice', 'mixed_egg', 'oil'], 'Fried rice tossed in wok.'],
+            
+            // MIX (Requires Bowl, consumes items)
+            [['egg', 'bowl'], 'mix', 'mixed_egg', ['egg'], 'Egg beaten.'],
+            [['boiled_potato', 'bowl'], 'mix', 'mashed_potatoes', ['boiled_potato'], 'Potatoes mashed smooth.'],
             [['sliced_lettuce', 'sliced_tomato', 'bowl'], 'mix', 'side_salad', ['sliced_lettuce', 'sliced_tomato'], 'Salad tossed.'],
-
-            // COMPOSITE COOK (Requires pan + oil but consumes ingredients only)
-            [['seared_sliced_beef', 'fried_onion', 'chopped_garlic', 'oil', 'pan'], 'cook', 'beef_stir_fry', ['seared_sliced_beef', 'fried_onion', 'chopped_garlic'], 'Aromatic stir fry.'],
-            [['mixed_egg', 'oil', 'pan'], 'cook', 'omelette', ['mixed_egg'], 'Omelette folded.'],
-            [['sliced_bread', 'chopped_garlic', 'oil', 'pan'], 'cook', 'garlic_bread', ['sliced_bread', 'chopped_garlic'], 'Bread toasted.'],
-            [['boiled_rice', 'mixed_egg', 'oil', 'pan'], 'cook', 'fried_rice', ['boiled_rice', 'mixed_egg'], 'Wok hei achieved.'],
-            [['sliced_bread', 'cheese', 'oil', 'pan'], 'cook', 'grilled_cheese', ['sliced_bread', 'cheese'], 'Cheese melted.'],
-            [['seared_beef', 'sliced_bread', 'oil', 'pan'], 'cook', 'hamburger', ['seared_beef', 'sliced_bread'], 'Burger assembled.'],
-            [['sliced_bread', 'cheese', 'chopped_garlic', 'oil', 'pan'], 'cook', 'cheesy_garlic_bread', ['sliced_bread', 'cheese', 'chopped_garlic'], 'Cheesy goodness.'],
-            [['fried_egg', 'sliced_bread', 'french_fries', 'oil', 'pan'], 'cook', 'complete_breakfast', ['fried_egg', 'sliced_bread', 'french_fries'], 'Breakfast served.'],
-            [['cheese_omelette_raw', 'oil', 'pan'], 'cook', 'cheese_omelette', ['cheese_omelette_raw'], 'Cheese folded in.'],
-            [['fish', 'oil', 'pan'], 'cook', 'fish_fillet', ['fish'], 'Fillet seared perfectly.'],
-
-            // COMPOSITE BOIL
-            [['seared_sliced_beef', 'boiled_potato', 'water', 'pot'], 'boil', 'beef_stew', ['seared_sliced_beef', 'boiled_potato'], 'Stew thickened.'],
-            [['cooked_chicken', 'fried_onion', 'water', 'pot'], 'boil', 'chicken_soup', ['cooked_chicken', 'fried_onion'], 'Broth reduced.'],
-            [['cooked_fish', 'sliced_tomato', 'water', 'pot'], 'boil', 'fish_soup', ['cooked_fish', 'sliced_tomato'], 'Seafood broth rich.'],
-            [['fried_onion', 'cheese', 'sliced_bread', 'water', 'pot'], 'boil', 'french_onion_soup', ['fried_onion', 'cheese', 'sliced_bread'], 'Crust baked.'],
-            [['pasta', 'tomato_soup', 'seared_beef', 'water', 'pot'], 'boil', 'pasta_bolognese', ['pasta', 'tomato_soup', 'seared_beef'], 'Ragù simmered.'],
-            [['pasta', 'tomato_soup', 'seared_beef', 'water', 'pot'], 'boil', 'meatball_pasta', ['pasta', 'tomato_soup', 'seared_beef'], 'Meatballs stewed.'],
-            [['pasta', 'sauteed_mushroom', 'chopped_garlic', 'water', 'pot'], 'boil', 'mushroom_pasta', ['pasta', 'sauteed_mushroom', 'chopped_garlic'], 'Sauce emulsified.'],
-            [['boiled_rice', 'sauteed_mushroom', 'water', 'pot'], 'boil', 'mushroom_risotto', ['boiled_rice', 'sauteed_mushroom'], 'Risotto creamy.'],
-            [['boiled_rice', 'cooked_fish', 'tomato_soup', 'water', 'pot'], 'boil', 'seafood_paella', ['boiled_rice', 'cooked_fish', 'tomato_soup'], 'Socarrat formed.'],
-
-            // COMPOSITE MIX
-            [['cooked_chicken', 'side_salad', 'bowl'], 'mix', 'chicken_salad', ['cooked_chicken', 'side_salad'], 'Protein added.'],
-            [['mixed_egg', 'cheese', 'bowl'], 'mix', 'cheese_omelette_raw', ['mixed_egg', 'cheese'], 'Cheese incorporated.'],
-            [['cooked_chicken', 'sliced_bread', 'sliced_lettuce', 'bowl'], 'mix', 'chicken_sandwich', ['cooked_chicken', 'sliced_bread', 'sliced_lettuce'], 'Sandwich stacked.'],
-            [['cooked_fish', 'french_fries', 'bowl'], 'mix', 'fish_and_chips', ['cooked_fish', 'french_fries'], 'Pub classic ready.'],
-            [['seared_beef', 'french_fries', 'bowl'], 'mix', 'steak_frites', ['seared_beef', 'french_fries'], 'Bistro classic ready.'],
-            [['hamburger', 'cheese', 'sliced_lettuce', 'sliced_tomato', 'bowl'], 'mix', 'ultimate_burger', ['hamburger', 'cheese', 'sliced_lettuce', 'sliced_tomato'], 'Stacked high.'],
-            [['cooked_chicken', 'cheese', 'tomato_soup', 'bowl'], 'mix', 'chicken_parmesan', ['cooked_chicken', 'cheese', 'tomato_soup'], 'Parmigiana assembled.'],
-            [['side_salad', 'boiled_egg', 'cheese', 'cooked_chicken', 'bowl'], 'mix', 'chefs_salad', ['side_salad', 'boiled_egg', 'cheese', 'cooked_chicken'], 'Chef\'s special.'],
+            [['seared_beef', 'french_fries', 'bowl'], 'mix', 'steak_frites', ['seared_beef', 'french_fries'], 'Bistro classic plated.'],
+            [['cooked_fish', 'french_fries', 'bowl'], 'mix', 'fish_and_chips', ['cooked_fish', 'french_fries'], 'Pub classic plated.'],
             [['seared_beef', 'cooked_chicken', 'cooked_fish', 'french_fries', 'side_salad', 'bowl'], 'mix', 'bistrox_masterpiece', ['seared_beef', 'cooked_chicken', 'cooked_fish', 'french_fries', 'side_salad'], 'The absolute zenith of culinary art.']
         ];
+        
+        theories.forEach(t => db.theories.push({ reqs: t[0], action: t[1], result: t[2], consumes: t[3], msg: t[4] }));
 
-        theoryDefs.forEach(t => { theDatabase.theories.push({ requires: t[0], action: t[1], result: t[2], consumes: t[3], msg: t[4] }); });
+        // Master 40 Level Array with detailed hints
+        const levels = [
+            // EASY (1-10)
+            { id: 'sliced_onion', name: 'Sliced Onion', hints: ["1. Find ONION in Veggies.", "2. Find CHEF KNIFE in Tools.", "3. Place both on Board and click SLICE."] },
+            { id: 'boiled_egg', name: 'Boiled Egg', hints: ["1. Need EGG (Meats), WATER (Pantry), and POT (Tools).", "2. Place all 3 on Board and click BOIL."] },
+            { id: 'fried_onion', name: 'Fried Onion', hints: ["1. Slice an ONION first.", "2. Clear board.", "3. Combine SLICED ONION + OIL + PAN.", "4. Click COOK."] },
+            { id: 'seared_beef', name: 'Seared Beef', hints: ["1. Combine RAW BEEF + OIL + PAN.", "2. Click COOK."] },
+            { id: 'mashed_potatoes', name: 'Mashed Potatoes', hints: ["1. Boil a POTATO first (Potato + Water + Pot + Boil).", "2. Combine BOILED POTATO + BOWL.", "3. Click MIX."] },
+            { id: 'french_fries', name: 'French Fries', hints: ["1. Slice a POTATO.", "2. Combine SLICED POTATO + OIL + PAN.", "3. Click COOK."] },
+            { id: 'fried_egg', name: 'Fried Egg', hints: ["1. Combine RAW EGG + OIL + PAN.", "2. Click COOK."] },
+            { id: 'chopped_garlic', name: 'Minced Garlic', hints: ["1. Combine GARLIC + KNIFE.", "2. Click SLICE."] },
+            { id: 'sauteed_mushroom', name: 'Sautéed Mushroom', hints: ["1. Slice MUSHROOM first.", "2. Combine SLICED MUSHROOM + OIL + PAN.", "3. Click COOK."] },
+            { id: 'boiled_rice', name: 'Fluffy Rice', hints: ["1. Combine RICE + WATER + POT.", "2. Click BOIL."] },
 
-        // Generate UI based on Manifest
+            // MEDIUM (11-20)
+            { id: 'omelette', name: 'Omelette', hints: ["1. Mix RAW EGG in a BOWL to get Beaten Egg.", "2. Combine BEATEN EGG + OIL + PAN.", "3. Click COOK."] },
+            { id: 'side_salad', name: 'Side Salad', hints: ["1. Slice LETTUCE.", "2. Slice TOMATO.", "3. Combine both slices + BOWL.", "4. Click MIX."] },
+            { id: 'tomato_soup', name: 'Tomato Soup', hints: ["1. Slice TOMATO.", "2. Combine SLICED TOMATO + WATER + POT.", "3. Click BOIL."] },
+            { id: 'garlic_bread', name: 'Garlic Bread', hints: ["1. Slice BREAD.", "2. Slice GARLIC.", "3. Combine SLICED BREAD + MINCED GARLIC + OIL + PAN.", "4. Click COOK."] },
+            { id: 'grilled_cheese', name: 'Grilled Cheese', hints: ["1. Slice BREAD.", "2. Combine SLICED BREAD + CHEESE BLOCK + OIL + PAN.", "3. Click COOK."] },
+            { id: 'pasta', name: 'Cooked Pasta', hints: ["1. Combine DRY PASTA + WATER + POT.", "2. Click BOIL."] },
+            { id: 'cooked_chicken', name: 'Roasted Chicken', hints: ["1. Combine RAW CHICKEN + OIL + PAN.", "2. Click COOK."] },
+            { id: 'cooked_fish', name: 'Seared Fish', hints: ["1. Combine RAW FISH + OIL + PAN.", "2. Click COOK."] },
+            { id: 'fried_rice', name: 'Fried Rice', hints: ["1. Boil RICE.", "2. Mix EGG in BOWL.", "3. Combine BOILED RICE + BEATEN EGG + OIL + PAN.", "4. Click COOK."] },
+            { id: 'hamburger', name: 'Hamburger', hints: ["1. Slice BREAD.", "2. Cook RAW BEEF (Sear it).", "3. Combine SLICED BREAD + SEARED BEEF + OIL + PAN.", "4. Click COOK."] },
+
+            // HARD (21-30)
+            { id: 'beef_stew', name: 'Beef Stew', hints: ["1. Sear RAW BEEF.", "2. Boil POTATO.", "3. Combine SEARED BEEF + BOILED POTATO + WATER + POT.", "4. Click BOIL."] },
+            { id: 'chicken_soup', name: 'Chicken Soup', hints: ["1. Cook CHICKEN.", "2. Slice & Fry ONION.", "3. Combine COOKED CHICKEN + FRIED ONION + WATER + POT.", "4. Click BOIL."] },
+            { id: 'steak_frites', name: 'Steak Frites', hints: ["1. Sear BEEF.", "2. Make FRENCH FRIES (Slice Potato -> Cook with Oil/Pan).", "3. Combine SEARED BEEF + FRIES + BOWL.", "4. Click MIX."] },
+            { id: 'fish_and_chips', name: 'Fish & Chips', hints: ["1. Cook FISH.", "2. Make FRENCH FRIES.", "3. Combine COOKED FISH + FRIES + BOWL.", "4. Click MIX."] },
+            { id: 'pasta_bolognese', name: 'Pasta Bolognese', hints: ["1. Boil PASTA.", "2. Make TOMATO SOUP.", "3. Sear BEEF.", "4. Combine PASTA + SOUP + BEEF + WATER + POT.", "5. Click BOIL."] },
+            { id: 'beef_stew', name: 'Rich Beef Stew', hints: ["See Beef Stew."] },
+            { id: 'chicken_soup', name: 'Homestyle Chicken Soup', hints: ["See Chicken Soup."] },
+            { id: 'steak_frites', name: 'Bistro Steak Frites', hints: ["See Steak Frites."] },
+            { id: 'fish_and_chips', name: 'Tavern Fish & Chips', hints: ["See Fish & Chips."] },
+            { id: 'pasta_bolognese', name: 'Classic Bolognese', hints: ["See Pasta Bolognese."] },
+
+            // IMPOSSIBLE (31-40)
+            { id: 'meatball_pasta', name: 'Meatball Pasta', hints: ["Requires exact same components as Bolognese: Pasta, Tomato Soup, Seared Beef, Water, Pot -> BOIL."] },
+            { id: 'hamburger', name: 'Double Hamburger', hints: ["See Hamburger."] },
+            { id: 'omelette', name: 'Fluffy Omelette', hints: ["See Omelette."] },
+            { id: 'fried_rice', name: 'Special Fried Rice', hints: ["See Fried Rice."] },
+            { id: 'grilled_cheese', name: 'Ultimate Grilled Cheese', hints: ["See Grilled Cheese."] },
+            { id: 'garlic_bread', name: 'Artisan Garlic Bread', hints: ["See Garlic Bread."] },
+            { id: 'beef_stew', name: 'Winter Beef Stew', hints: ["See Beef Stew."] },
+            { id: 'side_salad', name: 'Garden Salad', hints: ["See Side Salad."] },
+            { id: 'french_fries', name: 'Loaded Fries', hints: ["See French Fries."] },
+            { id: 'bistrox_masterpiece', name: 'BistroX Masterpiece', hints: ["1. Prepare: Seared Beef, Cooked Chicken, Cooked Fish, French Fries, and Side Salad.", "2. Place all 5 on the board with a BOWL.", "3. Click MIX.", "Good luck Chef."] }
+        ];
+
         function generateLevels() {
-            let globalLevelCount = 1;
-
-            categories.forEach(cat => {
-                const grid = document.getElementById(`grid-${cat.id}`);
-                grid.innerHTML = ''; 
+            const catMap = ['easy', 'medium', 'hard', 'impossible'];
+            
+            for(let c=0; c<4; c++) {
+                const grid = document.getElementById(`grid-${catMap[c]}`);
+                grid.innerHTML = '';
                 
-                for (let i = 0; i < 10; i++) {
-                    let levelNum = globalLevelCount; 
-                    let levelData = levelsManifest[levelNum - 1];
-                    const isUnlocked = (levelNum <= maxUnlockedLevel);
-                    const card = document.createElement('div');
+                for(let i=0; i<10; i++) {
+                    let lvlNum = (c * 10) + i + 1;
+                    let lvlData = levels[lvlNum - 1];
+                    let isUnlocked = (lvlNum <= maxUnlockedLevel);
+                    
+                    let card = document.createElement('div');
                     card.className = `level-card ${isUnlocked ? '' : 'locked'}`;
                     
                     if (isUnlocked) {
-                        card.onclick = () => loadLevel(levelNum, levelData.id);
-                        const img = theDatabase.items[levelData.id].img;
+                        card.onclick = () => startLevel(lvlNum, lvlData);
                         card.innerHTML = `
-                            <img src="${img}" alt="Unlocked">
-                            <h4>${levelData.name}</h4>
-                            <p>Level ${levelNum}</p>
+                            <img src="${db.items[lvlData.id].img}" alt="Dish">
+                            <h4>${lvlData.name}</h4>
+                            <p>Level ${lvlNum}</p>
                         `;
                     } else {
-                        card.title = "Unlock previous recipe";
                         card.innerHTML = `
                             <div class="lock-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
                             <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%231A1A1A'/></svg>" alt="Locked">
-                            <h4>Classified</h4>
-                            <p>Level ${levelNum}</p>
+                            <h4 style="color:#666;">Classified</h4>
+                            <p style="color:#888;">Level ${lvlNum}</p>
                         `;
                         card.onclick = () => notify("Recipe locked. Complete previous timelines first.");
                     }
-                    
                     grid.appendChild(card);
-                    globalLevelCount++;
                 }
-            });
+            }
         }
 
-        let currentInventory = [];
-        let currentStaging = [];
-        let targetLevel = null;
+        /* --- ENGINE STATE --- */
+        let sessionInventory = []; // Base items + items created this session
+        let stagingArea = [];
+        let currentFilter = 'all';
+        let currentSearch = '';
 
-        function loadLevel(levelNum, levelId) {
-            currentPlayingLevelNum = levelNum;
-            targetLevel = levelId;
-            const levelData = levelsManifest[levelNum - 1];
+        function startLevel(num, data) {
+            currentPlayingLevelNum = num;
+            targetLevelId = data.id;
+            document.getElementById('targetDishName').textContent = data.name;
             
-            document.getElementById('targetDishName').textContent = levelData.name;
-            currentInventory = [...levelData.inv];
-            currentStaging = [];
-            renderBoard();
+            // Build Hints
+            const hintList = document.getElementById('hintContent');
+            hintList.innerHTML = '';
+            data.hints.forEach(h => {
+                let li = document.createElement('li');
+                li.textContent = h;
+                hintList.appendChild(li);
+            });
+
+            // Initialize Session Inventory (Give all base items)
+            sessionInventory = masterItems.filter(i => i.cat !== 'prepped').map(i => i.id);
+            stagingArea = [];
+            currentFilter = 'all';
+            document.getElementById('pantrySearch').value = '';
+            
+            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.cat-btn').classList.add('active'); // Set 'All' active
+
+            renderPantry();
+            renderStaging();
             switchScreen('screen-play');
         }
 
-        function renderBoard() {
-            const invGrid = document.getElementById('inventoryGrid');
-            const stageArea = document.getElementById('stagingArea');
-            
-            invGrid.innerHTML = '';
-            stageArea.innerHTML = '';
+        function setCategory(cat) {
+            currentFilter = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderPantry();
+        }
 
-            currentInventory.forEach(itemId => {
-                const item = theDatabase.items[itemId];
-                const el = document.createElement('div');
-                el.className = 'item-slot';
-                el.innerHTML = `<img src="${item.img}" alt="${item.name}"><span>${item.name}</span>`;
-                el.onclick = () => moveToStaging(itemId);
-                invGrid.appendChild(el);
+        function renderPantry() {
+            const grid = document.getElementById('inventoryGrid');
+            grid.innerHTML = '';
+            currentSearch = document.getElementById('pantrySearch').value.toLowerCase();
+
+            // Filter logic
+            let displayItems = sessionInventory.filter(id => {
+                let item = db.items[id];
+                if (!item) return false;
+                if (stagingArea.includes(id)) return false; // Don't show if on board
+                if (currentFilter !== 'all' && item.cat !== currentFilter) return false;
+                if (currentSearch && !item.name.toLowerCase().includes(currentSearch)) return false;
+                return true;
             });
 
-            if (currentStaging.length > 0) {
-                currentStaging.forEach((itemId, index) => {
-                    const item = theDatabase.items[itemId];
-                    const el = document.createElement('div');
+            displayItems.forEach(id => {
+                let item = db.items[id];
+                let el = document.createElement('div');
+                el.className = 'item-slot';
+                el.title = item.name;
+                el.innerHTML = `<img src="${item.img}" alt="${item.name}"><span>${item.name}</span>`;
+                el.onclick = () => moveToBoard(id);
+                grid.appendChild(el);
+            });
+        }
+
+        function renderStaging() {
+            const stage = document.getElementById('stagingArea');
+            // Clear current icons (keep the empty text span if we added one, but for this design we can just clear innerHTML and recreate if empty)
+            stage.innerHTML = '';
+
+            if (stagingArea.length > 0) {
+                stagingArea.forEach((id, index) => {
+                    let item = db.items[id];
+                    let el = document.createElement('div');
                     el.className = 'item-slot';
                     el.innerHTML = `<img src="${item.img}" alt="${item.name}"><span>${item.name}</span>`;
-                    el.onclick = () => moveBackToInventory(index);
-                    stageArea.appendChild(el);
+                    el.onclick = () => moveToPantry(index);
+                    stage.appendChild(el);
                 });
             }
         }
 
-        function moveToStaging(itemId) {
-            if(currentStaging.length >= 12) { notify("Board at maximum capacity!"); return; } // Expanded capacity
-            const idx = currentInventory.indexOf(itemId);
-            currentInventory.splice(idx, 1);
-            currentStaging.push(itemId);
-            renderBoard();
+        function moveToBoard(id) {
+            if (stagingArea.length >= 6) { notify("Board is full! Max 6 items."); return; }
+            stagingArea.push(id);
+            renderPantry();
+            renderStaging();
         }
 
-        function moveBackToInventory(stageIndex) {
-            const itemId = currentStaging[stageIndex];
-            currentStaging.splice(stageIndex, 1);
-            currentInventory.push(itemId);
-            renderBoard();
+        function moveToPantry(index) {
+            stagingArea.splice(index, 1);
+            renderPantry();
+            renderStaging();
         }
 
         function clearStaging() {
-            while(currentStaging.length > 0) { currentInventory.push(currentStaging.pop()); }
-            renderBoard();
+            stagingArea = [];
+            renderPantry();
+            renderStaging();
         }
 
         function performAction(actionStr) {
-            if (currentStaging.length === 0) { notify("Board is empty."); return; }
+            if (stagingArea.length === 0) { notify("Put ingredients on the board first!"); return; }
 
             let success = false;
 
-            for (let theory of theDatabase.theories) {
-                if (theory.action === actionStr) {
-                    if (currentStaging.length === theory.requires.length && 
-                        theory.requires.every(req => currentStaging.includes(req))) {
-                        
-                        success = true;
-                        
-                        currentStaging.forEach(item => {
-                            if (!theory.consumes.includes(item)) { currentInventory.push(item); }
-                        });
-                        
-                        currentStaging = [];
-                        currentInventory.push(theory.result);
-                        
-                        notify(theory.msg);
-                        renderBoard();
-                        checkWinCondition(theory.result);
-                        break;
+            for (let t of db.theories) {
+                if (t.action === actionStr) {
+                    // Check if exact match of requirements (ignoring order)
+                    if (stagingArea.length === t.reqs.length) {
+                        let hasAll = t.reqs.every(req => stagingArea.includes(req));
+                        if (hasAll) {
+                            success = true;
+                            
+                            // Add result to session inventory if not already there
+                            if (!sessionInventory.includes(t.result)) {
+                                sessionInventory.push(t.result);
+                            }
+
+                            // Keep tools/items that are not consumed
+                            let remainingItems = stagingArea.filter(id => !t.consumes.includes(id));
+                            stagingArea = []; // clear board
+                            
+                            // Remaining tools go back to inventory naturally since they are never removed from sessionInventory. 
+                            // We just clear the staging area to make it clean.
+                            
+                            notify(t.msg);
+                            renderPantry();
+                            renderStaging();
+                            
+                            checkWin(t.result);
+                            break;
+                        }
                     }
                 }
             }
 
-            if (!success) { notify("Theory failed. Incorrect mix of elements or tools."); }
+            if (!success) { notify(`Invalid ${actionStr.toUpperCase()} combination.`); }
         }
 
-        function checkWinCondition(resultId) {
-            if (resultId === targetLevel) {
-                if (currentPlayingLevelNum === maxUnlockedLevel) {
+        function checkWin(resId) {
+            if (resId === targetLevelId) {
+                if (currentPlayingLevelNum === maxUnlockedLevel && maxUnlockedLevel < 40) {
                     maxUnlockedLevel++;
-                    saveUserProgress(); // Updates specific user's level in localStorage
-                    generateLevels(); // Refresh Menu UI behind the scenes
+                    saveUserProgress();
+                    generateLevels(); 
                 }
-
                 setTimeout(() => {
                     document.getElementById('overlayTitle').textContent = "Masterpiece Created.";
-                    document.getElementById('overlaySub').textContent = theDatabase.items[resultId].name + " Unlocked • Timeline Advancing";
+                    document.getElementById('overlaySub').textContent = db.items[resId].name + " Unlocked • Timeline Advancing";
                     document.getElementById('gameOverlay').classList.add('active');
-                }, 600);
-            }
-        }
-
-        function showHint() {
-            if (!targetLevel) return;
-            const finalTheory = theDatabase.theories.find(t => t.result === targetLevel);
-            if (finalTheory) {
-                const reqNames = finalTheory.requires.map(id => theDatabase.items[id] ? theDatabase.items[id].name : id).join(", ");
-                notify("TIP: Final step requires " + reqNames + " (" + finalTheory.action.toUpperCase() + ")");
-            } else {
-                notify("Experiment with your tools and ingredients!");
+                }, 800);
             }
         }
 

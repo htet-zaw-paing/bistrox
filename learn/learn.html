@@ -738,8 +738,22 @@
                             <a href="#game">Game</a>
                         </div>
                     </li>
-                    <li><div class="nav-link-wrap"><a
-                                href="../support/support.html">Support</a></div></li>
+                    <li class="nav-item-dropdown">
+                        <div class="nav-link-wrap">
+                            <a href="../support/support.html">Support <span
+                                    class="desktop-arrow">&blacktriangledown;</span></a>
+                            <svg class="chevron desktop-hidden"
+                                viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"><polyline
+                                    points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
+                        <div class="dropdown-menu">
+                            <a href="../support/support.html">Chat Assistant</a>
+                            <a href="../faqs/faqs.html">FAQs</a>
+                        </div>
+                    </li>
                 </ul>
 
                 <div class="mobile-utils desktop-hidden">
@@ -785,20 +799,23 @@
                 </div>
 
                 <div class="mobile-socials desktop-hidden">
-                    <a href="#"><svg viewBox="0 0 24 24"
-                            fill="currentColor"><path
-                                d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
-                    <a href="#"><svg viewBox="0 0 24 24"
-                            fill="currentColor"><path
-                                d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
-                    <a href="#"><svg viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round"><rect
-                                x="2" y="2" width="20" height="20" rx="5"
-                                ry="5"></rect><path
-                                d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line
-                                x1="17.5" y1="6.5" x2="17.51"
-                                y2="6.5"></line></svg></a>
+                    <a href="https://github.com" target="_blank"
+                        class="social-icon">
+                        <!-- GitHub Icon -->
+                        <svg viewBox="0 0 24 24"><path
+                                d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" /></svg>
+                    </a>
+                    <a href="https://linkedin.com" target="_blank"
+                        class="social-icon">
+                        <!-- LinkedIn Icon -->
+                        <svg viewBox="0 0 24 24"><path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
+                    </a>
+                    <a href="#" target="_blank" class="social-icon">
+                        <!-- Twitter/X Icon -->
+                        <svg viewBox="0 0 24 24"><path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
+                    </a>
                 </div>
             </nav>
 
@@ -1345,7 +1362,8 @@
             toast.className = 'toast'; toast.textContent = message;
             container.appendChild(toast);
             setTimeout(() => {
-                toast.style.opacity = '0'; toast.style.transform = 'translateX(50px)';
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(50px)';
                 setTimeout(() => toast.remove(), 500);
             }, 3500);
         }
@@ -1467,16 +1485,20 @@
                 hamburger.classList.toggle('active'); nav.classList.toggle('active');
             });
             
-            document.querySelectorAll('.nav-item-dropdown > a').forEach(link => {
-                link.addEventListener('click', (e) => {
+            // Fix: Target the .nav-link-wrap so clicking anywhere on the row works perfectly
+            const dropdownWraps = document.querySelectorAll('.nav-item-dropdown .nav-link-wrap');
+            dropdownWraps.forEach(wrap => {
+                wrap.addEventListener('click', (e) => {
                     if (window.innerWidth > 968) return; 
                     e.preventDefault(); 
-                    const dropdown = link.nextElementSibling;
+                    const dropdown = wrap.nextElementSibling;
+                    const chevron = wrap.querySelector('.chevron');
+                    
                     if (dropdown) {
-                        dropdown.style.display = dropdown.style.display === 'flex' ? 'none' : 'flex';
-                        dropdown.style.position = 'static'; dropdown.style.transform = 'none';
-                        dropdown.style.boxShadow = 'none'; dropdown.style.border = 'none';
-                        dropdown.style.marginTop = '0'; dropdown.style.width = '100%'; dropdown.style.background = '#f9f9f9';
+                        dropdown.classList.toggle('active');
+                        if (chevron) {
+                            chevron.classList.toggle('open');
+                        }
                     }
                 });
             });

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BistroX | Image-Based Cooking Game</title>
-    <link rel="icon" href="./imgs/web-banners/logo.png">
-    <style>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>BistroX | Image-Based Cooking Game</title>
+        <link rel="icon" href="./imgs/web-banners/logo.png">
+        <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Jost:wght@400;500;600;700&display=swap');
 
         /* --- Formal Design System --- */
@@ -1421,512 +1421,701 @@
             .dev-profile-img { width: 150px; height: 150px; }
         }
     </style>
-</head>
-<body data-auth="guest">
+    </head>
+    <body data-auth="guest">
 
-    <!-- Fullscreen Preloader -->
-    <div id="globalLoader" class="loader-container">
-        <div class="pan-wrapper">
-            <div class="pan">
-                <div class="pan-handle"></div>
-                <div class="pan-base"></div>
+        <!-- Fullscreen Preloader -->
+        <div id="globalLoader" class="loader-container">
+            <div class="pan-wrapper">
+                <div class="pan">
+                    <div class="pan-handle"></div>
+                    <div class="pan-base"></div>
+                </div>
+                <div class="food"></div>
             </div>
-            <div class="food"></div>
+            <h2 class="loader-slogan">Please wait patiently,<br>we are
+                <span>cooking...</span></h2>
         </div>
-        <h2 class="loader-slogan">Please wait patiently,<br>we are <span>cooking...</span></h2>
-    </div>
 
-    <!-- Scroll To Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" onclick="scrollToTop()">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="12" y1="19" x2="12" y2="5"></line>
-            <polyline points="5 12 12 5 19 12"></polyline>
-        </svg>
-    </button>
+        <!-- Scroll To Top Button -->
+        <button id="scrollTopBtn" class="scroll-top-btn"
+            onclick="scrollToTop()">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="19" x2="12" y2="5"></line>
+                <polyline points="5 12 12 5 19 12"></polyline>
+            </svg>
+        </button>
 
-    <!-- Toast Container -->
-    <div id="toastContainer"></div>
+        <!-- Toast Container -->
+        <div id="toastContainer"></div>
 
-    <!-- Auth Modal -->
-    <div class="modal-overlay" id="authOverlay">
-        <div class="auth-modal">
-            <span class="modal-close-auth" onclick="closeAuthModal()">&times;</span>
-            
-            <!-- Login State -->
-            <div id="loginForm" class="auth-form">
-                <span class="section-tag">Welcome Back</span>
-                <h2>Login to Kitchen</h2>
-                <p style="color: var(--text-muted); margin-bottom: 2.5rem;">Access your recipes and saved combinations.</p>
-                <div class="input-group">
-                    <label>Username</label>
-                    <input type="text" id="loginUser" placeholder="Enter your username">
-                </div>
-                <div class="input-group">
-                    <label>Password</label>
-                    <input type="password" id="loginPass" placeholder="Enter password">
-                </div>
-                <button class="cta-btn auth-submit" onclick="handleLogin()">Log In</button>
-                <div class="auth-toggle">
-                    New Chef? <span onclick="toggleAuthMode('register')">Create an account</span>
-                </div>
-            </div>
+        <!-- Auth Modal -->
+        <div class="modal-overlay" id="authOverlay">
+            <div class="auth-modal">
+                <span class="modal-close-auth"
+                    onclick="closeAuthModal()">&times;</span>
 
-            <!-- Register State -->
-            <div id="registerForm" class="auth-form" style="display: none;">
-                <span class="section-tag">Join BistroX</span>
-                <h2>Create Profile</h2>
-                <p style="color: var(--text-muted); margin-bottom: 2.5rem;">Start discovering new image-based recipes.</p>
-                <div class="input-group">
-                    <label>Username</label>
-                    <input type="text" id="regUser" placeholder="Choose a username">
-                </div>
-                <div class="input-group">
-                    <label>Password</label>
-                    <input type="password" id="regPass" placeholder="Choose a password">
-                </div>
-                <div class="input-group">
-                    <label>Confirm Password</label>
-                    <input type="password" id="regPassConfirm" placeholder="Repeat your password">
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="regTerms">
-                    <label for="regTerms">I agree to the <a href="#" style="color: var(--primary); font-weight: 700;">Terms</a> and the use of browser local storage to save my progress.</label>
-                </div>
-                <button class="cta-btn auth-submit" onclick="handleRegister()">Register</button>
-                <div class="auth-toggle">
-                    Already a member? <span onclick="toggleAuthMode('login')">Login here</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <header>
-        <a href="index.html" class="logo">
-            <img src="./imgs/web-banners/logo.png" alt="BistroX Logo" style="width: 28px; height: 28px; object-fit: contain;">
-            <div class="logo-text">BISTRO<span>X</span></div>
-        </a>
-        
-        <nav id="mainNav">
-            <div class="mobile-nav-top desktop-hidden">
-                <div class="mobile-nav-header">
-                    <a href="#" class="logo">
-                        <img src="./imgs/web-banners/logo.png" alt="BistroX Logo" style="width: 24px; height: 24px; object-fit: contain;">
-                        <div class="logo-text">BISTRO<span>X</span></div>
-                    </a>
-                    <button class="mobile-close" onclick="closeMobileMenu()">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                    </button>
-                </div>
-            </div>
-
-            <ul id="navList">
-                <li class="nav-item-dropdown">
-                    <div class="nav-link-wrap">
-                        <a href="#hero" class="active">Home <span class="desktop-arrow">&blacktriangledown;</span></a>
-                        <svg class="chevron desktop-hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                <!-- Login State -->
+                <div id="loginForm" class="auth-form">
+                    <span class="section-tag">Welcome Back</span>
+                    <h2>Login to Kitchen</h2>
+                    <p
+                        style="color: var(--text-muted); margin-bottom: 2.5rem;">Access
+                        your recipes and saved combinations.</p>
+                    <div class="input-group">
+                        <label>Username</label>
+                        <input type="text" id="loginUser"
+                            placeholder="Enter your username">
                     </div>
-                    <div class="dropdown-menu">
-                        <a href="#mechanics">Gameplay</a>
-                        <a href="#ingredients">Ingredients</a>
-                        <a href="#recipes">Masterpieces</a>
-                        <a href="#dev">Developer</a>
-                        <a href="#contact">Help</a>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="loginPass"
+                            placeholder="Enter password">
                     </div>
-                </li>
-                
-                <li class="nav-item-dropdown">
-                    <div class="nav-link-wrap">
-                        <a href="./about/about.html">About <span class="desktop-arrow">&blacktriangledown;</span></a>
-                        <svg class="chevron desktop-hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <button class="cta-btn auth-submit"
+                        onclick="handleLogin()">Log In</button>
+                    <div class="auth-toggle">
+                        New Chef? <span
+                            onclick="toggleAuthMode('register')">Create an
+                            account</span>
                     </div>
-                    <div class="dropdown-menu">
-                        <a href="./about/about.html#about-game">game</a>
-                        <a href="./about/about.html#dev">developer</a>
+                </div>
+
+                <!-- Register State -->
+                <div id="registerForm" class="auth-form" style="display: none;">
+                    <span class="section-tag">Join BistroX</span>
+                    <h2>Create Profile</h2>
+                    <p
+                        style="color: var(--text-muted); margin-bottom: 2.5rem;">Start
+                        discovering new image-based recipes.</p>
+                    <div class="input-group">
+                        <label>Username</label>
+                        <input type="text" id="regUser"
+                            placeholder="Choose a username">
                     </div>
-                </li>
-                
-                <li class="nav-item-dropdown">
-                    <div class="nav-link-wrap">
-                        <a href="./learn/learn.html">Learn <span class="desktop-arrow">&blacktriangledown;</span></a>
-                        <svg class="chevron desktop-hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="regPass"
+                            placeholder="Choose a password">
                     </div>
-                    <div class="dropdown-menu">
-                        <a href="./learn/learn.html#recipes">Recipes</a>
-                        <a href="./learn/learn.html#game">Game</a>
+                    <div class="input-group">
+                        <label>Confirm Password</label>
+                        <input type="password" id="regPassConfirm"
+                            placeholder="Repeat your password">
                     </div>
-                </li>
-                <li>
-                    <div class="nav-link-wrap">
-                        <a href="./support/support.html">Support</a>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="regTerms">
+                        <label for="regTerms">I agree to the <a href="#"
+                                style="color: var(--primary); font-weight: 700;">Terms</a>
+                            and the use of browser local storage to save my
+                            progress.</label>
                     </div>
-                </li>
-            </ul>
-
-            <div class="mobile-utils desktop-hidden">
-                <div class="mobile-util-item show-on-guest-flex" id="mobGuestLogin" onclick="openAuthModal('login')">
-                    <span>Login</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                </div>
-                <div class="mobile-util-item show-on-guest-flex" id="mobGuestReg" onclick="openAuthModal('register')">
-                    <span>Register</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
-                </div>
-                <div class="mobile-util-item show-on-user-flex" id="mobUserLabel">
-                    <span id="mobUserName">User: ...</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                </div>
-                <div class="mobile-util-item show-on-user-flex" id="mobLogout" onclick="handleLogout()">
-                    <span style="color: #d93025;">Log Out</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#d93025" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                </div>
-            </div>
-
-            <div class="mobile-socials desktop-hidden">
-                <a href="#"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
-                <a href="#"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
-                <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-            </div>
-        </nav>
-
-        <div class="header-actions">
-            <!-- Desktop Auth -->
-            <div id="guestActions" class="show-on-guest-flex desktop-only" style="gap: 0.5rem; align-items: center;">
-                <button class="cta-btn btn-text" onclick="openAuthModal('login')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                    Login
-                </button>
-                <button class="cta-btn btn-outline" onclick="openAuthModal('register')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
-                    Register
-                </button>
-            </div>
-            
-            <button class="cta-btn" id="playBtn" onclick="handlePlayNow()">Play Now</button>
-            
-            <!-- Desktop User -->
-            <div class="user-menu show-on-user desktop-only" id="userMenu">
-                <button class="user-icon-btn" onclick="toggleUserDropdown()">
-                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                </button>
-                <div class="user-dropdown" id="userDropdown">
-                    <div class="user-dropdown-header">
-                        <p id="displayUser">User: Loading...</p>
+                    <button class="cta-btn auth-submit"
+                        onclick="handleRegister()">Register</button>
+                    <div class="auth-toggle">
+                        Already a member? <span
+                            onclick="toggleAuthMode('login')">Login here</span>
                     </div>
-                    <a href="#" class="dropdown-link logout-btn" onclick="handleLogout()">Log Out</a>
                 </div>
             </div>
+        </div>
 
-            <!-- Hamburger -->
-            <div class="hamburger" id="hamburgerBtn">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </header>
+        <header>
+            <a href="index.html" class="logo">
+                <img src="./imgs/web-banners/logo.png" alt="BistroX Logo"
+                    style="width: 28px; height: 28px; object-fit: contain;">
+                <div class="logo-text">BISTRO<span>X</span></div>
+            </a>
 
-    <section class="hero" id="hero">
-        <div class="hero-content">
-            <span class="section-tag">Visual Cooking Game</span>
-            <h1>Combine. Cook.<br>Discover.</h1>
-            <p>An interactive image-based cooking game. Select visual ingredients, experiment with real cooking methods, and discover new dishes based entirely on your specific image combinations.</p>
-            <div style="display: flex; gap: 1.5rem;">
-                <button class="cta-btn" onclick="handlePlayNow()">Start Cooking</button>
-                <a href="#mechanics" class="cta-btn btn-outline" style="background: transparent; color: var(--secondary);">How it Works</a>
-            </div>
-        </div>
-        
-        <div class="hero-graphics" id="egg">
-            <!-- The Egg -->
-            <div class="hero-visual">
-                <div class="parallax-wrap yolk-wrap">
-                    <div class="egg-yolk"></div>
+            <nav id="mainNav">
+                <div class="mobile-nav-top desktop-hidden">
+                    <div class="mobile-nav-header">
+                        <a href="#" class="logo">
+                            <img src="./imgs/web-banners/logo.png"
+                                alt="BistroX Logo"
+                                style="width: 24px; height: 24px; object-fit: contain;">
+                            <div class="logo-text">BISTRO<span>X</span></div>
+                        </a>
+                        <button class="mobile-close"
+                            onclick="closeMobileMenu()">
+                            <svg viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"><line x1="18" y1="6"
+                                    x2="6" y2="18"></line><line x1="6" y1="6"
+                                    x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Metrics Section -->
-    <section class="metrics reveal">
-        <div class="container">
-            <div class="metrics-grid">
-                <div class="metric-item">
-                    <h2>Visual</h2>
-                    <p>Image-Based Items</p>
-                </div>
-                <div class="metric-item">
-                    <h2>Local</h2>
-                    <p>Saved In-Browser</p>
-                </div>
-                <div class="metric-item">
-                    <h2>Mix</h2>
-                    <p>Endless Combos</p>
-                </div>
-                <div class="metric-item">
-                    <h2>Free</h2>
-                    <p>Pure Web Game</p>
-                </div>
-            </div>
-        </div>
-    </section>
+                <ul id="navList">
+                    <li class="nav-item-dropdown">
+                        <div class="nav-link-wrap">
+                            <a href="#hero" class="active">Home <span
+                                    class="desktop-arrow">&blacktriangledown;</span></a>
+                            <svg class="chevron desktop-hidden"
+                                viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"><polyline
+                                    points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
+                        <div class="dropdown-menu">
+                            <a href="#mechanics">Gameplay</a>
+                            <a href="#ingredients">Ingredients</a>
+                            <a href="#recipes">Masterpieces</a>
+                            <a href="#dev">Developer</a>
+                            <a href="#contact">Help</a>
+                        </div>
+                    </li>
 
-    <section class="gameplay" id="mechanics">
-        <span class="section-tag">Gameplay Mechanics</span>
-        <h2 class="section-title reveal">The Art of Visual Cooking</h2>
-        <p class="reveal" style="color: var(--text-muted); max-width: 600px;">BistroX relies entirely on your choices. Select images from your pantry and combine them to reveal the final dish.</p>
-        
-        <div class="grid">
-            <div class="card reveal">
-                <div class="icon-box">
-                    <svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71L12 2z"/></svg>
-                </div>
-                <h3>Choose Ingredients</h3>
-                <p>Pick from a visual pantry of image-based items, like fresh onions, specific oils, and raw meats.</p>
-            </div>
-            <div class="card reveal">
-                <div class="icon-box">
-                    <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                </div>
-                <h3>Combine & Method</h3>
-                <p>Follow real cooking theories. Mix the specific ingredient images together to create your recipe base.</p>
-            </div>
-            <div class="card reveal">
-                <div class="icon-box">
-                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                </div>
-                <h3>See the Result</h3>
-                <p>Your final dish image is generated exclusively based on the exact combination you cooked up.</p>
-            </div>
-        </div>
-    </section>
+                    <li class="nav-item-dropdown">
+                        <div class="nav-link-wrap">
+                            <a href="./about/about.html">About <span
+                                    class="desktop-arrow">&blacktriangledown;</span></a>
+                            <svg class="chevron desktop-hidden"
+                                viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"><polyline
+                                    points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
+                        <div class="dropdown-menu">
+                            <a href="./about/about.html#about-game">game</a>
+                            <a href="./about/about.html#dev">developer</a>
+                        </div>
+                    </li>
 
-    <!-- INGREDIENTS SLIDER SECTION -->
-    <section class="ingredients-section" id="ingredients">
-        <span class="section-tag">Pantry Elements</span>
-        <h2 class="section-title reveal">Main Ingredients</h2>
-        <p class="reveal" style="color: var(--text-muted); max-width: 600px;">Explore the high-quality, fresh components that form the base of every great recipe. Combine these foundational visual items to unlock new culinary paths.</p>
-        
-        <div class="carousel-container reveal" id="carouselWrapper">
-            <div class="carousel-track" id="ingredientTrack">
-                <div class="carousel-item">
-                    <img src="./imgs/ingredients/tomato.png" alt="Tomato">
-                    <h4>Fresh Tomato</h4>
-                </div>
-                <div class="carousel-item">
-                    <img src="./imgs/ingredients/white-onion.png" alt="Onion">
-                    <h4>White Onion</h4>
-                </div>
-                <div class="carousel-item">
-                    <img src="./imgs/ingredients/garlic.png" alt="Garlic">
-                    <h4>Clove of Garlic</h4>
-                </div>
-                <div class="carousel-item">
-                    <img src="./imgs/ingredients/olive-oil.png" alt="Olive Oil">
-                    <h4>Olive Oil</h4>
-                </div>
-                <div class="carousel-item">
-                    <img src="./imgs/ingredients/beef-steak.png" alt="Beef Steak">
-                    <h4>Raw Beef Cut</h4>
-                </div>
-                <div class="carousel-item">
-                    <img src="./imgs/ingredients/basil.png" alt="Basil">
-                    <h4>Fresh Basil</h4>
-                </div>
-                <div class="carousel-item">
-                    <img src="./imgs/ingredients/cheese.png" alt="Cheese">
-                    <h4>Aged Cheese</h4>
-                </div>
-                <div class="carousel-item">
-                    <img src="./imgs/ingredients/egg.png" alt="Egg">
-                    <h4>Farm Egg</h4>
-                </div>
-            </div>
-        </div>
-        
-        <div class="carousel-controls reveal">
-            <button class="carousel-btn" onclick="moveCarousel(-1)">&#8592;</button>
-            <button class="carousel-btn" onclick="moveCarousel(1)">&#8594;</button>
-        </div>
-    </section>
-
-    <!-- POPULAR RECIPES SECTION -->
-    <section class="recipes-section" id="recipes">
-        <span class="section-tag">Masterpieces</span>
-        <h2 class="section-title reveal">Popular Recipes</h2>
-        
-        <div class="recipe-grid">
-            <div class="recipe-card reveal">
-                <img src="./imgs/menu/mohinga.png" alt="Mohinga">
-                <div class="recipe-overlay">
-                    <h3>Mohinga</h3>
-                    <p>Myanmar's beloved rice noodle and fish soup, enriched with lemongrass and crispy fritters.</p>
-                    <a href="learn.html#mohinga" class="recipe-btn">Learn</a>
-                </div>
-            </div>
-            
-            <div class="recipe-card reveal">
-                <img src="./imgs/menu/lahpet thoke.png" alt="Lahpet Thoke">
-                <div class="recipe-overlay">
-                    <h3>Lahpet Thoke</h3>
-                    <p>A unique, savory fermented tea leaf salad mixed with crunchy roasted peanuts and fried garlic.</p>
-                    <a href="learn.html#lahpet-thoke" class="recipe-btn">Learn</a>
-                </div>
-            </div>
-            
-            <div class="recipe-card reveal">
-                <img src="./imgs/menu/bistrox-signature.png" alt="BISTROX Signature Soup">
-                <div class="recipe-overlay">
-                    <h3>BISTROX's Signature Soup</h3>
-                    <p>Our exclusive, closely-guarded recipe featuring a perfect blend of rich, comforting flavors.</p>
-                    <a href="learn.html#signature-soup" class="recipe-btn">Learn</a>
-                </div>
-            </div>
-            
-            <div class="recipe-card reveal">
-                <img src="./imgs/menu/steak.png" alt="Grilled Ribeye">
-                <div class="recipe-overlay">
-                    <h3>Garlic Butter Steak</h3>
-                    <p>Premium beef cut elevated with crushed garlic, butter, and high heat.</p>
-                    <a href="learn.html#steak" class="recipe-btn">Learn</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="dev-section" id="dev">
-        <div class="dev-image-container reveal">
-            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 250'><rect width='250' height='250' fill='%23E5E5E5'/><path d='M125 125c22.091 0 40-17.909 40-40s-17.909-40-40-40-40 17.909-40 40 17.909 40 40 40zm0 20c-26.667 0-80 13.333-80 40v20h160v-20c0-26.667-53.333-40-80-40z' fill='%23b08d57'/></svg>" alt="Developer Profile" class="dev-profile-img">
-        </div>
-        <div class="dev-info reveal">
-            <span class="section-tag">Lead Developer</span>
-            <h2 class="section-title">Htet Zaw Paing</h2>
-            <p>BistroX is built purely with HTML, CSS, and JavaScript. No external libraries, just efficient code and a passion for interactive web experiences.</p>
-            
-            <div class="dev-stats">
-                <div class="stat-item">
-                    <h4>Qualification</h4>
-                    <p>B.Sc. Computer Science</p>
-                </div>
-                <div class="stat-item">
-                    <h4>University</h4>
-                    <p>Edinburgh Napier University</p>
-                </div>
-                <div class="stat-item">
-                    <h4>Location</h4>
-                    <p>Yangon, Myanmar</p>
-                </div>
-                <div class="stat-item">
-                    <h4>Alumni</h4>
-                    <p>Info Myanmar University</p>
-                </div>
-            </div>
-        </div>
-        <div class="dev-quote-container reveal">
-            <div style="padding: 3.5rem; border-left: 2px solid var(--primary); background: #fafafa; text-align: left;">
-                <p style="font-family: var(--font-accent); font-style: italic; font-size: 1.8rem; line-height: 1.4; color: var(--secondary);">"Combining pure web development with the joy of cooking. Everything is built to be fast, responsive, and fun."</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- CONTACT SECTION -->
-    <section class="contact-section" id="contact">
-        <div class="contact-info reveal">
-            <span class="section-tag">Help & Support</span>
-            <h2 class="section-title" style="margin-bottom: 1rem;">Get In Touch</h2>
-            <p>Have a new recipe idea? Found a bug in the kitchen? Or just want to say hi? Send me a message directly, and I'll get back to you as soon as possible.</p>
-            <ul style="list-style: none; margin-top: 2rem;">
-                <li style="margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; color: var(--secondary);">
-                    <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: var(--primary);"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                    contact@htetzawpaing.site
-                </li>
-                <li style="display: flex; align-items: center; gap: 10px; color: var(--secondary);">
-                    <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: var(--primary);"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                    Yangon, Myanmar
-                </li>
-            </ul>
-        </div>
-        
-        <div class="contact-form-container reveal">
-            <h3 style="margin-bottom: 1.5rem; font-size: 1.5rem;">Send a Message</h3>
-            <div class="input-group">
-                <label>Your Name</label>
-                <input type="text" id="contactName" placeholder="Chef Name">
-            </div>
-            <div class="input-group">
-                <label>Message / Idea / Bug Report</label>
-                <textarea id="contactMessage" placeholder="What's cooking?"></textarea>
-            </div>
-            <button class="cta-btn" onclick="sendEmail()" style="width: 100%;">Send via Email App</button>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-grid">
-            
-            <div>
-                <h4 class="footer-title">Game Info</h4>
-                <ul class="footer-links">
-                    <li><a href="#" onclick="openAuthModal('register')">Register to Play</a></li>
-                    <li><a href="#" onclick="openAuthModal('login')">Log In</a></li>
-                    <li><a href="./learn/learn.html#recipes">Recipe Theories</a></li>
-                    <li><a href="#ingredients">Ingredients List</a></li>
-                    <li><a href="#contact">Submit Idea</a></li>
+                    <li class="nav-item-dropdown">
+                        <div class="nav-link-wrap">
+                            <a href="./learn/learn.html">Learn <span
+                                    class="desktop-arrow">&blacktriangledown;</span></a>
+                            <svg class="chevron desktop-hidden"
+                                viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"><polyline
+                                    points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
+                        <div class="dropdown-menu">
+                            <a href="./learn/learn.html#recipes">Recipes</a>
+                            <a href="./learn/learn.html#game">Game</a>
+                        </div>
+                    </li>
+                    <li class="nav-item-dropdown">
+                        <div class="nav-link-wrap">
+                            <a href="./support/support.html">Support <span
+                                    class="desktop-arrow">&blacktriangledown;</span></a>
+                            <svg class="chevron desktop-hidden"
+                                viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"><polyline
+                                    points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
+                        <div class="dropdown-menu">
+                            <a href="./support/support.html">Chat Assistant</a>
+                            <a href="./faqs/faqs.html">FAQs</a>
+                        </div>
+                    </li>
                 </ul>
-            </div>
 
-            <div>
-                <h4 class="footer-title">Privacy</h4>
-                <ul class="footer-links">
-                    <li><a href="./terms-conditions/terms-conditions.html#terms">Terms of Use</a></li>
-                    <li><a href="./terms-conditions/terms-conditions.html#privacy">Data Privacy</a></li>
-                    <li><a href="./terms-conditions/terms-conditions.html#local-storage">Local Storage Info</a></li>
-                    <li><a href="./terms-conditions/terms-conditions.html#cookies">Browser Cookies</a></li>
-                </ul>
-            </div>
+                <div class="mobile-utils desktop-hidden">
+                    <div class="mobile-util-item show-on-guest-flex"
+                        id="mobGuestLogin" onclick="openAuthModal('login')">
+                        <span>Login</span>
+                        <svg viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"><path
+                                d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle
+                                cx="12" cy="7" r="4"></circle></svg>
+                    </div>
+                    <div class="mobile-util-item show-on-guest-flex"
+                        id="mobGuestReg" onclick="openAuthModal('register')">
+                        <span>Register</span>
+                        <svg viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"><path
+                                d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle
+                                cx="8.5" cy="7" r="4"></circle><line x1="20"
+                                y1="8" x2="20" y2="14"></line><line x1="23"
+                                y1="11" x2="17" y2="11"></line></svg>
+                    </div>
+                    <div class="mobile-util-item show-on-user-flex"
+                        id="mobUserLabel">
+                        <span id="mobUserName">User: ...</span>
+                        <svg viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"><path
+                                d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle
+                                cx="12" cy="7" r="4"></circle></svg>
+                    </div>
+                    <div class="mobile-util-item show-on-user-flex"
+                        id="mobLogout" onclick="handleLogout()">
+                        <span style="color: #d93025;">Log Out</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#d93025"
+                            stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round"><path
+                                d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline
+                                points="16 17 21 12 16 7"></polyline><line
+                                x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </div>
+                </div>
 
-            <div>
-                <h4 class="footer-title">Links</h4>
-                <ul class="footer-links">
-                    <li><a href="https://www.htetzawpaing.site" target="_blank">Developer</a></li>
-                    <li><a href="../learn/learn.html">How to Play Guide</a></li>
-                    <li><a href="../faqs/faqs.html">FAQ's</a></li>
-                    <li><a href="../credits/credits.html">Credits</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-logo-block">
-                <a href="#" class="footer-logo">
-                    <img src="./imgs/web-banners/logo.png" alt="BistroX Logo" style="width: 32px; height: 32px; object-fit: contain;">
-                    <div class="logo-text">BISTRO<span>X</span></div>
-                </a>
-                <p class="footer-slogan">"Master the ingredients. Discover the recipe."</p>
-                <p class="footer-desc">An interactive image-based cooking game. Save your combinations locally and master every recipe.</p>
-                
-                <h4 class="footer-title" style="margin-bottom: 1rem; margin-top: 1rem;">Follow Us</h4>
-                <div class="social-icons">
-                    <a href="https://github.com" target="_blank" class="social-icon">
+                <div class="mobile-socials desktop-hidden">
+                    <a href="https://github.com" target="_blank"
+                        class="social-icon">
                         <!-- GitHub Icon -->
-                        <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                        <svg viewBox="0 0 24 24"><path
+                                d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" /></svg>
                     </a>
-                    <a href="https://linkedin.com" target="_blank" class="social-icon">
+                    <a href="https://linkedin.com" target="_blank"
+                        class="social-icon">
                         <!-- LinkedIn Icon -->
-                        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                        <svg viewBox="0 0 24 24"><path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
                     </a>
                     <a href="#" target="_blank" class="social-icon">
                         <!-- Twitter/X Icon -->
-                        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        <svg viewBox="0 0 24 24"><path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
                     </a>
                 </div>
-            </div>
-            
-        </div>
-        
-        <div class="copyright-flex">
-            <div>&copy; 2026 BistroX Systems. All Rights Reserved.</div>
-        </div>
-    </footer>
+            </nav>
 
-    <script>
+            <div class="header-actions">
+                <!-- Desktop Auth -->
+                <div id="guestActions" class="show-on-guest-flex desktop-only"
+                    style="gap: 0.5rem; align-items: center;">
+                    <button class="cta-btn btn-text"
+                        onclick="openAuthModal('login')">
+                        <svg viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"><path
+                                d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle
+                                cx="12" cy="7" r="4"></circle></svg>
+                        Login
+                    </button>
+                    <button class="cta-btn btn-outline"
+                        onclick="openAuthModal('register')">
+                        <svg viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"><path
+                                d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle
+                                cx="8.5" cy="7" r="4"></circle><line x1="20"
+                                y1="8" x2="20" y2="14"></line><line x1="23"
+                                y1="11" x2="17" y2="11"></line></svg>
+                        Register
+                    </button>
+                </div>
+
+                <button class="cta-btn" id="playBtn"
+                    onclick="handlePlayNow()">Play Now</button>
+
+                <!-- Desktop User -->
+                <div class="user-menu show-on-user desktop-only" id="userMenu">
+                    <button class="user-icon-btn"
+                        onclick="toggleUserDropdown()">
+                        <svg viewBox="0 0 24 24"><path
+                                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" /></svg>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-dropdown-header">
+                            <p id="displayUser">User: Loading...</p>
+                        </div>
+                        <a href="#" class="dropdown-link logout-btn"
+                            onclick="handleLogout()">Log Out</a>
+                    </div>
+                </div>
+
+                <!-- Hamburger -->
+                <div class="hamburger" id="hamburgerBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </header>
+
+        <section class="hero" id="hero">
+            <div class="hero-content">
+                <span class="section-tag">Visual Cooking Game</span>
+                <h1>Combine. Cook.<br>Discover.</h1>
+                <p>An interactive image-based cooking game. Select visual
+                    ingredients, experiment with real cooking methods, and
+                    discover new dishes based entirely on your specific image
+                    combinations.</p>
+                <div style="display: flex; gap: 1.5rem;">
+                    <button class="cta-btn" onclick="handlePlayNow()">Start
+                        Cooking</button>
+                    <a href="#mechanics" class="cta-btn btn-outline"
+                        style="background: transparent; color: var(--secondary);">How
+                        it Works</a>
+                </div>
+            </div>
+
+            <div class="hero-graphics" id="egg">
+                <!-- The Egg -->
+                <div class="hero-visual">
+                    <div class="parallax-wrap yolk-wrap">
+                        <div class="egg-yolk"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Metrics Section -->
+        <section class="metrics reveal">
+            <div class="container">
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <h2>Visual</h2>
+                        <p>Image-Based Items</p>
+                    </div>
+                    <div class="metric-item">
+                        <h2>Local</h2>
+                        <p>Saved In-Browser</p>
+                    </div>
+                    <div class="metric-item">
+                        <h2>Mix</h2>
+                        <p>Endless Combos</p>
+                    </div>
+                    <div class="metric-item">
+                        <h2>Free</h2>
+                        <p>Pure Web Game</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="gameplay" id="mechanics">
+            <span class="section-tag">Gameplay Mechanics</span>
+            <h2 class="section-title reveal">The Art of Visual Cooking</h2>
+            <p class="reveal"
+                style="color: var(--text-muted); max-width: 600px;">BistroX
+                relies entirely on your choices. Select images from your pantry
+                and combine them to reveal the final dish.</p>
+
+            <div class="grid">
+                <div class="card reveal">
+                    <div class="icon-box">
+                        <svg viewBox="0 0 24 24"><path
+                                d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71L12 2z" /></svg>
+                    </div>
+                    <h3>Choose Ingredients</h3>
+                    <p>Pick from a visual pantry of image-based items, like
+                        fresh onions, specific oils, and raw meats.</p>
+                </div>
+                <div class="card reveal">
+                    <div class="icon-box">
+                        <svg viewBox="0 0 24 24"><path
+                                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" /></svg>
+                    </div>
+                    <h3>Combine & Method</h3>
+                    <p>Follow real cooking theories. Mix the specific ingredient
+                        images together to create your recipe base.</p>
+                </div>
+                <div class="card reveal">
+                    <div class="icon-box">
+                        <svg viewBox="0 0 24 24"><path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>
+                    </div>
+                    <h3>See the Result</h3>
+                    <p>Your final dish image is generated exclusively based on
+                        the exact combination you cooked up.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- INGREDIENTS SLIDER SECTION -->
+        <section class="ingredients-section" id="ingredients">
+            <span class="section-tag">Pantry Elements</span>
+            <h2 class="section-title reveal">Main Ingredients</h2>
+            <p class="reveal"
+                style="color: var(--text-muted); max-width: 600px;">Explore the
+                high-quality, fresh components that form the base of every great
+                recipe. Combine these foundational visual items to unlock new
+                culinary paths.</p>
+
+            <div class="carousel-container reveal" id="carouselWrapper">
+                <div class="carousel-track" id="ingredientTrack">
+                    <div class="carousel-item">
+                        <img src="./imgs/ingredients/tomato.png" alt="Tomato">
+                        <h4>Fresh Tomato</h4>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./imgs/ingredients/white-onion.png"
+                            alt="Onion">
+                        <h4>White Onion</h4>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./imgs/ingredients/garlic.png" alt="Garlic">
+                        <h4>Clove of Garlic</h4>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./imgs/ingredients/olive-oil.png"
+                            alt="Olive Oil">
+                        <h4>Olive Oil</h4>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./imgs/ingredients/beef-steak.png"
+                            alt="Beef Steak">
+                        <h4>Raw Beef Cut</h4>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./imgs/ingredients/basil.png" alt="Basil">
+                        <h4>Fresh Basil</h4>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./imgs/ingredients/cheese.png" alt="Cheese">
+                        <h4>Aged Cheese</h4>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./imgs/ingredients/egg.png" alt="Egg">
+                        <h4>Farm Egg</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-controls reveal">
+                <button class="carousel-btn"
+                    onclick="moveCarousel(-1)">&#8592;</button>
+                <button class="carousel-btn"
+                    onclick="moveCarousel(1)">&#8594;</button>
+            </div>
+        </section>
+
+        <!-- POPULAR RECIPES SECTION -->
+        <section class="recipes-section" id="recipes">
+            <span class="section-tag">Masterpieces</span>
+            <h2 class="section-title reveal">Popular Recipes</h2>
+
+            <div class="recipe-grid">
+                <div class="recipe-card reveal">
+                    <img src="./imgs/menu/mohinga.png" alt="Mohinga">
+                    <div class="recipe-overlay">
+                        <h3>Mohinga</h3>
+                        <p>Myanmar's beloved rice noodle and fish soup, enriched
+                            with lemongrass and crispy fritters.</p>
+                        <a href="learn.html#mohinga"
+                            class="recipe-btn">Learn</a>
+                    </div>
+                </div>
+
+                <div class="recipe-card reveal">
+                    <img src="./imgs/menu/lahpet thoke.png" alt="Lahpet Thoke">
+                    <div class="recipe-overlay">
+                        <h3>Lahpet Thoke</h3>
+                        <p>A unique, savory fermented tea leaf salad mixed with
+                            crunchy roasted peanuts and fried garlic.</p>
+                        <a href="learn.html#lahpet-thoke"
+                            class="recipe-btn">Learn</a>
+                    </div>
+                </div>
+
+                <div class="recipe-card reveal">
+                    <img src="./imgs/menu/bistrox-signature.png"
+                        alt="BISTROX Signature Soup">
+                    <div class="recipe-overlay">
+                        <h3>BISTROX's Signature Soup</h3>
+                        <p>Our exclusive, closely-guarded recipe featuring a
+                            perfect blend of rich, comforting flavors.</p>
+                        <a href="learn.html#signature-soup"
+                            class="recipe-btn">Learn</a>
+                    </div>
+                </div>
+
+                <div class="recipe-card reveal">
+                    <img src="./imgs/menu/steak.png" alt="Grilled Ribeye">
+                    <div class="recipe-overlay">
+                        <h3>Garlic Butter Steak</h3>
+                        <p>Premium beef cut elevated with crushed garlic,
+                            butter, and high heat.</p>
+                        <a href="learn.html#steak" class="recipe-btn">Learn</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="dev-section" id="dev">
+            <div class="dev-image-container reveal">
+                <img
+                    src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 250'><rect width='250' height='250' fill='%23E5E5E5'/><path d='M125 125c22.091 0 40-17.909 40-40s-17.909-40-40-40-40 17.909-40 40 17.909 40 40 40zm0 20c-26.667 0-80 13.333-80 40v20h160v-20c0-26.667-53.333-40-80-40z' fill='%23b08d57'/></svg>"
+                    alt="Developer Profile" class="dev-profile-img">
+            </div>
+            <div class="dev-info reveal">
+                <span class="section-tag">Lead Developer</span>
+                <h2 class="section-title">Htet Zaw Paing</h2>
+                <p>BistroX is built purely with HTML, CSS, and JavaScript. No
+                    external libraries, just efficient code and a passion for
+                    interactive web experiences.</p>
+
+                <div class="dev-stats">
+                    <div class="stat-item">
+                        <h4>Qualification</h4>
+                        <p>B.Sc. Computer Science</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>University</h4>
+                        <p>Edinburgh Napier University</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>Location</h4>
+                        <p>Yangon, Myanmar</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>Alumni</h4>
+                        <p>Info Myanmar University</p>
+                    </div>
+                </div>
+            </div>
+            <div class="dev-quote-container reveal">
+                <div
+                    style="padding: 3.5rem; border-left: 2px solid var(--primary); background: #fafafa; text-align: left;">
+                    <p
+                        style="font-family: var(--font-accent); font-style: italic; font-size: 1.8rem; line-height: 1.4; color: var(--secondary);">"Combining pure web development with the joy of cooking. Everything is built to be fast, responsive, and fun."</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section class="contact-section" id="contact">
+            <div class="contact-info reveal">
+                <span class="section-tag">Help & Support</span>
+                <h2 class="section-title" style="margin-bottom: 1rem;">Get In
+                    Touch</h2>
+                <p>Have a new recipe idea? Found a bug in the kitchen? Or just
+                    want to say hi? Send me a message directly, and I'll get
+                    back to you as soon as possible.</p>
+                <ul style="list-style: none; margin-top: 2rem;">
+                    <li
+                        style="margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; color: var(--secondary);">
+                        <svg viewBox="0 0 24 24"
+                            style="width: 20px; height: 20px; fill: var(--primary);"><path
+                                d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" /></svg>
+                        contact@htetzawpaing.site
+                    </li>
+                    <li
+                        style="display: flex; align-items: center; gap: 10px; color: var(--secondary);">
+                        <svg viewBox="0 0 24 24"
+                            style="width: 20px; height: 20px; fill: var(--primary);"><path
+                                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" /></svg>
+                        Yangon, Myanmar
+                    </li>
+                </ul>
+            </div>
+
+            <div class="contact-form-container reveal">
+                <h3 style="margin-bottom: 1.5rem; font-size: 1.5rem;">Send a
+                    Message</h3>
+                <div class="input-group">
+                    <label>Your Name</label>
+                    <input type="text" id="contactName" placeholder="Chef Name">
+                </div>
+                <div class="input-group">
+                    <label>Message / Idea / Bug Report</label>
+                    <textarea id="contactMessage"
+                        placeholder="What's cooking?"></textarea>
+                </div>
+                <button class="cta-btn" onclick="sendEmail()"
+                    style="width: 100%;">Send via Email App</button>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-grid">
+
+                <div>
+                    <h4 class="footer-title">Game Info</h4>
+                    <ul class="footer-links">
+                        <li><a href="#"
+                                onclick="openAuthModal('register')">Register to
+                                Play</a></li>
+                        <li><a href="#" onclick="openAuthModal('login')">Log
+                                In</a></li>
+                        <li><a href="./learn/learn.html#recipes">Recipe
+                                Theories</a></li>
+                        <li><a href="#ingredients">Ingredients List</a></li>
+                        <li><a href="#contact">Submit Idea</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Privacy</h4>
+                    <ul class="footer-links">
+                        <li><a
+                                href="./terms-conditions/terms-conditions.html#terms">Terms
+                                of Use</a></li>
+                        <li><a
+                                href="./terms-conditions/terms-conditions.html#privacy">Data
+                                Privacy</a></li>
+                        <li><a
+                                href="./terms-conditions/terms-conditions.html#local-storage">Local
+                                Storage Info</a></li>
+                        <li><a
+                                href="./terms-conditions/terms-conditions.html#cookies">Browser
+                                Cookies</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://www.htetzawpaing.site"
+                                target="_blank">Developer</a></li>
+                        <li><a href="../learn/learn.html">How to Play
+                                Guide</a></li>
+                        <li><a href="../faqs/faqs.html">FAQ's</a></li>
+                        <li><a href="../credits/credits.html">Credits</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-logo-block">
+                    <a href="#" class="footer-logo">
+                        <img src="./imgs/web-banners/logo.png"
+                            alt="BistroX Logo"
+                            style="width: 32px; height: 32px; object-fit: contain;">
+                        <div class="logo-text">BISTRO<span>X</span></div>
+                    </a>
+                    <p
+                        class="footer-slogan">"Master the ingredients. Discover the recipe."</p>
+                    <p class="footer-desc">An interactive image-based cooking
+                        game. Save your combinations locally and master every
+                        recipe.</p>
+
+                    <h4 class="footer-title"
+                        style="margin-bottom: 1rem; margin-top: 1rem;">Follow
+                        Us</h4>
+                    <div class="social-icons">
+                        <a href="https://github.com" target="_blank"
+                            class="social-icon">
+                            <!-- GitHub Icon -->
+                            <svg viewBox="0 0 24 24"><path
+                                    d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" /></svg>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank"
+                            class="social-icon">
+                            <!-- LinkedIn Icon -->
+                            <svg viewBox="0 0 24 24"><path
+                                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
+                        </a>
+                        <a href="#" target="_blank" class="social-icon">
+                            <!-- Twitter/X Icon -->
+                            <svg viewBox="0 0 24 24"><path
+                                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="copyright-flex">
+                <div>&copy; 2026 BistroX Systems. All Rights Reserved.</div>
+            </div>
+        </footer>
+
+        <script>
         /* --- REAL-TIME ASSET PRELOADER ENGINE --- */
         window.addEventListener('load', () => {
             const loader = document.getElementById('globalLoader');
@@ -2319,5 +2508,5 @@
             });
         });
     </script>
-</body>
+    </body>
 </html>
