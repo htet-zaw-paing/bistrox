@@ -8,49 +8,80 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600;700;800&display=swap');
 
-        /* --- Enterprise Game Design System (Light/Bread Theme) --- */
+        /* --- GLOBAL FONT SCALING (Real-time Reactive) --- */
+        html.font-size-small { font-size: 13px !important; }
+        html.font-size-medium { font-size: 16px !important; }
+        html.font-size-large { font-size: 20px !important; }
+
+        /* --- Enterprise Game Design System (Dynamic Variables for Themes) --- */
         :root {
-            --primary: #C5A059; /* BistroX Gold */
-            --secondary: #1A1A1A; /* Deep Charcoal */
+            --primary: #C5A059; 
+            --secondary: #1A1A1A; 
             --accent: #E5E5E5;
             --white: #ffffff;
+            --danger: #E63946;
             --transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
             --font-main: 'Inter', system-ui, -apple-system, sans-serif;
             --font-geo: 'Jost', system-ui, sans-serif;
             
-            /* Game Specific Variables - Light Edition */
-            --game-bg: #FDFBF7; /* Warm bread/off-white */
-            --game-panel: #FFFFFF; /* Pure white panels */
-            --game-border: #E8E3D9; /* Soft beige border */
-            --game-text: #2C2C2C; /* Dark text for readability */
-            --game-text-muted: #737373; /* Muted dark gray */
+            /* Game Specific Variables - Defaults to Classic Light Theme */
+            --game-bg: #FDFBF7; 
+            --game-panel: #FFFFFF; 
+            --game-border: #E8E3D9; 
+            --game-text: #2C2C2C; 
+            --game-text-muted: #737373; 
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body { 
+        body { 
             width: 100vw; height: 100vh; overflow: hidden; 
             background-color: var(--game-bg); color: var(--game-text);
             font-family: var(--font-main);
             -webkit-font-smoothing: antialiased;
+            transition: background-color 0.5s, color 0.5s;
         }
 
         h1, h2, h3, h4 { font-family: var(--font-geo); font-weight: 700; letter-spacing: 1px; margin: 0; }
         button { font-family: inherit; outline: none; }
 
-        /* --- Global Elements (Toast, Loader) --- */
+        /* --- Global Elements (Toast, Loader, Balance) --- */
         #toastContainer { position: fixed; bottom: 40px; right: 40px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
-        .toast { background: var(--white); color: var(--secondary); padding: 1.2rem 2rem; border-left: 3px solid var(--primary); box-shadow: 0 20px 40px rgba(0,0,0,0.08); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; animation: toastIn 0.5s var(--transition) forwards; min-width: 300px; pointer-events: auto; font-family: var(--font-geo); border: 1px solid var(--game-border); border-left: 4px solid var(--primary); }
+        .toast { background: var(--game-panel); color: var(--game-text); padding: 1.2rem 2rem; border-left: 3px solid var(--primary); box-shadow: 0 20px 40px rgba(0,0,0,0.15); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; animation: toastIn 0.5s var(--transition) forwards; min-width: 300px; pointer-events: auto; font-family: var(--font-geo); border: 1px solid var(--game-border); border-left: 4px solid var(--primary); }
         @keyframes toastIn { from { opacity: 0; transform: translateX(100px); } to { opacity: 1; transform: translateX(0); } }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         .reveal { opacity: 0; transform: translateY(30px); transition: var(--transition); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
+        /* Balance UI */
+        .balance-badge {
+            background: rgba(197, 160, 89, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            font-family: var(--font-geo);
+            font-weight: 800;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(197, 160, 89, 0.15);
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+        }
+        .balance-badge:hover {
+            transform: translateY(-2px);
+            background: var(--primary);
+            color: var(--white);
+        }
+
         .loader-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--game-bg); z-index: 999999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), visibility 0.8s; }
         .loader-container.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
         .pan-wrapper { position: relative; width: 200px; height: 150px; }
         .pan { position: absolute; bottom: 20px; left: 40px; transform-origin: 0% 50%; animation: panToss 1.2s ease-in-out infinite; }
-        .pan-base { width: 80px; height: 25px; background: var(--secondary); border-radius: 0 0 20px 20px; box-shadow: inset -5px -5px 10px rgba(0,0,0,0.3); }
+        .pan-base { width: 80px; height: 25px; background: var(--secondary); border-radius: 0 0 20px 20px; box-shadow: inset -5px -5px 10px rgba(0,0,0,0.3); transition: background 0.5s; }
         .pan-handle { position: absolute; top: 5px; right: 100%; width: 60px; height: 10px; background: #999; border-radius: 10px 0 0 10px; }
         .food { position: absolute; bottom: 35px; left: 65px; width: 25px; height: 25px; background: var(--primary); border-radius: 50%; animation: foodFlip 1.2s ease-in-out infinite; box-shadow: 0 5px 15px rgba(197, 160, 89, 0.4); }
         @keyframes panToss { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-15deg); } }
@@ -59,10 +90,10 @@
         .loader-slogan span { color: var(--primary); font-weight: 700; }
         @keyframes pulseText { 0% { opacity: 0.5; } 100% { opacity: 1; } }
 
-        /* Custom Scrollbar */
+        /* Custom Scrollbar for generic elements */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #D1CBBB; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: var(--game-border); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
         /* --- GAME ENGINE CSS --- */
@@ -72,17 +103,17 @@
         .game-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; flex-direction: column; background: var(--game-bg); animation: fadeIn 0.5s ease-out forwards; }
         .game-screen.active { display: flex; }
 
-        .game-header { padding: 2rem 4rem; background: rgba(255, 255, 255, 0.95); border-bottom: 1px solid var(--game-border); display: flex; justify-content: space-between; align-items: center; z-index: 10; }
+        .game-header { padding: 2rem 4rem; background: var(--game-panel); border-bottom: 1px solid var(--game-border); display: flex; justify-content: space-between; align-items: center; z-index: 10; transition: background 0.5s;}
         .game-header h2 { font-size: 1.2rem; color: var(--secondary); text-transform: uppercase; letter-spacing: 4px; font-weight: 600;}
-        .game-close-btn { background: transparent; border: 1px solid var(--game-border); color: var(--secondary); cursor: pointer; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 3px; font-family: var(--font-geo); transition: var(--transition); padding: 0.8rem 2rem; border-radius: 4px; font-weight: 600; }
-        .game-close-btn:hover { color: var(--white); background: var(--secondary); border-color: var(--secondary); }
+        .game-close-btn { background: transparent; border: 1px solid var(--game-border); color: var(--secondary); cursor: pointer; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 3px; font-family: var(--font-geo); transition: var(--transition); padding: 0.8rem 2rem; border-radius: 30px; font-weight: 600; }
+        .game-close-btn:hover { color: var(--game-bg); background: var(--secondary); border-color: var(--secondary); }
 
         /* --- NEW CINEMATIC FULLSCREEN MAIN MENU --- */
         .main-menu { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-left: 8%; background: url('https://images.unsplash.com/photo-1495521821757-a1efb6729352?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat; }
-        .menu-gradient-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(to right, rgba(253,251,247,0.98) 0%, rgba(253,251,247,0.9) 35%, rgba(253,251,247,0.1) 65%, transparent 100%); z-index: 1; pointer-events: none; }
+        .menu-gradient-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(to right, var(--game-bg) 0%, var(--game-bg) 35%, transparent 100%); z-index: 1; pointer-events: none; opacity: 0.95; transition: background 0.5s;}
         .menu-container { position: relative; z-index: 2; display: flex; flex-direction: row; align-items: center; justify-content: flex-start; gap: 8rem; max-width: 1200px; }
         .menu-brand-block { display: flex; flex-direction: column; width: 100%; max-width: 450px; }
-        .brand-tag { display: inline-block; border: 1px solid var(--primary); padding: 0.4rem 1.5rem; border-radius: 4px; font-family: var(--font-geo); font-size: 0.65rem; color: var(--primary); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 2rem; background: rgba(197, 160, 89, 0.1); backdrop-filter: blur(5px); width: fit-content; font-weight: 700; }
+        .brand-tag { display: inline-block; border: 1px solid var(--primary); padding: 0.4rem 1.5rem; border-radius: 30px; font-family: var(--font-geo); font-size: 0.65rem; color: var(--primary); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 2rem; background: rgba(197, 160, 89, 0.1); backdrop-filter: blur(5px); width: fit-content; font-weight: 700; }
         .menu-brand h1 { font-family: var(--font-geo); font-size: 6.5rem; color: var(--secondary); line-height: 1.1; font-weight: 300; margin-bottom: 1.5rem; letter-spacing: -2px; }
         .menu-brand h1 strong { font-weight: 800; display: block; color: var(--primary); letter-spacing: 0; }
         .menu-brand p { font-family: var(--font-main); color: var(--game-text-muted); font-size: 1.05rem; line-height: 1.8; font-weight: 400; margin-bottom: 0; }
@@ -92,15 +123,23 @@
         .menu-btn::before { content: ''; position: absolute; left: -30px; top: 50%; transform: translateY(-50%); width: 0; height: 2px; background: var(--primary); transition: var(--transition); }
         .menu-btn:hover { color: var(--primary); padding-left: 20px; }
         .menu-btn:hover::before { width: 15px; left: -5px; }
-        .menu-btn.quit-btn { margin-top: 1.5rem; color: #a33b3b; }
-        .menu-btn.quit-btn:hover { color: #d93025; }
-        .menu-btn.quit-btn::before { background: #d93025; }
+        .menu-btn.quit-btn { margin-top: 1.5rem; color: var(--danger); }
+        .menu-btn.quit-btn:hover { color: #ff5252; }
+        .menu-btn.quit-btn::before { background: var(--danger); }
 
-        /* --- RECIPE / LEVEL SCREEN --- */
+        /* --- RECIPE / LEVEL SCREEN & LEADERBOARD TABS --- */
         .recipe-layout { display: flex; flex-direction: column; flex: 1; padding: 2rem 4rem; background: var(--game-bg); }
-        .difficulty-tabs { display: flex; gap: 2rem; margin-bottom: 3rem; border-bottom: 2px solid var(--game-border); padding-bottom: 1rem; flex-wrap: wrap;}
-        .diff-tab { background: transparent; border: none; color: var(--game-text-muted); font-family: var(--font-geo); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 3px; cursor: pointer; transition: var(--transition); padding: 0.5rem 1rem; position: relative; font-weight: 500; }
-        .diff-tab::after { content: ''; position: absolute; bottom: -1.15rem; left: 0; width: 0; height: 3px; background: var(--primary); transition: var(--transition); }
+        .difficulty-tabs { 
+            display: flex; gap: 2rem; margin-bottom: 3rem; border-bottom: 2px solid var(--game-border); padding-bottom: 1rem; 
+            flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; 
+        }
+        .difficulty-tabs::-webkit-scrollbar { display: none; }
+        .diff-tab { 
+            background: transparent; border: none; color: var(--game-text-muted); font-family: var(--font-geo); font-size: 0.95rem; 
+            text-transform: uppercase; letter-spacing: 3px; cursor: pointer; transition: var(--transition); padding: 0.5rem 1rem; 
+            position: relative; font-weight: 500; white-space: nowrap; flex-shrink: 0;
+        }
+        .diff-tab::after { content: ''; position: absolute; bottom: -1.15rem; left: 0; width: 0; height: 3px; background: var(--primary); transition: var(--transition); border-radius: 3px 3px 0 0;}
         .diff-tab:hover { color: var(--secondary); }
         .diff-tab.active { color: var(--secondary); font-weight: 800; }
         .diff-tab.active::after { width: 100%; }
@@ -109,9 +148,9 @@
         .recipe-grid { display: none; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 2.5rem; animation: fadeIn 0.4s ease-out; }
         .recipe-grid.active { display: grid; }
 
-        .level-card { background: var(--game-panel); border: 1px solid var(--game-border); border-radius: 4px; padding: 2.5rem 1.5rem; text-align: center; cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; box-shadow: 0 10px 20px rgba(0,0,0,0.02); }
-        .level-card:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 15px 30px rgba(197, 160, 89, 0.15); }
-        .level-card.locked { opacity: 0.6; cursor: not-allowed; background: #F5F3EC;}
+        .level-card { background: var(--game-panel); border: 1px solid var(--game-border); border-radius: 12px; padding: 2.5rem 1.5rem; text-align: center; cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; box-shadow: 0 10px 25px rgba(0,0,0,0.03); }
+        .level-card:hover { border-color: var(--primary); transform: translateY(-8px); box-shadow: 0 20px 40px rgba(197, 160, 89, 0.15); }
+        .level-card.locked { opacity: 0.6; cursor: not-allowed; background: var(--game-bg);}
         .level-card.locked:hover { transform: none; border-color: var(--game-border); box-shadow: 0 10px 20px rgba(0,0,0,0.02); }
         .lock-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.15; }
         .lock-icon svg { width: 50px; height: 50px; fill: var(--secondary); }
@@ -124,67 +163,133 @@
         .level-card p { font-family: var(--font-main); font-size: 0.75rem; color: var(--game-text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600;}
 
         /* --- PLAY INTERFACE --- */
-        .play-layout { display: flex; flex: 1; height: calc(100vh - 90px); }
+        .play-layout { display: flex; flex: 1; height: calc(100vh - 90px); position: relative; }
 
-        .cooking-zone { flex: 1.5; padding: 3rem 4rem 8rem; display: flex; flex-direction: column; border-right: 1px solid var(--game-border); background: var(--game-bg); overflow-y: auto;}
+        .cooking-zone { flex: 1; padding: 3rem 4rem 8rem; display: flex; flex-direction: column; background: var(--game-bg); overflow-y: auto; }
 
-        .goal-display { background: var(--white); padding: 1.5rem 2rem; border: 1px solid var(--game-border); border-radius: 4px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; box-shadow: 0 5px 20px rgba(0,0,0,0.02); }
+        /* Dynamic Inventory Panel Setup */
+        .inventory-panel { flex: none; width: 450px; min-width: 300px; max-width: 700px; background: var(--game-panel); display: flex; flex-direction: column; position: relative; z-index: 10; transition: background 0.5s;}
+        .inventory-panel.dragging { transition: none; user-select: none; }
+        
+        /* Resizer Drag Handle */
+        .resizer { width: 14px; background: var(--game-border); cursor: col-resize; display: flex; align-items: center; justify-content: center; transition: background 0.3s, width 0.3s; z-index: 15; position: relative; border-left: 1px solid rgba(0,0,0,0.05); border-right: 1px solid rgba(0,0,0,0.05);}
+        .resizer:hover, .resizer.dragging { background: rgba(197, 160, 89, 0.2); width: 18px; border-color: var(--primary); }
+        .resizer-grip { height: 40px; width: 4px; background: var(--game-text-muted); border-radius: 4px; transition: background 0.3s; }
+        .resizer:hover .resizer-grip, .resizer.dragging .resizer-grip { background: var(--primary); }
+
+        .goal-display { background: var(--game-panel); padding: 1.5rem 2rem; border: 1px solid var(--game-border); border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; box-shadow: 0 5px 25px rgba(0,0,0,0.03); transition: background 0.5s; }
         .goal-display h4 { color: var(--game-text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 0.5rem; font-weight: 600;}
         .goal-display p { font-size: 1.8rem; color: var(--secondary); margin: 0; font-family: var(--font-geo); font-weight: 800; letter-spacing: 1px;}
 
-        .staging-area { flex: 1; border: 2px dashed var(--primary); border-radius: 4px; display: flex; align-content: flex-start; justify-content: center; gap: 1rem; padding: 2.5rem 2rem; background: rgba(197, 160, 89, 0.03); position: relative; margin-bottom: 2rem; flex-wrap: wrap; transition: var(--transition); min-height: 250px;}
-        .staging-area::before { content: 'STAGING BOARD'; position: absolute; top: 1rem; left: 1rem; font-family: var(--font-geo); font-size: 0.7rem; color: var(--primary); letter-spacing: 4px; font-weight: 700; opacity: 0.5;}
+        /* --- PREP TABLE --- */
+        .staging-area { 
+            flex: 1; 
+            background: linear-gradient(145deg, var(--game-bg), var(--game-border));
+            border: 1px solid var(--game-border);
+            border-bottom: 12px solid var(--game-border);
+            border-radius: 16px; 
+            display: flex; align-content: flex-start; justify-content: center; gap: 1.5rem; 
+            padding: 3rem 2rem; 
+            position: relative; margin-bottom: 2rem; flex-wrap: wrap; transition: var(--transition); 
+            min-height: 280px;
+            box-shadow: inset 0 10px 30px rgba(255,255,255,0.05), 0 15px 35px rgba(0,0,0,0.05);
+        }
+        .staging-area::before { content: 'PREP TABLE'; position: absolute; top: 1.2rem; left: 1.5rem; font-family: var(--font-geo); font-size: 0.8rem; color: var(--game-text-muted); letter-spacing: 5px; font-weight: 800; opacity: 0.7;}
 
         .game-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
         
-        /* Base action button styling - applies universally */
-        .action-btn { background: var(--white); border: 1px solid var(--game-border); color: var(--secondary); padding: 1rem 1.5rem; font-family: var(--font-geo); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: var(--transition); border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
-        .action-btn:hover { background: var(--game-bg); border-color: var(--primary); color: var(--primary);}
-        .action-btn.primary { background: var(--primary); border-color: var(--primary); color: var(--white); box-shadow: 0 5px 15px rgba(197, 160, 89, 0.3);}
-        .action-btn.primary:hover { background: var(--secondary); border-color: var(--secondary); transform: translateY(-2px); }
+        .action-btn { background: var(--game-panel); border: 1px solid var(--game-border); color: var(--secondary); padding: 1rem 1.5rem; font-family: var(--font-geo); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1); border-radius: 30px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); }
+        .action-btn:hover { background: var(--game-bg); border-color: var(--primary); color: var(--primary); transform: translateY(-3px); box-shadow: 0 8px 20px rgba(197, 160, 89, 0.15);}
+        .action-btn.primary { background: var(--primary); border-color: var(--primary); color: var(--white); box-shadow: 0 8px 25px rgba(197, 160, 89, 0.4);}
+        .action-btn.primary:hover { background: var(--secondary); border-color: var(--secondary); transform: translateY(-4px); box-shadow: 0 12px 30px rgba(26, 26, 26, 0.3); color: var(--game-bg); }
         .action-btn.clear { background: var(--game-bg); }
-        .action-btn.clear:hover { background: rgba(217, 48, 37, 0.1); border-color: #d93025; color: #d93025; }
-        
-        /* Specifically target dock buttons to fill width */
+        .action-btn.clear:hover { background: rgba(230, 57, 70, 0.1); border-color: var(--danger); color: var(--danger); box-shadow: 0 8px 20px rgba(230, 57, 70, 0.15); }
         .game-actions .action-btn { flex: 1; min-width: 100px; }
 
-        /* Inventory Panel with Search & Categories */
-        .inventory-panel { flex: 1; max-width: 450px; background: var(--white); border-left: 1px solid var(--game-border); display: flex; flex-direction: column; }
-        
+        /* Inventory Panel Content */
         .pantry-header { padding: 2rem; border-bottom: 1px solid var(--game-border); background: var(--game-panel); }
-        .pantry-search { width: 100%; padding: 1rem 1.5rem; background: var(--game-bg); border: 1px solid var(--game-border); border-radius: 30px; color: var(--secondary); font-family: var(--font-main); font-size: 0.9rem; outline: none; transition: var(--transition); margin-bottom: 1.5rem;}
-        .pantry-search:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.1); }
+        .pantry-search { width: 100%; padding: 1rem 1.5rem; background: var(--game-bg); border: 1px solid var(--game-border); border-radius: 30px; color: var(--secondary); font-family: var(--font-main); font-size: 0.95rem; outline: none; transition: var(--transition); margin-bottom: 1.5rem;}
+        .pantry-search:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(197, 160, 89, 0.1); background: var(--game-panel); }
         
-        .pantry-categories { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.5rem; scrollbar-width: none; }
-        .cat-btn { background: transparent; border: 1px solid var(--game-border); color: var(--game-text-muted); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; transition: var(--transition); cursor: pointer;}
+        .pantry-categories-wrapper { display: flex; align-items: center; width: 100%; gap: 1rem; position: relative;}
+
+        .pantry-scroll-mask { flex: 1; overflow: hidden; position: relative; -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%); mask-image: linear-gradient(to right, black 85%, transparent 100%); }
+        .pantry-categories { display: flex; gap: 0.6rem; overflow-x: auto; padding-bottom: 12px; flex: 1; scroll-behavior: smooth; padding-right: 3rem; }
+        .pantry-categories::-webkit-scrollbar { display: block; height: 8px; }
+        .pantry-categories::-webkit-scrollbar-track { background: var(--game-bg); border-radius: 10px; border: 1px solid var(--game-border); }
+        .pantry-categories::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; border: 1px solid var(--game-bg); }
+        .pantry-categories::-webkit-scrollbar-thumb:hover { background: var(--secondary); }
+        
+        .pantry-fixed-prep { padding-left: 1rem; border-left: 2px solid var(--game-border); padding-bottom: 12px; flex-shrink: 0; z-index: 10; }
+        .cat-btn { background: transparent; border: 1px solid var(--game-border); color: var(--game-text-muted); padding: 0.6rem 1.2rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; transition: var(--transition); cursor: pointer;}
         .cat-btn.active, .cat-btn:hover { background: rgba(197, 160, 89, 0.1); color: var(--primary); border-color: var(--primary); }
 
-        .inventory-grid { flex: 1; overflow-y: auto; padding: 2rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 1rem; align-content: flex-start; }
+        .prepped-btn { background: var(--primary) !important; color: var(--white) !important; border-color: var(--primary) !important; font-weight: 800; animation: pulsePrepped 2s infinite; }
+        @keyframes pulsePrepped { 0% { box-shadow: 0 0 0 0 rgba(197, 160, 89, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(197, 160, 89, 0); } 100% { box-shadow: 0 0 0 0 rgba(197, 160, 89, 0); } }
 
-        .item-slot { background: var(--game-bg); border: 1px solid var(--game-border); border-radius: 4px; aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); position: relative; padding: 10px; user-select: none;}
-        .item-slot:hover { border-color: var(--primary); background: var(--white); transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.05); z-index: 2;}
-        .item-slot img { width: 45%; height: 45%; object-fit: contain; margin-bottom: 8px; transition: transform 0.3s; }
-        .item-slot:hover img { transform: scale(1.15); }
-        .item-slot span { font-family: var(--font-geo); font-size: 0.65rem; color: var(--secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; text-align: center; line-height: 1.2;}
+        .inventory-grid { flex: 1; overflow-y: auto; padding: 2rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 1.2rem; align-content: flex-start; }
 
-        .staging-area .item-slot { width: 100px; height: 100px; }
+        .item-slot { background: var(--game-panel); border: 1px solid var(--game-border); border-radius: 12px; aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1); position: relative; padding: 10px; user-select: none; box-shadow: 0 4px 10px rgba(0,0,0,0.02);}
+        .item-slot:hover { border-color: var(--primary); transform: scale(1.08) translateY(-5px); box-shadow: 0 15px 30px rgba(197, 160, 89, 0.15); z-index: 2;}
+        .item-slot img { width: 45%; height: 45%; object-fit: contain; margin-bottom: 10px; transition: transform 0.4s; }
+        .item-slot:hover img { transform: scale(1.2) rotate(3deg); }
+        .item-slot span { font-family: var(--font-geo); font-size: 0.7rem; color: var(--secondary); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; text-align: center; line-height: 1.2;}
 
-        /* --- HINT MODAL (Light Theme) --- */
+        .staging-area .item-slot { 
+            width: 110px; height: 110px; 
+            background: var(--game-panel); 
+            backdrop-filter: blur(8px);
+            border-color: transparent;
+            box-shadow: 0 15px 25px rgba(0,0,0,0.1), 0 5px 10px rgba(0,0,0,0.05);
+            border-radius: 50%; 
+        }
+        .staging-area .item-slot:hover { border-color: var(--primary); border-radius: 16px; }
+
+        /* --- THEME STORE SCREEN --- */
+        .store-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; margin-top: 1.5rem;}
+        .store-card { position: relative; background: var(--game-panel); border: 1px solid var(--game-border); padding: 2.5rem 2rem; border-radius: 12px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.03); transition: var(--transition); display: flex; flex-direction: column; justify-content: space-between;}
+        .store-card:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 10px 25px rgba(197,160,89,0.1); }
+        .store-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; font-family: var(--font-geo); color: var(--secondary); }
+        .store-card p { font-size: 0.85rem; color: var(--game-text-muted); margin-bottom: 1.5rem; line-height: 1.6; }
+        .store-palette { display: flex; justify-content: center; gap: 8px; margin-bottom: 2rem; }
+        .palette-dot { width: 24px; height: 24px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); }
+
+        /* Store Card Tooltips */
+        .info-wrapper { position: absolute; top: 1rem; right: 1rem; z-index: 10; }
+        .info-icon { width: 24px; height: 24px; border-radius: 50%; background: var(--game-bg); border: 1px solid var(--game-border); color: var(--game-text-muted); display: flex; align-items: center; justify-content: center; font-family: var(--font-main); font-size: 0.85rem; cursor: help; font-weight: bold; transition: var(--transition); }
+        .info-icon:hover { background: var(--primary); color: var(--white); border-color: var(--primary); }
+        .info-tooltip { position: absolute; top: 100%; right: 0; margin-top: 0.5rem; background: var(--secondary); color: var(--white); padding: 1rem; border-radius: 8px; font-size: 0.75rem; width: 220px; text-align: left; opacity: 0; visibility: hidden; transition: var(--transition); box-shadow: 0 10px 20px rgba(0,0,0,0.2); pointer-events: none; font-family: var(--font-main); font-weight: 400; line-height: 1.5; }
+        .info-wrapper:hover .info-tooltip { opacity: 1; visibility: visible; transform: translateY(0); }
+
+        /* --- LEADERBOARD SCREEN --- */
+        .lb-layout { display: flex; flex-direction: column; flex: 1; padding: 2rem 4rem; background: var(--game-bg); align-items: center;}
+        .lb-panel { background: var(--game-panel); border: 1px solid var(--game-border); border-radius: 12px; padding: 0; box-shadow: 0 10px 25px rgba(0,0,0,0.02); overflow: hidden; width: 100%; }
+        
+        .lb-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px;}
+        .lb-table th { padding: 1.5rem 2rem; border-bottom: 2px solid var(--game-border); color: var(--game-text-muted); font-family: var(--font-geo); text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; font-weight: 700; background: rgba(197, 160, 89, 0.02); }
+        .lb-table td { padding: 1.2rem 2rem; border-bottom: 1px solid var(--game-border); color: var(--secondary); font-family: var(--font-main); font-weight: 500; font-size: 0.95rem; }
+        .lb-table tr:last-child td { border-bottom: none; }
+        .lb-table tr:hover td { background: rgba(197, 160, 89, 0.04); }
+        
+        .rank-pos { font-family: var(--font-geo); font-size: 1.1rem; font-weight: 800; color: var(--game-text-muted); }
+        .rank-1 .rank-pos { color: var(--primary); font-size: 1.3rem; }
+        .rank-2 .rank-pos { color: #A0A0A0; font-size: 1.2rem; }
+        .rank-3 .rank-pos { color: #B08D57; font-size: 1.15rem; }
+
+        /* --- HINT MODAL --- */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; opacity: 0; transition: opacity 0.3s; }
         .modal-overlay.active { display: flex; opacity: 1; }
-        .modal-box { background: var(--white); border: 1px solid var(--game-border); border-radius: 8px; width: 100%; max-width: 500px; padding: 3rem; text-align: center; transform: translateY(20px); transition: transform 0.3s; box-shadow: 0 25px 50px rgba(0,0,0,0.15);}
+        .modal-box { background: var(--game-panel); border: 1px solid var(--game-border); border-radius: 16px; width: 100%; max-width: 500px; padding: 3rem; text-align: center; transform: translateY(20px); transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1); box-shadow: 0 30px 60px rgba(0,0,0,0.2);}
         .modal-overlay.active .modal-box { transform: translateY(0); }
-        
-        .modal-box h2 { font-size: 1.8rem; color: var(--secondary); margin-bottom: 1rem; font-family: var(--font-geo); text-transform: uppercase; letter-spacing: 2px;}
-        
-        .hint-list { text-align: left; background: var(--game-bg); padding: 1.5rem; border-radius: 4px; border: 1px solid var(--game-border); margin-bottom: 2rem; max-height: 300px; overflow-y: auto; list-style: none;}
-        .hint-list li { margin-bottom: 1rem; color: var(--game-text-muted); font-size: 0.95rem; padding-left: 1.5rem; position: relative; font-family: var(--font-main); line-height: 1.5;}
+        .modal-box h2 { font-size: 2rem; color: var(--secondary); margin-bottom: 1.5rem; font-family: var(--font-geo); text-transform: uppercase; letter-spacing: 2px;}
+        .hint-list { text-align: left; background: var(--game-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--game-border); margin-bottom: 2.5rem; max-height: 300px; overflow-y: auto; list-style: none;}
+        .hint-list li { margin-bottom: 1.2rem; color: var(--game-text-muted); font-size: 1rem; padding-left: 1.8rem; position: relative; font-family: var(--font-main); line-height: 1.6;}
         .hint-list li::before { content: '>'; position: absolute; left: 0; color: var(--primary); font-weight: bold; font-family: var(--font-geo);}
         .hint-list li:last-child { margin-bottom: 0; }
 
-        /* --- DOCUMENTS / SETTINGS (Minimalist Strict Content Design) --- */
+        /* --- DOCUMENTS / SETTINGS --- */
         .doc-scroll { flex: 1; overflow-y: auto; padding: 4rem 10% 8rem; display: flex; justify-content: center; background: var(--game-bg); }
-        .doc-content { width: 100%; max-width: 800px; background: transparent; }
+        .doc-content { width: 100%; max-width: 800px; background: transparent; margin: 0 auto; }
         .doc-content h2 { font-size: 2.8rem; font-weight: 800; color: var(--secondary); margin-bottom: 1rem; font-family: var(--font-geo); letter-spacing: -1px;}
         .doc-content > p.lead { font-size: 1.2rem; color: var(--game-text-muted); margin-bottom: 3rem; line-height: 1.6; border-left: 3px solid var(--primary); padding-left: 1.5rem;}
         .doc-content h3 { font-size: 1.5rem; font-weight: 700; color: var(--secondary); margin-bottom: 1rem; margin-top: 3.5rem; border-bottom: 1px solid var(--game-border); padding-bottom: 0.8rem; font-family: var(--font-main); letter-spacing: 0;}
@@ -193,40 +298,52 @@
         .doc-content ul { padding-left: 1.5rem; margin-bottom: 2rem;}
         .doc-content strong { color: var(--secondary); font-weight: 600; }
         
-        .setting-group { margin-bottom: 1.5rem; background: transparent; border: 1px solid var(--game-border); padding: 1.5rem 2rem; border-radius: 4px; transition: var(--transition); display: flex; flex-direction: column; gap: 1rem;}
-        .setting-group:hover { border-color: var(--secondary); }
+        .setting-group { margin-bottom: 1.5rem; background: var(--game-panel); border: 1px solid var(--game-border); padding: 1.5rem 2rem; border-radius: 12px; transition: var(--transition); display: flex; flex-direction: column; gap: 1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.02);}
+        .setting-group:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 10px 25px rgba(197, 160, 89, 0.1);}
         .setting-group label { display: flex; justify-content: space-between; font-family: var(--font-main); text-transform: uppercase; letter-spacing: 1px; color: var(--secondary); font-size: 0.85rem; font-weight: 700; align-items: center;}
         
-        .switch-control { display: flex; align-items: center; justify-content: space-between; background: var(--game-bg); border: 1px solid var(--game-border); border-radius: 4px; overflow: hidden; }
-        .switch-control button { background: transparent; border: none; padding: 1rem 1.5rem; color: var(--secondary); cursor: pointer; transition: var(--transition); font-size: 1rem; display: flex; align-items: center; justify-content: center; }
-        .switch-control button:hover { background: rgba(197, 160, 89, 0.1); color: var(--primary); }
+        .switch-control { display: flex; align-items: center; justify-content: space-between; background: var(--game-bg); border: 1px solid var(--game-border); border-radius: 30px; overflow: hidden; padding: 4px;}
+        .switch-control button { background: var(--game-panel); border: 1px solid var(--game-border); padding: 0.8rem 1.5rem; color: var(--secondary); cursor: pointer; transition: var(--transition); font-size: 1rem; display: flex; align-items: center; justify-content: center; border-radius: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
+        .switch-control button:hover { background: var(--primary); color: var(--white); border-color: var(--primary); }
         .switch-control span { font-family: var(--font-main); font-size: 0.95rem; font-weight: 600; color: var(--secondary); flex: 1; text-align: center; }
 
-        .setting-group input[type="range"] { width: 100%; cursor: pointer; accent-color: var(--secondary); height: 2px; background: var(--game-border); -webkit-appearance: none; outline: none; margin-top: 10px;}
-        .setting-group input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: var(--secondary); border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: var(--transition);}
-        .setting-group input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+        .setting-group input[type="range"] { width: 100%; cursor: pointer; accent-color: var(--secondary); height: 4px; background: var(--game-border); -webkit-appearance: none; outline: none; margin-top: 10px; border-radius: 2px;}
+        .setting-group input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; background: var(--primary); border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.3); transition: var(--transition);}
+        .setting-group input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); background: var(--secondary); }
         
-        /* Game Feedback Overlay (Restored Original Win Screen) */
-        .game-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(253, 251, 247, 0.95); z-index: 100; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; backdrop-filter: blur(10px); }
+        /* Game Feedback Overlay */
+        .game-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0, 0.8); z-index: 100; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; backdrop-filter: blur(10px); }
         .game-overlay.active { display: flex; animation: fadeIn 0.6s cubic-bezier(0.19, 1, 0.22, 1); }
-        .overlay-msg { font-size: 4rem; font-weight: 800; color: var(--secondary); margin-bottom: 0.5rem; letter-spacing: -1px;}
-        .overlay-sub { font-family: var(--font-geo); font-size: 1.2rem; color: var(--primary); margin-bottom: 3rem; text-transform: uppercase; letter-spacing: 4px; font-weight: 600; }
-        
-        .font-size-small { font-size: 14px; }
-        .font-size-medium { font-size: 16px; }
-        .font-size-large { font-size: 18px; }
-        .gfx-low * { box-shadow: none !important; animation: none !important; transition: none !important; backdrop-filter: none !important;}
+        .overlay-msg { font-size: 4rem; font-weight: 800; color: var(--game-panel); margin-bottom: 0.5rem; letter-spacing: -1px;}
+        .overlay-sub { font-family: var(--font-geo); font-size: 1.2rem; color: var(--primary); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 4px; font-weight: 600; }
+        .reward-text { font-family: var(--font-geo); font-size: 2rem; color: var(--primary); font-weight: 900; margin-bottom: 3rem; text-shadow: 0 5px 15px rgba(197,160,89, 0.3); animation: floatUp 2s ease infinite alternate; }
+        @keyframes floatUp { 0% { transform: translateY(0); } 100% { transform: translateY(-10px); } }
+
+        /* --- FUNCTIONAL GRAPHIC CLASSES --- */
+        .gfx-medium .level-card, .gfx-medium .action-btn, .gfx-medium .item-slot, .gfx-medium .toast, .gfx-medium .modal-box, .gfx-medium .staging-area, .gfx-medium .setting-group, .gfx-medium .lb-panel { box-shadow: none !important; }
+        .gfx-medium .menu-gradient-overlay { background: var(--game-bg); opacity: 0.85; }
+        .gfx-medium .modal-overlay, .gfx-medium .game-overlay { backdrop-filter: none !important; background-color: var(--secondary); opacity: 0.98;}
+
+        .gfx-low .level-card, .gfx-low .action-btn, .gfx-low .item-slot, .gfx-low .toast, .gfx-low .modal-box, .gfx-low .staging-area, .gfx-low .setting-group, .gfx-low .lb-panel { box-shadow: none !important; }
+        .gfx-low .menu-gradient-overlay { display: none !important; }
+        .gfx-low .main-menu { background: var(--game-bg) !important; }
+        .gfx-low .modal-overlay, .gfx-low .game-overlay { backdrop-filter: none !important; background-color: var(--secondary); opacity: 0.98; }
+        .gfx-low * { animation-duration: 0.01s !important; transition-duration: 0.01s !important; }
 
         /* --- RESPONSIVE MOBILE ADJUSTMENTS --- */
         @media (max-width: 1024px) {
             .menu-container { gap: 4rem; }
             .play-layout { flex-direction: column; overflow-y: auto; }
-            .cooking-zone { flex: none; height: auto; border-right: none; border-bottom: 1px solid var(--game-border); padding: 2rem; }
-            .pantry-panel { flex: none; max-width: 100%; height: 500px; border-left: none; }
+            .resizer { display: none; }
+            .inventory-panel { width: 100% !important; max-width: 100% !important; flex: none; height: 600px; border-left: none; }
+            .cooking-zone { flex: none; height: auto; border-right: none; padding: 2rem; border-bottom: 4px solid var(--game-border); }
         }
         
         @media (max-width: 768px) {
-            html { font-size: 14px; }
+            html.font-size-small { font-size: 11px !important; }
+            html.font-size-medium { font-size: 14px !important; }
+            html.font-size-large { font-size: 17px !important; }
+            
             .main-menu { padding-left: 0; justify-content: center;}
             .menu-container { flex-direction: column; gap: 3rem; text-align: center; align-items: center; width: 100%; padding: 0 2rem;}
             .menu-brand-block { max-width: 100%; align-items: center; transform: none; }
@@ -238,17 +355,24 @@
             .menu-btn:hover { padding-left: 0; transform: scale(1.05); }
             .menu-btn::before { display: none; }
             
-            .game-header { padding: 1.5rem; flex-direction: column; gap: 1rem; align-items: flex-start;}
-            .recipe-layout { padding: 1.5rem; }
+            .game-header { padding: 1.5rem; flex-direction: column; gap: 1rem; align-items: center;}
+            .recipe-layout, .lb-layout { padding: 1.5rem; }
             .recipe-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
             
             .target-dashboard { flex-direction: column; align-items: flex-start; gap: 1rem; }
-            .staging-area { padding: 1rem; gap: 0.5rem;}
-            .staging-area .item-slot { width: 80px; height: 80px; }
-            .game-actions { gap: 0.5rem; }
+            .staging-area { padding: 1.5rem 1rem; gap: 0.5rem; min-height: 220px;}
+            .staging-area .item-slot { width: 85px; height: 85px; }
+            
+            .game-actions { gap: 0.8rem; }
             .game-actions .action-btn { padding: 0.8rem 1rem; font-size: 0.75rem; min-width: 80px;}
             
             .pantry-header { padding: 1.5rem; }
+            .pantry-categories-wrapper { flex-direction: column; align-items: stretch; gap: 0.8rem; }
+            .pantry-scroll-mask { mask-image: none; -webkit-mask-image: none; }
+            .pantry-categories { padding-right: 0; }
+            .pantry-fixed-prep { border-left: none; padding-left: 0; border-top: 1px solid var(--game-border); padding-top: 1rem; text-align: center;}
+            .prepped-btn { width: 100%; }
+
             .inventory-grid { padding: 1.5rem; grid-template-columns: repeat(4, 1fr); }
             .modal-box { padding: 2rem; }
         }
@@ -256,16 +380,19 @@
         @media (max-width: 480px) {
             .recipe-grid { grid-template-columns: 1fr; }
             .inventory-grid { grid-template-columns: repeat(3, 1fr); gap: 0.8rem; padding: 1rem; }
-            .overlay-msg { font-size: 2.5rem; }
+            .overlay-msg { font-size: 2.5rem; color: var(--white); }
             .game-actions .action-btn { min-width: calc(50% - 0.5rem); padding: 0.8rem; font-size: 0.7rem; }
-            .staging-area { padding: 1rem; min-height: 200px; }
-            .staging-area .item-slot { width: 75px; height: 75px; }
+            .staging-area { padding: 1.5rem 0.5rem; min-height: 200px; }
+            .staging-area .item-slot { width: 75px; height: 75px; border-radius: 8px;}
             .menu-brand h1 { font-size: 3.5rem; }
         }
 
         /* Smartwatch & Ultra Small Devices */
         @media (max-width: 360px) {
-            html { font-size: 12px; }
+            html.font-size-small { font-size: 10px !important; }
+            html.font-size-medium { font-size: 12px !important; }
+            html.font-size-large { font-size: 14px !important; }
+            
             .game-header { padding: 1rem; flex-direction: column; align-items: stretch; gap: 0.8rem; }
             .game-header h2 { font-size: 1rem; text-align: center; }
             .header-actions { justify-content: center; }
@@ -288,14 +415,19 @@
             .cat-btn { padding: 0.4rem 0.8rem; font-size: 0.65rem; }
             
             .inventory-grid { grid-template-columns: repeat(2, 1fr); padding: 0.8rem; gap: 0.6rem; }
+            .store-grid { grid-template-columns: 1fr; }
             
             .modal-box { padding: 1.5rem 1rem; }
             .modal-box h2 { font-size: 1.4rem; }
             .hint-list { padding: 1rem; max-height: 200px; }
             .hint-list li { font-size: 0.85rem; }
             
-            .overlay-msg { font-size: 1.8rem; }
-            .overlay-sub { font-size: 0.8rem; margin-bottom: 2rem; }
+            .overlay-msg { font-size: 1.8rem; color: var(--white);}
+            .overlay-sub { font-size: 0.8rem; margin-bottom: 1rem; }
+            .reward-text { font-size: 1.2rem; margin-bottom: 2rem; }
+            
+            .lb-table { min-width: 100%; font-size: 0.8rem; }
+            .lb-table th, .lb-table td { padding: 0.5rem; }
         }
 
         @media (max-width: 280px) {
@@ -326,36 +458,44 @@
     </div>
 
     <!-- FULLSCREEN GAME APP -->
-    <main id="gameApp" class="game-app font-size-medium gfx-high">
+    <main id="gameApp" class="game-app gfx-high font-size-medium">
         
-        <!-- ORIGINAL WIN/LOSE OVERLAY -->
+        <!-- WIN/LOSE OVERLAY WITH KYAT REWARD -->
         <div id="gameOverlay" class="game-overlay">
             <h2 id="overlayTitle" class="overlay-msg">Masterpiece Created.</h2>
             <p id="overlaySub" class="overlay-sub">Timeline Unlocked</p>
-            <button class="action-btn primary" style="flex: none; padding: 1.2rem 3rem; border-radius: 30px; width: auto; font-size: 0.95rem;" onclick="switchScreen('screen-recipes'); document.getElementById('gameOverlay').classList.remove('active');">Continue Journey</button>
+            <div id="overlayReward" class="reward-text">+1,000 Kyats</div>
+            <button class="action-btn primary" style="flex: none; padding: 1.2rem 3rem; border-radius: 30px; width: auto; font-size: 0.95rem; box-shadow: 0 5px 25px rgba(197, 160, 89, 0.5);" onclick="switchScreen('screen-recipes'); document.getElementById('gameOverlay').classList.remove('active');">Continue Journey</button>
         </div>
 
-        <!-- SCREEN 1: MAIN MENU (Restored Cinematic Layout) -->
+        <!-- SCREEN 1: MAIN MENU -->
         <div id="screen-main" class="game-screen main-menu active">
             <div class="menu-gradient-overlay"></div>
             
+            <div style="position: absolute; top: 2rem; right: 4rem; z-index: 10;" class="desktop-only-balance">
+                <div class="balance-badge" title="Your Kyat Balance">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v12M8 12h8"/></svg>
+                    <span class="ui-balance-display">0</span> K
+                </div>
+            </div>
+
             <div class="menu-container">
-                <!-- Left Side Brand -->
                 <div class="menu-brand-block reveal">
-                    <span class="brand-tag">Visual Cooking Engine • Build 2.0.0</span>
+                    <span class="brand-tag">Visual Cooking Engine • Build 6.0.0</span>
                     <div class="menu-brand">
                         <h1>BISTRO<br><strong>X</strong></h1>
                         <p>An interactive image-based cooking game. Select visual ingredients, experiment with real cooking methods, and discover new dishes based entirely on your choices.</p>
                     </div>
                 </div>
 
-                <!-- Right Side Menu Buttons -->
                 <div class="menu-list-block reveal">
                     <div class="menu-list">
                         <button class="menu-btn" onclick="startGame()">Start</button>
                         <button class="menu-btn" onclick="switchScreen('screen-recipes')">Recipe Menu</button>
+                        <button class="menu-btn" onclick="openStore('screen-main')">Themes & Store</button>
+                        <button class="menu-btn" onclick="openLeaderboard()">Leaderboards</button>
                         <button class="menu-btn" onclick="window.location.href='learn.html'">Learn</button>
-                        <button class="menu-btn" onclick="switchScreen('screen-settings')">Settings</button>
+                        <button class="menu-btn" onclick="openSettings('screen-main')">Settings</button>
                         <button class="menu-btn" onclick="switchScreen('screen-terms')">Terms</button>
                         <button class="menu-btn" onclick="switchScreen('screen-credits')">Credit</button>
                         <button class="menu-btn quit-btn" onclick="window.location.href='../index.html'">Quit</button>
@@ -368,7 +508,13 @@
         <div id="screen-recipes" class="game-screen">
             <div class="game-header">
                 <h2>Recipe Menu</h2>
-                <button class="game-close-btn" onclick="switchScreen('screen-main')">Return</button>
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <div class="balance-badge" title="Your Kyat Balance">
+                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v12M8 12h8"/></svg>
+                        <span class="ui-balance-display">0</span> K
+                    </div>
+                    <button class="game-close-btn" onclick="switchScreen('screen-main')">Return</button>
+                </div>
             </div>
             
             <div class="recipe-layout">
@@ -392,14 +538,19 @@
         <div id="screen-play" class="game-screen">
             <div class="game-header">
                 <h2>The Kitchen</h2>
-                <div style="display: flex; gap: 1rem;">
-                    <button class="game-close-btn" onclick="document.getElementById('hintModal').classList.add('active')">Tips</button>
-                    <button class="game-close-btn" style="color:var(--danger); border-color:var(--danger);" onclick="switchScreen('screen-recipes')">Abandon</button>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; align-items: center;">
+                    <div class="balance-badge">
+                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v12M8 12h8"/></svg>
+                        <span class="ui-balance-display">0</span> K
+                    </div>
+                    <button class="game-close-btn" style="color:var(--info); border-color:var(--info);" onclick="document.getElementById('hintModal').classList.add('active')">Tips</button>
+                    <button class="game-close-btn" onclick="openStore('screen-play')">Store</button>
+                    <button class="game-close-btn" onclick="openSettings('screen-play')">Settings</button>
+                    <button class="game-close-btn" style="color:var(--danger); border-color:var(--danger);" onclick="abandonKitchen()">Abandon</button>
                 </div>
             </div>
             
             <div class="play-layout">
-                <!-- Left: Cooking Zone -->
                 <div class="cooking-zone">
                     <div class="goal-display">
                         <div>
@@ -414,7 +565,7 @@
                         </div>
                         
                         <div class="game-actions">
-                            <button class="action-btn clear" onclick="clearStaging()">Clear Board</button>
+                            <button class="action-btn clear" onclick="clearStaging()">Clear Table</button>
                             <button class="action-btn" onclick="performAction('slice')">Slice</button>
                             <button class="action-btn" onclick="performAction('boil')">Boil</button>
                             <button class="action-btn" onclick="performAction('mix')">Mix</button>
@@ -422,32 +573,91 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="resizer" id="panelResizer"><div class="resizer-grip"></div></div>
                 
-                <!-- Right: Inventory / Pantry -->
-                <div class="inventory-panel">
+                <div class="inventory-panel" id="inventoryPanel">
                     <div class="pantry-header">
-                        <input type="text" id="pantrySearch" class="pantry-search" placeholder="Search ingredients & tools..." onkeyup="renderPantry()">
-                        <div class="pantry-categories">
-                            <button class="cat-btn active" onclick="setCategory('all')">All</button>
-                            <button class="cat-btn" onclick="setCategory('tools')">Tools</button>
-                            <button class="cat-btn" onclick="setCategory('pantry')">Pantry</button>
-                            <button class="cat-btn" onclick="setCategory('raw_veg')">Veggies</button>
-                            <button class="cat-btn" onclick="setCategory('raw_meat')">Meats</button>
-                            <button class="cat-btn" onclick="setCategory('prepped')" style="border-color:var(--primary); color:var(--primary);">Prepped</button>
+                        <input type="text" id="pantrySearch" class="pantry-search" placeholder="Search globally..." onkeyup="renderPantry()">
+                        
+                        <div class="pantry-categories-wrapper">
+                            <div class="pantry-scroll-mask">
+                                <div class="pantry-categories" id="pantryCategories">
+                                    <button class="cat-btn active" onclick="setCategory('all')">All</button>
+                                    <button class="cat-btn" onclick="setCategory('tools')">Tools</button>
+                                    <button class="cat-btn" onclick="setCategory('pantry')">Pantry</button>
+                                    <button class="cat-btn" onclick="setCategory('raw_veg')">Veggies</button>
+                                    <button class="cat-btn" onclick="setCategory('raw_meat')">Meats</button>
+                                    <button class="cat-btn" onclick="setCategory('fruits')">Fruits</button>
+                                    <button class="cat-btn" onclick="setCategory('nuts')">Nuts</button>
+                                </div>
+                            </div>
+                            <div class="pantry-fixed-prep">
+                                <button class="cat-btn prepped-btn" onclick="setCategory('prepped')">Prepped ⭐</button>
+                            </div>
                         </div>
+
                     </div>
-                    <div class="inventory-grid" id="inventoryGrid">
-                        <!-- JS injects items here -->
-                    </div>
+                    <div class="inventory-grid" id="inventoryGrid"></div>
                 </div>
             </div>
         </div>
 
-        <!-- SCREEN 4: SETTINGS (Restored) -->
+        <!-- SCREEN: STORE & THEMES -->
+        <div id="screen-store" class="game-screen">
+            <div class="game-header">
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <h2>BISTRO<span style="color:var(--primary);">X</span> Exchange</h2>
+                    <div class="balance-badge">
+                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v12M8 12h8"/></svg>
+                        <span class="ui-balance-display">0</span> K
+                    </div>
+                </div>
+                <button class="game-close-btn" onclick="closeStore()">Return</button>
+            </div>
+            <div class="doc-scroll" style="padding-bottom: 2rem;">
+                <div class="doc-content" style="max-width: 1000px;">
+                    <h2>The Exchange</h2>
+                    <p class="lead">Exchange your hard-earned Kyats for premium aesthetic themes and functional kitchen perks.</p>
+                    
+                    <h3 style="margin-top: 1rem;">Aesthetic Themes</h3>
+                    <div class="store-grid" id="storeThemesGrid"></div>
+                    
+                    <h3 style="margin-top: 3rem;">Kitchen Perks</h3>
+                    <div class="store-grid" id="storePerksGrid" style="margin-bottom: 5rem;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN: LEADERBOARD -->
+        <div id="screen-leaderboard" class="game-screen">
+            <div class="game-header">
+                <h2>Local Rankings</h2>
+                <button class="game-close-btn" onclick="switchScreen('screen-main')">Return</button>
+            </div>
+            <div class="lb-layout doc-scroll">
+                <div class="doc-content" style="max-width: 1000px; margin: 0 auto; width: 100%;">
+                    
+                    <div class="difficulty-tabs" style="margin-bottom: 2rem;">
+                        <button class="diff-tab active" id="lb-tab-overall" onclick="switchLBTab('overall')">Culinary Syndicate (Overall)</button>
+                        <button class="diff-tab" id="lb-tab-wealth" onclick="switchLBTab('wealth')">The Magnate (Wealth)</button>
+                        <button class="diff-tab" id="lb-tab-progression" onclick="switchLBTab('progression')">Executive Chef (Progression)</button>
+                        <button class="diff-tab" id="lb-tab-speed" onclick="switchLBTab('speed')">Rush Service (Speed)</button>
+                    </div>
+                    
+                    <div class="lb-panel" id="lb-container">
+                        <!-- Dynamic Content Injected Here -->
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN: SETTINGS -->
         <div id="screen-settings" class="game-screen">
             <div class="game-header">
                 <h2>Settings</h2>
-                <button class="game-close-btn" onclick="switchScreen('screen-main')">Apply</button>
+                <button class="game-close-btn" onclick="closeSettings()">Apply</button>
             </div>
             <div class="doc-scroll">
                 <div class="doc-content">
@@ -474,18 +684,18 @@
 
                     <h3>Audio Setup</h3>
                     <div class="setting-group">
-                        <label>Master Audio <span><span id="vol-val">80</span>%</span></label>
-                        <input type="range" id="set-vol" min="0" max="100" value="80" oninput="document.getElementById('vol-val').textContent=this.value">
+                        <label>Master SFX Volume <span><span id="vol-val">80</span>%</span></label>
+                        <input type="range" id="set-vol" min="0" max="100" value="80" oninput="updateVolume('sfx', this.value)">
                     </div>
                     <div class="setting-group">
                         <label>Atmosphere & Music <span><span id="bgm-val">50</span>%</span></label>
-                        <input type="range" id="set-bgm" min="0" max="100" value="50" oninput="document.getElementById('bgm-val').textContent=this.value">
+                        <input type="range" id="set-bgm" min="0" max="100" value="50" oninput="updateVolume('bgm', this.value)">
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- SCREEN 5: TERMS (Restored) -->
+        <!-- SCREEN: TERMS -->
         <div id="screen-terms" class="game-screen">
             <div class="game-header">
                 <h2>Terms</h2>
@@ -508,16 +718,16 @@
                     <p>BistroX is a logic-puzzle game themed around culinary arts. The mechanics rely on abstract string matching. While the theories presented are inspired by real-world cooking logic, they are drastically simplified.</p>
 
                     <h3>3. Licensing & Fair Use</h3>
-                    <p>Access to the BistroX engine is provided free of charge for personal entertainment. Reproduction or commercial resale of the software framework is prohibited without consent.</p>
+                    <p>Access to the BistroX engine is provided free of charge for personal entertainment. The structural code, styling, and specific game logic matrix remain the intellectual property of the developer. Reproduction or commercial resale of the software framework is prohibited without consent.</p>
                     
-                    <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--game-border);">
+                    <div style="margin-top: 3rem; padding-top: 2rem; padding-bottom: 5rem; border-top: 1px solid var(--game-border);">
                         <button class="action-btn" onclick="window.location.href='terms-conditions.html'" style="display: inline-flex;">View Extensive Legal Documentation</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- SCREEN 6: CREDITS (Restored) -->
+        <!-- SCREEN: CREDITS -->
         <div id="screen-credits" class="game-screen">
             <div class="game-header">
                 <h2>Credit</h2>
@@ -550,57 +760,337 @@
 
     <!-- GAME SCRIPT LOGIC (Upgraded) -->
     <script>
+        // Move notify function to top to fix ReferenceError
+        function notify(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div'); 
+            toast.className = 'toast'; 
+            toast.textContent = message;
+            
+            if (type === 'error') {
+                toast.style.borderLeftColor = 'var(--danger, #E63946)';
+                toast.style.color = 'var(--danger, #E63946)';
+            } else if (type === 'success') {
+                toast.style.borderLeftColor = 'var(--primary, #C5A059)';
+            }
+
+            container.appendChild(toast);
+            setTimeout(() => { 
+                toast.style.opacity = '0'; 
+                toast.style.transform = 'translateX(50px)'; 
+                setTimeout(() => toast.remove(), 500); 
+            }, 3500);
+        }
         
         let maxUnlockedLevel = 1; 
         let currentUser = null;
         let currentPlayingLevelNum = 1;
         let targetLevelId = null;
+        let currentLevelStartTime = 0;
+        let userFastestTime = Infinity;
+
+        /* --- THEME / STORE ENGINE --- */
+        let userBalance = 0;
+        let unlockedThemes = ['classic'];
+        let unlockedPerks = [];
+        let activeTheme = 'classic';
+        let returnScreenFromStore = 'screen-main';
+
+        const themes = [
+            {
+                id: 'classic', name: 'Bistro Classic', desc: 'The default light bread and charcoal aesthetic.', price: 0, type: 'theme',
+                colors: { 'game-bg': '#FDFBF7', 'game-panel': '#FFFFFF', 'game-border': '#E8E3D9', 'primary': '#C5A059', 'secondary': '#1A1A1A', 'game-text': '#2C2C2C', 'game-text-muted': '#737373' }
+            },
+            {
+                id: 'budget', name: 'Starter Budget', desc: 'A cheap, simple aesthetic designed for beginners.', price: 1000, type: 'theme',
+                colors: { 'game-bg': '#E8E8E8', 'game-panel': '#F5F5F5', 'game-border': '#CCCCCC', 'primary': '#666666', 'secondary': '#333333', 'game-text': '#444444', 'game-text-muted': '#888888' }
+            },
+            {
+                id: 'dark', name: 'Midnight Service', desc: 'A sleek, low-light kitchen designed for night owls.', price: 1100, type: 'theme',
+                colors: { 'game-bg': '#121212', 'game-panel': '#1E1E1E', 'game-border': '#333333', 'primary': '#D4B271', 'secondary': '#FFFFFF', 'game-text': '#E5E5E5', 'game-text-muted': '#888888' }
+            },
+            {
+                id: 'sakura', name: 'Sakura Bakery', desc: 'Bright pinks and soft whites for a sweet environment.', price: 1200, type: 'theme',
+                colors: { 'game-bg': '#FFF0F5', 'game-panel': '#FFFFFF', 'game-border': '#FFD1DC', 'primary': '#FF69B4', 'secondary': '#4A0E2E', 'game-text': '#4A0E2E', 'game-text-muted': '#9C6B83' }
+            },
+            {
+                id: 'cyberpunk', name: 'Terminal Hacker', desc: 'High contrast futuristic terminal prep station.', price: 1300, type: 'theme',
+                colors: { 'game-bg': '#0D0E15', 'game-panel': '#151828', 'game-border': '#00FFCC', 'primary': '#00FFCC', 'secondary': '#FFFFFF', 'game-text': '#E0E0E0', 'game-text-muted': '#00AA88' }
+            },
+            {
+                id: 'royal', name: 'Royal Obsidian', desc: 'The absolute premium aesthetic with gold accents.', price: 1400, type: 'theme',
+                colors: { 'game-bg': '#0A0A0A', 'game-panel': '#141414', 'game-border': '#4A3B18', 'primary': '#D4AF37', 'secondary': '#FFFFFF', 'game-text': '#F0F0F0', 'game-text-muted': '#A0A0A0' }
+            }
+        ];
+
+        const perks = [
+            { id: 'golden_tools', name: '24k Golden Tools', desc: 'Upgrades all your base kitchen tools into pure solid gold. Purely cosmetic wealth prestige.', price: 200000, type: 'perk' },
+            { id: 'platinum_board', name: 'Platinum Prep Table', desc: 'A highly sanitized, extremely durable platinum cutting surface. (Coming Soon)', price: 500000, type: 'perk' },
+            { id: 'auto_chef', name: 'Sous-Chef Automaton', desc: 'An automated assistant to process raw ingredients directly from inventory. (Coming Soon)', price: 1000000, type: 'perk' }
+        ];
+
+        /* --- AUDIO ENGINE --- */
+        let masterSFXVolume = 0.8;
+        let bgmStarted = false;
+
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playClick() {
+            if(masterSFXVolume <= 0) return;
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.05);
+            gainNode.gain.setValueAtTime(masterSFXVolume * 0.3, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.05);
+        }
+
+        const bgmAudio = new Audio('https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=bossa-nova-111059.mp3');
+        bgmAudio.loop = true;
+        bgmAudio.volume = 0.5;
+
+        const sfxURLs = {
+            slice: 'https://actions.google.com/sounds/v1/tools/cutting_vegetables.ogg',
+            cook: 'https://actions.google.com/sounds/v1/water/crackle_and_hiss.ogg',
+            boil: 'https://actions.google.com/sounds/v1/water/water_boiling.ogg',
+            mix: 'https://actions.google.com/sounds/v1/water/water_slosh.ogg',
+            success: 'https://actions.google.com/sounds/v1/cartoon/cartoon_success_fanfare.ogg'
+        };
+        const sfxAudio = {};
+        for (let key in sfxURLs) { sfxAudio[key] = new Audio(sfxURLs[key]); }
+
+        function playActionSound(type) {
+            if(masterSFXVolume <= 0) return;
+            if(sfxAudio[type]) {
+                let snd = sfxAudio[type].cloneNode(); 
+                snd.volume = masterSFXVolume;
+                snd.play().catch(e => console.log("SFX blocked by browser policy"));
+            }
+        }
+
+        document.addEventListener('click', (e) => {
+            if(e.target.type !== 'range') playClick();
+            if(!bgmStarted) {
+                bgmAudio.play().catch(e => console.log("BGM autoplay blocked"));
+                bgmStarted = true;
+            }
+        });
+
+        function updateVolume(type, val) {
+            if (type === 'bgm') {
+                document.getElementById('bgm-val').textContent = val;
+                bgmAudio.volume = parseInt(val) / 100;
+            } else if (type === 'sfx') {
+                document.getElementById('vol-val').textContent = val;
+                masterSFXVolume = parseInt(val) / 100;
+            }
+        }
 
         /* --- Standard Setup Scripts --- */
         window.addEventListener('load', () => {
             const loader = document.getElementById('globalLoader');
             if (loader) loader.classList.add('hidden');
-            
             setTimeout(() => { document.querySelectorAll('.reveal').forEach(el => el.classList.add('active')); }, 300);
-
-            loadUserProgress();
+            
+            loadUserData();
             generateLevels();
-            applySettings();
+            applySettings(); 
+            initResizer();   
         });
 
         window.addEventListener('pageshow', (e) => { if (e.persisted) document.getElementById('globalLoader')?.classList.add('hidden'); });
 
-        function loadUserProgress() {
+        /* --- UI PANEL RESIZER --- */
+        function initResizer() {
+            let isDragging = false;
+            const resizer = document.getElementById('panelResizer');
+            const inventoryPanel = document.getElementById('inventoryPanel');
+
+            resizer.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                document.body.style.cursor = 'col-resize';
+                inventoryPanel.classList.add('dragging');
+                resizer.classList.add('dragging');
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                let newWidth = window.innerWidth - e.clientX;
+                if (newWidth < 300) newWidth = 300;
+                if (newWidth > 700) newWidth = 700;
+                inventoryPanel.style.width = newWidth + 'px';
+            });
+
+            document.addEventListener('mouseup', () => {
+                if (isDragging) {
+                    isDragging = false;
+                    document.body.style.cursor = '';
+                    inventoryPanel.classList.remove('dragging');
+                    resizer.classList.remove('dragging');
+                }
+            });
+        }
+
+        /* --- LOAD / SAVE USER DATA & LEADERBOARD LOGIC --- */
+        function loadUserData() {
             currentUser = localStorage.getItem('bx_currentUser');
-            if (currentUser) {
-                maxUnlockedLevel = parseInt(localStorage.getItem('bx_progress_' + currentUser)) || 1;
+            const prefix = currentUser ? 'bx_' + currentUser : 'bx_guest';
+            
+            maxUnlockedLevel = parseInt(localStorage.getItem(prefix + '_progress')) || 1;
+            userBalance = parseInt(localStorage.getItem(prefix + '_balance')) || 0;
+            userFastestTime = parseFloat(localStorage.getItem(prefix + '_fastest_time')) || Infinity;
+            
+            const savedThemes = localStorage.getItem(prefix + '_themes');
+            unlockedThemes = savedThemes ? JSON.parse(savedThemes) : ['classic'];
+            
+            const savedPerks = localStorage.getItem(prefix + '_perks');
+            unlockedPerks = savedPerks ? JSON.parse(savedPerks) : [];
+
+            activeTheme = localStorage.getItem(prefix + '_activeTheme') || 'classic';
+            
+            if (!currentUser) {
+                setTimeout(() => notify("SYSTEM: Guest profile loaded. Log in via Home to persist data & purchases.", 'info'), 1500);
             } else {
-                maxUnlockedLevel = parseInt(localStorage.getItem('bx_progress_guest')) || 1;
-                setTimeout(() => notify("Guest Mode. Login via Home to save progress."), 1500);
+                setTimeout(() => notify(`SYSTEM: Welcome back to the kitchen, Chef ${currentUser}.`, 'success'), 1000);
             }
+            
+            applyTheme(activeTheme, false);
+            updateBalanceUI();
+            updateToolColors();
         }
 
-        function saveUserProgress() {
-            if (currentUser) { localStorage.setItem('bx_progress_' + currentUser, maxUnlockedLevel); } 
-            else { localStorage.setItem('bx_progress_guest', maxUnlockedLevel); }
+        function saveUserData() {
+            const prefix = currentUser ? 'bx_' + currentUser : 'bx_guest';
+            localStorage.setItem(prefix + '_progress', maxUnlockedLevel);
+            localStorage.setItem(prefix + '_balance', userBalance);
+            localStorage.setItem(prefix + '_fastest_time', userFastestTime);
+            localStorage.setItem(prefix + '_themes', JSON.stringify(unlockedThemes));
+            localStorage.setItem(prefix + '_perks', JSON.stringify(unlockedPerks));
+            localStorage.setItem(prefix + '_activeTheme', activeTheme);
         }
 
-        function notify(message) {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div'); toast.className = 'toast'; toast.textContent = message;
-            container.appendChild(toast);
-            setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(50px)'; setTimeout(() => toast.remove(), 500); }, 3500);
+        function updateBalanceUI() {
+            document.querySelectorAll('.ui-balance-display').forEach(el => {
+                el.textContent = userBalance.toLocaleString();
+            });
+        }
+
+        /* --- LOCAL LEADERBOARD ENGINE --- */
+        let lbCurrentTab = 'overall';
+
+        function openLeaderboard() {
+            switchLBTab('overall');
+            switchScreen('screen-leaderboard');
+        }
+
+        function switchLBTab(tabId) {
+            lbCurrentTab = tabId;
+            document.querySelectorAll('#screen-leaderboard .diff-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(`lb-tab-${tabId}`).classList.add('active');
+            renderLeaderboard();
+        }
+
+        function renderLeaderboard() {
+            let users = [];
+            let guestIncluded = false;
+            
+            for(let i=0; i<localStorage.length; i++) {
+                let key = localStorage.key(i);
+                if(key.startsWith('bx_') && key.endsWith('_progress')) {
+                    let username = key.replace('bx_', '').replace('_progress', '');
+                    if (username === 'currentUser' || username === 'users') continue; 
+                    
+                    let prog = parseInt(localStorage.getItem('bx_' + username + '_progress')) || 1;
+                    let bal = parseInt(localStorage.getItem('bx_' + username + '_balance')) || 0;
+                    let time = parseFloat(localStorage.getItem('bx_' + username + '_fastest_time')) || Infinity;
+                    
+                    users.push({name: username === 'guest' ? 'Guest Chef' : username, progress: prog, balance: bal, time: time});
+                    if(username === 'guest') guestIncluded = true;
+                }
+            }
+
+            if(!guestIncluded && !currentUser) {
+                users.push({name: 'Guest Chef', progress: maxUnlockedLevel, balance: userBalance, time: userFastestTime});
+            }
+
+            let container = document.getElementById('lb-container');
+            let html = '';
+
+            function formatTime(t) { return t === Infinity ? '--' : t.toFixed(2) + 's'; }
+
+            let sorted = [];
+            if(lbCurrentTab === 'overall') {
+                sorted = [...users].sort((a,b) => b.progress !== a.progress ? b.progress - a.progress : b.balance - a.balance).slice(0, 10);
+            } else if(lbCurrentTab === 'wealth') {
+                sorted = [...users].sort((a,b) => b.balance - a.balance).slice(0, 10);
+            } else if(lbCurrentTab === 'progression') {
+                sorted = [...users].sort((a,b) => b.progress - a.progress).slice(0, 10);
+            } else if(lbCurrentTab === 'speed') {
+                sorted = [...users].filter(u => u.time !== Infinity).sort((a,b) => a.time - b.time).slice(0, 10);
+            }
+
+            if(sorted.length === 0) {
+                html = '<p style="text-align:center; padding: 3rem; color:var(--game-text-muted); font-family:var(--font-main);">No records established yet.</p>';
+            } else {
+                html = `<div style="overflow-x: auto;"><table class="lb-table">
+                            <thead><tr><th>Rank</th><th>Chef</th><th>Lvl</th><th>Wealth</th><th>Service Time</th></tr></thead>
+                            <tbody>`;
+                sorted.forEach((u, i) => {
+                    let rankClass = i === 0 ? 'rank-1' : (i === 1 ? 'rank-2' : (i === 2 ? 'rank-3' : ''));
+                    let wealthColor = lbCurrentTab === 'wealth' || lbCurrentTab === 'overall' ? 'color:var(--primary); font-weight:700;' : '';
+                    let lvlColor = lbCurrentTab === 'progression' ? 'color:var(--primary); font-weight:700;' : '';
+                    let timeColor = lbCurrentTab === 'speed' ? 'color:var(--primary); font-weight:700;' : '';
+                    
+                    html += `<tr class="${rankClass}">
+                                <td><span class="rank-pos">#${i+1}</span></td>
+                                <td style="font-weight:600;">${u.name}</td>
+                                <td style="${lvlColor}">${u.progress}</td>
+                                <td style="${wealthColor}">${u.balance.toLocaleString()} K</td>
+                                <td style="${timeColor}">${formatTime(u.time)}</td>
+                             </tr>`;
+                });
+                html += `</tbody></table></div>`;
+            }
+            container.innerHTML = html;
         }
 
         /* --- UI NAVIGATION & SETTINGS --- */
+        let returnScreenFromSettings = 'screen-main';
+
         function switchScreen(screenId) {
             document.querySelectorAll('.game-screen').forEach(s => s.classList.remove('active'));
             document.getElementById(screenId).classList.add('active');
         }
         function startGame() { switchScreen('screen-recipes'); }
 
+        function abandonKitchen() {
+            switchScreen('screen-recipes');
+            notify("ACTION: Kitchen abandoned. All ingredients and progress reset.", 'error');
+        }
+
+        function openSettings(returnTo) {
+            returnScreenFromSettings = returnTo;
+            switchScreen('screen-settings');
+        }
+        function closeSettings() { 
+            switchScreen(returnScreenFromSettings); 
+            notify("SYSTEM: Configuration successfully applied.", 'success');
+        }
+
+        function openStore(returnTo) {
+            returnScreenFromStore = returnTo;
+            renderStore();
+            switchScreen('screen-store');
+        }
+        function closeStore() { switchScreen(returnScreenFromStore || 'screen-main'); }
+
         const sysSettings = {
-            gfx: { options: [{val:'high', label:'High (Full Cinematic FX)'}, {val:'low', label:'Low (Performance)'}], index: 0 },
+            gfx: { options: [{val:'high', label:'High (Full Cinematic FX)'}, {val:'medium', label:'Medium (Balanced)'}, {val:'low', label:'Low (Performance)'}], index: 0 },
             font: { options: [{val:'small', label:'Small'}, {val:'medium', label:'Medium (Standard)'}, {val:'large', label:'Large'}], index: 1 }
         };
 
@@ -611,24 +1101,160 @@
             if(s.index >= s.options.length) s.index = 0;
             document.getElementById(key + '-display').textContent = s.options[s.index].label;
             applySettings();
+            notify(`SYSTEM: Display setting adjusted to ${s.options[s.index].label}.`, 'info');
         }
 
         function applySettings() {
             const app = document.getElementById('gameApp');
+            const htmlNode = document.documentElement;
+            htmlNode.classList.remove('font-size-small', 'font-size-medium', 'font-size-large');
+            htmlNode.classList.add(`font-size-${sysSettings.font.options[sysSettings.font.index].val}`);
             app.className = 'game-app'; 
-            app.classList.add(`font-size-${sysSettings.font.options[sysSettings.font.index].val}`);
             app.classList.add(`gfx-${sysSettings.gfx.options[sysSettings.gfx.index].val}`);
         }
 
-        function switchDifficultyTab(diffId) {
-            document.querySelectorAll('.diff-tab').forEach(tab => tab.classList.remove('active'));
-            event.target.classList.add('active');
-            document.querySelectorAll('.recipe-grid').forEach(grid => grid.classList.remove('active'));
-            document.getElementById(`grid-${diffId}`).classList.add('active');
+        /* --- STORE LOGIC --- */
+        function applyTheme(themeId, save = true) {
+            const theme = themes.find(t => t.id === themeId) || themes[0];
+            const root = document.documentElement;
+            for(let key in theme.colors) { root.style.setProperty(`--${key}`, theme.colors[key]); }
+            activeTheme = themeId;
+            if(save) saveUserData();
+            if(document.getElementById('screen-store').classList.contains('active')) renderStore();
         }
 
-        /* --- NEW GAME DATABASE (Graphical & Strict) --- */
+        function equipThemeUI(id) {
+            const t = themes.find(x => x.id === id);
+            applyTheme(id);
+            notify(`SYSTEM: Aesthetic layout successfully updated to ${t.name}.`, 'success');
+        }
+
+        function buyItem(id, type) {
+            let list = type === 'theme' ? themes : perks;
+            let unlockList = type === 'theme' ? unlockedThemes : unlockedPerks;
+            
+            const item = list.find(x => x.id === id);
+            if (!item) return;
+            
+            if (userBalance >= item.price && !unlockList.includes(id)) {
+                userBalance -= item.price;
+                unlockList.push(id);
+                playActionSound('success'); 
+                
+                if (type === 'theme') applyTheme(id);
+                if (type === 'perk' && id === 'golden_tools') updateToolColors();
+
+                saveUserData();
+                updateBalanceUI();
+                renderStore();
+                notify(`TRANSACTION SUCCESS: ${item.name} acquired for ${item.price.toLocaleString()} K.`, 'success');
+            } else {
+                notify(`TRANSACTION FAILED: Insufficient Kyats. You need ${item.price.toLocaleString()} K.`, 'error');
+            }
+        }
+
+        function renderStore() {
+            const themesGrid = document.getElementById('storeThemesGrid');
+            const perksGrid = document.getElementById('storePerksGrid');
+            themesGrid.innerHTML = '';
+            perksGrid.innerHTML = '';
+
+            themes.forEach(t => {
+                let isUnlocked = unlockedThemes.includes(t.id);
+                let isActive = activeTheme === t.id;
+                
+                let btnHtml = '';
+                if (isActive) {
+                    btnHtml = `<button class="action-btn" disabled style="opacity:0.5; width:100%;">Equipped</button>`;
+                } else if (isUnlocked) {
+                    btnHtml = `<button class="action-btn primary" style="width:100%;" onclick="equipThemeUI('${t.id}')">Equip Theme</button>`;
+                } else {
+                    let canAfford = userBalance >= t.price;
+                    btnHtml = `<button class="action-btn ${canAfford ? 'primary' : ''}" style="width:100%;" ${canAfford ? `onclick="buyItem('${t.id}', 'theme')"` : `onclick="notify('TRANSACTION FAILED: Insufficient Kyats for ${t.name}.', 'error')"`}>Buy for ${t.price.toLocaleString()} K</button>`;
+                }
+
+                let dots = Object.values(t.colors).slice(0,4).map(c => `<div class="palette-dot" style="background:${c}"></div>`).join('');
+
+                themesGrid.innerHTML += `
+                    <div class="store-card">
+                        <div class="info-wrapper">
+                            <div class="info-icon">?</div>
+                            <div class="info-tooltip">${t.desc}</div>
+                        </div>
+                        <div>
+                            <h3 style="margin-top:0; border:none; padding:0;">${t.name}</h3>
+                            <div class="store-palette" style="margin-top:1rem;">${dots}</div>
+                        </div>
+                        <div>${btnHtml}</div>
+                    </div>
+                `;
+            });
+
+            perks.forEach(p => {
+                let isUnlocked = unlockedPerks.includes(p.id);
+                let btnHtml = '';
+                if (isUnlocked && p.id !== 'auto_chef' && p.id !== 'platinum_board') {
+                    btnHtml = `<button class="action-btn" disabled style="opacity:0.5; width:100%;">Purchased & Active</button>`;
+                } else if (p.id === 'auto_chef' || p.id === 'platinum_board') {
+                    btnHtml = `<button class="action-btn" disabled style="opacity:0.5; width:100%;">Coming Soon</button>`;
+                } else {
+                    let canAfford = userBalance >= p.price;
+                    btnHtml = `<button class="action-btn ${canAfford ? 'primary' : ''}" style="width:100%;" ${canAfford ? `onclick="buyItem('${p.id}', 'perk')"` : `onclick="notify('TRANSACTION FAILED: Insufficient Kyats for ${p.name}.', 'error')"`}>Buy for ${p.price.toLocaleString()} K</button>`;
+                }
+
+                perksGrid.innerHTML += `
+                    <div class="store-card">
+                        <div class="info-wrapper">
+                            <div class="info-icon">?</div>
+                            <div class="info-tooltip">${p.desc}</div>
+                        </div>
+                        <div>
+                            <h3 style="margin-top:0; border:none; padding:0; color:var(--primary); margin-bottom: 2rem;">${p.name}</h3>
+                        </div>
+                        <div>${btnHtml}</div>
+                    </div>
+                `;
+            });
+        }
+
+        /* --- NEW GAME DATABASE (Graphical & Strict & Fuzzy Search) --- */
         const db = { items: {}, theories: [] };
+
+        // Fuzzy Searching Engine (Levenshtein Distance)
+        function getLevenshteinDistance(a, b) {
+            const matrix = [];
+            for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+            for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+            for (let i = 1; i <= b.length; i++) {
+                for (let j = 1; j <= a.length; j++) {
+                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, matrix[i][j - 1] + 1, matrix[i - 1][j] + 1);
+                    }
+                }
+            }
+            return matrix[b.length][a.length];
+        }
+
+        function isFuzzyMatch(query, text) {
+            if (query === '') return true;
+            if (text.includes(query)) return true;
+            
+            const queryWords = query.split(/\s+/).filter(w => w.length > 0);
+            const textWords = text.split(/[\s,.\-?()_]+/).filter(w => w.length > 0);
+            
+            return queryWords.every(qWord => {
+                if (textWords.some(tWord => tWord.includes(qWord))) return true;
+                if (qWord.length <= 2) return false; // Ignore tiny typos to prevent broad matching
+                
+                const maxDist = qWord.length >= 6 ? 2 : 1;
+                return textWords.some(tWord => {
+                    if (Math.abs(tWord.length - qWord.length) > maxDist + 2) return false;
+                    return getLevenshteinDistance(qWord, tWord) <= maxDist;
+                });
+            });
+        }
 
         // Advanced Graphical SVGs
         function getSVG(color, shape, detail='') {
@@ -647,6 +1273,16 @@
             else if (shape === 'sliced_block') s += `<rect x='20' y='30' width='60' height='40' fill='none' stroke='${c}' stroke-width='8' stroke-dasharray='15,10' rx='8'/>`;
             else if (shape === 'mixed') s += `<circle cx='50' cy='50' r='40' fill='${c}' opacity='0.9'/><circle cx='30' cy='40' r='10' fill='#FFF' opacity='0.3'/><circle cx='70' cy='60' r='15' fill='#000' opacity='0.1'/>`;
             else if (shape === 'plate') s += `<ellipse cx='50' cy='50' rx='45' ry='30' fill='#FFF' stroke='#DDD' stroke-width='2'/><circle cx='50' cy='50' r='20' fill='${c}' opacity='0.9'/>`;
+            else if (shape === 'banana') s += `<path d='M20,80 Q50,90 80,40 Q60,80 20,80 Z' fill='${c}' stroke='#D4B271' stroke-width='2'/>`;
+            else if (shape === 'peanut') s += `<path d='M30,50 C30,30 50,40 70,30 C90,30 90,70 70,70 C50,60 30,70 30,50 Z' fill='${c}' stroke='#8b5a2b' stroke-width='2'/>`;
+            else if (shape === 'glass') s += `<path d='M30,20 L40,80 Q50,90 60,80 L70,20 Z' fill='rgba(255,255,255,0.5)' stroke='#CCC' stroke-width='2'/><path d='M32,30 L40,80 Q50,85 60,80 L68,30 Z' fill='${c}' opacity='0.9'/>`;
+            
+            // Golden Variants
+            else if (shape === 'golden_knife') s += `<path d='M10,80 L80,20 Q90,30 85,40 L25,90 Z' fill='#FFD700'/><rect x='10' y='75' width='30' height='15' fill='#333' transform='rotate(-45 25 80)'/>`;
+            else if (shape === 'golden_pan') s += `<circle cx='50' cy='50' r='40' fill='#FFD700' stroke='#DAA520' stroke-width='4'/><rect x='85' y='45' width='40' height='10' fill='#333' rx='5'/>`;
+            else if (shape === 'golden_pot') s += `<rect x='15' y='30' width='70' height='55' fill='#FFD700' rx='10'/><path d='M10,30 L90,30' stroke='#DAA520' stroke-width='8' stroke-linecap='round'/><rect x='40' y='15' width='20' height='10' fill='#333' rx='3'/>`;
+            else if (shape === 'golden_bowl') s += `<path d='M10,40 Q50,100 90,40 Z' fill='#FFD700' stroke='#DAA520' stroke-width='3'/>`;
+
             s += `</svg>`; return `data:image/svg+xml;utf8,${s}`;
         }
 
@@ -654,7 +1290,6 @@
         const meatLines = `<path d='M30,40 L70,40 M30,60 L70,60' stroke='#8B0000' stroke-width='3' opacity='0.4'/>`;
 
         const masterItems = [
-            // Base Tools & Pantry
             { id: 'knife', name: 'Chef Knife', cat: 'tools', img: getSVG('', 'knife') },
             { id: 'pan', name: 'Frying Pan', cat: 'tools', img: getSVG('', 'pan') },
             { id: 'pot', name: 'Cooking Pot', cat: 'tools', img: getSVG('', 'pot') },
@@ -665,7 +1300,10 @@
             { id: 'rice', name: 'Raw Rice', cat: 'pantry', img: getSVG('#F1FAEE', 'oval') },
             { id: 'cheese', name: 'Cheese Block', cat: 'pantry', img: getSVG('#FFD166', 'block') },
             { id: 'bread', name: 'Loaf of Bread', cat: 'pantry', img: getSVG('#E0A96D', 'block') },
-            // Base Veg & Meat
+            { id: 'milk', name: 'Milk', cat: 'pantry', img: getSVG('#FFFFFF', 'glass') },
+            { id: 'banana', name: 'Banana', cat: 'fruits', img: getSVG('#FFE135', 'banana') },
+            { id: 'apple', name: 'Apple', cat: 'fruits', img: getSVG('#E63946', 'round', "<path d='M50,20 Q55,10 60,5' stroke='#5c4033' stroke-width='3' fill='none'/>") },
+            { id: 'peanut', name: 'Peanut', cat: 'nuts', img: getSVG('#D2B48C', 'peanut') },
             { id: 'onion', name: 'Onion', cat: 'raw_veg', img: getSVG('#DED3C3', 'round') },
             { id: 'potato', name: 'Potato', cat: 'raw_veg', img: getSVG('#E6C280', 'oval') },
             { id: 'tomato', name: 'Tomato', cat: 'raw_veg', img: getSVG('#E63946', 'round', leaf) },
@@ -676,7 +1314,8 @@
             { id: 'chicken', name: 'Raw Chicken', cat: 'raw_meat', img: getSVG('#F4A261', 'oval') },
             { id: 'fish', name: 'Raw Fish', cat: 'raw_meat', img: getSVG('#8ECAE6', 'oval') },
             { id: 'egg', name: 'Raw Egg', cat: 'raw_meat', img: getSVG('#FFFDD0', 'oval') },
-            // Prepped (Generated in game)
+            
+            // Prepped Items
             { id: 'sliced_onion', name: 'Sliced Onion', cat: 'prepped', img: getSVG('#DED3C3', 'sliced_round') },
             { id: 'sliced_potato', name: 'Sliced Potato', cat: 'prepped', img: getSVG('#E6C280', 'sliced_oval') },
             { id: 'sliced_tomato', name: 'Sliced Tomato', cat: 'prepped', img: getSVG('#E63946', 'sliced_round') },
@@ -687,6 +1326,15 @@
             { id: 'sliced_beef', name: 'Beef Strips', cat: 'prepped', img: getSVG('#B23A3A', 'sliced_block') },
             { id: 'sliced_chicken', name: 'Diced Chicken', cat: 'prepped', img: getSVG('#F4A261', 'sliced_oval') },
             { id: 'sliced_fish', name: 'Fish Fillet', cat: 'prepped', img: getSVG('#8ECAE6', 'sliced_oval') },
+            { id: 'sliced_banana', name: 'Sliced Banana', cat: 'prepped', img: getSVG('#FFE135', 'sliced_round') },
+            { id: 'sliced_apple', name: 'Apple Slices', cat: 'prepped', img: getSVG('#E63946', 'sliced_round') },
+            { id: 'crushed_peanut', name: 'Crushed Peanut', cat: 'prepped', img: getSVG('#D2B48C', 'mixed') },
+            { id: 'peanut_butter', name: 'Peanut Butter', cat: 'prepped', img: getSVG('#C19A6B', 'mixed') },
+            { id: 'pbj_sandwich', name: 'PB & Banana Sandwich', cat: 'prepped', img: getSVG('#C19A6B', 'sliced_block') },
+            { id: 'banana_smoothie', name: 'Banana Smoothie', cat: 'prepped', img: getSVG('#FFE135', 'glass') },
+            { id: 'cheese_sauce', name: 'Cheese Sauce', cat: 'prepped', img: getSVG('#FFD166', 'mixed') },
+            { id: 'mac_and_cheese', name: 'Mac & Cheese', cat: 'prepped', img: getSVG('#FFD166', 'plate') },
+            { id: 'fruit_salad', name: 'Fruit Salad', cat: 'prepped', img: getSVG('#FFE135', 'mixed') },
             { id: 'fried_onion', name: 'Fried Onion', cat: 'prepped', img: getSVG('#8b5a2b', 'mixed') },
             { id: 'seared_beef', name: 'Seared Beef', cat: 'prepped', img: getSVG('#5c1a1a', 'block') },
             { id: 'boiled_egg', name: 'Boiled Egg', cat: 'prepped', img: getSVG('#FFFFFF', 'oval') },
@@ -716,22 +1364,32 @@
             { id: 'bistrox_masterpiece', name: 'BistroX Masterpiece', cat: 'prepped', img: getSVG('#C5A059', 'plate') }
         ];
 
+        function updateToolColors() {
+            if(unlockedPerks.includes('golden_tools')) {
+                db.items['knife'].img = getSVG('', 'golden_knife');
+                db.items['pan'].img = getSVG('', 'golden_pan');
+                db.items['pot'].img = getSVG('', 'golden_pot');
+                db.items['bowl'].img = getSVG('', 'golden_bowl');
+            }
+        }
+
         masterItems.forEach(i => db.items[i.id] = i);
 
         const theories = [
-            // SLICE (Requires Knife, consumes item)
-            [['onion', 'knife'], 'slice', 'sliced_onion', ['onion'], 'Onion perfectly sliced.'],
-            [['potato', 'knife'], 'slice', 'sliced_potato', ['potato'], 'Potato sliced.'],
+            [['onion', 'knife'], 'slice', 'sliced_onion', ['onion'], 'Precision cut applied.'],
+            [['potato', 'knife'], 'slice', 'sliced_potato', ['potato'], 'Tuber sliced.'],
             [['tomato', 'knife'], 'slice', 'sliced_tomato', ['tomato'], 'Tomato chopped.'],
-            [['lettuce', 'knife'], 'slice', 'sliced_lettuce', ['lettuce'], 'Lettuce shredded.'],
+            [['lettuce', 'knife'], 'slice', 'sliced_lettuce', ['lettuce'], 'Greens shredded.'],
             [['garlic', 'knife'], 'slice', 'chopped_garlic', ['garlic'], 'Garlic minced.'],
-            [['mushroom', 'knife'], 'slice', 'sliced_mushroom', ['mushroom'], 'Mushroom sliced.'],
+            [['mushroom', 'knife'], 'slice', 'sliced_mushroom', ['mushroom'], 'Mushroom prepped.'],
             [['bread', 'knife'], 'slice', 'sliced_bread', ['bread'], 'Bread portioned.'],
-            [['beef', 'knife'], 'slice', 'sliced_beef', ['beef'], 'Beef cut into strips.'],
-            [['chicken', 'knife'], 'slice', 'sliced_chicken', ['chicken'], 'Chicken diced.'],
+            [['beef', 'knife'], 'slice', 'sliced_beef', ['beef'], 'Meat cut into strips.'],
+            [['chicken', 'knife'], 'slice', 'sliced_chicken', ['chicken'], 'Poultry diced.'],
             [['fish', 'knife'], 'slice', 'sliced_fish', ['fish'], 'Fish filleted.'],
+            [['banana', 'knife'], 'slice', 'sliced_banana', ['banana'], 'Banana perfectly sliced.'],
+            [['apple', 'knife'], 'slice', 'sliced_apple', ['apple'], 'Apple wedged.'],
+            [['peanut', 'knife'], 'slice', 'crushed_peanut', ['peanut'], 'Peanuts thoroughly crushed.'],
 
-            // BOIL (Requires Pot, consumes water + item)
             [['egg', 'water', 'pot'], 'boil', 'boiled_egg', ['egg', 'water'], 'Egg hard boiled.'],
             [['potato', 'water', 'pot'], 'boil', 'boiled_potato', ['potato', 'water'], 'Potato softened.'],
             [['rice', 'water', 'pot'], 'boil', 'boiled_rice', ['rice', 'water'], 'Rice cooked fluffy.'],
@@ -741,8 +1399,9 @@
             [['cooked_chicken', 'fried_onion', 'water', 'pot'], 'boil', 'chicken_soup', ['cooked_chicken', 'fried_onion', 'water'], 'Soup broth rich.'],
             [['pasta', 'tomato_soup', 'seared_beef', 'water', 'pot'], 'boil', 'pasta_bolognese', ['pasta', 'tomato_soup', 'seared_beef', 'water'], 'Bolognese simmered.'],
             [['pasta', 'tomato_soup', 'seared_beef', 'water', 'pot'], 'boil', 'meatball_pasta', ['pasta', 'tomato_soup', 'seared_beef', 'water'], 'Meatballs stewed.'],
+            [['cheese', 'milk', 'pot'], 'boil', 'cheese_sauce', ['cheese', 'milk'], 'Rich cheese sauce melted.'],
+            [['pasta', 'cheese_sauce', 'pot'], 'boil', 'mac_and_cheese', ['pasta', 'cheese_sauce'], 'Mac & Cheese combined perfectly.'],
 
-            // COOK / FRY (Requires Pan, consumes oil + item)
             [['sliced_onion', 'oil', 'pan'], 'cook', 'fried_onion', ['sliced_onion', 'oil'], 'Onions caramelized.'],
             [['beef', 'oil', 'pan'], 'cook', 'seared_beef', ['beef', 'oil'], 'Beef seared medium rare.'],
             [['egg', 'oil', 'pan'], 'cook', 'fried_egg', ['egg', 'oil'], 'Sunny side up egg.'],
@@ -755,21 +1414,22 @@
             [['sliced_bread', 'cheese', 'oil', 'pan'], 'cook', 'grilled_cheese', ['sliced_bread', 'cheese', 'oil'], 'Cheese melted beautifully.'],
             [['seared_beef', 'sliced_bread', 'oil', 'pan'], 'cook', 'hamburger', ['seared_beef', 'sliced_bread', 'oil'], 'Burger assembled and warmed.'],
             [['boiled_rice', 'mixed_egg', 'oil', 'pan'], 'cook', 'fried_rice', ['boiled_rice', 'mixed_egg', 'oil'], 'Fried rice tossed in wok.'],
+            [['sliced_bread', 'peanut_butter', 'sliced_banana', 'pan'], 'cook', 'pbj_sandwich', ['sliced_bread', 'peanut_butter', 'sliced_banana'], 'Peanut Butter Sandwich toasted.'],
             
-            // MIX (Requires Bowl, consumes items)
             [['egg', 'bowl'], 'mix', 'mixed_egg', ['egg'], 'Egg beaten.'],
             [['boiled_potato', 'bowl'], 'mix', 'mashed_potatoes', ['boiled_potato'], 'Potatoes mashed smooth.'],
             [['sliced_lettuce', 'sliced_tomato', 'bowl'], 'mix', 'side_salad', ['sliced_lettuce', 'sliced_tomato'], 'Salad tossed.'],
             [['seared_beef', 'french_fries', 'bowl'], 'mix', 'steak_frites', ['seared_beef', 'french_fries'], 'Bistro classic plated.'],
             [['cooked_fish', 'french_fries', 'bowl'], 'mix', 'fish_and_chips', ['cooked_fish', 'french_fries'], 'Pub classic plated.'],
+            [['crushed_peanut', 'bowl'], 'mix', 'peanut_butter', ['crushed_peanut'], 'Peanuts churned into creamy butter.'],
+            [['sliced_banana', 'milk', 'bowl'], 'mix', 'banana_smoothie', ['sliced_banana', 'milk'], 'Banana Smoothie blended.'],
+            [['sliced_apple', 'sliced_banana', 'bowl'], 'mix', 'fruit_salad', ['sliced_apple', 'sliced_banana'], 'Fruit salad gently tossed.'],
             [['seared_beef', 'cooked_chicken', 'cooked_fish', 'french_fries', 'side_salad', 'bowl'], 'mix', 'bistrox_masterpiece', ['seared_beef', 'cooked_chicken', 'cooked_fish', 'french_fries', 'side_salad'], 'The absolute zenith of culinary art.']
         ];
         
         theories.forEach(t => db.theories.push({ reqs: t[0], action: t[1], result: t[2], consumes: t[3], msg: t[4] }));
 
-        // Master 40 Level Array with detailed hints
         const levels = [
-            // EASY (1-10)
             { id: 'sliced_onion', name: 'Sliced Onion', hints: ["1. Find ONION in Veggies.", "2. Find CHEF KNIFE in Tools.", "3. Place both on Board and click SLICE."] },
             { id: 'boiled_egg', name: 'Boiled Egg', hints: ["1. Need EGG (Meats), WATER (Pantry), and POT (Tools).", "2. Place all 3 on Board and click BOIL."] },
             { id: 'fried_onion', name: 'Fried Onion', hints: ["1. Slice an ONION first.", "2. Clear board.", "3. Combine SLICED ONION + OIL + PAN.", "4. Click COOK."] },
@@ -781,7 +1441,6 @@
             { id: 'sauteed_mushroom', name: 'Sautéed Mushroom', hints: ["1. Slice MUSHROOM first.", "2. Combine SLICED MUSHROOM + OIL + PAN.", "3. Click COOK."] },
             { id: 'boiled_rice', name: 'Fluffy Rice', hints: ["1. Combine RICE + WATER + POT.", "2. Click BOIL."] },
 
-            // MEDIUM (11-20)
             { id: 'omelette', name: 'Omelette', hints: ["1. Mix RAW EGG in a BOWL to get Beaten Egg.", "2. Combine BEATEN EGG + OIL + PAN.", "3. Click COOK."] },
             { id: 'side_salad', name: 'Side Salad', hints: ["1. Slice LETTUCE.", "2. Slice TOMATO.", "3. Combine both slices + BOWL.", "4. Click MIX."] },
             { id: 'tomato_soup', name: 'Tomato Soup', hints: ["1. Slice TOMATO.", "2. Combine SLICED TOMATO + WATER + POT.", "3. Click BOIL."] },
@@ -793,19 +1452,17 @@
             { id: 'fried_rice', name: 'Fried Rice', hints: ["1. Boil RICE.", "2. Mix EGG in BOWL.", "3. Combine BOILED RICE + BEATEN EGG + OIL + PAN.", "4. Click COOK."] },
             { id: 'hamburger', name: 'Hamburger', hints: ["1. Slice BREAD.", "2. Cook RAW BEEF (Sear it).", "3. Combine SLICED BREAD + SEARED BEEF + OIL + PAN.", "4. Click COOK."] },
 
-            // HARD (21-30)
             { id: 'beef_stew', name: 'Beef Stew', hints: ["1. Sear RAW BEEF.", "2. Boil POTATO.", "3. Combine SEARED BEEF + BOILED POTATO + WATER + POT.", "4. Click BOIL."] },
             { id: 'chicken_soup', name: 'Chicken Soup', hints: ["1. Cook CHICKEN.", "2. Slice & Fry ONION.", "3. Combine COOKED CHICKEN + FRIED ONION + WATER + POT.", "4. Click BOIL."] },
             { id: 'steak_frites', name: 'Steak Frites', hints: ["1. Sear BEEF.", "2. Make FRENCH FRIES (Slice Potato -> Cook with Oil/Pan).", "3. Combine SEARED BEEF + FRIES + BOWL.", "4. Click MIX."] },
             { id: 'fish_and_chips', name: 'Fish & Chips', hints: ["1. Cook FISH.", "2. Make FRENCH FRIES.", "3. Combine COOKED FISH + FRIES + BOWL.", "4. Click MIX."] },
             { id: 'pasta_bolognese', name: 'Pasta Bolognese', hints: ["1. Boil PASTA.", "2. Make TOMATO SOUP.", "3. Sear BEEF.", "4. Combine PASTA + SOUP + BEEF + WATER + POT.", "5. Click BOIL."] },
-            { id: 'beef_stew', name: 'Rich Beef Stew', hints: ["See Beef Stew."] },
-            { id: 'chicken_soup', name: 'Homestyle Chicken Soup', hints: ["See Chicken Soup."] },
-            { id: 'steak_frites', name: 'Bistro Steak Frites', hints: ["See Steak Frites."] },
-            { id: 'fish_and_chips', name: 'Tavern Fish & Chips', hints: ["See Fish & Chips."] },
-            { id: 'pasta_bolognese', name: 'Classic Bolognese', hints: ["See Pasta Bolognese."] },
+            { id: 'mac_and_cheese', name: 'Mac & Cheese', hints: ["1. Boil DRY PASTA to Cooked Pasta.", "2. Boil CHEESE + MILK in POT to get Cheese Sauce.", "3. Combine PASTA + CHEESE SAUCE + POT.", "4. Click BOIL."] },
+            { id: 'pbj_sandwich', name: 'PB & Banana Sandwich', hints: ["1. Slice PEANUT to Crushed Peanut, then MIX in BOWL to get Peanut Butter.", "2. Slice BANANA.", "3. Slice BREAD.", "4. Combine BREAD + PEANUT BUTTER + SLICED BANANA + PAN.", "5. Click COOK."] },
+            { id: 'banana_smoothie', name: 'Banana Smoothie', hints: ["1. Slice BANANA.", "2. Combine SLICED BANANA + MILK + BOWL.", "3. Click MIX."] },
+            { id: 'fruit_salad', name: 'Fruit Salad', hints: ["1. Slice APPLE.", "2. Slice BANANA.", "3. Combine SLICED APPLE + SLICED BANANA + BOWL.", "4. Click MIX."] },
+            { id: 'cheese_sauce', name: 'Fondue Cheese Sauce', hints: ["1. Combine CHEESE + MILK + POT.", "2. Click BOIL."] },
 
-            // IMPOSSIBLE (31-40)
             { id: 'meatball_pasta', name: 'Meatball Pasta', hints: ["Requires exact same components as Bolognese: Pasta, Tomato Soup, Seared Beef, Water, Pot -> BOIL."] },
             { id: 'hamburger', name: 'Double Hamburger', hints: ["See Hamburger."] },
             { id: 'omelette', name: 'Fluffy Omelette', hints: ["See Omelette."] },
@@ -820,16 +1477,13 @@
 
         function generateLevels() {
             const catMap = ['easy', 'medium', 'hard', 'impossible'];
-            
             for(let c=0; c<4; c++) {
                 const grid = document.getElementById(`grid-${catMap[c]}`);
                 grid.innerHTML = '';
-                
                 for(let i=0; i<10; i++) {
                     let lvlNum = (c * 10) + i + 1;
                     let lvlData = levels[lvlNum - 1];
                     let isUnlocked = (lvlNum <= maxUnlockedLevel);
-                    
                     let card = document.createElement('div');
                     card.className = `level-card ${isUnlocked ? '' : 'locked'}`;
                     
@@ -847,7 +1501,7 @@
                             <h4 style="color:#666;">Classified</h4>
                             <p style="color:#888;">Level ${lvlNum}</p>
                         `;
-                        card.onclick = () => notify("Recipe locked. Complete previous timelines first.");
+                        card.onclick = () => notify("ACCESS DENIED: Recipe locked. Complete previous timelines first.", "error");
                     }
                     grid.appendChild(card);
                 }
@@ -855,7 +1509,7 @@
         }
 
         /* --- ENGINE STATE --- */
-        let sessionInventory = []; // Base items + items created this session
+        let sessionInventory = []; 
         let stagingArea = [];
         let currentFilter = 'all';
         let currentSearch = '';
@@ -865,7 +1519,6 @@
             targetLevelId = data.id;
             document.getElementById('targetDishName').textContent = data.name;
             
-            // Build Hints
             const hintList = document.getElementById('hintContent');
             hintList.innerHTML = '';
             data.hints.forEach(h => {
@@ -874,18 +1527,20 @@
                 hintList.appendChild(li);
             });
 
-            // Initialize Session Inventory (Give all base items)
             sessionInventory = masterItems.filter(i => i.cat !== 'prepped').map(i => i.id);
             stagingArea = [];
             currentFilter = 'all';
             document.getElementById('pantrySearch').value = '';
             
             document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelector('.cat-btn').classList.add('active'); // Set 'All' active
+            document.querySelector('.pantry-categories .cat-btn:first-child').classList.add('active'); 
 
             renderPantry();
             renderStaging();
             switchScreen('screen-play');
+            
+            currentLevelStartTime = Date.now(); // Start timer
+            notify(`SYSTEM: Kitchen prepared for ${data.name}. Good luck.`, 'info');
         }
 
         function setCategory(cat) {
@@ -898,16 +1553,25 @@
         function renderPantry() {
             const grid = document.getElementById('inventoryGrid');
             grid.innerHTML = '';
-            currentSearch = document.getElementById('pantrySearch').value.toLowerCase();
+            currentSearch = document.getElementById('pantrySearch').value.toLowerCase().trim();
 
-            // Filter logic
+            if (currentSearch !== '' && currentFilter !== 'all') {
+                document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelector('.pantry-categories .cat-btn:first-child').classList.add('active');
+                currentFilter = 'all';
+            }
+
             let displayItems = sessionInventory.filter(id => {
                 let item = db.items[id];
                 if (!item) return false;
-                if (stagingArea.includes(id)) return false; // Don't show if on board
-                if (currentFilter !== 'all' && item.cat !== currentFilter) return false;
-                if (currentSearch && !item.name.toLowerCase().includes(currentSearch)) return false;
-                return true;
+                if (stagingArea.includes(id)) return false; 
+                
+                if (currentSearch !== '') {
+                    return isFuzzyMatch(currentSearch, item.name.toLowerCase());
+                } else {
+                    if (currentFilter !== 'all' && item.cat !== currentFilter) return false;
+                    return true;
+                }
             });
 
             displayItems.forEach(id => {
@@ -923,7 +1587,6 @@
 
         function renderStaging() {
             const stage = document.getElementById('stagingArea');
-            // Clear current icons (keep the empty text span if we added one, but for this design we can just clear innerHTML and recreate if empty)
             stage.innerHTML = '';
 
             if (stagingArea.length > 0) {
@@ -939,7 +1602,7 @@
         }
 
         function moveToBoard(id) {
-            if (stagingArea.length >= 6) { notify("Board is full! Max 6 items."); return; }
+            if (stagingArea.length >= 6) { notify("ERROR: Prep table is at maximum capacity (6 items).", "error"); return; }
             stagingArea.push(id);
             renderPantry();
             renderStaging();
@@ -952,40 +1615,37 @@
         }
 
         function clearStaging() {
-            stagingArea = [];
-            renderPantry();
-            renderStaging();
+            if (stagingArea.length > 0) {
+                stagingArea = [];
+                renderPantry();
+                renderStaging();
+                notify("ACTION: Prep table cleared. Ingredients returned to pantry.", "info");
+            }
         }
 
         function performAction(actionStr) {
-            if (stagingArea.length === 0) { notify("Put ingredients on the board first!"); return; }
+            if (stagingArea.length === 0) { notify("ERROR: Prep table is empty. Place ingredients and tools first.", "error"); return; }
 
             let success = false;
 
             for (let t of db.theories) {
                 if (t.action === actionStr) {
-                    // Check if exact match of requirements (ignoring order)
                     if (stagingArea.length === t.reqs.length) {
                         let hasAll = t.reqs.every(req => stagingArea.includes(req));
                         if (hasAll) {
                             success = true;
+                            playActionSound(actionStr); 
                             
-                            // Add result to session inventory if not already there
                             if (!sessionInventory.includes(t.result)) {
                                 sessionInventory.push(t.result);
                             }
-
-                            // Keep tools/items that are not consumed
-                            let remainingItems = stagingArea.filter(id => !t.consumes.includes(id));
-                            stagingArea = []; // clear board
+                            stagingArea = []; 
                             
-                            // Remaining tools go back to inventory naturally since they are never removed from sessionInventory. 
-                            // We just clear the staging area to make it clean.
+                            let resultName = db.items[t.result].name;
+                            notify(`SYNTHESIS COMPLETE: ${t.msg} [${resultName}] safely stored in your PREPPED inventory.`, 'success');
                             
-                            notify(t.msg);
                             renderPantry();
                             renderStaging();
-                            
                             checkWin(t.result);
                             break;
                         }
@@ -993,19 +1653,47 @@
                 }
             }
 
-            if (!success) { notify(`Invalid ${actionStr.toUpperCase()} combination.`); }
+            if (!success) { notify(`SYNTHESIS FAILED: Incorrect combination for ${actionStr.toUpperCase()}. Ingredients wasted.`, "error"); }
         }
 
         function checkWin(resId) {
             if (resId === targetLevelId) {
+                playActionSound('success'); 
+                
+                // Process Timer for Flash Leaderboard
+                let timeTaken = (Date.now() - currentLevelStartTime) / 1000;
+                if (timeTaken < userFastestTime) {
+                    userFastestTime = timeTaken;
+                }
+
+                // Dynamic Kyat Reward Calculation
+                let reward = 0;
+                if (currentPlayingLevelNum <= 10) {
+                    reward = 1000 + (currentPlayingLevelNum - 1) * 1000;
+                } else if (currentPlayingLevelNum <= 20) {
+                    reward = 10000 + (currentPlayingLevelNum - 11) * 5000;
+                } else if (currentPlayingLevelNum <= 30) {
+                    reward = 50000 + (currentPlayingLevelNum - 21) * 10000;
+                } else {
+                    reward = 150000 + (currentPlayingLevelNum - 31) * 50000;
+                }
+                
+                userBalance += reward;
+                
                 if (currentPlayingLevelNum === maxUnlockedLevel && maxUnlockedLevel < 40) {
                     maxUnlockedLevel++;
-                    saveUserProgress();
-                    generateLevels(); 
                 }
+                
+                saveUserData();
+                generateLevels(); 
+                updateBalanceUI();
+                
+                notify(`LEVEL COMPLETE: ${reward.toLocaleString()} Kyats added to your balance.`, 'success');
+
                 setTimeout(() => {
                     document.getElementById('overlayTitle').textContent = "Masterpiece Created.";
                     document.getElementById('overlaySub').textContent = db.items[resId].name + " Unlocked • Timeline Advancing";
+                    document.getElementById('overlayReward').textContent = `+${reward.toLocaleString()} Kyats`;
                     document.getElementById('gameOverlay').classList.add('active');
                 }, 800);
             }
