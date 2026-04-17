@@ -543,7 +543,7 @@
                         <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v12M8 12h8"/></svg>
                         <span class="ui-balance-display">0</span> K
                     </div>
-                    <button class="game-close-btn" style="color:var(--info); border-color:var(--info);" onclick="document.getElementById('hintModal').classList.add('active')">Tips</button>
+                    <button class="game-close-btn" style="color:var(--info); border-color:var(--info);" onclick="buyHint()">Tips</button>
                     <button class="game-close-btn" onclick="openStore('screen-play')">Store</button>
                     <button class="game-close-btn" onclick="openSettings('screen-play')">Settings</button>
                     <button class="game-close-btn" style="color:var(--danger); border-color:var(--danger);" onclick="abandonKitchen()">Abandon</button>
@@ -596,9 +596,15 @@
                                 <button class="cat-btn prepped-btn" onclick="setCategory('prepped')">Prepped ⭐</button>
                             </div>
                         </div>
-
                     </div>
+
+                    <div id="searchFeedback" style="display:none; padding: 1.5rem 2rem 0; color: var(--primary); font-family: var(--font-geo); font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px;"></div>
+
                     <div class="inventory-grid" id="inventoryGrid"></div>
+
+                    <div id="resetSearchContainer" style="display:none; padding: 0 2rem 2rem; width: 100%;">
+                        <button class="action-btn clear" onclick="resetSearch()" style="width: 100%; border-radius: 30px;">Reset Search</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1153,6 +1159,19 @@
             }
         }
 
+        function buyHint() {
+            const hintCost = 1599;
+            if (userBalance >= hintCost) {
+                userBalance -= hintCost;
+                saveUserData();
+                updateBalanceUI();
+                document.getElementById('hintModal').classList.add('active');
+                notify(`TRANSACTION SUCCESS: Tips accessed for ${hintCost.toLocaleString()} K.`, 'success');
+            } else {
+                notify(`TRANSACTION FAILED: Insufficient amount. You need ${hintCost.toLocaleString()} K to view tips.`, 'error');
+            }
+        }
+
         function renderStore() {
             const themesGrid = document.getElementById('storeThemesGrid');
             const perksGrid = document.getElementById('storePerksGrid');
@@ -1549,6 +1568,11 @@
             renderPantry();
         }
 
+        function resetSearch() {
+            document.getElementById('pantrySearch').value = '';
+            renderPantry();
+        }
+
         function renderPantry() {
             const grid = document.getElementById('inventoryGrid');
             grid.innerHTML = '';
@@ -1572,6 +1596,18 @@
                     return true;
                 }
             });
+
+            const searchFeedback = document.getElementById('searchFeedback');
+            const resetContainer = document.getElementById('resetSearchContainer');
+            
+            if (currentSearch !== '') {
+                searchFeedback.style.display = 'block';
+                searchFeedback.textContent = `Search Result (${displayItems.length})`;
+                resetContainer.style.display = 'block';
+            } else {
+                searchFeedback.style.display = 'none';
+                resetContainer.style.display = 'none';
+            }
 
             displayItems.forEach(id => {
                 let item = db.items[id];
