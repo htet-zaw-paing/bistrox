@@ -102,7 +102,8 @@
         .tips-btn:hover { background: var(--primary); color: var(--white); border-color: var(--primary); }
         .header-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; align-items: center; }
 
-        .main-menu { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-left: 8%; background: url('https://images.unsplash.com/photo-1495521821757-a1efb6729352?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat; }
+        .menu-bg-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-position: center; background-size: cover; background-repeat: no-repeat; transition: opacity 2s ease-in-out; z-index: 0; }
+        .main-menu { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-left: 8%; position: relative; }
         .menu-gradient-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(to right, var(--game-bg) 0%, var(--game-bg) 35%, transparent 100%); z-index: 1; pointer-events: none; opacity: 0.95; transition: background 0.5s;}
         .menu-container { position: relative; z-index: 2; display: flex; flex-direction: row; align-items: center; justify-content: flex-start; gap: 8rem; max-width: 1200px; }
         .menu-brand-block { display: flex; flex-direction: column; width: 100%; max-width: 500px; }
@@ -120,39 +121,151 @@
         .menu-btn.quit-btn:hover { color: #ff5252; }
         .menu-btn.quit-btn::before { background: var(--danger); }
 
-        .recipe-layout { display: flex; flex-direction: column; flex: 1; padding: 2rem 4rem; background: var(--game-bg); overflow: hidden;}
-        .difficulty-tabs { 
-            display: flex; gap: 2rem; margin-bottom: 2rem; border-bottom: 2px solid var(--game-border); padding-bottom: 1rem; 
-            flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; 
-        }
-        .difficulty-tabs::-webkit-scrollbar { display: none; }
-        .diff-tab { 
-            background: transparent; border: none; color: var(--game-text-muted); font-family: var(--font-geo); font-size: 0.95rem; 
-            text-transform: uppercase; letter-spacing: 3px; cursor: pointer; transition: var(--transition); padding: 0.5rem 1rem; 
-            position: relative; font-weight: 500; white-space: nowrap; flex-shrink: 0;
-        }
-        .diff-tab::after { content: ''; position: absolute; bottom: -1.15rem; left: 0; width: 0; height: 3px; background: var(--primary); transition: var(--transition); border-radius: 3px 3px 0 0;}
-        .diff-tab:hover { color: var(--secondary); }
-        .diff-tab.active { color: var(--secondary); font-weight: 800; }
-        .diff-tab.active::after { width: 100%; }
+        .icon-controls { display: flex; gap: 0.5rem; align-items: center; }
+        .icon-btn { padding: 0.5rem !important; border-radius: 50% !important; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3) !important; }
+        .icon-btn svg { width: 18px; height: 18px; }
 
+        /* Rank Styles for Tabs */
+        .difficulty-tabs { 
+            display: flex; gap: 1rem; margin-bottom: 2rem; padding-bottom: 0.5rem; 
+            flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none;
+        }
+        .diff-tab { border-radius: 8px; padding: 0.8rem 1.5rem; border: 1px solid transparent; background: rgba(0,0,0,0.03); color: var(--game-text-muted); font-family: var(--font-geo); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 3px; cursor: pointer; transition: var(--transition); position: relative; font-weight: 500; white-space: nowrap; flex-shrink: 0; }
+        .diff-tab::after { display: none; }
+        .diff-tab.rank-easy.active { background: linear-gradient(145deg, #ffffff, #f4f0ec); border-color: #dcb897; color: #8b5a2b; box-shadow: 0 4px 10px rgba(139, 90, 43, 0.1); font-weight: 800; transform: translateY(-2px); }
+        .diff-tab.rank-medium.active { background: linear-gradient(145deg, #ffffff, #eef1f5); border-color: #b0c4de; color: #4a5d80; box-shadow: 0 4px 10px rgba(74, 93, 128, 0.1); font-weight: 800; transform: translateY(-2px); }
+        .diff-tab.rank-hard.active { background: linear-gradient(145deg, #fffdf8, #fff4cc); border-color: #ffd700; color: #b8860b; box-shadow: 0 4px 10px rgba(184, 134, 11, 0.1); font-weight: 800; transform: translateY(-2px); }
+        .diff-tab.rank-impossible.active { background: linear-gradient(145deg, #1f2226, #121417); border-color: #8892b0; color: #e5e4e2; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); font-weight: 800; transform: translateY(-2px); }
+        .diff-tab.rank-executive.active { background: linear-gradient(145deg, #0a0a0a, #000000); border-color: #ffd700; color: #ffd700; box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2); font-weight: 800; transform: translateY(-2px); }
+
+        /* Rank Styles for Cards */
         .recipe-grid-container { flex: 1; overflow-y: auto; padding-right: 1rem; padding-bottom: 2rem; }
         .recipe-grid { display: none; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 2.5rem; animation: fadeIn 0.4s ease-out; }
         .recipe-grid.active { display: grid; }
 
-        .level-card { background: linear-gradient(145deg, var(--game-panel), var(--game-bg)); border: 1px solid var(--game-border); border-radius: 24px; padding: 2.5rem 1.5rem; text-align: center; cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; box-shadow: 0 15px 35px rgba(0,0,0,0.04); }
-        .level-card:hover { border-color: var(--primary); transform: translateY(-10px); box-shadow: 0 25px 50px rgba(197, 160, 89, 0.2); }
-        .level-card.locked { opacity: 0.6; cursor: not-allowed; background: var(--game-bg);}
-        .level-card.locked:hover { transform: none; border-color: var(--game-border); box-shadow: 0 10px 20px rgba(0,0,0,0.02); }
-        .lock-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.15; }
-        .lock-icon svg { width: 50px; height: 50px; fill: var(--secondary); }
-
+        .level-card, .badge-card { background: linear-gradient(145deg, var(--game-panel), var(--game-bg)); border: 1px solid var(--game-border); border-radius: 24px; padding: 2.5rem 1.5rem; text-align: center; cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; box-shadow: 0 15px 35px rgba(0,0,0,0.04); }
+        .level-card:hover, .badge-card:hover { border-color: var(--primary); transform: translateY(-10px); box-shadow: 0 25px 50px rgba(197, 160, 89, 0.2); }
+        .level-card.locked, .badge-card.locked { opacity: 0.6; cursor: not-allowed; background: var(--game-bg);}
+        .level-card.locked:hover, .badge-card.locked:hover { transform: none; border-color: var(--game-border); box-shadow: 0 10px 20px rgba(0,0,0,0.02); }
+        
+        .level-card.rank-easy, .badge-card.rank-easy { background: linear-gradient(145deg, #ffffff, #f4f0ec); border-color: #dcb897; }
+        .level-card.rank-easy h4, .badge-card.rank-easy h4 { color: #8b5a2b; }
+        .level-card.rank-medium, .badge-card.rank-medium { background: linear-gradient(145deg, #ffffff, #eef1f5); border-color: #b0c4de; }
+        .level-card.rank-medium h4, .badge-card.rank-medium h4 { color: #4a5d80; }
+        .level-card.rank-hard, .badge-card.rank-hard { background: linear-gradient(145deg, #fffdf8, #fff4cc); border-color: #ffd700; }
+        .level-card.rank-hard h4, .badge-card.rank-hard h4 { color: #b8860b; }
+        .level-card.rank-impossible, .badge-card.rank-impossible { background: linear-gradient(145deg, #1f2226, #121417); border-color: #8892b0; }
+        .level-card.rank-impossible h4, .badge-card.rank-impossible h4 { color: #e5e4e2; }
+        .level-card.rank-impossible p, .badge-card.rank-impossible p { color: #aaaaaa; }
+        .level-card.rank-executive, .badge-card.rank-executive { background: linear-gradient(145deg, #0a0a0a, #000000); border-color: #ffd700; box-shadow: 0 10px 20px rgba(255,215,0,0.1); }
+        .level-card.rank-executive h4, .badge-card.rank-executive h4 { color: #ffd700; }
+        .level-card.rank-executive p, .badge-card.rank-executive p { color: #eeeeee; }
+        
         .level-card img, .badge-card img { width: 90px; height: 90px; object-fit: contain; margin-bottom: 1.5rem; border-radius: 16px; background: var(--game-panel); padding: 10px; box-shadow: inset 0 5px 15px rgba(0,0,0,0.03); border: 1px solid var(--game-border); transition: var(--transition); }
         .level-card:hover img, .badge-card:hover img { border-color: var(--primary); transform: scale(1.15) rotate(3deg); background: var(--white); box-shadow: 0 10px 20px rgba(197, 160, 89, 0.15); }
         .level-card.locked img, .badge-card.locked img { filter: grayscale(100%) opacity(0.3); }
+
+        .level-card.rank-impossible img, .badge-card.rank-impossible img { background: #2a2e33; border-color: #4a5059; }
+        .level-card.rank-executive img, .badge-card.rank-executive img { background: #1a1a1a; border-color: #ffd700; box-shadow: inset 0 0 10px rgba(255,215,0,0.1); }
         
         .level-card h4, .badge-card h4 { font-size: 1.05rem; margin-bottom: 0.5rem; color: var(--secondary); font-family: var(--font-geo); font-weight: 700; letter-spacing: 1px;}
         .level-card p, .badge-card p { font-family: var(--font-main); font-size: 0.75rem; color: var(--game-text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600;}
+
+        /* --- RECIPE MENU SPECIFIC REDESIGN OVERRIDES --- */
+        #screen-recipes .recipe-layout {
+            padding: 0;
+        }
+        #screen-recipes .difficulty-tabs {
+            border-bottom: 1px solid var(--game-border);
+            padding: 0 4rem; 
+            margin-bottom: 1.5rem; /* Adjusted to balance the extra padding-top added below */
+            gap: 3rem;
+        }
+        #screen-recipes .diff-tab {
+            border: none; border-radius: 0; background: transparent; padding: 1.5rem 0 1.2rem;
+            color: var(--game-text-muted); font-family: var(--font-geo); font-size: 0.8rem;
+            text-transform: uppercase; letter-spacing: 2px; font-weight: 600;
+            box-shadow: none; transform: none;
+        }
+        #screen-recipes .diff-tab.active {
+            color: var(--secondary); font-weight: 800; background: transparent;
+        }
+        #screen-recipes .diff-tab.active::after {
+            content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 3px;
+            background: var(--secondary); display: block; border-radius: 3px 3px 0 0;
+        }
+        /* Completely remove the visual rank cues from tabs in Recipe screen */
+        #screen-recipes .diff-tab[class*="rank-"] { background: transparent; box-shadow: none; border-color: transparent; color: var(--game-text-muted); }
+        #screen-recipes .diff-tab[class*="rank-"].active { color: var(--secondary); background: transparent; }
+
+        #screen-recipes .recipe-grid-container {
+            padding: 15px 4rem 4rem; /* Padding top prevents cards from clipping during hover transform */
+        }
+        #screen-recipes .recipe-grid {
+            gap: 2.5rem;
+            grid-template-columns: repeat(5, 1fr);
+        }
+
+        @media (max-width: 1400px) {
+            #screen-recipes .recipe-grid { grid-template-columns: repeat(4, 1fr); gap: 2rem;}
+        }
+
+        #screen-recipes .level-card {
+            background: var(--game-panel);
+            border: 1px solid var(--game-border);
+            border-radius: 18px;
+            padding: 2.8rem 1.2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            justify-content: flex-start;
+        }
+        
+        #screen-recipes .level-card[class*="rank-"] {
+            background: var(--game-panel); border-color: var(--game-border); box-shadow: 0 5px 15px rgba(0,0,0,0.03); color: inherit;
+        }
+        
+        #screen-recipes .level-card:hover, #screen-recipes .level-card.selected {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 1px var(--primary), 0 15px 35px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+
+        #screen-recipes .level-card img {
+            width: 80px; height: 80px;
+            border-radius: 20px;
+            background: var(--game-bg);
+            border: 1px solid var(--game-border);
+            padding: 16px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
+            margin-bottom: 1.5rem;
+            transform: none; 
+        }
+        #screen-recipes .level-card:hover img {
+            transform: scale(1.05);
+            background: var(--game-panel);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-color: var(--primary);
+        }
+
+        #screen-recipes .level-card h4 {
+            color: var(--secondary) !important;
+            font-family: var(--font-geo);
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+            letter-spacing: 0.5px;
+        }
+        #screen-recipes .level-card p {
+            color: var(--game-text-muted) !important;
+            font-family: var(--font-main);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        #screen-recipes .level-card.locked { opacity: 0.8; cursor: not-allowed; border-color: var(--game-border); }
+        #screen-recipes .level-card.locked:hover { transform: none; border-color: var(--game-border); box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
+        /* --- END RECIPE MENU REDESIGN --- */
 
         .play-layout { display: flex; flex: 1; height: calc(100vh - 90px); position: relative; overflow: hidden; }
 
@@ -246,7 +359,7 @@
         .cat-btn { background: transparent; border: 1px solid transparent; color: var(--game-text-muted); padding: 0.8rem 1rem; border-radius: 12px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; text-align: left; transition: var(--transition); cursor: pointer; width: 100%; }
         .cat-btn.active, .cat-btn:hover { background: rgba(197, 160, 89, 0.1); color: var(--primary); border-color: rgba(197, 160, 89, 0.2); }
 
-        .prepped-btn { background: var(--primary) !important; color: var(--white) !important; border-color: var(--primary) !important; font-weight: 800; margin-top: auto; text-align: center; animation: pulsePrepped 2s infinite; }
+        .prepped-btn { background: var(--primary) !important; color: var(--white) !important; border-color: var(--primary) !important; font-weight: 800; margin-bottom: 0.5rem; text-align: center; animation: pulsePrepped 2s infinite; }
         @keyframes pulsePrepped { 0% { box-shadow: 0 0 0 0 rgba(197, 160, 89, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(197, 160, 89, 0); } 100% { box-shadow: 0 0 0 0 rgba(197, 160, 89, 0); } }
 
         .inventory-grid { flex: 1; overflow-y: auto; padding: 2rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 1.2rem; align-content: flex-start; }
@@ -346,16 +459,11 @@
         .gfx-medium .modal-overlay, .gfx-medium .game-overlay { backdrop-filter: none !important; opacity: 0.98;}
 
         .gfx-low .level-card, .gfx-low .action-btn, .gfx-low .item-slot, .gfx-low .toast, .gfx-low .modal-box, .gfx-low .staging-area, .gfx-low .setting-group, .gfx-low .lb-panel { box-shadow: none !important; }
+        .gfx-low .menu-bg-layer { display: none !important; }
         .gfx-low .menu-gradient-overlay { display: none !important; }
         .gfx-low .main-menu { background: var(--game-bg) !important; }
         .gfx-low .modal-overlay, .gfx-low .game-overlay { backdrop-filter: none !important; opacity: 0.98; }
         .gfx-low * { animation-duration: 0.01s !important; transition-duration: 0.01s !important; }
-
-        .badge-card { background: linear-gradient(145deg, var(--game-panel), var(--game-bg)); border: 1px solid var(--game-border); border-radius: 20px; padding: 2.5rem 1.5rem; text-align: center; transition: var(--transition); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 15px 35px rgba(0,0,0,0.04); position: relative; overflow: hidden; }
-        .badge-card:hover { border-color: var(--primary); transform: translateY(-10px); box-shadow: 0 25px 50px rgba(197, 160, 89, 0.2); }
-        .badge-card.locked { opacity: 0.5; filter: grayscale(100%); }
-        .badge-card h4 { font-family: var(--font-geo); color: var(--secondary); margin-bottom: 0.5rem; font-size: 1.1rem; }
-        .badge-card p { font-family: var(--font-main); color: var(--game-text-muted); font-size: 0.8rem; line-height: 1.5; }
 
         @media (max-width: 1024px) {
             .menu-container { gap: 4rem; padding-right: 4rem;}
@@ -364,6 +472,11 @@
             .cooking-zone { flex: 0 0 50%; border-right: none; padding: 2rem; border-bottom: 4px solid var(--game-border); }
             .inventory-panel { flex: 1; width: 100% !important; max-width: 100% !important; border-left: none; }
             .game-actions { flex-wrap: nowrap; }
+            
+            /* Recipe Menu Adjustments */
+            #screen-recipes .difficulty-tabs { padding: 0 2rem; }
+            #screen-recipes .recipe-grid-container { padding: 15px 2rem 2rem; }
+            #screen-recipes .recipe-grid { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
         }
         
         @media (max-width: 768px) {
@@ -388,7 +501,7 @@
 
             .recipe-layout, .lb-layout { padding: 1.5rem; }
             .recipe-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
-            .level-card { padding: 1.5rem 1rem; }
+            .level-card, .badge-card { padding: 1.5rem 1rem; }
             
             .cooking-zone { flex: 0 0 55%; padding: 1rem; }
             .goal-display { padding: 1rem; margin-bottom: 1rem; flex-direction: row; justify-content: space-between; align-items: center;}
@@ -407,7 +520,7 @@
             .pantry-sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--game-border); flex-shrink: 0;}
             .pantry-categories { flex-direction: row; overflow-x: auto; padding: 1rem; gap: 0.5rem; }
             .cat-btn { width: auto; white-space: nowrap; padding: 0.6rem 1.2rem; text-align: center; border-radius: 20px; border: 1px solid var(--game-border); }
-            .prepped-btn { margin-top: 0; }
+            .prepped-btn { margin-bottom: 0; margin-right: 0.5rem; }
 
             .inventory-grid { padding: 1rem; gap: 0.8rem; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
             .item-slot span { font-size: 0.65rem; }
@@ -417,6 +530,17 @@
 
             .setting-group { padding: 1rem; }
             .doc-content h2 { font-size: 2rem; }
+            
+            /* Recipe Menu Adjustments */
+            #screen-recipes .difficulty-tabs { padding: 0 1.5rem; gap: 1.5rem; margin-bottom: 1rem; }
+            #screen-recipes .recipe-grid-container { padding: 15px 1.5rem 2rem; }
+            #screen-recipes .recipe-grid { grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+            #screen-recipes .diff-tab { padding: 1rem 0; font-size: 0.7rem; }
+            #screen-recipes .level-card { padding: 1.5rem 0.5rem; }
+        }
+
+        @media (max-width: 600px) {
+            #screen-recipes .recipe-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
         }
 
         @media (max-width: 480px) {
@@ -426,9 +550,9 @@
             
             .game-header h2 { display: none; }
             .game-header { padding: 0.6rem; gap: 0.5rem; flex-direction: row; flex-wrap: wrap;}
-            .header-actions { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; width: 100%;}
+            .header-actions { flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.4rem; width: 100%; flex-wrap: wrap;}
             .balance-badge { width: 100%; justify-content: center; padding: 0.5rem;}
-            .game-close-btn { padding: 0.5rem; font-size: 0.6rem; letter-spacing: 1px; width: 100%;}
+            .game-close-btn { padding: 0.5rem; font-size: 0.6rem; letter-spacing: 1px; flex: 1;}
             
             .cooking-zone { flex: 0 0 58%; padding: 0.6rem; }
             .goal-display { padding: 0.6rem 0.8rem; margin-bottom: 0.6rem; border-radius: 8px;}
@@ -454,9 +578,9 @@
             .item-slot { padding: 6px; border-radius: 8px;}
             
             .recipe-grid { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
-            .level-card { padding: 1rem 0.5rem; }
-            .level-card img { width: 50px; height: 50px; margin-bottom: 0.8rem; padding: 8px;}
-            .level-card h4 { font-size: 0.8rem; }
+            .level-card, .badge-card { padding: 1rem 0.5rem; }
+            .level-card img, .badge-card img { width: 50px; height: 50px; margin-bottom: 0.8rem; padding: 8px;}
+            .level-card h4, .badge-card h4 { font-size: 0.8rem; }
             
             .store-grid { grid-template-columns: 1fr; gap: 1rem;}
             .store-card { padding: 1.5rem 1rem; }
@@ -464,6 +588,11 @@
             .overlay-msg { font-size: 2rem; }
             .overlay-sub { font-size: 0.9rem; margin-bottom: 1rem;}
             .reward-text { font-size: 1.5rem; margin-bottom: 1.5rem;}
+            
+            /* Recipe Menu Adjustments */
+            #screen-recipes .difficulty-tabs { padding: 0 1rem; gap: 1rem; margin-bottom: 1rem; }
+            #screen-recipes .recipe-grid-container { padding: 15px 1rem 2rem; }
+            #screen-recipes .recipe-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
         }
 
         @media (max-width: 320px) {
@@ -472,6 +601,7 @@
             .game-actions .action-btn.clear { grid-column: span 2; }
             .game-actions .action-btn.primary { grid-column: span 2; }
             .recipe-grid { grid-template-columns: 1fr; }
+            #screen-recipes .recipe-grid { grid-template-columns: 1fr; }
             .staging-area .item-slot { width: 50px; height: 50px; }
         }
     </style>
@@ -494,12 +624,10 @@
                 
                 <h4 style="color: var(--primary); margin-bottom: 0.5rem; font-family: var(--font-geo); text-transform: uppercase; letter-spacing: 1px;">Gourmet Upgrade (⭐⭐⭐⭐)</h4>
                 <div id="hintContent4Star" style="margin-bottom: 1.5rem; font-family: var(--font-main); color: var(--game-text-muted); font-size: 0.95rem;">
-                    <button class="action-btn" onclick="buyStarHint(4)" style="width: 100%; font-size: 0.8rem;">Unlock 4-Star Secrets (10,000 K)</button>
                 </div>
                 
                 <h4 style="color: var(--primary); margin-bottom: 0.5rem; font-family: var(--font-geo); text-transform: uppercase; letter-spacing: 1px;">Masterpiece Upgrade (⭐⭐⭐⭐⭐)</h4>
                 <div id="hintContent5Star" style="font-family: var(--font-main); color: var(--game-text-muted); font-size: 0.95rem;">
-                    <button class="action-btn" onclick="buyStarHint(5)" style="width: 100%; font-size: 0.8rem;">Unlock 5-Star Secrets (20,000 K)</button>
                 </div>
             </div>
             <button class="action-btn primary" style="flex: none; width: 100%; border-radius: 30px; padding: 1rem;" onclick="document.getElementById('hintModal').classList.remove('active')">Understood</button>
@@ -526,7 +654,7 @@
             <div class="dish-showcase">
                 <img id="overlayDishImg" src="" alt="Dish">
             </div>
-            <div id="overlayStarsDisplay" style="color: #FFD700; font-size: 2.5rem; margin-bottom: 0.5rem; letter-spacing: 5px; text-shadow: 0 4px 10px rgba(0,0,0,0.5);">⭐⭐⭐</div>
+            <div id="overlayStarsDisplay" style="font-size: 2.5rem; margin-bottom: 0.5rem; letter-spacing: 5px; text-shadow: 0 4px 10px rgba(0,0,0,0.5); display: flex; justify-content: center; gap: 5px;"></div>
             <h2 id="overlayTitle" class="overlay-msg">Masterpiece Created.</h2>
             <p id="overlaySub" class="overlay-sub">Timeline Unlocked</p>
             <div id="overlayReward" class="reward-text">+1,000 Kyats</div>
@@ -541,12 +669,23 @@
         </div>
 
         <div id="screen-main" class="game-screen main-menu active">
+            <div id="mainMenuBg1" class="menu-bg-layer" style="background-image: url('../imgs/web-banners/kitchen1.png'); opacity: 1;"></div>
+            <div id="mainMenuBg2" class="menu-bg-layer" style="opacity: 0;"></div>
             <div class="menu-gradient-overlay"></div>
             
-            <div style="position: absolute; top: 2rem; right: 4rem; z-index: 10;" class="desktop-only-balance">
+            <div style="position: absolute; top: 2rem; right: 2rem; z-index: 10; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; justify-content: flex-end;" class="desktop-only-balance">
                 <div class="balance-badge" title="Your Kyat Balance">
                     <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v12M8 12h8"/></svg>
                     <span class="ui-balance-display">0</span> K
+                </div>
+                <div class="icon-controls">
+                    <button class="action-btn primary icon-btn" onclick="toggleSound(false)" title="Toggle Sound">
+                        <svg class="sound-icon-on" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                        <svg class="sound-icon-off" style="display:none;" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                    </button>
+                    <button class="action-btn primary icon-btn" onclick="toggleFullScreen(false)" title="Toggle Fullscreen">
+                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                    </button>
                 </div>
             </div>
 
@@ -584,17 +723,26 @@
                         <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v12M8 12h8"/></svg>
                         <span class="ui-balance-display">0</span> K
                     </div>
+                    <div class="icon-controls">
+                        <button class="action-btn primary icon-btn" onclick="toggleSound(false)" title="Toggle Sound">
+                            <svg class="sound-icon-on" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                            <svg class="sound-icon-off" style="display:none;" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                        </button>
+                        <button class="action-btn primary icon-btn" onclick="toggleFullScreen(false)" title="Toggle Fullscreen">
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                        </button>
+                    </div>
                     <button class="game-close-btn" onclick="switchScreen('screen-main')">Return</button>
                 </div>
             </div>
             
             <div class="recipe-layout">
                 <div class="difficulty-tabs">
-                    <button class="diff-tab active" onclick="switchDifficultyTab('easy')">Commis Chef</button>
-                    <button class="diff-tab" onclick="switchDifficultyTab('medium')">Chef de Partie</button>
-                    <button class="diff-tab" onclick="switchDifficultyTab('hard')">Sous Chef</button>
-                    <button class="diff-tab" onclick="switchDifficultyTab('impossible')">Head Chef</button>
-                    <button class="diff-tab" onclick="switchDifficultyTab('executive')">Executive Chef</button>
+                    <button class="diff-tab rank-easy active" onclick="switchDifficultyTab('easy')">Commis Chef</button>
+                    <button class="diff-tab rank-medium" onclick="switchDifficultyTab('medium')">Chef de Partie</button>
+                    <button class="diff-tab rank-hard" onclick="switchDifficultyTab('hard')">Sous Chef</button>
+                    <button class="diff-tab rank-impossible" onclick="switchDifficultyTab('impossible')">Head Chef</button>
+                    <button class="diff-tab rank-executive" onclick="switchDifficultyTab('executive')">Executive Chef</button>
                 </div>
 
                 <div class="recipe-grid-container">
@@ -614,6 +762,15 @@
                     <div class="balance-badge">
                         <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v12M8 12h8"/></svg>
                         <span class="ui-balance-display">0</span> K
+                    </div>
+                    <div class="icon-controls">
+                        <button class="action-btn primary icon-btn" onclick="toggleSound(false)" title="Toggle Sound">
+                            <svg class="sound-icon-on" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                            <svg class="sound-icon-off" style="display:none;" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                        </button>
+                        <button class="action-btn primary icon-btn" onclick="toggleFullScreen(false)" title="Toggle Fullscreen">
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                        </button>
                     </div>
                     <button class="game-close-btn tips-btn" onclick="document.getElementById('hintModal').classList.add('active')">Tips</button>
                     <button class="game-close-btn" onclick="openStore('screen-play')">Store</button>
@@ -659,6 +816,7 @@
                     <div class="inventory-body">
                         <div class="pantry-sidebar">
                             <div class="pantry-categories" id="pantryCategories">
+                                <button id="preppedBtn" class="cat-btn prepped-btn" onclick="setCategory('prepped')">Prepped ⭐</button>
                                 <button class="cat-btn active" onclick="setCategory('all')">All</button>
                                 <button class="cat-btn" onclick="setCategory('tools')">Tools</button>
                                 <button class="cat-btn" onclick="setCategory('pantry')">Pantry</button>
@@ -666,7 +824,6 @@
                                 <button class="cat-btn" onclick="setCategory('raw_meat')">Meats</button>
                                 <button class="cat-btn" onclick="setCategory('fruits')">Fruits</button>
                                 <button class="cat-btn" onclick="setCategory('nuts')">Nuts</button>
-                                <button id="preppedBtn" class="cat-btn prepped-btn" onclick="setCategory('prepped')">Prepped ⭐</button>
                             </div>
                         </div>
 
@@ -690,13 +847,22 @@
                         <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v12M8 12h8"/></svg>
                         <span class="ui-balance-display">0</span> K
                     </div>
+                    <div class="icon-controls">
+                        <button class="action-btn primary icon-btn" onclick="toggleSound(false)" title="Toggle Sound">
+                            <svg class="sound-icon-on" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                            <svg class="sound-icon-off" style="display:none;" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                        </button>
+                        <button class="action-btn primary icon-btn" onclick="toggleFullScreen(false)" title="Toggle Fullscreen">
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                        </button>
+                    </div>
                 </div>
                 <button class="game-close-btn" onclick="closeStore()">Return</button>
             </div>
             <div class="doc-scroll" style="padding-bottom: 2rem;">
                 <div class="doc-content" style="max-width: 1000px;">
                     <h2>The Exchange</h2>
-                    <p class="lead">Exchange your hard-earned Kyats for premium aesthetic themes and functional kitchen perks.</p>
+                    <p class="lead">Exchange your hard-earned Kyats for premium aesthetic themes and functional kitchen upgrades.</p>
                     
                     <h3 style="margin-top: 1rem;">Classic Themes</h3>
                     <div class="store-grid" id="storeThemesClassic"></div>
@@ -707,7 +873,7 @@
                     <h3 style="margin-top: 3rem;">Deluxe Themes</h3>
                     <div class="store-grid" id="storeThemesDeluxe"></div>
                     
-                    <h3 style="margin-top: 4rem;">Kitchen Perks</h3>
+                    <h3 style="margin-top: 4rem;">Operational Upgrades</h3>
                     <div class="store-grid" id="storePerksGrid" style="margin-bottom: 5rem;"></div>
                 </div>
             </div>
@@ -716,7 +882,18 @@
         <div id="screen-badges" class="game-screen">
             <div class="game-header">
                 <h2>Culinary Badges</h2>
-                <button class="game-close-btn" onclick="switchScreen('screen-main')">Return</button>
+                <div class="header-actions">
+                    <div class="icon-controls">
+                        <button class="action-btn primary icon-btn" onclick="toggleSound(false)" title="Toggle Sound">
+                            <svg class="sound-icon-on" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                            <svg class="sound-icon-off" style="display:none;" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                        </button>
+                        <button class="action-btn primary icon-btn" onclick="toggleFullScreen(false)" title="Toggle Fullscreen">
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                        </button>
+                    </div>
+                    <button class="game-close-btn" onclick="switchScreen('screen-main')">Return</button>
+                </div>
             </div>
             <div class="doc-scroll">
                 <div class="doc-content" style="max-width: 1000px; margin: 0 auto; width: 100%;">
@@ -730,16 +907,27 @@
         <div id="screen-leaderboard" class="game-screen">
             <div class="game-header">
                 <h2>Local Rankings</h2>
-                <button class="game-close-btn" onclick="switchScreen('screen-main')">Return</button>
+                <div class="header-actions">
+                    <div class="icon-controls">
+                        <button class="action-btn primary icon-btn" onclick="toggleSound(false)" title="Toggle Sound">
+                            <svg class="sound-icon-on" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                            <svg class="sound-icon-off" style="display:none;" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                        </button>
+                        <button class="action-btn primary icon-btn" onclick="toggleFullScreen(false)" title="Toggle Fullscreen">
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                        </button>
+                    </div>
+                    <button class="game-close-btn" onclick="switchScreen('screen-main')">Return</button>
+                </div>
             </div>
             <div class="lb-layout doc-scroll">
                 <div class="doc-content" style="max-width: 1000px; margin: 0 auto; width: 100%;">
                     
                     <div class="difficulty-tabs" style="margin-bottom: 2rem;">
-                        <button class="diff-tab active" id="lb-tab-overall" onclick="switchLBTab('overall')">Culinary Syndicate (Overall)</button>
-                        <button class="diff-tab" id="lb-tab-wealth" onclick="switchLBTab('wealth')">The Magnate (Wealth)</button>
-                        <button class="diff-tab" id="lb-tab-progression" onclick="switchLBTab('progression')">Executive Chef (Progression)</button>
-                        <button class="diff-tab" id="lb-tab-speed" onclick="switchLBTab('speed')">Rush Service (Speed)</button>
+                        <button class="diff-tab rank-easy active" id="lb-tab-overall" onclick="switchLBTab('overall')">Culinary Syndicate (Overall)</button>
+                        <button class="diff-tab rank-medium" id="lb-tab-wealth" onclick="switchLBTab('wealth')">The Magnate (Wealth)</button>
+                        <button class="diff-tab rank-hard" id="lb-tab-progression" onclick="switchLBTab('progression')">Executive Chef (Progression)</button>
+                        <button class="diff-tab rank-impossible" id="lb-tab-speed" onclick="switchLBTab('speed')">Rush Service (Speed)</button>
                     </div>
                     
                     <div class="lb-panel" id="lb-container">
@@ -752,7 +940,18 @@
         <div id="screen-settings" class="game-screen">
             <div class="game-header">
                 <h2>Settings</h2>
-                <button class="game-close-btn" onclick="closeSettings()">Apply</button>
+                <div class="header-actions">
+                    <div class="icon-controls">
+                        <button class="action-btn primary icon-btn" onclick="toggleSound(false)" title="Toggle Sound">
+                            <svg class="sound-icon-on" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                            <svg class="sound-icon-off" style="display:none;" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                        </button>
+                        <button class="action-btn primary icon-btn" onclick="toggleFullScreen(false)" title="Toggle Fullscreen">
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                        </button>
+                    </div>
+                    <button class="game-close-btn" onclick="closeSettings()">Apply</button>
+                </div>
             </div>
             <div class="doc-scroll">
                 <div class="doc-content" style="margin-bottom: 2rem;">
@@ -879,6 +1078,62 @@
     </main>
 
     <script>
+        // Setup Dynamic Backgrounds for Main Menu
+        const menuBgs = [
+            '../imgs/web-banners/kitchen1.png',
+            '../imgs/web-banners/kitchen2.jpg',
+            '../imgs/web-banners/kitchen3.jpg'
+        ];
+        
+        // Preload images for smooth transition
+        menuBgs.forEach(src => {
+            const img = new Image();
+            img.src = src;
+        });
+
+        let currentBgIndex = 0;
+        let isBg1Active = true;
+        
+        // Initialize first background immediately
+        const bg1 = document.getElementById('mainMenuBg1');
+        const bg2 = document.getElementById('mainMenuBg2');
+
+        setInterval(() => {
+            currentBgIndex = (currentBgIndex + 1) % menuBgs.length;
+            
+            if(bg1 && bg2) {
+                if (isBg1Active) {
+                    bg2.style.backgroundImage = `url('${menuBgs[currentBgIndex]}')`;
+                    bg2.style.opacity = 1;
+                    bg1.style.opacity = 0;
+                } else {
+                    bg1.style.backgroundImage = `url('${menuBgs[currentBgIndex]}')`;
+                    bg1.style.opacity = 1;
+                    bg2.style.opacity = 0;
+                }
+                isBg1Active = !isBg1Active;
+            }
+        }, 10000);
+
+        function toggleFullScreen(fromKeyboard = false) {
+            if (typeof fromKeyboard !== 'boolean') fromKeyboard = false;
+            
+            const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+            const keyPrefix = isMac ? 'Cmd' : 'Ctrl';
+
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    notify(`Error attempting to enable full-screen mode: ${err.message}`, 'error');
+                });
+                if (!fromKeyboard) notify(`Tip: Press ${keyPrefix} + L to Exit Fullscreen.`, 'info');
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+                if (!fromKeyboard) notify(`Tip: Press ${keyPrefix} + L to Enter Fullscreen.`, 'info');
+            }
+        }
+
         function notify(message, type = 'info') {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div'); 
@@ -906,6 +1161,7 @@
         let targetLevelId = null;
         let currentLevelStartTime = 0;
         let userFastestTime = Infinity;
+        let userLevelStars = {};
 
         let levelTimerInterval = null;
         let remainingSeconds = 0;
@@ -922,8 +1178,7 @@
             sfxVol: 80,
             bgmVol: 50,
             bgmTrack: 0,
-            hasBoughtTips4Star: false,
-            hasBoughtTips5Star: false
+            unlockedHints: {}
         };
 
         const themes = [
@@ -939,12 +1194,13 @@
         ];
 
         const perks = [
-            { id: 'golden_tools', name: '24k Golden Tools', desc: 'Upgrades all your base kitchen tools into pure solid gold. Purely cosmetic wealth prestige.', price: 200000, type: 'perk' },
-            { id: 'platinum_board', name: 'Platinum Prep Table', desc: 'A highly sanitized, extremely durable platinum cutting surface. (Coming Soon)', price: 500000, type: 'perk' },
-            { id: 'auto_chef', name: 'Sous-Chef Automaton', desc: 'An automated assistant to process raw ingredients directly from inventory. (Coming Soon)', price: 1000000, type: 'perk' }
+            { id: 'fast_synth', name: 'Induction Accelerator', desc: 'Upgrades your kitchen hardware to process and cook ingredients 60% faster.', price: 500000, type: 'perk' },
+            { id: 'expanded_table', name: 'Executive Prep Station', desc: 'Increases your maximum prep table capacity from 6 to 9 items at once.', price: 750000, type: 'perk' },
+            { id: 'time_extension', name: 'Chronos Service Watch', desc: 'Grants an additional 30 seconds of service time on every single recipe level.', price: 1000000, type: 'perk' }
         ];
 
         const badges = [
+            { id: 'rookie_chef', name: 'Rookie Chef', reqLevel: 2, img: '../imgs/badge/rookie.png', desc: 'Successfully completed your very first recipe.' },
             { id: 'commis_chef', name: 'Commis Chef', reqLevel: 11, img: '../imgs/badge/bronze.png', desc: 'Successfully mastered the fundamentals.' },
             { id: 'chef_de_partie', name: 'Chef de Partie', reqLevel: 21, img: '../imgs/badge/silver.png', desc: 'Demonstrated exceptional station skills.' },
             { id: 'sous_chef', name: 'Sous Chef', reqLevel: 31, img: '../imgs/badge/gold.png', desc: 'Executed advanced cooking maneuvers.' },
@@ -966,15 +1222,45 @@
         let masterSFXVolume = 0.8;
         let bgmStarted = false;
 
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         const uiClickSound = new Audio('../mp3/click.mp3');
 
-function playClick() {
-    if(masterSFXVolume <= 0) return;
-    let snd = uiClickSound.cloneNode(); 
-    snd.volume = masterSFXVolume * 0.5; // Adjust the 0.5 multiplier as needed
-    snd.play().catch(e => {});
-}
+        let isMuted = false;
+        function toggleSound(fromKeyboard = false) {
+            if (typeof fromKeyboard !== 'boolean') fromKeyboard = false;
+            
+            isMuted = !isMuted;
+            document.querySelectorAll('.sound-icon-on').forEach(el => el.style.display = isMuted ? 'none' : 'block');
+            document.querySelectorAll('.sound-icon-off').forEach(el => el.style.display = isMuted ? 'block' : 'none');
+            
+            if (isMuted) {
+                bgmAudio.muted = true;
+                for (let key in sfxAudio) sfxAudio[key].muted = true;
+                uiClickSound.muted = true;
+            } else {
+                bgmAudio.muted = false;
+                for (let key in sfxAudio) sfxAudio[key].muted = false;
+                uiClickSound.muted = false;
+                
+                if (!bgmStarted) {
+                    bgmAudio.play().catch(e => {});
+                    bgmStarted = true;
+                }
+            }
+
+            if (!fromKeyboard) {
+                const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+                const keyPrefix = isMac ? 'Cmd' : 'Ctrl';
+                const nextAction = isMuted ? 'Unmute' : 'Mute';
+                notify(`Tip: Press ${keyPrefix} + M to ${nextAction}.`, 'info');
+            }
+        }
+
+        function playClick() {
+            if(masterSFXVolume <= 0) return;
+            let snd = uiClickSound.cloneNode();
+            snd.volume = masterSFXVolume * 0.5;
+            snd.play().catch(e => {});
+        }
 
         const bgmAudio = new Audio(bgmTracks[appConfig.bgmTrack].url);
         bgmAudio.loop = true;
@@ -1002,9 +1288,33 @@ function playClick() {
 
         document.addEventListener('click', (e) => {
             if(e.target.type !== 'range') playClick();
-            if(!bgmStarted) {
+            if(!bgmStarted && !isMuted) {
                 bgmAudio.play().catch(e => {});
                 bgmStarted = true;
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+            const cmdOrCtrl = isMac ? e.metaKey : e.ctrlKey;
+
+            if (cmdOrCtrl) {
+                if (e.key.toLowerCase() === 'm') {
+                    e.preventDefault();
+                    toggleSound(true);
+                } else if (e.key.toLowerCase() === 'l') {
+                    e.preventDefault();
+                    toggleFullScreen(true);
+                } else if (e.key.toLowerCase() === 'f') {
+                    // Only intercept if we are actively playing
+                    if (document.getElementById('screen-play').classList.contains('active')) {
+                        e.preventDefault();
+                        const searchInput = document.getElementById('pantrySearch');
+                        if (searchInput) {
+                            searchInput.focus();
+                        }
+                    }
+                }
             }
         });
 
@@ -1026,7 +1336,7 @@ function playClick() {
             if(appConfig.bgmTrack >= bgmTracks.length) appConfig.bgmTrack = 0;
             document.getElementById('track-display').textContent = bgmTracks[appConfig.bgmTrack].name;
             bgmAudio.src = bgmTracks[appConfig.bgmTrack].url;
-            if(bgmStarted) bgmAudio.play().catch(e => {});
+            if(bgmStarted && !isMuted) bgmAudio.play().catch(e => {});
         }
 
         function openOfflineModal() {
@@ -1070,6 +1380,13 @@ function playClick() {
         }
 
         window.addEventListener('load', () => {
+            const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+            const keyPrefix = isMac ? 'Cmd' : 'Ctrl';
+            const searchInput = document.getElementById('pantrySearch');
+            if(searchInput) {
+                searchInput.placeholder = `Search globally... (${keyPrefix} + F)`;
+            }
+
             const loader = document.getElementById('globalLoader');
             if (loader) loader.classList.add('hidden');
             setTimeout(() => { document.querySelectorAll('.reveal').forEach(el => el.classList.add('active')); }, 300);
@@ -1079,7 +1396,9 @@ function playClick() {
             renderBadges();
             applySettings(); 
             initResizer();
-            bgmAudio.play().then(() => { bgmStarted = true; }).catch(() => {});
+            if(!isMuted) {
+                bgmAudio.play().then(() => { bgmStarted = true; }).catch(() => {});
+            }
         });
 
         window.addEventListener('pageshow', (e) => { if (e.persisted) document.getElementById('globalLoader')?.classList.add('hidden'); });
@@ -1122,6 +1441,9 @@ function playClick() {
             userBalance = parseInt(localStorage.getItem(prefix + '_balance')) || 0;
             userFastestTime = parseFloat(localStorage.getItem(prefix + '_fastest_time')) || Infinity;
             
+            const savedStars = localStorage.getItem(prefix + '_levelStars');
+            userLevelStars = savedStars ? JSON.parse(savedStars) : {};
+
             const savedThemes = localStorage.getItem(prefix + '_themes');
             unlockedThemes = savedThemes ? JSON.parse(savedThemes) : ['classic'];
             
@@ -1134,6 +1456,7 @@ function playClick() {
             if (savedConfig) {
                 appConfig = { ...appConfig, ...JSON.parse(savedConfig) };
             }
+            if (!appConfig.unlockedHints) appConfig.unlockedHints = {};
 
             if (!currentUser) {
                 setTimeout(() => notify("SYSTEM: Guest profile loaded. Log in via Home to persist data & purchases.", 'info'), 1500);
@@ -1167,6 +1490,7 @@ function playClick() {
             localStorage.setItem(prefix + '_progress', maxUnlockedLevel);
             localStorage.setItem(prefix + '_balance', userBalance);
             localStorage.setItem(prefix + '_fastest_time', userFastestTime);
+            localStorage.setItem(prefix + '_levelStars', JSON.stringify(userLevelStars));
             localStorage.setItem(prefix + '_themes', JSON.stringify(unlockedThemes));
             localStorage.setItem(prefix + '_perks', JSON.stringify(unlockedPerks));
             localStorage.setItem(prefix + '_activeTheme', activeTheme);
@@ -1258,6 +1582,23 @@ function playClick() {
         }
 
         let returnScreenFromSettings = 'screen-main';
+        let actionTimeout = null;
+        let isActionAnimating = false;
+
+        function clearCurrentAction() {
+            if (actionTimeout) clearTimeout(actionTimeout);
+            isActionAnimating = false;
+            document.querySelectorAll('.game-actions .action-btn').forEach(b => { 
+                b.style.opacity = '1'; 
+                b.disabled = false; 
+            });
+            let stagingEl = document.getElementById('stagingArea');
+            if (stagingEl) stagingEl.style.pointerEvents = 'auto';
+            let progC = document.getElementById('actionProgressBarContainer');
+            if (progC) progC.remove();
+            let progL = document.getElementById('actionProgressLabel');
+            if (progL) progL.remove();
+        }
 
         function switchScreen(screenId) {
             document.querySelectorAll('.game-screen').forEach(s => s.classList.remove('active'));
@@ -1268,6 +1609,7 @@ function playClick() {
 
         function abandonKitchen() {
             clearInterval(levelTimerInterval);
+            clearCurrentAction();
             switchScreen('screen-recipes');
             notify("ACTION: Kitchen abandoned. All ingredients and progress reset.", 'error');
         }
@@ -1290,10 +1632,15 @@ function playClick() {
         function closeStore() { switchScreen(returnScreenFromStore || 'screen-main'); }
 
         function switchDifficultyTab(tab) {
-            document.querySelectorAll('.diff-tab').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
+            document.querySelectorAll('.difficulty-tabs').forEach(container => {
+                if(container.contains(event.target)) {
+                    container.querySelectorAll('.diff-tab').forEach(b => b.classList.remove('active'));
+                    event.target.classList.add('active');
+                }
+            });
             document.querySelectorAll('.recipe-grid').forEach(g => g.classList.remove('active'));
-            document.getElementById('grid-' + tab).classList.add('active');
+            let grid = document.getElementById('grid-' + tab);
+            if (grid) grid.classList.add('active');
         }
 
         const sysSettings = {
@@ -1363,26 +1710,35 @@ function playClick() {
         }
 
         function updateHintUI() {
+            if(!targetLevelId) return;
             let h4 = document.getElementById('hintContent4Star');
-            if (appConfig.hasBoughtTips4Star) {
-                h4.innerHTML = `<ul class="hint-list" style="margin:0; padding:0; background:transparent; border:none;"><li>Enhance the base recipe with <strong>Sea Salt</strong>, or use <strong>Cheese / Butter</strong> (if not already required).</li></ul>`;
-            }
             let h5 = document.getElementById('hintContent5Star');
-            if (appConfig.hasBoughtTips5Star) {
+            
+            let hintsForLevel = appConfig.unlockedHints[targetLevelId] || {4: false, 5: false};
+
+            if (hintsForLevel[4]) {
+                h4.innerHTML = `<ul class="hint-list" style="margin:0; padding:0; background:transparent; border:none;"><li>Enhance the base recipe with <strong>Sea Salt</strong>, or use <strong>Cheese / Butter</strong> (if not already required).</li></ul>`;
+            } else {
+                h4.innerHTML = `<button class="action-btn" onclick="buyStarHint(4)" style="width: 100%; font-size: 0.8rem;">Unlock 4-Star Secrets for this level (10,000 K)</button>`;
+            }
+
+            if (hintsForLevel[5]) {
                 h5.innerHTML = `<ul class="hint-list" style="margin:0; padding:0; background:transparent; border:none;"><li>Achieve flawless perfection by adding <strong>Black Pepper</strong> on top of a 4-star recipe.</li></ul>`;
+            } else {
+                h5.innerHTML = `<button class="action-btn" onclick="buyStarHint(5)" style="width: 100%; font-size: 0.8rem;">Unlock 5-Star Secrets for this level (20,000 K)</button>`;
             }
         }
 
         function buyStarHint(tier) {
-            let cost = tier === 4 ? 400000 : 500000;
+            let cost = tier === 4 ? 10000 : 20000;
             if (userBalance >= cost) {
                 userBalance -= cost;
-                if (tier === 4) appConfig.hasBoughtTips4Star = true;
-                if (tier === 5) appConfig.hasBoughtTips5Star = true;
+                if(!appConfig.unlockedHints[targetLevelId]) appConfig.unlockedHints[targetLevelId] = {4: false, 5: false};
+                appConfig.unlockedHints[targetLevelId][tier] = true;
                 saveUserData();
                 updateBalanceUI();
                 updateHintUI();
-                notify(`TRANSACTION SUCCESS: ${tier}-Star secrets unlocked permanently!`, 'success');
+                notify(`TRANSACTION SUCCESS: ${tier}-Star secrets unlocked for this level!`, 'success');
             } else {
                 notify(`TRANSACTION FAILED: Insufficient funds. You need ${cost.toLocaleString()} K.`, 'error');
             }
@@ -1436,10 +1792,8 @@ function playClick() {
             perks.forEach(p => {
                 let isUnlocked = unlockedPerks.includes(p.id);
                 let btnHtml = '';
-                if (isUnlocked && p.id !== 'auto_chef' && p.id !== 'platinum_board') {
+                if (isUnlocked) {
                     btnHtml = `<button class="action-btn" disabled style="opacity:0.5; width:100%;">Purchased & Active</button>`;
-                } else if (p.id === 'auto_chef' || p.id === 'platinum_board') {
-                    btnHtml = `<button class="action-btn" disabled style="opacity:0.5; width:100%;">Coming Soon</button>`;
                 } else {
                     let canAfford = userBalance >= p.price;
                     btnHtml = `<button class="action-btn ${canAfford ? 'primary' : ''}" style="width:100%;" ${canAfford ? `onclick="buyItem('${p.id}', 'perk')"` : `onclick="notify('TRANSACTION FAILED: Insufficient Kyats for ${p.name}.', 'error')"`}>Buy for ${p.price.toLocaleString()} K</button>`;
@@ -1467,12 +1821,27 @@ function playClick() {
             
             badges.forEach(b => {
                 let isUnlocked = maxUnlockedLevel >= b.reqLevel;
-                let reqChapter = b.reqLevel === 11 ? "Commis Chef chapter" : (b.reqLevel === 21 ? "Chef de Partie chapter" : (b.reqLevel === 31 ? "Sous Chef chapter" : (b.reqLevel === 41 ? "Head Chef chapter" : "Executive Chef chapter")));
+                let reqChapter = "an earlier timeline";
+                let rankClass = 'rank-easy';
+                
+                if(b.reqLevel === 2) { reqChapter = "the first recipe"; rankClass = 'rank-easy'; }
+                else if(b.reqLevel === 11) { reqChapter = "Commis Chef chapter"; rankClass = 'rank-easy'; }
+                else if(b.reqLevel === 21) { reqChapter = "Chef de Partie chapter"; rankClass = 'rank-medium'; }
+                else if(b.reqLevel === 31) { reqChapter = "Sous Chef chapter"; rankClass = 'rank-hard'; }
+                else if(b.reqLevel === 41) { reqChapter = "Head Chef chapter"; rankClass = 'rank-impossible'; }
+                else if(b.reqLevel === 51) { reqChapter = "Executive Chef chapter"; rankClass = 'rank-executive'; }
+
+                let lockOverlay = !isUnlocked ? `
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 10; display: flex; align-items: center; justify-content: center; border-radius: 20px; pointer-events: none; backdrop-filter: blur(2px);">
+                        <img src="../imgs/icons/lock.png" alt="Locked" style="width: 60px; height: 60px; object-fit: contain; background: var(--game-panel); border-radius: 50%; padding: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); border: 2px solid var(--primary);" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3064/3064155.png';">
+                    </div>` : '';
+
                 grid.innerHTML += `
-                    <div class="badge-card ${isUnlocked ? '' : 'locked'}">
+                    <div class="badge-card ${rankClass} ${isUnlocked ? '' : 'locked'}">
+                        ${lockOverlay}
                         <img src="${b.img}" alt="${b.name}">
                         <h4>${b.name}</h4>
-                        <p>${isUnlocked ? b.desc : 'Complete the ' + reqChapter + ' to unlock.'}</p>
+                        <p>${isUnlocked ? b.desc : 'Complete ' + reqChapter + ' to unlock.'}</p>
                     </div>
                 `;
             });
@@ -1775,33 +2144,66 @@ function playClick() {
 
         function generateLevels() {
             const catMap = ['easy', 'medium', 'hard', 'impossible', 'executive'];
+            const tierStyles = [
+                { bg: '#111111', color: '#CD7F32', name: 'Commis Chef' },      
+                { bg: '#0A0A0A', color: '#C0C0C0', name: 'Chef de Partie' }, 
+                { bg: '#000000', color: '#FFD700', name: 'Sous Chef' },      
+                { bg: '#050508', color: '#E5E4E2', name: 'Head Chef' },      
+                { bg: '#08040C', color: '#B9F2FF', name: 'Executive Chef' }  
+            ];
+
             for(let c=0; c<5; c++) {
                 const grid = document.getElementById(`grid-${catMap[c]}`);
                 if(!grid) continue;
                 grid.innerHTML = '';
+                let tStyle = tierStyles[c];
+
                 for(let i=0; i<10; i++) {
                     let lvlNum = (c * 10) + i + 1;
                     if(lvlNum > 50) break;
                     let lvlData = levels[lvlNum - 1];
                     let isUnlocked = (lvlNum <= maxUnlockedLevel);
+                    let rankClass = `rank-${catMap[c]}`;
                     let card = document.createElement('div');
-                    card.className = `level-card ${isUnlocked ? '' : 'locked'}`;
+                    card.className = `level-card ${rankClass} ${isUnlocked ? '' : 'locked'}`;
                     
+                    let starsEarned = userLevelStars[lvlData.id] || 0;
+                    let starDisplay = '';
+                    if (starsEarned > 0) {
+                        starDisplay = '<div style="margin-top: 10px; display:flex; gap:2px; justify-content:center;">';
+                        for(let s=0; s<5; s++) {
+                            if(s < starsEarned) starDisplay += '<span style="color: #FFD700; font-size:14px; text-shadow: 0 1px 3px rgba(0,0,0,0.2);">⭐</span>';
+                            else starDisplay += '<span style="filter: grayscale(100%); opacity: 0.3; font-size:14px;">⭐</span>';
+                        }
+                        starDisplay += '</div>';
+                    }
+
                     if (isUnlocked) {
                         card.onclick = () => startLevel(lvlNum, lvlData);
                         card.innerHTML = `
                             <img src="${db.items[lvlData.id].img}" alt="Dish">
                             <h4>${lvlData.name}</h4>
                             <p>Level ${lvlNum}</p>
+                            ${starDisplay}
                         `;
                     } else {
+                        card.style.opacity = '1';
+                        card.style.padding = '0';
                         card.innerHTML = `
-                            <div class="lock-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
-                            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%231A1A1A'/></svg>" alt="Locked">
-                            <h4 style="color:#666;">Classified</h4>
-                            <p style="color:#888;">Level ${lvlNum}</p>
+                            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, ${tStyle.bg}dd 0%, ${tStyle.bg}ff 100%); z-index: 5; display: flex; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(4px); border: 1px solid ${tStyle.color}30; border-radius: 24px;">
+                                <div style="background: ${tStyle.color}15; padding: 15px; border-radius: 50%; border: 1px solid ${tStyle.color}80; margin-bottom: 12px; box-shadow: 0 0 25px ${tStyle.color}40; display: flex; align-items: center; justify-content: center;">
+                                    <img src="../imgs/icons/lock.png" alt="Locked" style="width: 24px; height: 24px; object-fit: contain; filter: drop-shadow(0 0 8px ${tStyle.color}); margin: 0; padding: 0; border: none; background: transparent; box-shadow: none;" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg viewBox=\\'0 0 24 24\\' fill=\\'${tStyle.color.replace('#','%23')}\\' xmlns=\\'http://www.w3.org/2000/svg\\'><rect x=\\'3\\' y=\\'11\\' width=\\'18\\' height=\\'11\\' rx=\\'2\\' ry=\\'2\\'/><path d=\\'M7 11V7a5 5 0 0110 0v4\\' fill=\\'none\\' stroke=\\'${tStyle.color.replace('#','%23')}\\' stroke-width=\\'2\\'/></svg>'">
+                                </div>
+                                <span style="color: ${tStyle.color}; font-family: var(--font-geo); font-size: 0.95rem; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; text-shadow: 0 2px 10px ${tStyle.color}60;">Level ${lvlNum}</span>
+                                <span style="color: ${tStyle.color}; opacity: 0.8; font-family: var(--font-main); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; margin-top: 6px; font-weight: 600;">${tStyle.name}</span>
+                            </div>
+                            <div style="padding: 2.5rem 1.5rem; display: flex; flex-direction: column; align-items: center; width: 100%; height: 100%;">
+                                <img src="${db.items[lvlData.id].img}" alt="Locked Background" style="filter: grayscale(100%) brightness(0.2); opacity: 0.3; transform: scale(0.9); margin-bottom: 1.5rem; border-radius: 16px;">
+                                <h4 style="color: var(--game-text-muted); opacity: 0.2; font-size: 1.05rem; margin-bottom: 0.5rem; font-family: var(--font-geo); font-weight: 700; letter-spacing: 1px;">Classified</h4>
+                                <p style="color: var(--game-text-muted); opacity: 0.1; font-family: var(--font-main); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Unknown Recipe</p>
+                            </div>
                         `;
-                        card.onclick = () => notify("ACCESS DENIED: Recipe locked. Complete previous timelines first.", "error");
+                        card.onclick = () => notify(`ACCESS DENIED: ${tStyle.name} clearance required. Complete previous timelines.`, "error");
                     }
                     grid.appendChild(card);
                 }
@@ -1830,6 +2232,7 @@ function playClick() {
         }
 
         function levelFailed() {
+            clearCurrentAction();
             notify("SERVICE FAILED: Time has run out.", "error");
             document.getElementById('failOverlay').classList.add('active');
         }
@@ -1841,6 +2244,7 @@ function playClick() {
         }
 
         function startLevel(num, data) {
+            clearCurrentAction();
             currentPlayingLevelNum = num;
             targetLevelId = data.id;
             document.getElementById('targetDishName').textContent = data.name;
@@ -1852,6 +2256,8 @@ function playClick() {
                 li.textContent = h;
                 hintList.appendChild(li);
             });
+            
+            updateHintUI();
 
             sessionInventory = masterItems.filter(i => i.cat !== 'prepped').map(i => i.id);
             stagingArea = [];
@@ -1859,7 +2265,7 @@ function playClick() {
             document.getElementById('pantrySearch').value = '';
             
             document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelector('.pantry-categories .cat-btn:first-child').classList.add('active'); 
+            document.querySelector('.pantry-categories .cat-btn:nth-child(2)').classList.add('active'); 
 
             renderPantry();
             renderStaging();
@@ -1870,7 +2276,11 @@ function playClick() {
             clearInterval(levelTimerInterval);
             let catIndex = Math.floor((num - 1) / 10);
             const timeLimits = [60, 120, 180, 240, 300]; 
-            remainingSeconds = timeLimits[catIndex];
+            
+            // LOGIC HOOK: Time Extension Perk
+            let bonusTime = unlockedPerks.includes('time_extension') ? 30 : 0;
+            remainingSeconds = timeLimits[catIndex] + bonusTime;
+            
             updateTimerDisplay();
 
             levelTimerInterval = setInterval(() => {
@@ -1912,7 +2322,7 @@ function playClick() {
 
             if (currentSearch !== '' && currentFilter !== 'all') {
                 document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
-                document.querySelector('.pantry-categories .cat-btn:first-child').classList.add('active');
+                document.querySelector('.pantry-categories .cat-btn:nth-child(2)').classList.add('active');
                 currentFilter = 'all';
             }
 
@@ -1969,8 +2379,23 @@ function playClick() {
         }
 
         function moveToBoard(id) {
-            if (stagingArea.length >= 6) { notify("ERROR: Prep table is at maximum capacity (6 items).", "error"); return; }
+            // LOGIC HOOK: Expanded Prep Table Perk
+            let maxCapacity = unlockedPerks.includes('expanded_table') ? 9 : 6;
+            
+            if (stagingArea.length >= maxCapacity) { 
+                notify(`ERROR: Prep table is at maximum capacity (${maxCapacity} items).`, "error"); 
+                return; 
+            }
             stagingArea.push(id);
+            
+            // Auto-clear search when an item is selected to ready up for the next search
+            const searchInput = document.getElementById('pantrySearch');
+            if (searchInput && searchInput.value.trim() !== '') {
+                searchInput.value = '';
+                currentSearch = '';
+                searchInput.focus(); 
+            }
+
             renderPantry();
             renderStaging();
         }
@@ -1992,10 +2417,12 @@ function playClick() {
 
         function performAction(actionStr) {
             if (stagingArea.length === 0) { notify("ERROR: Prep table is empty. Place ingredients and tools first.", "error"); return; }
+            if (isActionAnimating) return;
 
             let success = false;
             let bestMatch = null;
             let maxStars = 0;
+            let maxScore = -1;
 
             for (let t of db.theories) {
                 if (t.action === actionStr) {
@@ -2039,7 +2466,10 @@ function playClick() {
                             if (hasBlackPepper) earnedStars++;
                             
                             earnedStars = Math.min(5, earnedStars);
-                            if (earnedStars >= maxStars) {
+                            let theoryScore = (t.reqs.length * 10) + earnedStars;
+
+                            if (theoryScore > maxScore) {
+                                maxScore = theoryScore;
                                 maxStars = earnedStars;
                                 bestMatch = t;
                             }
@@ -2049,43 +2479,100 @@ function playClick() {
             }
 
             if (bestMatch) {
-                success = true;
+                isActionAnimating = true;
                 playActionSound(actionStr); 
                 
-                if (!sessionInventory.includes(bestMatch.result)) {
-                    sessionInventory.push(bestMatch.result);
-                }
-                stagingArea = []; 
+                let btnList = document.querySelectorAll('.game-actions .action-btn');
+                btnList.forEach(b => { b.style.opacity = '0.5'; b.disabled = true; });
                 
-                let resultName = db.items[bestMatch.result].name;
-                let isWin = (bestMatch.result === targetLevelId);
+                let stagingEl = document.getElementById('stagingArea');
+                stagingEl.style.pointerEvents = 'none';
                 
-                if (!isWin) {
-                    let starStr = '⭐'.repeat(maxStars);
-                    let popup = document.createElement('div');
-                    popup.className = 'synth-popup';
-                    popup.innerHTML = `${starStr} ${resultName} Created! Moved to Prepped ⭐`;
-                    document.querySelector('.board-wrapper').appendChild(popup);
-                    setTimeout(() => popup.remove(), 2500);
+                // LOGIC HOOK: Synthesis Accelerator Perk
+                let synthDuration = unlockedPerks.includes('fast_synth') ? 1500 : 4000;
 
-                    let prepBtn = document.getElementById('preppedBtn');
-                    if(prepBtn) {
-                        prepBtn.classList.remove('attention-pulse');
-                        void prepBtn.offsetWidth; 
-                        prepBtn.classList.add('attention-pulse');
+                let progContainer = document.createElement('div');
+                progContainer.id = 'actionProgressBarContainer';
+                progContainer.style.position = 'absolute';
+                progContainer.style.bottom = '20px';
+                progContainer.style.left = '50%';
+                progContainer.style.transform = 'translateX(-50%)';
+                progContainer.style.width = '80%';
+                progContainer.style.height = '10px';
+                progContainer.style.background = 'rgba(0,0,0,0.1)';
+                progContainer.style.border = '1px solid var(--game-border)';
+                progContainer.style.borderRadius = '5px';
+                progContainer.style.overflow = 'hidden';
+                progContainer.style.zIndex = '100';
+                
+                let progBar = document.createElement('div');
+                progBar.style.width = '0%';
+                progBar.style.height = '100%';
+                progBar.style.background = 'var(--primary)';
+                progBar.style.transition = `width ${synthDuration / 1000}s linear`;
+                progBar.style.boxShadow = '0 0 10px var(--primary)';
+                
+                let progLabel = document.createElement('div');
+                progLabel.id = 'actionProgressLabel';
+                progLabel.style.position = 'absolute';
+                progLabel.style.bottom = '40px';
+                progLabel.style.left = '50%';
+                progLabel.style.transform = 'translateX(-50%)';
+                progLabel.style.fontFamily = 'var(--font-geo)';
+                progLabel.style.fontWeight = '800';
+                progLabel.style.color = 'var(--primary)';
+                progLabel.style.textTransform = 'uppercase';
+                progLabel.style.letterSpacing = '3px';
+                progLabel.textContent = actionStr.toUpperCase() + 'ING...';
+
+                progContainer.appendChild(progBar);
+                stagingEl.appendChild(progContainer);
+                stagingEl.appendChild(progLabel);
+
+                setTimeout(() => { progBar.style.width = '100%'; }, 50);
+
+                actionTimeout = setTimeout(() => {
+                    isActionAnimating = false;
+                    btnList.forEach(b => { b.style.opacity = '1'; b.disabled = false; });
+                    stagingEl.style.pointerEvents = 'auto';
+                    if (progContainer) progContainer.remove();
+                    if (progLabel) progLabel.remove();
+                    
+                    if (!sessionInventory.includes(bestMatch.result)) {
+                        sessionInventory.push(bestMatch.result);
                     }
+                    stagingArea = []; 
+                    
+                    let resultName = db.items[bestMatch.result].name;
+                    let isWin = (bestMatch.result === targetLevelId);
+                    
+                    if (!isWin) {
+                        let starStr = '⭐'.repeat(maxStars);
+                        let popup = document.createElement('div');
+                        popup.className = 'synth-popup';
+                        popup.innerHTML = `${starStr} ${resultName} Created! Moved to Prepped ⭐`;
+                        document.querySelector('.board-wrapper').appendChild(popup);
+                        setTimeout(() => popup.remove(), 2500);
 
-                    notify(`SYNTHESIS COMPLETE: ${bestMatch.msg} [${starStr}]`, 'success');
-                }
-                
-                renderPantry();
-                renderStaging();
-                if (isWin) {
-                    checkWin(bestMatch.result, maxStars);
-                }
+                        let prepBtn = document.getElementById('preppedBtn');
+                        if(prepBtn) {
+                            prepBtn.classList.remove('attention-pulse');
+                            void prepBtn.offsetWidth; 
+                            prepBtn.classList.add('attention-pulse');
+                        }
+
+                        notify(`SYNTHESIS COMPLETE: ${bestMatch.msg} [${starStr}]`, 'success');
+                    }
+                    
+                    renderPantry();
+                    renderStaging();
+                    if (isWin) {
+                        checkWin(bestMatch.result, maxStars);
+                    }
+                }, synthDuration);
+            } else {
+                notify(`SYNTHESIS FAILED: Incorrect combination for ${actionStr.toUpperCase()}. Ingredients wasted.`, "error");
             }
-
-            if (!success) { notify(`SYNTHESIS FAILED: Incorrect combination for ${actionStr.toUpperCase()}. Ingredients wasted.`, "error"); }
         }
 
         function checkWin(resId, stars) {
@@ -2096,6 +2583,10 @@ function playClick() {
                 let timeTaken = (Date.now() - currentLevelStartTime) / 1000;
                 if (timeTaken < userFastestTime) {
                     userFastestTime = timeTaken;
+                }
+
+                if (!userLevelStars[resId] || stars > userLevelStars[resId]) {
+                    userLevelStars[resId] = stars;
                 }
 
                 let baseReward = 0;
@@ -2140,7 +2631,13 @@ function playClick() {
                     playActionSound('success');
 
                     document.getElementById('overlayDishImg').src = db.items[resId].img;
-                    document.getElementById('overlayStarsDisplay').textContent = '⭐'.repeat(stars);
+                    
+                    let starHtml = '';
+                    for(let i=0; i<5; i++) {
+                        if(i < stars) starHtml += '<span style="color: #FFD700;">⭐</span>';
+                        else starHtml += '<span style="filter: grayscale(100%); opacity: 0.3; text-shadow: none;">⭐</span>';
+                    }
+                    document.getElementById('overlayStarsDisplay').innerHTML = starHtml;
 
                     if (newlyUnlockedBadge) {
                         document.getElementById('overlayTitle').textContent = `🏆 ${newlyUnlockedBadge.name} 🏆`;

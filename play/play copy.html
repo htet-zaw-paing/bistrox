@@ -3,17 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Play | BistroX</title>
+    <title>Play | BistroX Engine</title>
     <link rel="icon" href="../imgs/web-banners/logo.png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600;700;800&display=swap');
 
-        
         html.font-size-small { font-size: 13px !important; }
         html.font-size-medium { font-size: 16px !important; }
         html.font-size-large { font-size: 20px !important; }
 
-        
         :root {
             --primary: #C5A059; 
             --secondary: #1A1A1A; 
@@ -23,8 +21,6 @@
             --transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
             --font-main: 'Inter', system-ui, -apple-system, sans-serif;
             --font-geo: 'Jost', system-ui, sans-serif;
-            
-            
             --game-bg: #FDFBF7; 
             --game-panel: #FFFFFF; 
             --game-border: #E8E3D9; 
@@ -44,7 +40,6 @@
         h1, h2, h3, h4 { font-family: var(--font-geo); font-weight: 700; letter-spacing: 1px; margin: 0; }
         button { font-family: inherit; outline: none; }
 
-        
         #toastContainer { position: fixed; bottom: 40px; right: 40px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
         .toast { background: var(--game-panel); color: var(--game-text); padding: 1.2rem 2rem; border-left: 3px solid var(--primary); box-shadow: 0 20px 40px rgba(0,0,0,0.15); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; animation: toastIn 0.5s var(--transition) forwards; min-width: 300px; pointer-events: auto; font-family: var(--font-geo); border: 1px solid var(--game-border); border-left: 4px solid var(--primary); }
         @keyframes toastIn { from { opacity: 0; transform: translateX(100px); } to { opacity: 1; transform: translateX(0); } }
@@ -53,7 +48,6 @@
         .reveal { opacity: 0; transform: translateY(30px); transition: var(--transition); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        
         .balance-badge {
             background: rgba(197, 160, 89, 0.1);
             border: 1px solid var(--primary);
@@ -90,16 +84,13 @@
         .loader-slogan span { color: var(--primary); font-weight: 700; }
         @keyframes pulseText { 0% { opacity: 0.5; } 100% { opacity: 1; } }
 
-        
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--game-border); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
-        
         .game-app { position: relative; width: 100vw; height: 100vh; background: var(--game-bg); overflow: hidden; }
 
-        
         .game-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; flex-direction: column; background: var(--game-bg); animation: fadeIn 0.5s ease-out forwards; }
         .game-screen.active { display: flex; }
 
@@ -107,16 +98,18 @@
         .game-header h2 { font-size: 1.2rem; color: var(--secondary); text-transform: uppercase; letter-spacing: 4px; font-weight: 600;}
         .game-close-btn { background: transparent; border: 1px solid var(--game-border); color: var(--secondary); cursor: pointer; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 3px; font-family: var(--font-geo); transition: var(--transition); padding: 0.8rem 2rem; border-radius: 30px; font-weight: 600; }
         .game-close-btn:hover { color: var(--game-bg); background: var(--secondary); border-color: var(--secondary); }
+        .tips-btn { color: var(--primary); border-color: var(--primary); }
+        .tips-btn:hover { background: var(--primary); color: var(--white); border-color: var(--primary); }
         .header-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; align-items: center; }
 
-        
-        .main-menu { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-left: 8%; background: url('https://images.unsplash.com/photo-1495521821757-a1efb6729352?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat; }
+        .menu-bg-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-position: center; background-size: cover; background-repeat: no-repeat; transition: opacity 2s ease-in-out; z-index: 0; }
+        .main-menu { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-left: 8%; position: relative; }
         .menu-gradient-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(to right, var(--game-bg) 0%, var(--game-bg) 35%, transparent 100%); z-index: 1; pointer-events: none; opacity: 0.95; transition: background 0.5s;}
         .menu-container { position: relative; z-index: 2; display: flex; flex-direction: row; align-items: center; justify-content: flex-start; gap: 8rem; max-width: 1200px; }
-        .menu-brand-block { display: flex; flex-direction: column; width: 100%; max-width: 450px; }
+        .menu-brand-block { display: flex; flex-direction: column; width: 100%; max-width: 500px; }
         .brand-tag { display: inline-block; border: 1px solid var(--primary); padding: 0.4rem 1.5rem; border-radius: 30px; font-family: var(--font-geo); font-size: 0.65rem; color: var(--primary); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 2rem; background: rgba(197, 160, 89, 0.1); backdrop-filter: blur(5px); width: fit-content; font-weight: 700; }
-        .menu-brand h1 { font-family: var(--font-geo); font-size: 6.5rem; color: var(--secondary); line-height: 1.1; font-weight: 300; margin-bottom: 1.5rem; letter-spacing: -2px; }
-        .menu-brand h1 strong { font-weight: 800; display: block; color: var(--primary); letter-spacing: 0; }
+        .menu-brand h1 { font-family: var(--font-geo); font-size: clamp(3rem, 8vw, 6.5rem); color: var(--secondary); line-height: 1.1; font-weight: 300; margin-bottom: 1.5rem; letter-spacing: -2px; white-space: nowrap; display: inline-block;}
+        .menu-brand h1 strong { font-weight: 800; color: var(--primary); letter-spacing: 0; }
         .menu-brand p { font-family: var(--font-main); color: var(--game-text-muted); font-size: 1.05rem; line-height: 1.8; font-weight: 400; margin-bottom: 0; }
         .menu-list-block { display: flex; flex-direction: column; justify-content: center; }
         .menu-list { display: flex; flex-direction: column; gap: 0.8rem; }
@@ -128,50 +121,99 @@
         .menu-btn.quit-btn:hover { color: #ff5252; }
         .menu-btn.quit-btn::before { background: var(--danger); }
 
-        
-        .recipe-layout { display: flex; flex-direction: column; flex: 1; padding: 2rem 4rem; background: var(--game-bg); overflow: hidden;}
-        .difficulty-tabs { 
-            display: flex; gap: 2rem; margin-bottom: 2rem; border-bottom: 2px solid var(--game-border); padding-bottom: 1rem; 
-            flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; 
-        }
-        .difficulty-tabs::-webkit-scrollbar { display: none; }
-        .diff-tab { 
-            background: transparent; border: none; color: var(--game-text-muted); font-family: var(--font-geo); font-size: 0.95rem; 
-            text-transform: uppercase; letter-spacing: 3px; cursor: pointer; transition: var(--transition); padding: 0.5rem 1rem; 
-            position: relative; font-weight: 500; white-space: nowrap; flex-shrink: 0;
-        }
-        .diff-tab::after { content: ''; position: absolute; bottom: -1.15rem; left: 0; width: 0; height: 3px; background: var(--primary); transition: var(--transition); border-radius: 3px 3px 0 0;}
-        .diff-tab:hover { color: var(--secondary); }
-        .diff-tab.active { color: var(--secondary); font-weight: 800; }
-        .diff-tab.active::after { width: 100%; }
+        .icon-controls { display: flex; gap: 0.5rem; align-items: center; }
+        .icon-btn { padding: 0.5rem !important; border-radius: 50% !important; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3) !important; }
+        .icon-btn svg { width: 18px; height: 18px; }
 
+        /* Rank Styles for Tabs */
+        .difficulty-tabs { 
+            display: flex; gap: 1rem; margin-bottom: 2rem; padding-bottom: 0.5rem; 
+            flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none;
+        }
+        .diff-tab { border-radius: 8px; padding: 0.8rem 1.5rem; border: 1px solid transparent; background: rgba(0,0,0,0.03); color: var(--game-text-muted); font-family: var(--font-geo); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 3px; cursor: pointer; transition: var(--transition); position: relative; font-weight: 500; white-space: nowrap; flex-shrink: 0; }
+        .diff-tab::after { display: none; }
+        .diff-tab.rank-easy.active { background: linear-gradient(145deg, #ffffff, #f4f0ec); border-color: #dcb897; color: #8b5a2b; box-shadow: 0 4px 10px rgba(139, 90, 43, 0.1); font-weight: 800; transform: translateY(-2px); }
+        .diff-tab.rank-medium.active { background: linear-gradient(145deg, #ffffff, #eef1f5); border-color: #b0c4de; color: #4a5d80; box-shadow: 0 4px 10px rgba(74, 93, 128, 0.1); font-weight: 800; transform: translateY(-2px); }
+        .diff-tab.rank-hard.active { background: linear-gradient(145deg, #fffdf8, #fff4cc); border-color: #ffd700; color: #b8860b; box-shadow: 0 4px 10px rgba(184, 134, 11, 0.1); font-weight: 800; transform: translateY(-2px); }
+        .diff-tab.rank-impossible.active { background: linear-gradient(145deg, #1f2226, #121417); border-color: #8892b0; color: #e5e4e2; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); font-weight: 800; transform: translateY(-2px); }
+        .diff-tab.rank-executive.active { background: linear-gradient(145deg, #0a0a0a, #000000); border-color: #ffd700; color: #ffd700; box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2); font-weight: 800; transform: translateY(-2px); }
+
+        /* Rank Styles for Cards */
         .recipe-grid-container { flex: 1; overflow-y: auto; padding-right: 1rem; padding-bottom: 2rem; }
         .recipe-grid { display: none; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 2.5rem; animation: fadeIn 0.4s ease-out; }
         .recipe-grid.active { display: grid; }
 
-        .level-card { background: var(--game-panel); border: 1px solid var(--game-border); border-radius: 12px; padding: 2.5rem 1.5rem; text-align: center; cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; box-shadow: 0 10px 25px rgba(0,0,0,0.03); }
-        .level-card:hover { border-color: var(--primary); transform: translateY(-8px); box-shadow: 0 20px 40px rgba(197, 160, 89, 0.15); }
-        .level-card.locked { opacity: 0.6; cursor: not-allowed; background: var(--game-bg);}
-        .level-card.locked:hover { transform: none; border-color: var(--game-border); box-shadow: 0 10px 20px rgba(0,0,0,0.02); }
-        .lock-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.15; }
-        .lock-icon svg { width: 50px; height: 50px; fill: var(--secondary); }
-
-        .level-card img { width: 80px; height: 80px; object-fit: contain; margin-bottom: 1.5rem; border-radius: 50%; background: var(--game-bg); padding: 15px; border: 1px solid var(--game-border); transition: var(--transition); }
-        .level-card:hover img { border-color: var(--primary); transform: scale(1.1);}
-        .level-card.locked img { filter: grayscale(100%) opacity(0.3); }
+        .level-card, .badge-card { background: linear-gradient(145deg, var(--game-panel), var(--game-bg)); border: 1px solid var(--game-border); border-radius: 24px; padding: 2.5rem 1.5rem; text-align: center; cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; box-shadow: 0 15px 35px rgba(0,0,0,0.04); }
+        .level-card:hover, .badge-card:hover { border-color: var(--primary); transform: translateY(-10px); box-shadow: 0 25px 50px rgba(197, 160, 89, 0.2); }
+        .level-card.locked, .badge-card.locked { opacity: 0.6; cursor: not-allowed; background: var(--game-bg);}
+        .level-card.locked:hover, .badge-card.locked:hover { transform: none; border-color: var(--game-border); box-shadow: 0 10px 20px rgba(0,0,0,0.02); }
         
-        .level-card h4 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--secondary); font-family: var(--font-geo); font-weight: 700; letter-spacing: 1px;}
-        .level-card p { font-family: var(--font-main); font-size: 0.75rem; color: var(--game-text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600;}
-
+        .level-card.rank-easy, .badge-card.rank-easy { background: linear-gradient(145deg, #ffffff, #f4f0ec); border-color: #dcb897; }
+        .level-card.rank-easy h4, .badge-card.rank-easy h4 { color: #8b5a2b; }
+        .level-card.rank-medium, .badge-card.rank-medium { background: linear-gradient(145deg, #ffffff, #eef1f5); border-color: #b0c4de; }
+        .level-card.rank-medium h4, .badge-card.rank-medium h4 { color: #4a5d80; }
+        .level-card.rank-hard, .badge-card.rank-hard { background: linear-gradient(145deg, #fffdf8, #fff4cc); border-color: #ffd700; }
+        .level-card.rank-hard h4, .badge-card.rank-hard h4 { color: #b8860b; }
+        .level-card.rank-impossible, .badge-card.rank-impossible { background: linear-gradient(145deg, #1f2226, #121417); border-color: #8892b0; }
+        .level-card.rank-impossible h4, .badge-card.rank-impossible h4 { color: #e5e4e2; }
+        .level-card.rank-impossible p, .badge-card.rank-impossible p { color: #aaaaaa; }
+        .level-card.rank-executive, .badge-card.rank-executive { background: linear-gradient(145deg, #0a0a0a, #000000); border-color: #ffd700; box-shadow: 0 10px 20px rgba(255,215,0,0.1); }
+        .level-card.rank-executive h4, .badge-card.rank-executive h4 { color: #ffd700; }
+        .level-card.rank-executive p, .badge-card.rank-executive p { color: #eeeeee; }
         
+        .level-card img, .badge-card img { width: 90px; height: 90px; object-fit: contain; margin-bottom: 1.5rem; border-radius: 16px; background: var(--game-panel); padding: 10px; box-shadow: inset 0 5px 15px rgba(0,0,0,0.03); border: 1px solid var(--game-border); transition: var(--transition); }
+        .level-card:hover img, .badge-card:hover img { border-color: var(--primary); transform: scale(1.15) rotate(3deg); background: var(--white); box-shadow: 0 10px 20px rgba(197, 160, 89, 0.15); }
+        .level-card.locked img, .badge-card.locked img { filter: grayscale(100%) opacity(0.3); }
+
+        .level-card.rank-impossible img, .badge-card.rank-impossible img { background: #2a2e33; border-color: #4a5059; }
+        .level-card.rank-executive img, .badge-card.rank-executive img { background: #1a1a1a; border-color: #ffd700; box-shadow: inset 0 0 10px rgba(255,215,0,0.1); }
+        
+        .level-card h4, .badge-card h4 { font-size: 1.05rem; margin-bottom: 0.5rem; color: var(--secondary); font-family: var(--font-geo); font-weight: 700; letter-spacing: 1px;}
+        .level-card p, .badge-card p { font-family: var(--font-main); font-size: 0.75rem; color: var(--game-text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600;}
+
         .play-layout { display: flex; flex: 1; height: calc(100vh - 90px); position: relative; overflow: hidden; }
 
-        .cooking-zone { flex: 1; padding: 2rem 4rem; display: flex; flex-direction: column; background: var(--game-bg); overflow-y: auto; }
+        .cooking-zone { flex: 1; padding: 2rem 4rem; display: flex; flex-direction: column; background: var(--game-bg); overflow-y: auto; position: relative; }
 
-        
-        .inventory-panel { flex: none; width: 450px; min-width: 300px; max-width: 700px; background: var(--game-panel); display: flex; flex-direction: column; position: relative; z-index: 10; transition: background 0.5s; overflow: hidden;}
+        .synth-popup {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--primary);
+            color: var(--white);
+            padding: 1rem 2.5rem;
+            border-radius: 40px;
+            font-family: var(--font-geo);
+            font-weight: 800;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 15px 35px rgba(197, 160, 89, 0.5);
+            z-index: 1000;
+            animation: floatUpFade 2.5s forwards cubic-bezier(0.19, 1, 0.22, 1);
+            pointer-events: none;
+            text-align: center;
+        }
+
+        @keyframes floatUpFade {
+            0% { opacity: 0; transform: translate(-50%, 40px) scale(0.8); }
+            15% { opacity: 1; transform: translate(-50%, 0) scale(1.1); }
+            80% { opacity: 1; transform: translate(-50%, -20px) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -50px) scale(0.9); }
+        }
+
+        .attention-pulse {
+            animation: severePulse 1.5s cubic-bezier(0.19, 1, 0.22, 1) infinite !important;
+        }
+
+        @keyframes severePulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.8); }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(230, 57, 70, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(230, 57, 70, 0); }
+        }
+
+        .inventory-panel { flex: none; width: 550px; min-width: 350px; max-width: 800px; background: var(--game-panel); display: flex; flex-direction: column; position: relative; z-index: 10; transition: background 0.5s; overflow: hidden;}
         .inventory-panel.dragging { transition: none; user-select: none; }
-        
         
         .resizer { width: 14px; background: var(--game-border); cursor: col-resize; display: flex; align-items: center; justify-content: center; transition: background 0.3s, width 0.3s; z-index: 15; position: relative; border-left: 1px solid rgba(0,0,0,0.05); border-right: 1px solid rgba(0,0,0,0.05);}
         .resizer:hover, .resizer.dragging { background: rgba(197, 160, 89, 0.2); width: 18px; border-color: var(--primary); }
@@ -182,9 +224,8 @@
         .goal-display h4 { color: var(--game-text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 0.5rem; font-weight: 600;}
         .goal-display p { font-size: 1.8rem; color: var(--secondary); margin: 0; font-family: var(--font-geo); font-weight: 800; letter-spacing: 1px;}
 
-        .board-wrapper { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+        .board-wrapper { display: flex; flex-direction: column; flex: 1; min-height: 0; position: relative;}
 
-        
         .staging-area { 
             flex: 1; 
             background: linear-gradient(145deg, var(--game-bg), var(--game-border));
@@ -210,25 +251,19 @@
         .action-btn.clear:hover { background: rgba(230, 57, 70, 0.1); border-color: var(--danger); color: var(--danger); box-shadow: 0 8px 20px rgba(230, 57, 70, 0.15); }
         .game-actions .action-btn { flex: 1; min-width: 100px; }
 
-        
-        .pantry-header { padding: 2rem; border-bottom: 1px solid var(--game-border); background: var(--game-panel); flex-shrink: 0;}
+        .pantry-header { padding: 1.5rem 1.5rem 0 1.5rem; background: var(--game-panel); flex-shrink: 0;}
         .pantry-search { width: 100%; padding: 1rem 1.5rem; background: var(--game-bg); border: 1px solid var(--game-border); border-radius: 30px; color: var(--secondary); font-family: var(--font-main); font-size: 0.95rem; outline: none; transition: var(--transition); margin-bottom: 1.5rem;}
-        .pantry-search:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(197, 160, 89, 0.1); background: var(--game-panel); }
         
-        .pantry-categories-wrapper { display: flex; align-items: center; width: 100%; gap: 1rem; position: relative;}
-
-        .pantry-scroll-mask { flex: 1; overflow: hidden; position: relative; -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%); mask-image: linear-gradient(to right, black 85%, transparent 100%); }
-        .pantry-categories { display: flex; gap: 0.6rem; overflow-x: auto; padding-bottom: 12px; flex: 1; scroll-behavior: smooth; padding-right: 3rem; }
-        .pantry-categories::-webkit-scrollbar { display: block; height: 8px; }
-        .pantry-categories::-webkit-scrollbar-track { background: var(--game-bg); border-radius: 10px; border: 1px solid var(--game-border); }
-        .pantry-categories::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; border: 1px solid var(--game-bg); }
-        .pantry-categories::-webkit-scrollbar-thumb:hover { background: var(--secondary); }
+        .inventory-body { display: flex; flex: 1; overflow: hidden; border-top: 1px solid var(--game-border); }
+        .pantry-sidebar { width: 150px; border-right: 1px solid var(--game-border); background: var(--game-panel); display: flex; flex-direction: column; flex-shrink: 0; z-index: 10;}
+        .pantry-categories { display: flex; flex-direction: column; gap: 0.5rem; overflow-y: auto; padding: 1.5rem 1rem; flex: 1; }
+        .pantry-categories::-webkit-scrollbar { display: none; }
+        .inventory-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: var(--game-panel); }
         
-        .pantry-fixed-prep { padding-left: 1rem; border-left: 2px solid var(--game-border); padding-bottom: 12px; flex-shrink: 0; z-index: 10; }
-        .cat-btn { background: transparent; border: 1px solid var(--game-border); color: var(--game-text-muted); padding: 0.6rem 1.2rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; transition: var(--transition); cursor: pointer;}
-        .cat-btn.active, .cat-btn:hover { background: rgba(197, 160, 89, 0.1); color: var(--primary); border-color: var(--primary); }
+        .cat-btn { background: transparent; border: 1px solid transparent; color: var(--game-text-muted); padding: 0.8rem 1rem; border-radius: 12px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; text-align: left; transition: var(--transition); cursor: pointer; width: 100%; }
+        .cat-btn.active, .cat-btn:hover { background: rgba(197, 160, 89, 0.1); color: var(--primary); border-color: rgba(197, 160, 89, 0.2); }
 
-        .prepped-btn { background: var(--primary) !important; color: var(--white) !important; border-color: var(--primary) !important; font-weight: 800; animation: pulsePrepped 2s infinite; }
+        .prepped-btn { background: var(--primary) !important; color: var(--white) !important; border-color: var(--primary) !important; font-weight: 800; margin-top: auto; text-align: center; animation: pulsePrepped 2s infinite; }
         @keyframes pulsePrepped { 0% { box-shadow: 0 0 0 0 rgba(197, 160, 89, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(197, 160, 89, 0); } 100% { box-shadow: 0 0 0 0 rgba(197, 160, 89, 0); } }
 
         .inventory-grid { flex: 1; overflow-y: auto; padding: 2rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 1.2rem; align-content: flex-start; }
@@ -250,7 +285,6 @@
         }
         .staging-area .item-slot:hover { border-color: var(--primary); border-radius: 16px; }
 
-        
         .store-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; margin-top: 1.5rem;}
         .store-card { position: relative; background: var(--game-panel); border: 1px solid var(--game-border); padding: 2.5rem 2rem; border-radius: 12px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.03); transition: var(--transition); display: flex; flex-direction: column; justify-content: space-between;}
         .store-card:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 10px 25px rgba(197,160,89,0.1); }
@@ -259,14 +293,12 @@
         .store-palette { display: flex; justify-content: center; gap: 8px; margin-bottom: 2rem; }
         .palette-dot { width: 24px; height: 24px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); }
 
-        
         .info-wrapper { position: absolute; top: 1rem; right: 1rem; z-index: 10; }
         .info-icon { width: 24px; height: 24px; border-radius: 50%; background: var(--game-bg); border: 1px solid var(--game-border); color: var(--game-text-muted); display: flex; align-items: center; justify-content: center; font-family: var(--font-main); font-size: 0.85rem; cursor: help; font-weight: bold; transition: var(--transition); }
         .info-icon:hover { background: var(--primary); color: var(--white); border-color: var(--primary); }
-        .info-tooltip { position: absolute; top: 100%; right: 0; margin-top: 0.5rem; background: var(--secondary); color: var(--white); padding: 1rem; border-radius: 8px; font-size: 0.75rem; width: 220px; text-align: left; opacity: 0; visibility: hidden; transition: var(--transition); box-shadow: 0 10px 20px rgba(0,0,0,0.2); pointer-events: none; font-family: var(--font-main); font-weight: 400; line-height: 1.5; }
+        .info-tooltip { position: absolute; top: 100%; right: 0; margin-top: 0.5rem; background: var(--game-text); color: var(--game-bg); padding: 1rem; border-radius: 8px; font-size: 0.75rem; width: 220px; text-align: left; opacity: 0; visibility: hidden; transition: var(--transition); box-shadow: 0 10px 20px rgba(0,0,0,0.2); pointer-events: none; font-family: var(--font-main); font-weight: 500; line-height: 1.5; z-index: 100;}
         .info-wrapper:hover .info-tooltip { opacity: 1; visibility: visible; transform: translateY(0); }
 
-        
         .lb-layout { display: flex; flex-direction: column; flex: 1; padding: 2rem 4rem; background: var(--game-bg); align-items: center;}
         .lb-panel { background: var(--game-panel); border: 1px solid var(--game-border); border-radius: 12px; padding: 0; box-shadow: 0 10px 25px rgba(0,0,0,0.02); overflow: hidden; width: 100%; }
         
@@ -281,10 +313,9 @@
         .rank-2 .rank-pos { color: #A0A0A0; font-size: 1.2rem; }
         .rank-3 .rank-pos { color: #B08D57; font-size: 1.15rem; }
 
-        
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; opacity: 0; transition: opacity 0.3s; }
         .modal-overlay.active { display: flex; opacity: 1; }
-        .modal-box { background: var(--game-panel); border: 1px solid var(--game-border); border-radius: 16px; width: 100%; max-width: 500px; padding: 3rem; text-align: center; transform: translateY(20px); transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1); box-shadow: 0 30px 60px rgba(0,0,0,0.2); max-height: 90vh; display: flex; flex-direction: column;}
+        .modal-box { background: var(--game-panel); border: 1px solid var(--game-border); border-radius: 16px; width: 100%; max-width: 600px; padding: 3rem; text-align: center; transform: translateY(20px); transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1); box-shadow: 0 30px 60px rgba(0,0,0,0.2); max-height: 90vh; display: flex; flex-direction: column;}
         .modal-overlay.active .modal-box { transform: translateY(0); }
         .modal-box h2 { font-size: 2rem; color: var(--secondary); margin-bottom: 1.5rem; font-family: var(--font-geo); text-transform: uppercase; letter-spacing: 2px; flex-shrink: 0;}
         .hint-list { text-align: left; background: var(--game-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--game-border); margin-bottom: 1.5rem; overflow-y: auto; list-style: none; flex: 1;}
@@ -292,9 +323,8 @@
         .hint-list li::before { content: '>'; position: absolute; left: 0; color: var(--primary); font-weight: bold; font-family: var(--font-geo);}
         .hint-list li:last-child { margin-bottom: 0; }
 
-        
         .doc-scroll { flex: 1; overflow-y: auto; padding: 4rem 10% 8rem; display: flex; justify-content: center; background: var(--game-bg); }
-        .doc-content { width: 100%; max-width: 800px; background: transparent; margin: 0 auto; }
+        .doc-content { width: 100%; max-width: 800px; background: transparent; margin: 0 auto; padding-bottom: 5rem; }
         .doc-content h2 { font-size: 2.8rem; font-weight: 800; color: var(--secondary); margin-bottom: 1rem; font-family: var(--font-geo); letter-spacing: -1px;}
         .doc-content > p.lead { font-size: 1.2rem; color: var(--game-text-muted); margin-bottom: 3rem; line-height: 1.6; border-left: 3px solid var(--primary); padding-left: 1.5rem;}
         .doc-content h3 { font-size: 1.5rem; font-weight: 700; color: var(--secondary); margin-bottom: 1rem; margin-top: 3.5rem; border-bottom: 1px solid var(--game-border); padding-bottom: 0.8rem; font-family: var(--font-main); letter-spacing: 0;}
@@ -316,36 +346,37 @@
         .setting-group input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; background: var(--primary); border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.3); transition: var(--transition);}
         .setting-group input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); background: var(--secondary); }
         
-        
-        .game-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0, 0.8); z-index: 100; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; backdrop-filter: blur(10px); padding: 20px;}
+        .game-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--game-bg); z-index: 100; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px;}
         .game-overlay.active { display: flex; animation: fadeIn 0.6s cubic-bezier(0.19, 1, 0.22, 1); }
-        .overlay-msg { font-size: 4rem; font-weight: 800; color: var(--game-panel); margin-bottom: 0.5rem; letter-spacing: -1px;}
+        .overlay-msg { font-size: 4rem; font-weight: 800; color: var(--secondary); margin-bottom: 0.5rem; letter-spacing: -1px; }
         .overlay-sub { font-family: var(--font-geo); font-size: 1.2rem; color: var(--primary); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 4px; font-weight: 600; }
-        .reward-text { font-family: var(--font-geo); font-size: 2rem; color: var(--primary); font-weight: 900; margin-bottom: 3rem; text-shadow: 0 5px 15px rgba(197,160,89, 0.3); animation: floatUp 2s ease infinite alternate; }
+        .reward-text { font-family: var(--font-geo); font-size: 2rem; color: var(--primary); font-weight: 900; margin-bottom: 3rem; animation: floatUp 2s ease infinite alternate; }
+        
+        .dish-showcase { position: relative; width: 220px; height: 220px; margin-bottom: 2rem; display: flex; align-items: center; justify-content: center; }
+        .dish-showcase::before { content: ''; position: absolute; width: 100%; height: 100%; background: radial-gradient(circle, var(--primary) 0%, transparent 70%); opacity: 0.2; animation: pulseGlow 2s infinite alternate; z-index: 0; }
+        .dish-showcase img { width: 180px; height: 180px; object-fit: contain; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.15)); animation: floatUp 2s ease infinite alternate; z-index: 1; position: relative; }
+        @keyframes pulseGlow { 0% { transform: scale(0.8); opacity: 0.1; } 100% { transform: scale(1.2); opacity: 0.3; } }
         @keyframes floatUp { 0% { transform: translateY(0); } 100% { transform: translateY(-10px); } }
 
-        
         .gfx-medium .level-card, .gfx-medium .action-btn, .gfx-medium .item-slot, .gfx-medium .toast, .gfx-medium .modal-box, .gfx-medium .staging-area, .gfx-medium .setting-group, .gfx-medium .lb-panel { box-shadow: none !important; }
         .gfx-medium .menu-gradient-overlay { background: var(--game-bg); opacity: 0.85; }
-        .gfx-medium .modal-overlay, .gfx-medium .game-overlay { backdrop-filter: none !important; background-color: var(--secondary); opacity: 0.98;}
+        .gfx-medium .modal-overlay, .gfx-medium .game-overlay { backdrop-filter: none !important; opacity: 0.98;}
 
         .gfx-low .level-card, .gfx-low .action-btn, .gfx-low .item-slot, .gfx-low .toast, .gfx-low .modal-box, .gfx-low .staging-area, .gfx-low .setting-group, .gfx-low .lb-panel { box-shadow: none !important; }
+        .gfx-low .menu-bg-layer { display: none !important; }
         .gfx-low .menu-gradient-overlay { display: none !important; }
         .gfx-low .main-menu { background: var(--game-bg) !important; }
-        .gfx-low .modal-overlay, .gfx-low .game-overlay { backdrop-filter: none !important; background-color: var(--secondary); opacity: 0.98; }
+        .gfx-low .modal-overlay, .gfx-low .game-overlay { backdrop-filter: none !important; opacity: 0.98; }
         .gfx-low * { animation-duration: 0.01s !important; transition-duration: 0.01s !important; }
 
-        
         @media (max-width: 1024px) {
             .menu-container { gap: 4rem; padding-right: 4rem;}
             .resizer { display: none; }
             .play-layout { flex-direction: column; overflow: hidden; }
-            
             .cooking-zone { flex: 0 0 50%; border-right: none; padding: 2rem; border-bottom: 4px solid var(--game-border); }
             .inventory-panel { flex: 1; width: 100% !important; max-width: 100% !important; border-left: none; }
             .game-actions { flex-wrap: nowrap; }
         }
-        
         
         @media (max-width: 768px) {
             html.font-size-small { font-size: 12px !important; }
@@ -355,7 +386,7 @@
             .main-menu { padding-left: 0; justify-content: center;}
             .menu-container { flex-direction: column; gap: 3rem; text-align: center; align-items: center; width: 100%; padding: 0 2rem;}
             .menu-brand-block { max-width: 100%; align-items: center; transform: none; }
-            .menu-brand h1 { font-size: 4.5rem; text-align: center; }
+            .menu-brand h1 { text-align: center; }
             .menu-brand p { margin: 0 auto; text-align: center; }
             .menu-list-block { align-items: center; width: 100%; }
             .menu-list { align-items: stretch; width: 100%; max-width: 300px;}
@@ -369,7 +400,7 @@
 
             .recipe-layout, .lb-layout { padding: 1.5rem; }
             .recipe-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
-            .level-card { padding: 1.5rem 1rem; }
+            .level-card, .badge-card { padding: 1.5rem 1rem; }
             
             .cooking-zone { flex: 0 0 55%; padding: 1rem; }
             .goal-display { padding: 1rem; margin-bottom: 1rem; flex-direction: row; justify-content: space-between; align-items: center;}
@@ -379,38 +410,37 @@
             .staging-area { padding: 1.5rem 1rem; gap: 0.5rem; min-height: 180px; align-content: center;}
             .staging-area .item-slot { width: 75px; height: 75px; }
             
-            
             .game-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; width: 100%; }
             .game-actions .action-btn { width: 100%; min-width: 0; padding: 0.8rem 0.2rem; font-size: 0.7rem; margin: 0;}
             .game-actions .action-btn.clear { grid-column: span 3; }
             
-            .pantry-header { padding: 1rem; }
-            .pantry-categories-wrapper { flex-direction: column; align-items: stretch; gap: 0.8rem; }
-            .pantry-scroll-mask { mask-image: none; -webkit-mask-image: none; }
-            .pantry-categories { padding-right: 0; padding-bottom: 5px;}
-            .pantry-fixed-prep { border-left: none; padding-left: 0; border-top: 1px solid var(--game-border); padding-top: 0.8rem; text-align: center;}
-            .prepped-btn { width: 100%; }
+            .pantry-header { padding: 1rem 1rem 0 1rem; }
+            .inventory-body { flex-direction: column; }
+            .pantry-sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--game-border); flex-shrink: 0;}
+            .pantry-categories { flex-direction: row; overflow-x: auto; padding: 1rem; gap: 0.5rem; }
+            .cat-btn { width: auto; white-space: nowrap; padding: 0.6rem 1.2rem; text-align: center; border-radius: 20px; border: 1px solid var(--game-border); }
+            .prepped-btn { margin-top: 0; }
 
             .inventory-grid { padding: 1rem; gap: 0.8rem; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
             .item-slot span { font-size: 0.65rem; }
             
             .modal-box { padding: 1.5rem; width: 90%; }
-            .overlay-msg { font-size: 2.5rem; color: var(--white); }
+            .overlay-msg { font-size: 2.5rem; }
+
+            .setting-group { padding: 1rem; }
+            .doc-content h2 { font-size: 2rem; }
         }
 
-        
         @media (max-width: 480px) {
             html.font-size-small { font-size: 10px !important; }
             html.font-size-medium { font-size: 12px !important; }
             html.font-size-large { font-size: 14px !important; }
             
-            .game-header h2 { display: none; } 
+            .game-header h2 { display: none; }
             .game-header { padding: 0.6rem; gap: 0.5rem; flex-direction: row; flex-wrap: wrap;}
-            .header-actions { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; width: 100%;}
+            .header-actions { flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.4rem; width: 100%; flex-wrap: wrap;}
             .balance-badge { width: 100%; justify-content: center; padding: 0.5rem;}
-            .game-close-btn { padding: 0.5rem; font-size: 0.6rem; letter-spacing: 1px; width: 100%;}
-            
-            .menu-brand h1 { font-size: 3.5rem; }
+            .game-close-btn { padding: 0.5rem; font-size: 0.6rem; letter-spacing: 1px; flex: 1;}
             
             .cooking-zone { flex: 0 0 58%; padding: 0.6rem; }
             .goal-display { padding: 0.6rem 0.8rem; margin-bottom: 0.6rem; border-radius: 8px;}
@@ -423,22 +453,22 @@
             
             .game-actions { grid-template-columns: 1fr 1fr 1fr; gap: 0.4rem; }
             .game-actions .action-btn { padding: 0.6rem 0.1rem; font-size: 0.6rem; border-radius: 8px;}
-            .game-actions .action-btn.clear { grid-column: span 1; } 
+            .game-actions .action-btn.clear { grid-column: span 1; }
             .game-actions .action-btn.primary { grid-column: span 2; }
             
             .inventory-panel { flex: 1; }
-            .pantry-header { padding: 0.6rem; }
+            .pantry-header { padding: 0.6rem 0.6rem 0 0.6rem; }
             .pantry-search { padding: 0.6rem; font-size: 0.85rem; margin-bottom: 0.6rem; border-radius: 12px;}
-            .pantry-categories { gap: 0.3rem; }
+            .pantry-categories { padding: 0.6rem; gap: 0.3rem; }
             .cat-btn { padding: 0.4rem 0.6rem; font-size: 0.6rem; border-radius: 8px;}
             
-            .inventory-grid { padding: 0.6rem; gap: 0.5rem; grid-template-columns: repeat(3, 1fr); }
+            .inventory-grid { padding: 0.6rem; gap: 0.5rem; grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); }
             .item-slot { padding: 6px; border-radius: 8px;}
             
             .recipe-grid { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
-            .level-card { padding: 1rem 0.5rem; }
-            .level-card img { width: 50px; height: 50px; margin-bottom: 0.8rem; padding: 8px;}
-            .level-card h4 { font-size: 0.8rem; }
+            .level-card, .badge-card { padding: 1rem 0.5rem; }
+            .level-card img, .badge-card img { width: 50px; height: 50px; margin-bottom: 0.8rem; padding: 8px;}
+            .level-card h4, .badge-card h4 { font-size: 0.8rem; }
             
             .store-grid { grid-template-columns: 1fr; gap: 1rem;}
             .store-card { padding: 1.5rem 1rem; }
@@ -448,7 +478,6 @@
             .reward-text { font-size: 1.5rem; margin-bottom: 1.5rem;}
         }
 
-        
         @media (max-width: 320px) {
             .inventory-grid { grid-template-columns: repeat(2, 1fr); }
             .game-actions { grid-template-columns: 1fr 1fr; }
@@ -456,145 +485,98 @@
             .game-actions .action-btn.primary { grid-column: span 2; }
             .recipe-grid { grid-template-columns: 1fr; }
             .staging-area .item-slot { width: 50px; height: 50px; }
-            .menu-brand h1 { font-size: 2.5rem; }
         }
-    
-        :root {
-            --info: #4F7DFF;
-        }
-
-        a { color: var(--primary); text-decoration: none; }
-        a:hover { opacity: 0.9; text-decoration: underline; }
-
-        .menu-brand h1 { white-space: nowrap; letter-spacing: -1px; }
-        .menu-brand h1 strong { display: inline; }
-        .brand-tag { max-width: 100%; text-wrap: balance; }
-        .doc-scroll { padding: clamp(1rem, 3vw, 4rem) clamp(1rem, 6vw, 10%) calc(3rem + env(safe-area-inset-bottom)); }
-        .doc-content { padding-inline: clamp(0rem, 1vw, 0.25rem); }
-        .doc-content > p.lead { margin-bottom: 2.25rem; }
-        .lb-layout.doc-scroll { padding-bottom: 3rem; }
-        #screen-settings .doc-content, #screen-store .doc-content, #screen-terms .doc-content, #screen-credits .doc-content, #screen-leaderboard .doc-content { width: min(100%, 1040px); }
-        #screen-settings .setting-group, #screen-store .store-card, #screen-credits .doc-content ul, #screen-terms .doc-content ul { margin-inline: 0; }
-        .settings-meta { display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
-        .desktop-only-balance { max-width: calc(100vw - 2rem); }
-        .game-header h2 { white-space: nowrap; }
-        .balance-badge { max-width: 100%; }
-        .modal-box .hint-list { list-style: none; padding-left: 1.2rem; }
-        .menu-list { width: min(100%, 340px); }
-        .store-card .action-btn, .store-card .action-btn.primary { min-height: 44px; }
-        .difficulty-tabs { padding-right: 0.25rem; }
-        .pantry-search, .game-close-btn, .action-btn, .cat-btn { min-height: 44px; }
-        .info-tooltip { z-index: 30; }
-        @media (max-width: 1024px) {
-            .game-header { padding: 1rem 1.25rem; }
-            .doc-scroll { padding-inline: 1rem; }
-            .recipe-layout, .lb-layout { padding: 1.25rem; }
-            .store-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-            .menu-brand h1 { font-size: clamp(3.4rem, 8vw, 5rem); }
-        }
-        @media (max-width: 768px) {
-            body { overflow: hidden; }
-            .game-header { padding: 0.85rem; }
-            .menu-container { gap: 1.5rem; padding: 0 1rem; }
-            .menu-brand-block { gap: 1rem; }
-            .brand-tag { margin-bottom: 1rem; text-align: center; }
-            .menu-brand p { font-size: 0.95rem; line-height: 1.6; }
-            .doc-scroll { padding: 1rem 0.85rem calc(2.25rem + env(safe-area-inset-bottom)); }
-            .doc-content { width: 100%; }
-            .doc-content h2 { font-size: 2rem; }
-            .doc-content h3 { margin-top: 2rem; }
-            .setting-group { padding: 1rem; }
-            .switch-control { gap: 0.5rem; }
-            .switch-control button { padding: 0.75rem 1rem; flex: 0 0 auto; }
-            .switch-control span { min-width: 0; font-size: 0.88rem; line-height: 1.4; }
-            .store-card { padding: 1.25rem 1rem; }
-            .store-grid { grid-template-columns: 1fr 1fr; gap: 0.85rem; }
-            .palette-dot { width: 18px; height: 18px; }
-            .game-header h2 { font-size: 1rem; letter-spacing: 2px; white-space: normal; }
-            .header-actions { width: 100%; }
-            .balance-badge { padding: 0.5rem 0.85rem; font-size: 0.85rem; justify-content: center; }
-            .toast { min-width: 0; width: min(92vw, 360px); padding: 1rem 1rem; font-size: 0.75rem; }
-            #toastContainer { right: 12px; left: 12px; bottom: 12px; align-items: center; }
-            .staging-area { padding-top: 2rem; }
-            .inventory-grid { grid-template-columns: repeat(auto-fill, minmax(74px, 1fr)); }
-        }
-        @media (max-width: 560px) {
-            .store-grid { grid-template-columns: 1fr; }
-            .menu-brand h1 { font-size: clamp(2.6rem, 12vw, 4rem); }
-            .menu-list { max-width: 100%; }
-            .menu-btn { font-size: 0.88rem; letter-spacing: 2px; }
-            .header-actions { grid-template-columns: 1fr; }
-            .game-header { align-items: stretch; }
-            .game-close-btn { width: 100%; }
-            .goal-display { gap: 0.75rem; }
-            .goal-display p { font-size: 1rem; }
-        }
-
     </style>
 </head>
 <body>
 
-    
     <div id="globalLoader" class="loader-container">
         <div class="pan-wrapper"><div class="pan"><div class="pan-handle"></div><div class="pan-base"></div></div><div class="food"></div></div>
         <h2 class="loader-slogan">Please wait patiently,<br>we are <span>cooking...</span></h2>
     </div>
 
-    
     <div id="toastContainer"></div>
 
-    
     <div id="hintModal" class="modal-overlay">
-        <div class="modal-box">
+        <div class="modal-box" style="max-width: 600px;">
             <h2>Chef's Guide</h2>
-            <ul id="hintContent" class="hint-list"></ul>
+            <div style="text-align: left; background: var(--game-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--game-border); margin-bottom: 1.5rem; overflow-y: auto; max-height: 50vh;">
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem; font-family: var(--font-geo); text-transform: uppercase; letter-spacing: 1px;">Base Recipe (⭐⭐⭐) - FREE</h4>
+                <ul id="hintContentBase" class="hint-list" style="margin-bottom: 1.5rem; padding: 0; background: transparent; border: none; overflow: visible;"></ul>
+                
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem; font-family: var(--font-geo); text-transform: uppercase; letter-spacing: 1px;">Gourmet Upgrade (⭐⭐⭐⭐)</h4>
+                <div id="hintContent4Star" style="margin-bottom: 1.5rem; font-family: var(--font-main); color: var(--game-text-muted); font-size: 0.95rem;">
+                </div>
+                
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem; font-family: var(--font-geo); text-transform: uppercase; letter-spacing: 1px;">Masterpiece Upgrade (⭐⭐⭐⭐⭐)</h4>
+                <div id="hintContent5Star" style="font-family: var(--font-main); color: var(--game-text-muted); font-size: 0.95rem;">
+                </div>
+            </div>
             <button class="action-btn primary" style="flex: none; width: 100%; border-radius: 30px; padding: 1rem;" onclick="document.getElementById('hintModal').classList.remove('active')">Understood</button>
         </div>
     </div>
 
     <div id="offlineModal" class="modal-overlay">
         <div class="modal-box">
-            <h2>Offline Access</h2>
-            <ul class="hint-list" style="margin-bottom:1.5rem;">
-                <li id="offlineEstimateText">Preparing storage estimate...</li>
-                <li>Your BistroX profile, settings, active theme, selected soundtrack, and unlocked assets remain saved on this device.</li>
-                <li>An offline package will be prepared for this browser. If advanced offline caching is unavailable, a portable BistroX HTML backup will be downloaded instead.</li>
-            </ul>
-            <div style="display:flex; gap:0.8rem; flex-wrap:wrap;">
-                <button class="action-btn" style="flex:1 1 180px;" onclick="closeOfflineModal()">Cancel</button>
-                <button class="action-btn primary" style="flex:1 1 180px;" onclick="confirmOfflineDownload()">Confirm Download</button>
+            <h2>Offline Synchronization</h2>
+            <p style="color:var(--game-text-muted); font-size:1rem; margin-bottom: 1.5rem; line-height: 1.6; font-family: var(--font-main);">
+                Caching core assets allows you to play BistroX without an internet connection.<br><br>
+                <strong id="offlineSizeEstimate" style="color:var(--secondary); font-size:1.2rem;">Ready to sync...</strong>
+            </p>
+            <div style="display: flex; gap: 1rem; width: 100%;">
+                <button class="action-btn" style="flex:1;" onclick="document.getElementById('offlineModal').classList.remove('active')">Close</button>
+                <button class="action-btn primary" id="offlineBtnStart" style="flex:1;" onclick="confirmOffline()">Authorize & Cache</button>
             </div>
         </div>
     </div>
 
-    
     <main id="gameApp" class="game-app gfx-high font-size-medium">
         
-        
         <div id="gameOverlay" class="game-overlay">
+            <div class="dish-showcase">
+                <img id="overlayDishImg" src="" alt="Dish">
+            </div>
+            <div id="overlayStarsDisplay" style="font-size: 2.5rem; margin-bottom: 0.5rem; letter-spacing: 5px; text-shadow: 0 4px 10px rgba(0,0,0,0.5); display: flex; justify-content: center; gap: 5px;"></div>
             <h2 id="overlayTitle" class="overlay-msg">Masterpiece Created.</h2>
             <p id="overlaySub" class="overlay-sub">Timeline Unlocked</p>
             <div id="overlayReward" class="reward-text">+1,000 Kyats</div>
             <button class="action-btn primary" style="flex: none; padding: 1rem 2rem; border-radius: 30px; width: 100%; max-width: 300px; font-size: 0.95rem; box-shadow: 0 5px 25px rgba(197, 160, 89, 0.5);" onclick="switchScreen('screen-recipes'); document.getElementById('gameOverlay').classList.remove('active');">Continue Journey</button>
         </div>
 
-        
+        <div id="failOverlay" class="game-overlay">
+            <h2 class="overlay-msg" style="color: var(--danger) !important;">Service Failed.</h2>
+            <p class="overlay-sub">Time has run out.</p>
+            <button class="action-btn primary" style="flex: none; padding: 1rem 2rem; border-radius: 30px; width: 100%; max-width: 300px; font-size: 0.95rem; box-shadow: 0 5px 25px rgba(197, 160, 89, 0.5); margin-bottom: 1rem;" onclick="retryLevel()">Retry Level</button>
+            <button class="action-btn clear" style="flex: none; padding: 1rem 2rem; border-radius: 30px; width: 100%; max-width: 300px; font-size: 0.95rem;" onclick="switchScreen('screen-recipes'); document.getElementById('failOverlay').classList.remove('active');">Return to Menu</button>
+        </div>
+
         <div id="screen-main" class="game-screen main-menu active">
+            <div id="mainMenuBg1" class="menu-bg-layer" style="background-image: url('../imgs/web-banners/kitchen1.png'); opacity: 1;"></div>
+            <div id="mainMenuBg2" class="menu-bg-layer" style="opacity: 0;"></div>
             <div class="menu-gradient-overlay"></div>
             
-            <div style="position: absolute; top: 2rem; right: 4rem; z-index: 10;" class="desktop-only-balance">
+            <div style="position: absolute; top: 2rem; right: 2rem; z-index: 10; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; justify-content: flex-end;" class="desktop-only-balance">
                 <div class="balance-badge" title="Your Kyat Balance">
                     <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v12M8 12h8"/></svg>
                     <span class="ui-balance-display">0</span> K
+                </div>
+                <div class="icon-controls">
+                    <button class="action-btn primary icon-btn" onclick="toggleSound()" title="Toggle Sound">
+                        <svg class="sound-icon-on" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                        <svg class="sound-icon-off" style="display:none;" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                    </button>
+                    <button class="action-btn primary icon-btn" onclick="toggleFullScreen()" title="Toggle Fullscreen">
+                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                    </button>
                 </div>
             </div>
 
             <div class="menu-container">
                 <div class="menu-brand-block reveal">
-                    <span class="brand-tag">Cook Smart. Plate Prestige. Rule the Rush.</span>
+                    <span class="brand-tag">THE PREMIER CULINARY SIMULATION ENGINE</span>
                     <div class="menu-brand">
-                        <h1><strong>BistroX</strong></h1>
-                        <p>A fast, stylish culinary challenge where every ingredient, action, and decision shapes your service legacy.</p>
+                        <h1 style="white-space: nowrap; display: inline-block;">BISTRO<strong>X</strong></h1>
+                        <p>An interactive image-based cooking game. Select visual ingredients, experiment with real cooking methods, and discover new dishes based entirely on your choices.</p>
                     </div>
                 </div>
 
@@ -602,19 +584,19 @@
                     <div class="menu-list">
                         <button class="menu-btn" onclick="startGame()">Start</button>
                         <button class="menu-btn" onclick="switchScreen('screen-recipes')">Recipe Menu</button>
+                        <button class="menu-btn" onclick="switchScreen('screen-badges')">Badges</button>
                         <button class="menu-btn" onclick="openStore('screen-main')">Themes & Store</button>
                         <button class="menu-btn" onclick="openLeaderboard()">Leaderboards</button>
                         <button class="menu-btn" onclick="window.location.href='learn.html'">Learn</button>
                         <button class="menu-btn" onclick="openSettings('screen-main')">Settings</button>
                         <button class="menu-btn" onclick="switchScreen('screen-terms')">Terms</button>
-                        <button class="menu-btn" onclick="switchScreen('screen-credits')">Credits</button>
+                        <button class="menu-btn" onclick="switchScreen('screen-credits')">Credit</button>
                         <button class="menu-btn quit-btn" onclick="window.location.href='../index.html'">Quit</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        
         <div id="screen-recipes" class="game-screen">
             <div class="game-header">
                 <h2>Recipe Menu</h2>
@@ -623,16 +605,26 @@
                         <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v12M8 12h8"/></svg>
                         <span class="ui-balance-display">0</span> K
                     </div>
+                    <div class="icon-controls">
+                        <button class="action-btn primary icon-btn" onclick="toggleSound()" title="Toggle Sound">
+                            <svg class="sound-icon-on" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                            <svg class="sound-icon-off" style="display:none;" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                        </button>
+                        <button class="action-btn primary icon-btn" onclick="toggleFullScreen()" title="Toggle Fullscreen">
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                        </button>
+                    </div>
                     <button class="game-close-btn" onclick="switchScreen('screen-main')">Return</button>
                 </div>
             </div>
             
             <div class="recipe-layout">
                 <div class="difficulty-tabs">
-                    <button class="diff-tab active" onclick="switchDifficultyTab('easy')">Easy</button>
-                    <button class="diff-tab" onclick="switchDifficultyTab('medium')">Medium</button>
-                    <button class="diff-tab" onclick="switchDifficultyTab('hard')">Hard</button>
-                    <button class="diff-tab" onclick="switchDifficultyTab('impossible')">Impossible</button>
+                    <button class="diff-tab rank-easy active" onclick="switchDifficultyTab('easy')">Commis Chef</button>
+                    <button class="diff-tab rank-medium" onclick="switchDifficultyTab('medium')">Chef de Partie</button>
+                    <button class="diff-tab rank-hard" onclick="switchDifficultyTab('hard')">Sous Chef</button>
+                    <button class="diff-tab rank-impossible" onclick="switchDifficultyTab('impossible')">Head Chef</button>
+                    <button class="diff-tab rank-executive" onclick="switchDifficultyTab('executive')">Executive Chef</button>
                 </div>
 
                 <div class="recipe-grid-container">
@@ -640,11 +632,11 @@
                     <div id="grid-medium" class="recipe-grid"></div>
                     <div id="grid-hard" class="recipe-grid"></div>
                     <div id="grid-impossible" class="recipe-grid"></div>
+                    <div id="grid-executive" class="recipe-grid"></div>
                 </div>
             </div>
         </div>
 
-        
         <div id="screen-play" class="game-screen">
             <div class="game-header">
                 <h2>The Kitchen</h2>
@@ -653,7 +645,16 @@
                         <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v12M8 12h8"/></svg>
                         <span class="ui-balance-display">0</span> K
                     </div>
-                    <button class="game-close-btn" style="color:var(--info); border-color:var(--info);" onclick="buyHint()">Tips</button>
+                    <div class="icon-controls">
+                        <button class="action-btn primary icon-btn" onclick="toggleSound()" title="Toggle Sound">
+                            <svg class="sound-icon-on" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                            <svg class="sound-icon-off" style="display:none;" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                        </button>
+                        <button class="action-btn primary icon-btn" onclick="toggleFullScreen()" title="Toggle Fullscreen">
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                        </button>
+                    </div>
+                    <button class="game-close-btn tips-btn" onclick="document.getElementById('hintModal').classList.add('active')">Tips</button>
                     <button class="game-close-btn" onclick="openStore('screen-play')">Store</button>
                     <button class="game-close-btn" onclick="openSettings('screen-play')">Settings</button>
                     <button class="game-close-btn" style="color:var(--danger); border-color:var(--danger);" onclick="abandonKitchen()">Abandon</button>
@@ -667,11 +668,14 @@
                             <h4>Target Masterpiece</h4>
                             <p id="targetDishName">Fried Onion</p>
                         </div>
+                        <div style="text-align: right;">
+                            <h4>Time Remaining</h4>
+                            <p id="levelTimerDisplay" style="color: var(--primary); font-size: 1.8rem; font-family: var(--font-geo); font-weight: 800; letter-spacing: 1px; margin: 0; transition: color 0.3s;">00:00</p>
+                        </div>
                     </div>
                     
                     <div class="board-wrapper">
                         <div class="staging-area" id="stagingArea">
-                            
                         </div>
                         
                         <div class="game-actions">
@@ -689,44 +693,50 @@
                 <div class="inventory-panel" id="inventoryPanel">
                     <div class="pantry-header">
                         <input type="text" id="pantrySearch" class="pantry-search" placeholder="Search globally..." onkeyup="renderPantry()">
-                        
-                        <div class="pantry-categories-wrapper">
-                            <div class="pantry-scroll-mask">
-                                <div class="pantry-categories" id="pantryCategories">
-                                    <button class="cat-btn active" onclick="setCategory('all')">All</button>
-                                    <button class="cat-btn" onclick="setCategory('tools')">Tools</button>
-                                    <button class="cat-btn" onclick="setCategory('pantry')">Pantry</button>
-                                    <button class="cat-btn" onclick="setCategory('raw_veg')">Veggies</button>
-                                    <button class="cat-btn" onclick="setCategory('raw_meat')">Meats</button>
-                                    <button class="cat-btn" onclick="setCategory('fruits')">Fruits</button>
-                                    <button class="cat-btn" onclick="setCategory('nuts')">Nuts</button>
-                                </div>
-                            </div>
-                            <div class="pantry-fixed-prep">
-                                <button class="cat-btn prepped-btn" onclick="setCategory('prepped')">Prepped ⭐</button>
+                    </div>
+                    
+                    <div class="inventory-body">
+                        <div class="pantry-sidebar">
+                            <div class="pantry-categories" id="pantryCategories">
+                                <button class="cat-btn active" onclick="setCategory('all')">All</button>
+                                <button class="cat-btn" onclick="setCategory('tools')">Tools</button>
+                                <button class="cat-btn" onclick="setCategory('pantry')">Pantry</button>
+                                <button class="cat-btn" onclick="setCategory('raw_veg')">Veggies</button>
+                                <button class="cat-btn" onclick="setCategory('raw_meat')">Meats</button>
+                                <button class="cat-btn" onclick="setCategory('fruits')">Fruits</button>
+                                <button class="cat-btn" onclick="setCategory('nuts')">Nuts</button>
+                                <button id="preppedBtn" class="cat-btn prepped-btn" onclick="setCategory('prepped')">Prepped ⭐</button>
                             </div>
                         </div>
-                    </div>
 
-                    <div id="searchFeedback" style="display:none; padding: 1.5rem 2rem 0; color: var(--primary); font-family: var(--font-geo); font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px;"></div>
-
-                    <div class="inventory-grid" id="inventoryGrid"></div>
-
-                    <div id="resetSearchContainer" style="display:none; padding: 0 2rem 2rem; width: 100%;">
-                        <button class="action-btn clear" onclick="resetSearch()" style="width: 100%; border-radius: 30px;">Reset Search</button>
+                        <div class="inventory-main">
+                            <div id="searchFeedback" style="display:none; padding: 1.5rem 2rem 0; color: var(--primary); font-family: var(--font-geo); font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px;"></div>
+                            <div class="inventory-grid" id="inventoryGrid"></div>
+                            <div id="resetSearchContainer" style="display:none; padding: 0 2rem 2rem; width: 100%;">
+                                <button class="action-btn clear" onclick="resetSearch()" style="width: 100%; border-radius: 30px;">Reset Search</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        
         <div id="screen-store" class="game-screen">
             <div class="game-header">
                 <div class="header-actions">
-                    <h2>Bistro<span style="color:var(--primary);">X</span> Exchange</h2>
+                    <h2>BISTRO<span style="color:var(--primary);">X</span> Exchange</h2>
                     <div class="balance-badge">
                         <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v12M8 12h8"/></svg>
                         <span class="ui-balance-display">0</span> K
+                    </div>
+                    <div class="icon-controls">
+                        <button class="action-btn primary icon-btn" onclick="toggleSound()" title="Toggle Sound">
+                            <svg class="sound-icon-on" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                            <svg class="sound-icon-off" style="display:none;" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                        </button>
+                        <button class="action-btn primary icon-btn" onclick="toggleFullScreen()" title="Toggle Fullscreen">
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                        </button>
                     </div>
                 </div>
                 <button class="game-close-btn" onclick="closeStore()">Return</button>
@@ -736,47 +746,97 @@
                     <h2>The Exchange</h2>
                     <p class="lead">Exchange your hard-earned Kyats for premium aesthetic themes and functional kitchen perks.</p>
                     
-                    <h3 style="margin-top: 1rem;">Aesthetic Themes</h3>
-                    <div class="store-grid" id="storeThemesGrid"></div>
+                    <h3 style="margin-top: 1rem;">Classic Themes</h3>
+                    <div class="store-grid" id="storeThemesClassic"></div>
                     
-                    <h3 style="margin-top: 3rem;">Kitchen Perks</h3>
+                    <h3 style="margin-top: 3rem;">Premium Themes</h3>
+                    <div class="store-grid" id="storeThemesPremium"></div>
+                    
+                    <h3 style="margin-top: 3rem;">Deluxe Themes</h3>
+                    <div class="store-grid" id="storeThemesDeluxe"></div>
+                    
+                    <h3 style="margin-top: 4rem;">Kitchen Perks</h3>
                     <div class="store-grid" id="storePerksGrid" style="margin-bottom: 5rem;"></div>
                 </div>
             </div>
         </div>
 
-        
+        <div id="screen-badges" class="game-screen">
+            <div class="game-header">
+                <h2>Culinary Badges</h2>
+                <div class="header-actions">
+                    <div class="icon-controls">
+                        <button class="action-btn primary icon-btn" onclick="toggleSound()" title="Toggle Sound">
+                            <svg class="sound-icon-on" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                            <svg class="sound-icon-off" style="display:none;" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                        </button>
+                        <button class="action-btn primary icon-btn" onclick="toggleFullScreen()" title="Toggle Fullscreen">
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                        </button>
+                    </div>
+                    <button class="game-close-btn" onclick="switchScreen('screen-main')">Return</button>
+                </div>
+            </div>
+            <div class="doc-scroll">
+                <div class="doc-content" style="max-width: 1000px; margin: 0 auto; width: 100%;">
+                    <h2>Achievements</h2>
+                    <p class="lead">Complete timeline chapters to unlock and proudly display these professional culinary badges.</p>
+                    <div class="store-grid" id="badgesGrid" style="margin-bottom: 4rem;"></div>
+                </div>
+            </div>
+        </div>
+
         <div id="screen-leaderboard" class="game-screen">
             <div class="game-header">
                 <h2>Local Rankings</h2>
-                <button class="game-close-btn" onclick="switchScreen('screen-main')">Return</button>
+                <div class="header-actions">
+                    <div class="icon-controls">
+                        <button class="action-btn primary icon-btn" onclick="toggleSound()" title="Toggle Sound">
+                            <svg class="sound-icon-on" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                            <svg class="sound-icon-off" style="display:none;" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                        </button>
+                        <button class="action-btn primary icon-btn" onclick="toggleFullScreen()" title="Toggle Fullscreen">
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                        </button>
+                    </div>
+                    <button class="game-close-btn" onclick="switchScreen('screen-main')">Return</button>
+                </div>
             </div>
             <div class="lb-layout doc-scroll">
                 <div class="doc-content" style="max-width: 1000px; margin: 0 auto; width: 100%;">
                     
                     <div class="difficulty-tabs" style="margin-bottom: 2rem;">
-                        <button class="diff-tab active" id="lb-tab-overall" onclick="switchLBTab('overall')">Culinary Syndicate (Overall)</button>
-                        <button class="diff-tab" id="lb-tab-wealth" onclick="switchLBTab('wealth')">The Magnate (Wealth)</button>
-                        <button class="diff-tab" id="lb-tab-progression" onclick="switchLBTab('progression')">Executive Chef (Progression)</button>
-                        <button class="diff-tab" id="lb-tab-speed" onclick="switchLBTab('speed')">Rush Service (Speed)</button>
+                        <button class="diff-tab rank-easy active" id="lb-tab-overall" onclick="switchLBTab('overall')">Culinary Syndicate (Overall)</button>
+                        <button class="diff-tab rank-medium" id="lb-tab-wealth" onclick="switchLBTab('wealth')">The Magnate (Wealth)</button>
+                        <button class="diff-tab rank-hard" id="lb-tab-progression" onclick="switchLBTab('progression')">Executive Chef (Progression)</button>
+                        <button class="diff-tab rank-impossible" id="lb-tab-speed" onclick="switchLBTab('speed')">Rush Service (Speed)</button>
                     </div>
                     
                     <div class="lb-panel" id="lb-container">
-                        
                     </div>
                     
                 </div>
             </div>
         </div>
 
-        
         <div id="screen-settings" class="game-screen">
             <div class="game-header">
                 <h2>Settings</h2>
-                <button class="game-close-btn" onclick="closeSettings()">Apply</button>
+                <div class="header-actions">
+                    <div class="icon-controls">
+                        <button class="action-btn primary icon-btn" onclick="toggleSound()" title="Toggle Sound">
+                            <svg class="sound-icon-on" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                            <svg class="sound-icon-off" style="display:none;" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                        </button>
+                        <button class="action-btn primary icon-btn" onclick="toggleFullScreen()" title="Toggle Fullscreen">
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                        </button>
+                    </div>
+                    <button class="game-close-btn" onclick="closeSettings()">Apply</button>
+                </div>
             </div>
             <div class="doc-scroll">
-                <div class="doc-content">
+                <div class="doc-content" style="margin-bottom: 2rem;">
                     <h2>Configuration</h2>
                     <p class="lead">Adjust the engine's core behavior, layout scaling, and hardware utilization to best fit your device.</p>
                     
@@ -804,31 +864,27 @@
                         <input type="range" id="set-vol" min="0" max="100" value="80" oninput="updateVolume('sfx', this.value)">
                     </div>
                     <div class="setting-group">
-                        <label>Atmosphere & Music <span><span id="bgm-val">50</span>%</span></label>
+                        <label>Atmosphere Volume <span><span id="bgm-val">50</span>%</span></label>
                         <input type="range" id="set-bgm" min="0" max="100" value="50" oninput="updateVolume('bgm', this.value)">
                     </div>
-                    <div class="setting-group">
-                        <label>Theme Song Selection</label>
+                    <div class="setting-group" style="margin-bottom: 2rem;">
+                        <label>Atmosphere Track</label>
                         <div class="switch-control">
                             <button onclick="changeTrack(-1)">&#9664;</button>
-                            <span id="track-display">Default Lounge</span>
+                            <span id="track-display" style="font-size: 0.85rem;">Bossa Nova Default</span>
                             <button onclick="changeTrack(1)">&#9654;</button>
                         </div>
                     </div>
 
-                    <h3>Offline & Device Memory</h3>
+                    <h3>Offline Synchronization</h3>
                     <div class="setting-group">
-                        <label>Offline Download Package</label>
-                        <div class="switch-control" style="padding:0.6rem; gap:0.8rem; flex-wrap:wrap;">
-                            <span style="text-align:left; padding:0 0.35rem;">Prepare BistroX for offline access with a storage estimate and a confirmation flow.</span>
-                            <button onclick="openOfflineModal()" style="min-width:180px;">Download Offline</button>
-                        </div>
+                        <label>Cache Assets Locally</label>
+                        <button class="action-btn primary" onclick="openOfflineModal()" style="margin-top: 0.5rem; justify-content: center;">Authorize Offline Access</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        
         <div id="screen-terms" class="game-screen">
             <div class="game-header">
                 <h2>Terms</h2>
@@ -853,48 +909,105 @@
                     <h3>3. Licensing & Fair Use</h3>
                     <p>Access to the BistroX engine is provided free of charge for personal entertainment. The structural code, styling, and specific game logic matrix remain the intellectual property of the developer. Reproduction or commercial resale of the software framework is prohibited without consent.</p>
                     
-                    <div style="margin-top: 3rem; padding-top: 2rem; padding-bottom: 5rem; border-top: 1px solid var(--game-border);">
+                    <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--game-border);">
                         <button class="action-btn" onclick="window.location.href='terms-conditions.html'" style="display: inline-flex;">View Extensive Legal Documentation</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        
         <div id="screen-credits" class="game-screen">
             <div class="game-header">
-                <h2>Credits</h2>
+                <h2>Credit</h2>
                 <button class="game-close-btn" onclick="switchScreen('screen-main')">Return</button>
             </div>
             <div class="doc-scroll">
                 <div class="doc-content">
-                    <h2>Project Credits</h2>
-                    <p class="lead">BistroX is supported by a curated ecosystem of creative platforms and media libraries that contribute to its visual, audio, and presentation quality.</p>
-
-                    <h3>Lead Product Direction</h3>
-                    <h4>Htet Zaw Paing</h4>
-                    <p>Product architecture, gameplay systems, responsive interface direction, and overall BistroX experience design.</p>
-
-                    <h4>Edinburgh Napier University</h4>
-                    <p>Academic influence through advanced study in computer science, software engineering practice, and digital systems thinking.</p>
-
-                    <h3>Creative Asset & Media Attribution</h3>
-                    <p>The BistroX experience benefits from respected creative resource providers that support modern digital production workflows. Attribution is formally extended to the following platforms:</p>
+                    <h2>Intellectual Property & Acknowledgements</h2>
+                    <p class="lead">BistroX acknowledges the foundational contributions of global creative professionals and enterprise asset platforms. The synthesis of this culinary simulation is made possible through the following collaborative open-source and commercial resources.</p>
+                    
+                    <h3>Visual Framework & Vector Typology</h3>
+                    <p>High-fidelity iconography, structural templates, and photographic elements are integrated through strategic partnerships with industry-leading visual databases:</p>
                     <ul>
-                        <li><strong>Images, Icons, and Templates:</strong> <a href="https://www.flaticon.com" target="_blank" rel="noopener noreferrer">Flaticon</a>, <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a>, <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>, and <a href="https://www.freepik.com" target="_blank" rel="noopener noreferrer">Freepik</a>.</li>
-                        <li><strong>Audio Resources:</strong> <a href="https://pixabay.com/music/" target="_blank" rel="noopener noreferrer">Pixabay</a> and <a href="https://freesound.org" target="_blank" rel="noopener noreferrer">Freesound</a>.</li>
-                        <li><strong>Video Resources:</strong> <a href="https://www.pexels.com/videos/" target="_blank" rel="noopener noreferrer">Pexels Video</a> and <a href="https://pixabay.com/videos/" target="_blank" rel="noopener noreferrer">Pixabay Video</a>.</li>
+                        <li><a href="https://www.flaticon.com" target="_blank" style="color:var(--primary); text-decoration:none; font-weight:600;">Flaticon Ecosystem</a>: Vector iconography and foundational shapes.</li>
+                        <li><a href="https://www.pexels.com" target="_blank" style="color:var(--primary); text-decoration:none; font-weight:600;">Pexels Visuals</a> & <a href="https://unsplash.com" target="_blank" style="color:var(--primary); text-decoration:none; font-weight:600;">Unsplash Photography</a>: Environmental photography and cinematic backdrops.</li>
+                        <li><a href="https://www.freepik.com" target="_blank" style="color:var(--primary); text-decoration:none; font-weight:600;">Freepik Assets</a>: Supplementary graphic templates and vectors.</li>
                     </ul>
 
-                    <h3>Collaboration Standard</h3>
-                    <p>BistroX is shaped with a collaborative, enterprise-minded respect for open creative ecosystems, responsible attribution, and professional digital craftsmanship across every release touchpoint.</p></div>
+                    <h3>Acoustic Environment & Audio Engineering</h3>
+                    <p>The immersive soundscapes, interactive auditory feedback, and dynamic background orchestrations are licensed and sourced from paramount audio engineering platforms:</p>
+                    <ul>
+                        <li><a href="https://pixabay.com" target="_blank" style="color:var(--primary); text-decoration:none; font-weight:600;">Pixabay Audio Services</a>: High-definition musical tracks.</li>
+                        <li><a href="https://freesound.org" target="_blank" style="color:var(--primary); text-decoration:none; font-weight:600;">Freesound Acoustic Library</a>: Interactive sound effects and UI feedback.</li>
+                    </ul>
+
+                    <h3>Cinematic Motion Assets</h3>
+                    <p>High-resolution temporal media and environmental video backdrops are procured via enterprise-grade cinematic repositories:</p>
+                    <ul>
+                        <li><a href="https://www.pexels.com" target="_blank" style="color:var(--primary); text-decoration:none; font-weight:600;">Pexels Motion</a></li>
+                        <li><a href="https://pixabay.com" target="_blank" style="color:var(--primary); text-decoration:none; font-weight:600;">Pixabay Cinematic</a></li>
+                    </ul>
+
+                    <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--game-border);">
+                        <h3>Lead Architecture & Engineering</h3>
+                        <h4>Htet Zaw Paing</h4>
+                        <p>Serving as the sole architect, developer, and UI/UX designer. The core philosophy was to build a highly responsive, cinematic game interface entirely natively.</p>
+                    </div>
+                </div>
             </div>
         </div>
 
     </main>
 
-    
     <script>
+        // Setup Dynamic Backgrounds for Main Menu
+        const menuBgs = [
+            '../imgs/web-banners/kitchen1.png',
+            '../imgs/web-banners/kitchen2.jpg',
+            '../imgs/web-banners/kitchen3.jpg'
+        ];
+        
+        // Preload images for smooth transition
+        menuBgs.forEach(src => {
+            const img = new Image();
+            img.src = src;
+        });
+
+        let currentBgIndex = 0;
+        let isBg1Active = true;
+        
+        // Initialize first background immediately
+        const bg1 = document.getElementById('mainMenuBg1');
+        const bg2 = document.getElementById('mainMenuBg2');
+
+        setInterval(() => {
+            currentBgIndex = (currentBgIndex + 1) % menuBgs.length;
+            
+            if(bg1 && bg2) {
+                if (isBg1Active) {
+                    bg2.style.backgroundImage = `url('${menuBgs[currentBgIndex]}')`;
+                    bg2.style.opacity = 1;
+                    bg1.style.opacity = 0;
+                } else {
+                    bg1.style.backgroundImage = `url('${menuBgs[currentBgIndex]}')`;
+                    bg1.style.opacity = 1;
+                    bg2.style.opacity = 0;
+                }
+                isBg1Active = !isBg1Active;
+            }
+        }, 10000);
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    notify(`Error attempting to enable full-screen mode: ${err.message}`, 'error');
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
 
         function notify(message, type = 'info') {
             const container = document.getElementById('toastContainer');
@@ -923,42 +1036,36 @@
         let targetLevelId = null;
         let currentLevelStartTime = 0;
         let userFastestTime = Infinity;
-        let tipsUnlocked = false;
-        let selectedTrack = 0;
-        let offlineEstimateBytes = 0;
+        let userLevelStars = {};
 
-        
+        let levelTimerInterval = null;
+        let remainingSeconds = 0;
+
         let userBalance = 0;
         let unlockedThemes = ['classic'];
         let unlockedPerks = [];
         let activeTheme = 'classic';
         let returnScreenFromStore = 'screen-main';
 
+        let appConfig = {
+            gfxIndex: 0,
+            fontIndex: 1,
+            sfxVol: 80,
+            bgmVol: 50,
+            bgmTrack: 0,
+            unlockedHints: {}
+        };
+
         const themes = [
-            {
-                id: 'classic', name: 'Bistro Classic', desc: 'The default light bread and charcoal aesthetic.', price: 0, type: 'theme',
-                colors: { 'game-bg': '#FDFBF7', 'game-panel': '#FFFFFF', 'game-border': '#E8E3D9', 'primary': '#C5A059', 'secondary': '#1A1A1A', 'game-text': '#2C2C2C', 'game-text-muted': '#737373' }
-            },
-            {
-                id: 'budget', name: 'Starter Budget', desc: 'A cheap, simple aesthetic designed for beginners.', price: 1000, type: 'theme',
-                colors: { 'game-bg': '#E8E8E8', 'game-panel': '#F5F5F5', 'game-border': '#CCCCCC', 'primary': '#666666', 'secondary': '#333333', 'game-text': '#444444', 'game-text-muted': '#888888' }
-            },
-            {
-                id: 'dark', name: 'Midnight Service', desc: 'A sleek, low-light kitchen designed for night owls.', price: 1100, type: 'theme',
-                colors: { 'game-bg': '#121212', 'game-panel': '#1E1E1E', 'game-border': '#333333', 'primary': '#D4B271', 'secondary': '#FFFFFF', 'game-text': '#E5E5E5', 'game-text-muted': '#888888' }
-            },
-            {
-                id: 'sakura', name: 'Sakura Bakery', desc: 'Bright pinks and soft whites for a sweet environment.', price: 1200, type: 'theme',
-                colors: { 'game-bg': '#FFF0F5', 'game-panel': '#FFFFFF', 'game-border': '#FFD1DC', 'primary': '#FF69B4', 'secondary': '#4A0E2E', 'game-text': '#4A0E2E', 'game-text-muted': '#9C6B83' }
-            },
-            {
-                id: 'cyberpunk', name: 'Terminal Hacker', desc: 'High contrast futuristic terminal prep station.', price: 1300, type: 'theme',
-                colors: { 'game-bg': '#0D0E15', 'game-panel': '#151828', 'game-border': '#00FFCC', 'primary': '#00FFCC', 'secondary': '#FFFFFF', 'game-text': '#E0E0E0', 'game-text-muted': '#00AA88' }
-            },
-            {
-                id: 'royal', name: 'Royal Obsidian', desc: 'The absolute premium aesthetic with gold accents.', price: 1400, type: 'theme',
-                colors: { 'game-bg': '#0A0A0A', 'game-panel': '#141414', 'game-border': '#4A3B18', 'primary': '#D4AF37', 'secondary': '#FFFFFF', 'game-text': '#F0F0F0', 'game-text-muted': '#A0A0A0' }
-            }
+            { id: 'classic', name: 'Bistro Classic', desc: 'The default light bread and charcoal aesthetic.', price: 0, type: 'theme', tier: 'Classic', colors: { 'game-bg': '#FDFBF7', 'game-panel': '#FFFFFF', 'game-border': '#E8E3D9', 'primary': '#C5A059', 'secondary': '#1A1A1A', 'game-text': '#2C2C2C', 'game-text-muted': '#737373' } },
+            { id: 'budget', name: 'Starter Budget', desc: 'A cheap, simple aesthetic designed for beginners.', price: 200000, type: 'theme', tier: 'Classic', colors: { 'game-bg': '#E8E8E8', 'game-panel': '#F5F5F5', 'game-border': '#CCCCCC', 'primary': '#666666', 'secondary': '#333333', 'game-text': '#444444', 'game-text-muted': '#888888' } },
+            { id: 'dark', name: 'Midnight Service', desc: 'A sleek, low-light kitchen designed for night owls.', price: 25000, type: 'theme', tier: 'Classic', colors: { 'game-bg': '#121212', 'game-panel': '#1E1E1E', 'game-border': '#333333', 'primary': '#D4B271', 'secondary': '#FFFFFF', 'game-text': '#E5E5E5', 'game-text-muted': '#888888' } },
+            { id: 'ocean', name: 'Ocean Blue', desc: 'Calm and refreshing aquatic kitchen vibes.', price: 45000, type: 'theme', tier: 'Premium', colors: { 'game-bg': '#F0F8FF', 'game-panel': '#FFFFFF', 'game-border': '#B0E0E6', 'primary': '#008080', 'secondary': '#003366', 'game-text': '#004080', 'game-text-muted': '#6699CC' } },
+            { id: 'cyberpunk', name: 'Terminal Hacker', desc: 'High contrast futuristic neon prep station.', price: 35000, type: 'theme', tier: 'Premium', colors: { 'game-bg': '#0D0E15', 'game-panel': '#151828', 'game-border': '#00FFCC', 'primary': '#FF007F', 'secondary': '#00FFCC', 'game-text': '#E0E0E0', 'game-text-muted': '#00AA88' } },
+            { id: 'navy', name: 'Admiral Navy', desc: 'Sophisticated deep blue with prestigious gold accents.', price: 45000, type: 'theme', tier: 'Premium', colors: { 'game-bg': '#0A1128', 'game-panel': '#121C3A', 'game-border': '#D4AF37', 'primary': '#D4AF37', 'secondary': '#FFFFFF', 'game-text': '#F0F0F0', 'game-text-muted': '#8B9DC3' } },
+            { id: 'sakura', name: 'Sakura Bakery', desc: 'Bright pinks and soft whites for a sweet environment.', price: 150000, type: 'theme', tier: 'Deluxe', colors: { 'game-bg': '#FFF0F5', 'game-panel': '#FFFFFF', 'game-border': '#FFB7C5', 'primary': '#FF69B4', 'secondary': '#2D0A16', 'game-text': '#4A0E2E', 'game-text-muted': '#9C6B83' } },
+            { id: 'chocolate', name: 'Rich Chocolate', desc: 'Warm cocoa tones for a sweet, cozy kitchen.', price: 150000, type: 'theme', tier: 'Deluxe', colors: { 'game-bg': '#FDF8F5', 'game-panel': '#FFFFFF', 'game-border': '#E8DCC8', 'primary': '#8B5A2B', 'secondary': '#3E2723', 'game-text': '#4E342E', 'game-text-muted': '#8D6E63' } },
+            { id: 'royal', name: 'Royal Obsidian', desc: 'The absolute premium aesthetic with dark gold elements.', price: 100000, type: 'theme', tier: 'Deluxe', colors: { 'game-bg': '#0A0A0A', 'game-panel': '#141414', 'game-border': '#4A3B18', 'primary': '#D4AF37', 'secondary': '#FFFFFF', 'game-text': '#F0F0F0', 'game-text-muted': '#A0A0A0' } }
         ];
 
         const perks = [
@@ -967,90 +1074,71 @@
             { id: 'auto_chef', name: 'Sous-Chef Automaton', desc: 'An automated assistant to process raw ingredients directly from inventory. (Coming Soon)', price: 1000000, type: 'perk' }
         ];
 
-        
-        let masterSFXVolume = 0.8;
-        let bgmStarted = false;
-        let bgmVolume = 0.5;
-
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        function playClick() {
-            if(masterSFXVolume <= 0) return;
-            if(audioCtx.state === 'suspended') audioCtx.resume();
-            const oscillator = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            oscillator.type = 'sine';
-            oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.05);
-            gainNode.gain.setValueAtTime(masterSFXVolume * 0.3, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
-            oscillator.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            oscillator.start();
-            oscillator.stop(audioCtx.currentTime + 0.05);
-        }
-
-        
-        const soundtrackPresets = [
-            { name: 'Default Lounge', notes: [261.63, 329.63, 392.0, 523.25], wave: 'sine', tempo: 0.48, gain: 0.12 },
-            { name: 'Midnight Service', notes: [196.0, 246.94, 293.66, 369.99], wave: 'triangle', tempo: 0.56, gain: 0.14 },
-            { name: 'Neon Prep Rush', notes: [329.63, 392.0, 493.88, 659.25], wave: 'square', tempo: 0.32, gain: 0.08 },
-            { name: 'Golden Hour Dining', notes: [220.0, 277.18, 329.63, 440.0], wave: 'sine', tempo: 0.62, gain: 0.13 },
-            { name: 'Sakura Counter', notes: [293.66, 349.23, 440.0, 587.33], wave: 'triangle', tempo: 0.42, gain: 0.11 },
-            { name: 'Executive Calm', notes: [174.61, 220.0, 261.63, 349.23], wave: 'sine', tempo: 0.74, gain: 0.1 }
+        const badges = [
+            { id: 'rookie_chef', name: 'Rookie Chef', reqLevel: 2, img: '../imgs/badge/rookie.png', desc: 'Successfully completed your very first recipe.' },
+            { id: 'commis_chef', name: 'Commis Chef', reqLevel: 11, img: '../imgs/badge/bronze.png', desc: 'Successfully mastered the fundamentals.' },
+            { id: 'chef_de_partie', name: 'Chef de Partie', reqLevel: 21, img: '../imgs/badge/silver.png', desc: 'Demonstrated exceptional station skills.' },
+            { id: 'sous_chef', name: 'Sous Chef', reqLevel: 31, img: '../imgs/badge/gold.png', desc: 'Executed advanced cooking maneuvers.' },
+            { id: 'head_chef', name: 'Head Chef', reqLevel: 41, img: '../imgs/badge/platinum.png', desc: 'Mastered complex plating and recipes.' },
+            { id: 'exec_chef', name: 'Executive Chef', reqLevel: 51, img: '../imgs/badge/diamond.png', desc: 'Reached the zenith of culinary arts.' }
         ];
 
-        let bgmScheduler = null;
-        let bgmNoteIndex = 0;
+        const bgmTracks = [
+            { name: 'Velvet Morning', url: '../mp3/chill.mp3' },
+            { name: 'Lavender Drift', url: '../mp3/genshin.mp3' },
+            { name: 'Golden Hour Waltz', url: '../mp3/pool.mp3' },
+            { name: 'Carefree', url: '../mp3/care.mp3' },
+            { name: 'Jazz Noir', url: '../mp3/jazz.mp3' },
+            { name: 'Sonic Impact', url: '../mp3/sea.mp3' },
+            { name: 'Adrenaline Loop', url: '../mp3/roi.mp3' },
+            { name: 'Sugar Rush', url: '../mp3/flux.mp3' }
+        ];
 
-        function ensureAudioContext() {
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume().catch(() => {});
+        let masterSFXVolume = 0.8;
+        let bgmStarted = false;
+
+        const uiClickSound = new Audio('../mp3/click.mp3');
+
+        let isMuted = false;
+        function toggleSound() {
+            isMuted = !isMuted;
+            document.querySelectorAll('.sound-icon-on').forEach(el => el.style.display = isMuted ? 'none' : 'block');
+            document.querySelectorAll('.sound-icon-off').forEach(el => el.style.display = isMuted ? 'block' : 'none');
+            
+            if (isMuted) {
+                bgmAudio.muted = true;
+                for (let key in sfxAudio) sfxAudio[key].muted = true;
+                uiClickSound.muted = true;
+            } else {
+                bgmAudio.muted = false;
+                for (let key in sfxAudio) sfxAudio[key].muted = false;
+                uiClickSound.muted = false;
+                
+                if (!bgmStarted) {
+                    bgmAudio.play().catch(e => {});
+                    bgmStarted = true;
+                }
             }
         }
 
-        function stopTrackScheduler() {
-            if (bgmScheduler) {
-                clearInterval(bgmScheduler);
-                bgmScheduler = null;
-            }
+        function playClick() {
+            if(masterSFXVolume <= 0) return;
+            let snd = uiClickSound.cloneNode();
+            snd.volume = masterSFXVolume * 0.5;
+            snd.play().catch(e => {});
         }
 
-        function playSynthNote(freq, duration, wave, gainAmount) {
-            ensureAudioContext();
-            const oscillator = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            oscillator.type = wave;
-            oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            gainNode.gain.setValueAtTime(Math.max(0, gainAmount * bgmVolume), audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
-            oscillator.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            oscillator.start();
-            oscillator.stop(audioCtx.currentTime + duration);
-        }
-
-        function startBGM(forceRestart = false) {
-            if (!bgmStarted && !forceRestart) return;
-            stopTrackScheduler();
-            const track = soundtrackPresets[selectedTrack] || soundtrackPresets[0];
-            bgmNoteIndex = 0;
-            if (bgmVolume <= 0) return;
-            bgmStarted = true;
-            bgmScheduler = setInterval(() => {
-                if (bgmVolume <= 0) return;
-                const note = track.notes[bgmNoteIndex % track.notes.length];
-                const octaveShift = bgmNoteIndex % 8 === 7 ? 0.5 : 1;
-                playSynthNote(note * octaveShift, Math.max(0.18, track.tempo * 0.92), track.wave, track.gain);
-                bgmNoteIndex++;
-            }, track.tempo * 1000);
-        }
+        const bgmAudio = new Audio(bgmTracks[appConfig.bgmTrack].url);
+        bgmAudio.loop = true;
+        bgmAudio.volume = 0.5;
 
         const sfxURLs = {
-            slice: 'https://actions.google.com/sounds/v1/tools/cutting_vegetables.ogg',
-            cook: 'https://actions.google.com/sounds/v1/water/crackle_and_hiss.ogg',
-            boil: 'https://actions.google.com/sounds/v1/water/water_boiling.ogg',
-            mix: 'https://actions.google.com/sounds/v1/water/water_slosh.ogg',
-            success: 'https://actions.google.com/sounds/v1/cartoon/cartoon_success_fanfare.ogg'
+            slice: '../mp3/slice.mp3',
+            cook: '../mp3/cook.mp3',
+            boil: '../mp3/boil.mp3',
+            mix: '../mp3/mix.mp3',
+            magic: '../mp3/magic.mp3',
+            success: '../mp3/success.wav',
         };
         const sfxAudio = {};
         for (let key in sfxURLs) { sfxAudio[key] = new Audio(sfxURLs[key]); }
@@ -1058,52 +1146,81 @@
         function playActionSound(type) {
             if(masterSFXVolume <= 0) return;
             if(sfxAudio[type]) {
-                let snd = sfxAudio[type].cloneNode();
+                let snd = sfxAudio[type].cloneNode(); 
                 snd.volume = masterSFXVolume;
-                snd.play().catch(() => {});
+                snd.play().catch(e => {});
             }
         }
 
         document.addEventListener('click', (e) => {
             if(e.target.type !== 'range') playClick();
-            if(!bgmStarted) {
+            if(!bgmStarted && !isMuted) {
+                bgmAudio.play().catch(e => {});
                 bgmStarted = true;
-                startBGM(true);
             }
         });
 
-        function changeTrack(dir) {
-            selectedTrack += dir;
-            if (selectedTrack < 0) selectedTrack = soundtrackPresets.length - 1;
-            if (selectedTrack >= soundtrackPresets.length) selectedTrack = 0;
-            updateTrackUI();
-            startBGM(true);
-            saveUserData();
-            notify(`SYSTEM: Soundtrack switched to ${soundtrackPresets[selectedTrack].name}.`, 'info');
-        }
-
-        function updateTrackUI() {
-            const node = document.getElementById('track-display');
-            if (node) node.textContent = soundtrackPresets[selectedTrack].name;
-        }
-
         function updateVolume(type, val) {
-            const value = parseInt(val, 10) || 0;
             if (type === 'bgm') {
-                document.getElementById('bgm-val').textContent = value;
-                bgmVolume = value / 100;
-                if (bgmVolume <= 0) {
-                    stopTrackScheduler();
-                } else if (bgmStarted) {
-                    startBGM(true);
-                }
+                document.getElementById('bgm-val').textContent = val;
+                appConfig.bgmVol = parseInt(val);
+                bgmAudio.volume = appConfig.bgmVol / 100;
             } else if (type === 'sfx') {
-                document.getElementById('vol-val').textContent = value;
-                masterSFXVolume = value / 100;
+                document.getElementById('vol-val').textContent = val;
+                appConfig.sfxVol = parseInt(val);
+                masterSFXVolume = appConfig.sfxVol / 100;
             }
-            saveUserData();
         }
-        
+
+        function changeTrack(dir) {
+            appConfig.bgmTrack += dir;
+            if(appConfig.bgmTrack < 0) appConfig.bgmTrack = bgmTracks.length - 1;
+            if(appConfig.bgmTrack >= bgmTracks.length) appConfig.bgmTrack = 0;
+            document.getElementById('track-display').textContent = bgmTracks[appConfig.bgmTrack].name;
+            bgmAudio.src = bgmTracks[appConfig.bgmTrack].url;
+            if(bgmStarted && !isMuted) bgmAudio.play().catch(e => {});
+        }
+
+        function openOfflineModal() {
+            document.getElementById('offlineModal').classList.add('active');
+        }
+
+        async function confirmOffline() {
+            const btn = document.getElementById('offlineBtnStart');
+            const estimateText = document.getElementById('offlineSizeEstimate');
+            btn.disabled = true;
+            btn.textContent = 'Caching Assets...';
+            estimateText.textContent = 'Downloading and syncing data...';
+            
+            try {
+                const cache = await caches.open('bistrox-offline-v1');
+                let urls = Object.values(db.items).map(i => i.img);
+                urls.push('../imgs/web-banners/logo.png');
+                badges.forEach(b => urls.push(b.img));
+                
+                let totalBytes = 0;
+                for(let url of urls) {
+                    try {
+                        let res = await fetch(url);
+                        if(res.ok) {
+                            let blob = await res.clone().blob();
+                            totalBytes += blob.size;
+                            await cache.put(url, res);
+                        }
+                    } catch(e) {}
+                }
+                let mb = (totalBytes / (1024*1024)).toFixed(2);
+                estimateText.textContent = `Synchronization Complete! Synced: ${mb} MB`;
+                notify("SYSTEM: All assets cached successfully. Ready for offline operation.", "success");
+                btn.textContent = 'Cache Complete';
+            } catch(e) {
+                notify("SYSTEM ERROR: Offline caching sequence failed.", "error");
+                btn.textContent = 'Retry Cache';
+                estimateText.textContent = 'Error occurred during caching.';
+                btn.disabled = false;
+            }
+        }
+
         window.addEventListener('load', () => {
             const loader = document.getElementById('globalLoader');
             if (loader) loader.classList.add('hidden');
@@ -1111,13 +1228,16 @@
             
             loadUserData();
             generateLevels();
+            renderBadges();
             applySettings(); 
-            initResizer();   
+            initResizer();
+            if(!isMuted) {
+                bgmAudio.play().then(() => { bgmStarted = true; }).catch(() => {});
+            }
         });
 
         window.addEventListener('pageshow', (e) => { if (e.persisted) document.getElementById('globalLoader')?.classList.add('hidden'); });
 
-        
         function initResizer() {
             let isDragging = false;
             const resizer = document.getElementById('panelResizer');
@@ -1133,8 +1253,8 @@
             document.addEventListener('mousemove', (e) => {
                 if (!isDragging) return;
                 let newWidth = window.innerWidth - e.clientX;
-                if (newWidth < 300) newWidth = 300;
-                if (newWidth > 700) newWidth = 700;
+                if (newWidth < 350) newWidth = 350;
+                if (newWidth > 800) newWidth = 800;
                 inventoryPanel.style.width = newWidth + 'px';
             });
 
@@ -1144,104 +1264,80 @@
                     document.body.style.cursor = '';
                     inventoryPanel.classList.remove('dragging');
                     resizer.classList.remove('dragging');
-                    saveUserData();
                 }
             });
         }
 
-        
-        
-        function getUserPrefix() {
-            return currentUser ? 'bx_' + currentUser : 'bx_guest';
-        }
-
-        function getProfileState() {
-            const prefix = getUserPrefix();
-            return {
-                progress: parseInt(localStorage.getItem(prefix + '_progress')) || 1,
-                balance: parseInt(localStorage.getItem(prefix + '_balance')) || 0,
-                fastestTime: parseFloat(localStorage.getItem(prefix + '_fastest_time')) || Infinity,
-                themes: JSON.parse(localStorage.getItem(prefix + '_themes') || '["classic"]'),
-                perks: JSON.parse(localStorage.getItem(prefix + '_perks') || '[]'),
-                activeTheme: localStorage.getItem(prefix + '_activeTheme') || 'classic',
-                tipsUnlocked: localStorage.getItem(prefix + '_tipsUnlocked') === 'true',
-                selectedTrack: parseInt(localStorage.getItem(prefix + '_selectedTrack')) || 0,
-                bgmVolume: parseFloat(localStorage.getItem(prefix + '_bgmVolume')),
-                sfxVolume: parseFloat(localStorage.getItem(prefix + '_sfxVolume')),
-                gfxIndex: parseInt(localStorage.getItem(prefix + '_gfxIndex')),
-                fontIndex: parseInt(localStorage.getItem(prefix + '_fontIndex')),
-                panelWidth: parseInt(localStorage.getItem(prefix + '_panelWidth')) || 450
-            };
-        }
-
         function loadUserData() {
             currentUser = localStorage.getItem('bx_currentUser');
-            const state = getProfileState();
+            const prefix = currentUser ? 'bx_' + currentUser : 'bx_guest';
+            
+            maxUnlockedLevel = parseInt(localStorage.getItem(prefix + '_progress')) || 1;
+            userBalance = parseInt(localStorage.getItem(prefix + '_balance')) || 0;
+            userFastestTime = parseFloat(localStorage.getItem(prefix + '_fastest_time')) || Infinity;
+            
+            const savedStars = localStorage.getItem(prefix + '_levelStars');
+            userLevelStars = savedStars ? JSON.parse(savedStars) : {};
 
-            maxUnlockedLevel = state.progress;
-            userBalance = state.balance;
-            userFastestTime = state.fastestTime;
-            unlockedThemes = Array.isArray(state.themes) && state.themes.length ? state.themes : ['classic'];
-            unlockedPerks = Array.isArray(state.perks) ? state.perks : [];
-            activeTheme = state.activeTheme;
-            tipsUnlocked = state.tipsUnlocked;
-            selectedTrack = Number.isFinite(state.selectedTrack) ? Math.min(Math.max(state.selectedTrack, 0), soundtrackPresets.length - 1) : 0;
+            const savedThemes = localStorage.getItem(prefix + '_themes');
+            unlockedThemes = savedThemes ? JSON.parse(savedThemes) : ['classic'];
+            
+            const savedPerks = localStorage.getItem(prefix + '_perks');
+            unlockedPerks = savedPerks ? JSON.parse(savedPerks) : [];
 
-            if (Number.isFinite(state.gfxIndex) && sysSettings.gfx.options[state.gfxIndex]) sysSettings.gfx.index = state.gfxIndex;
-            if (Number.isFinite(state.fontIndex) && sysSettings.font.options[state.fontIndex]) sysSettings.font.index = state.fontIndex;
-            if (Number.isFinite(state.bgmVolume)) bgmVolume = Math.min(Math.max(state.bgmVolume, 0), 1);
-            if (Number.isFinite(state.sfxVolume)) masterSFXVolume = Math.min(Math.max(state.sfxVolume, 0), 1);
+            activeTheme = localStorage.getItem(prefix + '_activeTheme') || 'classic';
 
-            applyTheme(activeTheme, false);
-            updateBalanceUI();
-            updateToolColors();
-            updateTrackUI();
-
-            const bgmSlider = document.getElementById('set-bgm');
-            const sfxSlider = document.getElementById('set-vol');
-            if (bgmSlider) bgmSlider.value = Math.round(bgmVolume * 100);
-            if (sfxSlider) sfxSlider.value = Math.round(masterSFXVolume * 100);
-            document.getElementById('bgm-val').textContent = Math.round(bgmVolume * 100);
-            document.getElementById('vol-val').textContent = Math.round(masterSFXVolume * 100);
-
-            const inventoryPanel = document.getElementById('inventoryPanel');
-            if (inventoryPanel && window.innerWidth > 1024) {
-                inventoryPanel.style.width = `${Math.min(Math.max(state.panelWidth, 300), 700)}px`;
+            const savedConfig = localStorage.getItem(prefix + '_config');
+            if (savedConfig) {
+                appConfig = { ...appConfig, ...JSON.parse(savedConfig) };
             }
+            if (!appConfig.unlockedHints) appConfig.unlockedHints = {};
 
             if (!currentUser) {
-                setTimeout(() => notify('SYSTEM: Guest profile loaded. Local memory is active for this device.', 'info'), 1200);
+                setTimeout(() => notify("SYSTEM: Guest profile loaded. Log in via Home to persist data & purchases.", 'info'), 1500);
             } else {
-                setTimeout(() => notify(`SYSTEM: Welcome back, Chef ${currentUser}. Your BistroX workspace has been restored.`, 'success'), 900);
+                setTimeout(() => notify(`SYSTEM: Welcome back to the kitchen, Chef ${currentUser}.`, 'success'), 1000);
             }
+
+            sysSettings.gfx.index = appConfig.gfxIndex;
+            sysSettings.font.index = appConfig.fontIndex;
+            document.getElementById('gfx-display').textContent = sysSettings.gfx.options[appConfig.gfxIndex].label;
+            document.getElementById('font-display').textContent = sysSettings.font.options[appConfig.fontIndex].label;
+            
+            document.getElementById('set-vol').value = appConfig.sfxVol;
+            document.getElementById('vol-val').textContent = appConfig.sfxVol;
+            masterSFXVolume = appConfig.sfxVol / 100;
+            
+            document.getElementById('set-bgm').value = appConfig.bgmVol;
+            document.getElementById('bgm-val').textContent = appConfig.bgmVol;
+            bgmAudio.volume = appConfig.bgmVol / 100;
+            
+            document.getElementById('track-display').textContent = bgmTracks[appConfig.bgmTrack].name;
+            bgmAudio.src = bgmTracks[appConfig.bgmTrack].url;
+            
+            applyTheme(activeTheme, false);
+            updateBalanceUI();
+            updateHintUI();
         }
 
         function saveUserData() {
-            const prefix = getUserPrefix();
+            const prefix = currentUser ? 'bx_' + currentUser : 'bx_guest';
             localStorage.setItem(prefix + '_progress', maxUnlockedLevel);
             localStorage.setItem(prefix + '_balance', userBalance);
             localStorage.setItem(prefix + '_fastest_time', userFastestTime);
+            localStorage.setItem(prefix + '_levelStars', JSON.stringify(userLevelStars));
             localStorage.setItem(prefix + '_themes', JSON.stringify(unlockedThemes));
             localStorage.setItem(prefix + '_perks', JSON.stringify(unlockedPerks));
             localStorage.setItem(prefix + '_activeTheme', activeTheme);
-            localStorage.setItem(prefix + '_tipsUnlocked', tipsUnlocked ? 'true' : 'false');
-            localStorage.setItem(prefix + '_selectedTrack', String(selectedTrack));
-            localStorage.setItem(prefix + '_bgmVolume', String(bgmVolume));
-            localStorage.setItem(prefix + '_sfxVolume', String(masterSFXVolume));
-            localStorage.setItem(prefix + '_gfxIndex', String(sysSettings.gfx.index));
-            localStorage.setItem(prefix + '_fontIndex', String(sysSettings.font.index));
-            const inventoryPanel = document.getElementById('inventoryPanel');
-            if (inventoryPanel && inventoryPanel.style.width) {
-                localStorage.setItem(prefix + '_panelWidth', parseInt(inventoryPanel.style.width, 10) || 450);
-            }
+            localStorage.setItem(prefix + '_config', JSON.stringify(appConfig));
         }
+
         function updateBalanceUI() {
             document.querySelectorAll('.ui-balance-display').forEach(el => {
                 el.textContent = userBalance.toLocaleString();
             });
         }
 
-        
         let lbCurrentTab = 'overall';
 
         function openLeaderboard() {
@@ -1320,16 +1416,35 @@
             container.innerHTML = html;
         }
 
-        
         let returnScreenFromSettings = 'screen-main';
+        let actionTimeout = null;
+        let isActionAnimating = false;
+
+        function clearCurrentAction() {
+            if (actionTimeout) clearTimeout(actionTimeout);
+            isActionAnimating = false;
+            document.querySelectorAll('.game-actions .action-btn').forEach(b => { 
+                b.style.opacity = '1'; 
+                b.disabled = false; 
+            });
+            let stagingEl = document.getElementById('stagingArea');
+            if (stagingEl) stagingEl.style.pointerEvents = 'auto';
+            let progC = document.getElementById('actionProgressBarContainer');
+            if (progC) progC.remove();
+            let progL = document.getElementById('actionProgressLabel');
+            if (progL) progL.remove();
+        }
 
         function switchScreen(screenId) {
             document.querySelectorAll('.game-screen').forEach(s => s.classList.remove('active'));
             document.getElementById(screenId).classList.add('active');
+            if(screenId === 'screen-badges') renderBadges();
         }
         function startGame() { switchScreen('screen-recipes'); }
 
         function abandonKitchen() {
+            clearInterval(levelTimerInterval);
+            clearCurrentAction();
             switchScreen('screen-recipes');
             notify("ACTION: Kitchen abandoned. All ingredients and progress reset.", 'error');
         }
@@ -1339,9 +1454,9 @@
             switchScreen('screen-settings');
         }
         function closeSettings() { 
-            saveUserData();
             switchScreen(returnScreenFromSettings); 
-            notify("SYSTEM: Configuration successfully applied and remembered.", 'success');
+            saveUserData();
+            notify("SYSTEM: Configuration successfully applied and stored.", 'success');
         }
 
         function openStore(returnTo) {
@@ -1350,6 +1465,18 @@
             switchScreen('screen-store');
         }
         function closeStore() { switchScreen(returnScreenFromStore || 'screen-main'); }
+
+        function switchDifficultyTab(tab) {
+            document.querySelectorAll('.difficulty-tabs').forEach(container => {
+                if(container.contains(event.target)) {
+                    container.querySelectorAll('.diff-tab').forEach(b => b.classList.remove('active'));
+                    event.target.classList.add('active');
+                }
+            });
+            document.querySelectorAll('.recipe-grid').forEach(g => g.classList.remove('active'));
+            let grid = document.getElementById('grid-' + tab);
+            if (grid) grid.classList.add('active');
+        }
 
         const sysSettings = {
             gfx: { options: [{val:'high', label:'High (Full Cinematic FX)'}, {val:'medium', label:'Medium (Balanced)'}, {val:'low', label:'Low (Performance)'}], index: 0 },
@@ -1362,93 +1489,23 @@
             if(s.index < 0) s.index = s.options.length - 1;
             if(s.index >= s.options.length) s.index = 0;
             document.getElementById(key + '-display').textContent = s.options[s.index].label;
+            
+            if(key === 'gfx') appConfig.gfxIndex = s.index;
+            if(key === 'font') appConfig.fontIndex = s.index;
+
             applySettings();
             notify(`SYSTEM: Display setting adjusted to ${s.options[s.index].label}.`, 'info');
         }
 
-        
         function applySettings() {
             const app = document.getElementById('gameApp');
             const htmlNode = document.documentElement;
-            const fontOption = sysSettings.font.options[sysSettings.font.index];
-            const gfxOption = sysSettings.gfx.options[sysSettings.gfx.index];
             htmlNode.classList.remove('font-size-small', 'font-size-medium', 'font-size-large');
-            htmlNode.classList.add(`font-size-${fontOption.val}`);
-            app.className = 'game-app';
-            app.classList.add(`gfx-${gfxOption.val}`);
-            document.getElementById('gfx-display').textContent = gfxOption.label;
-            document.getElementById('font-display').textContent = fontOption.label;
-            saveUserData();
+            htmlNode.classList.add(`font-size-${sysSettings.font.options[sysSettings.font.index].val}`);
+            app.className = 'game-app'; 
+            app.classList.add(`gfx-${sysSettings.gfx.options[sysSettings.gfx.index].val}`);
         }
 
-        function estimateOfflineStorage() {
-            const shellBytes = new Blob([document.documentElement.outerHTML]).size;
-            const runtimeAllowance = 2400000;
-            offlineEstimateBytes = shellBytes + runtimeAllowance;
-            return offlineEstimateBytes;
-        }
-
-        function formatBytes(bytes) {
-            if (bytes < 1024) return `${bytes} B`;
-            if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-            return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
-        }
-
-        function openOfflineModal() {
-            const estimate = estimateOfflineStorage();
-            document.getElementById('offlineEstimateText').textContent = `Estimated storage impact: approximately ${formatBytes(estimate)} for the BistroX offline package.`;
-            document.getElementById('offlineModal').classList.add('active');
-        }
-
-        function closeOfflineModal() {
-            document.getElementById('offlineModal').classList.remove('active');
-        }
-
-        async function confirmOfflineDownload() {
-            const htmlSnapshot = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-            let cached = false;
-
-            if ('serviceWorker' in navigator && window.isSecureContext) {
-                try {
-                    const swCode = `
-                        const CACHE_NAME = 'bistrox-offline-v1';
-                        self.addEventListener('install', event => {
-                            event.waitUntil(
-                                caches.open(CACHE_NAME).then(cache => cache.addAll([self.registration.scope]))
-                            );
-                            self.skipWaiting();
-                        });
-                        self.addEventListener('activate', event => {
-                            event.waitUntil(self.clients.claim());
-                        });
-                        self.addEventListener('fetch', event => {
-                            event.respondWith(
-                                caches.match(event.request).then(response => response || fetch(event.request).catch(() => caches.match(self.registration.scope)))
-                            );
-                        });
-                    `;
-                    const swBlobUrl = URL.createObjectURL(new Blob([swCode], { type: 'text/javascript' }));
-                    await navigator.serviceWorker.register(swBlobUrl, { scope: './' });
-                    cached = true;
-                } catch (error) {
-                    cached = false;
-                }
-            }
-
-            const blob = new Blob([htmlSnapshot], { type: 'text/html' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'bistrox-offline.html';
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
-
-            closeOfflineModal();
-            notify(cached ? 'SYSTEM: Offline package prepared and backup file downloaded.' : 'SYSTEM: Portable offline backup downloaded for this device.', 'success');
-        }
-
-        
-        
         function applyTheme(themeId, save = true) {
             const theme = themes.find(t => t.id === themeId) || themes[0];
             const root = document.documentElement;
@@ -1477,7 +1534,6 @@
                 playActionSound('success'); 
                 
                 if (type === 'theme') applyTheme(id);
-                if (type === 'perk' && id === 'golden_tools') updateToolColors();
 
                 saveUserData();
                 updateBalanceUI();
@@ -1488,31 +1544,52 @@
             }
         }
 
-        
-        function buyHint() {
-            const hintCost = 1599;
-            if (tipsUnlocked) {
-                document.getElementById('hintModal').classList.add('active');
-                notify('SYSTEM: Tips access already licensed for this profile.', 'success');
-                return;
+        function updateHintUI() {
+            if(!targetLevelId) return;
+            let h4 = document.getElementById('hintContent4Star');
+            let h5 = document.getElementById('hintContent5Star');
+            
+            let hintsForLevel = appConfig.unlockedHints[targetLevelId] || {4: false, 5: false};
+
+            if (hintsForLevel[4]) {
+                h4.innerHTML = `<ul class="hint-list" style="margin:0; padding:0; background:transparent; border:none;"><li>Enhance the base recipe with <strong>Sea Salt</strong>, or use <strong>Cheese / Butter</strong> (if not already required).</li></ul>`;
+            } else {
+                h4.innerHTML = `<button class="action-btn" onclick="buyStarHint(4)" style="width: 100%; font-size: 0.8rem;">Unlock 4-Star Secrets for this level (10,000 K)</button>`;
             }
-            if (userBalance >= hintCost) {
-                userBalance -= hintCost;
-                tipsUnlocked = true;
+
+            if (hintsForLevel[5]) {
+                h5.innerHTML = `<ul class="hint-list" style="margin:0; padding:0; background:transparent; border:none;"><li>Achieve flawless perfection by adding <strong>Black Pepper</strong> on top of a 4-star recipe.</li></ul>`;
+            } else {
+                h5.innerHTML = `<button class="action-btn" onclick="buyStarHint(5)" style="width: 100%; font-size: 0.8rem;">Unlock 5-Star Secrets for this level (20,000 K)</button>`;
+            }
+        }
+
+        function buyStarHint(tier) {
+            let cost = tier === 4 ? 10000 : 20000;
+            if (userBalance >= cost) {
+                userBalance -= cost;
+                if(!appConfig.unlockedHints[targetLevelId]) appConfig.unlockedHints[targetLevelId] = {4: false, 5: false};
+                appConfig.unlockedHints[targetLevelId][tier] = true;
                 saveUserData();
                 updateBalanceUI();
-                document.getElementById('hintModal').classList.add('active');
-                notify(`TRANSACTION SUCCESS: Permanent tips access unlocked for ${hintCost.toLocaleString()} K.`, 'success');
+                updateHintUI();
+                notify(`TRANSACTION SUCCESS: ${tier}-Star secrets unlocked for this level!`, 'success');
             } else {
-                notify(`TRANSACTION FAILED: Insufficient amount. You need ${hintCost.toLocaleString()} K to unlock tips permanently.`, 'error');
+                notify(`TRANSACTION FAILED: Insufficient funds. You need ${cost.toLocaleString()} K.`, 'error');
             }
         }
 
         function renderStore() {
-            const themesGrid = document.getElementById('storeThemesGrid');
+            const grids = {
+                'Classic': document.getElementById('storeThemesClassic'),
+                'Premium': document.getElementById('storeThemesPremium'),
+                'Deluxe': document.getElementById('storeThemesDeluxe')
+            };
+            
+            for(let key in grids) if(grids[key]) grids[key].innerHTML = '';
+            
             const perksGrid = document.getElementById('storePerksGrid');
-            themesGrid.innerHTML = '';
-            perksGrid.innerHTML = '';
+            if(perksGrid) perksGrid.innerHTML = '';
 
             themes.forEach(t => {
                 let isUnlocked = unlockedThemes.includes(t.id);
@@ -1530,7 +1607,7 @@
 
                 let dots = Object.values(t.colors).slice(0,4).map(c => `<div class="palette-dot" style="background:${c}"></div>`).join('');
 
-                themesGrid.innerHTML += `
+                let cardHtml = `
                     <div class="store-card">
                         <div class="info-wrapper">
                             <div class="info-icon">?</div>
@@ -1543,6 +1620,8 @@
                         <div>${btnHtml}</div>
                     </div>
                 `;
+                
+                if(grids[t.tier]) grids[t.tier].innerHTML += cardHtml;
             });
 
             perks.forEach(p => {
@@ -1557,7 +1636,7 @@
                     btnHtml = `<button class="action-btn ${canAfford ? 'primary' : ''}" style="width:100%;" ${canAfford ? `onclick="buyItem('${p.id}', 'perk')"` : `onclick="notify('TRANSACTION FAILED: Insufficient Kyats for ${p.name}.', 'error')"`}>Buy for ${p.price.toLocaleString()} K</button>`;
                 }
 
-                perksGrid.innerHTML += `
+                if(perksGrid) perksGrid.innerHTML += `
                     <div class="store-card">
                         <div class="info-wrapper">
                             <div class="info-icon">?</div>
@@ -1572,7 +1651,39 @@
             });
         }
 
-        
+        function renderBadges() {
+            const grid = document.getElementById('badgesGrid');
+            if(!grid) return;
+            grid.innerHTML = '';
+            
+            badges.forEach(b => {
+                let isUnlocked = maxUnlockedLevel >= b.reqLevel;
+                let reqChapter = "an earlier timeline";
+                let rankClass = 'rank-easy';
+                
+                if(b.reqLevel === 2) { reqChapter = "the first recipe"; rankClass = 'rank-easy'; }
+                else if(b.reqLevel === 11) { reqChapter = "Commis Chef chapter"; rankClass = 'rank-easy'; }
+                else if(b.reqLevel === 21) { reqChapter = "Chef de Partie chapter"; rankClass = 'rank-medium'; }
+                else if(b.reqLevel === 31) { reqChapter = "Sous Chef chapter"; rankClass = 'rank-hard'; }
+                else if(b.reqLevel === 41) { reqChapter = "Head Chef chapter"; rankClass = 'rank-impossible'; }
+                else if(b.reqLevel === 51) { reqChapter = "Executive Chef chapter"; rankClass = 'rank-executive'; }
+
+                let lockOverlay = !isUnlocked ? `
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 10; display: flex; align-items: center; justify-content: center; border-radius: 20px; pointer-events: none; backdrop-filter: blur(2px);">
+                        <img src="../imgs/icons/lock.png" alt="Locked" style="width: 60px; height: 60px; object-fit: contain; background: var(--game-panel); border-radius: 50%; padding: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); border: 2px solid var(--primary); margin-bottom: 60px;" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3064/3064155.png';">
+                    </div>` : '';
+
+                grid.innerHTML += `
+                    <div class="badge-card ${rankClass} ${isUnlocked ? '' : 'locked'}">
+                        ${lockOverlay}
+                        <img src="${b.img}" alt="${b.name}">
+                        <h4 style="position: relative; z-index: 20;">${b.name}</h4>
+                        <p style="position: relative; z-index: 20;">${isUnlocked ? b.desc : 'Complete ' + reqChapter + ' to unlock.'}</p>
+                    </div>
+                `;
+            });
+        }
+
         const db = { items: {}, theories: [] };
 
         function getLevenshteinDistance(a, b) {
@@ -1600,7 +1711,7 @@
             
             return queryWords.every(qWord => {
                 if (textWords.some(tWord => tWord.includes(qWord))) return true;
-                if (qWord.length <= 2) return false; // Ignore tiny typos to prevent broad matching
+                if (qWord.length <= 2) return false; 
                 
                 const maxDist = qWord.length >= 6 ? 2 : 1;
                 return textWords.some(tWord => {
@@ -1610,42 +1721,14 @@
             });
         }
 
-        function getSVG(color, shape, detail='') {
-            const c = encodeURIComponent(color);
-            let s = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>`;
-            if (shape === 'knife') s += `<path d='M10,80 L80,20 Q90,30 85,40 L25,90 Z' fill='#E0E0E0'/><rect x='10' y='75' width='30' height='15' fill='#555' transform='rotate(-45 25 80)'/>`;
-            else if (shape === 'pan') s += `<circle cx='50' cy='50' r='40' fill='#222' stroke='#444' stroke-width='4'/><rect x='85' y='45' width='40' height='10' fill='#111' rx='5'/>`;
-            else if (shape === 'pot') s += `<rect x='15' y='30' width='70' height='55' fill='#444' rx='10'/><path d='M10,30 L90,30' stroke='#666' stroke-width='8' stroke-linecap='round'/><rect x='40' y='15' width='20' height='10' fill='#222' rx='3'/>`;
-            else if (shape === 'bowl') s += `<path d='M10,40 Q50,100 90,40 Z' fill='#EAEAEA' stroke='#CCC' stroke-width='3'/>`;
-            else if (shape === 'bottle') s += `<rect x='35' y='30' width='30' height='60' fill='${c}' rx='5' opacity='0.9'/><rect x='42' y='10' width='16' height='20' fill='#333'/><path d='M35,50 L65,50' stroke='#FFF' stroke-width='2' opacity='0.5'/>`;
-            else if (shape === 'drop') s += `<path d='M50,15 Q20,60 20,75 A30,30 0 0,0 80,75 Q80,60 50,15 Z' fill='${c}' opacity='0.8'/>`;
-            else if (shape === 'round') s += `<circle cx='50' cy='55' r='35' fill='${c}'/>${detail}`;
-            else if (shape === 'oval') s += `<ellipse cx='50' cy='50' rx='40' ry='25' fill='${c}'/>${detail}`;
-            else if (shape === 'block') s += `<rect x='20' y='30' width='60' height='40' fill='${c}' rx='8'/>${detail}`;
-            else if (shape === 'sliced_round') s += `<circle cx='50' cy='55' r='35' fill='none' stroke='${c}' stroke-width='8' stroke-dasharray='15,10'/>`;
-            else if (shape === 'sliced_block') s += `<rect x='20' y='30' width='60' height='40' fill='none' stroke='${c}' stroke-width='8' stroke-dasharray='15,10' rx='8'/>`;
-            else if (shape === 'mixed') s += `<circle cx='50' cy='50' r='40' fill='${c}' opacity='0.9'/><circle cx='30' cy='40' r='10' fill='#FFF' opacity='0.3'/><circle cx='70' cy='60' r='15' fill='#000' opacity='0.1'/>`;
-            else if (shape === 'plate') s += `<ellipse cx='50' cy='50' rx='45' ry='30' fill='#FFF' stroke='#DDD' stroke-width='2'/><circle cx='50' cy='50' r='20' fill='${c}' opacity='0.9'/>`;
-            else if (shape === 'banana') s += `<path d='M20,80 Q50,90 80,40 Q60,80 20,80 Z' fill='${c}' stroke='#D4B271' stroke-width='2'/>`;
-            else if (shape === 'peanut') s += `<path d='M30,50 C30,30 50,40 70,30 C90,30 90,70 70,70 C50,60 30,70 30,50 Z' fill='${c}' stroke='#8b5a2b' stroke-width='2'/>`;
-            else if (shape === 'glass') s += `<path d='M30,20 L40,80 Q50,90 60,80 L70,20 Z' fill='rgba(255,255,255,0.5)' stroke='#CCC' stroke-width='2'/><path d='M32,30 L40,80 Q50,85 60,80 L68,30 Z' fill='${c}' opacity='0.9'/>`;
-
-            else if (shape === 'golden_knife') s += `<path d='M10,80 L80,20 Q90,30 85,40 L25,90 Z' fill='#FFD700'/><rect x='10' y='75' width='30' height='15' fill='#333' transform='rotate(-45 25 80)'/>`;
-            else if (shape === 'golden_pan') s += `<circle cx='50' cy='50' r='40' fill='#FFD700' stroke='#DAA520' stroke-width='4'/><rect x='85' y='45' width='40' height='10' fill='#333' rx='5'/>`;
-            else if (shape === 'golden_pot') s += `<rect x='15' y='30' width='70' height='55' fill='#FFD700' rx='10'/><path d='M10,30 L90,30' stroke='#DAA520' stroke-width='8' stroke-linecap='round'/><rect x='40' y='15' width='20' height='10' fill='#333' rx='3'/>`;
-            else if (shape === 'golden_bowl') s += `<path d='M10,40 Q50,100 90,40 Z' fill='#FFD700' stroke='#DAA520' stroke-width='3'/>`;
-
-            s += `</svg>`; return `data:image/svg+xml;utf8,${s}`;
-        }
-
-        const leaf = `<path d='M50,20 Q60,5 70,20 Q60,25 50,20 Z' fill='#2A9D8F'/>`;
-        const meatLines = `<path d='M30,40 L70,40 M30,60 L70,60' stroke='#8B0000' stroke-width='3' opacity='0.4'/>`;
-
         const masterItems = [
             { id: 'knife', name: 'Chef Knife', cat: 'tools', img: '../imgs/ingredients/knife.png' },
             { id: 'pan', name: 'Frying Pan', cat: 'tools', img: '../imgs/ingredients/pan.png' },
             { id: 'pot', name: 'Cooking Pot', cat: 'tools', img: '../imgs/ingredients/pot.png' },
             { id: 'bowl', name: 'Mixing Bowl', cat: 'tools', img: '../imgs/ingredients/bowl.png' },
+            
+            { id: 'salt', name: 'Sea Salt', cat: 'pantry', img: '../imgs/ingredients/salt.png' },
+            { id: 'black_pepper', name: 'Black Pepper', cat: 'pantry', img: '../imgs/ingredients/black_pepper.png' },
             { id: 'oil', name: 'Olive Oil', cat: 'pantry', img: '../imgs/ingredients/oil.png' },
             { id: 'water', name: 'Water', cat: 'pantry', img: '../imgs/ingredients/water.png' },
             { id: 'pasta_dry', name: 'Dry Pasta', cat: 'pantry', img: '../imgs/ingredients/pasta_dry.png' },
@@ -1653,19 +1736,32 @@
             { id: 'cheese', name: 'Cheese Block', cat: 'pantry', img: '../imgs/ingredients/cheese.png' },
             { id: 'bread', name: 'Loaf of Bread', cat: 'pantry', img: '../imgs/ingredients/bread.png' },
             { id: 'milk', name: 'Milk', cat: 'pantry', img: '../imgs/ingredients/milk.png' },
+            { id: 'butter', name: 'Butter', cat: 'pantry', img: '../imgs/ingredients/butter.png' },
+            { id: 'flour', name: 'Flour', cat: 'pantry', img: '../imgs/ingredients/flour.png' },
+            { id: 'soy_sauce', name: 'Soy Sauce', cat: 'pantry', img: '../imgs/ingredients/soy_sauce.png' },
+            { id: 'wine', name: 'Cooking Wine', cat: 'pantry', img: '../imgs/ingredients/wine.png' },
+            
             { id: 'banana', name: 'Banana', cat: 'fruits', img: '../imgs/ingredients/banana.png' },
             { id: 'apple', name: 'Apple', cat: 'fruits', img: '../imgs/ingredients/apple.png' },
             { id: 'peanut', name: 'Peanut', cat: 'nuts', img: '../imgs/ingredients/peanut.png' },
+            
             { id: 'onion', name: 'Onion', cat: 'raw_veg', img: '../imgs/ingredients/onion.png' },
             { id: 'potato', name: 'Potato', cat: 'raw_veg', img: '../imgs/ingredients/potato.png' },
             { id: 'tomato', name: 'Tomato', cat: 'raw_veg', img: '../imgs/ingredients/tomato.png' },
             { id: 'lettuce', name: 'Lettuce Head', cat: 'raw_veg', img: '../imgs/ingredients/lettuce.png' },
             { id: 'garlic', name: 'Garlic Bulb', cat: 'raw_veg', img: '../imgs/ingredients/garlic.png' },
             { id: 'mushroom', name: 'Mushroom', cat: 'raw_veg', img: '../imgs/ingredients/mushroom.png' },
+            { id: 'seaweed', name: 'Seaweed', cat: 'raw_veg', img: '../imgs/ingredients/seaweed.png' },
+            { id: 'truffle', name: 'Black Truffle', cat: 'raw_veg', img: '../imgs/ingredients/truffle.png' },
+            
             { id: 'beef', name: 'Raw Beef', cat: 'raw_meat', img: '../imgs/ingredients/beef.png' },
             { id: 'chicken', name: 'Raw Chicken', cat: 'raw_meat', img: '../imgs/ingredients/chicken.png' },
             { id: 'fish', name: 'Raw Fish', cat: 'raw_meat', img: '../imgs/ingredients/fish.png' },
             { id: 'egg', name: 'Raw Egg', cat: 'raw_meat', img: '../imgs/ingredients/egg.png' },
+            { id: 'lobster', name: 'Lobster', cat: 'raw_meat', img: '../imgs/ingredients/lobster.png' },
+            { id: 'lamb', name: 'Lamb Chop', cat: 'raw_meat', img: '../imgs/ingredients/lamb.png' },
+            { id: 'duck', name: 'Raw Duck', cat: 'raw_meat', img: '../imgs/ingredients/duck.png' },
+            { id: 'caviar', name: 'Caviar', cat: 'raw_meat', img: '../imgs/ingredients/caviar.png' },
             
             { id: 'sliced_onion', name: 'Sliced Onion', cat: 'prepped', img: '../imgs/ingredients/sliced_onion.png' },
             { id: 'sliced_potato', name: 'Sliced Potato', cat: 'prepped', img: '../imgs/ingredients/sliced_potato.png' },
@@ -1680,203 +1776,186 @@
             { id: 'sliced_banana', name: 'Sliced Banana', cat: 'prepped', img: '../imgs/ingredients/sliced_banana.png' },
             { id: 'sliced_apple', name: 'Apple Slices', cat: 'prepped', img: '../imgs/ingredients/sliced_apple.png' },
             { id: 'crushed_peanut', name: 'Crushed Peanut', cat: 'prepped', img: '../imgs/ingredients/crushed_peanut.png' },
-            { id: 'peanut_butter', name: 'Peanut Butter', cat: 'prepped', img: '../imgs/ingredients/peanut_butter.png' },
-            { id: 'pbj_sandwich', name: 'PB & Banana Sandwich', cat: 'prepped', img: '../imgs/ingredients/pbj_sandwich.png' },
-            { id: 'banana_smoothie', name: 'Banana Smoothie', cat: 'prepped', img: '../imgs/ingredients/banana_smoothie.png' },
-            { id: 'cheese_sauce', name: 'Cheese Sauce', cat: 'prepped', img: '../imgs/ingredients/cheese_sauce.png' },
-            { id: 'mac_and_cheese', name: 'Mac & Cheese', cat: 'prepped', img: '../imgs/ingredients/mac_and_cheese.png' },
-            { id: 'fruit_salad', name: 'Fruit Salad', cat: 'prepped', img: '../imgs/ingredients/fruit_salad.png' },
-            { id: 'fried_onion', name: 'Fried Onion', cat: 'prepped', img: '../imgs/ingredients/fried_onion.png' },
-            { id: 'seared_beef', name: 'Seared Beef', cat: 'prepped', img: '../imgs/ingredients/seared_beef.png' },
-            { id: 'boiled_egg', name: 'Boiled Egg', cat: 'prepped', img: '../imgs/ingredients/boiled_egg.png' },
-            { id: 'french_fries', name: 'French Fries', cat: 'prepped', img: '../imgs/ingredients/french_fries.png' },
-            { id: 'tomato_soup', name: 'Tomato Soup', cat: 'prepped', img: '../imgs/ingredients/tomato_soup.png' },
-            { id: 'fried_egg', name: 'Fried Egg', cat: 'prepped', img: '../imgs/ingredients/fried_egg.png' },
-            { id: 'sauteed_mushroom', name: 'Sautéed Mushroom', cat: 'prepped', img: '../imgs/ingredients/sauteed_mushroom.png' },
-            { id: 'boiled_rice', name: 'Fluffy Rice', cat: 'prepped', img: '../imgs/ingredients/boiled_rice.png' },
-            { id: 'mixed_egg', name: 'Beaten Egg', cat: 'prepped', img: '../imgs/ingredients/mixed_egg.png' },
+            { id: 'beaten_egg', name: 'Beaten Egg', cat: 'prepped', img: '../imgs/ingredients/beaten_egg.png' },
+            { id: 'pancake_batter', name: 'Pancake Batter', cat: 'prepped', img: '../imgs/ingredients/pancake_batter.png' },
+            { id: 'cooked_pasta', name: 'Cooked Pasta', cat: 'prepped', img: '../imgs/ingredients/cooked_pasta.png' },
             { id: 'boiled_potato', name: 'Boiled Potato', cat: 'prepped', img: '../imgs/ingredients/boiled_potato.png' },
-            { id: 'pasta', name: 'Cooked Pasta', cat: 'prepped', img: '../imgs/ingredients/pasta.png' },
-            { id: 'mashed_potatoes', name: 'Mashed Potatoes', cat: 'prepped', img: '../imgs/ingredients/mashed_potatoes.png' },
-            { id: 'side_salad', name: 'Side Salad', cat: 'prepped', img: '../imgs/ingredients/side_salad.png' },
-            { id: 'garlic_bread', name: 'Garlic Bread', cat: 'prepped', img: '../imgs/ingredients/garlic_bread.png' },
-            { id: 'grilled_cheese', name: 'Grilled Cheese', cat: 'prepped', img: '../imgs/ingredients/grilled_cheese.png' },
+            { id: 'boiled_rice', name: 'Boiled Rice', cat: 'prepped', img: '../imgs/ingredients/boiled_rice.png' },
+            { id: 'boiled_egg', name: 'Boiled Egg', cat: 'prepped', img: '../imgs/ingredients/boiled_egg.png' },
+            { id: 'seared_beef', name: 'Seared Beef', cat: 'prepped', img: '../imgs/ingredients/seared_beef.png' },
             { id: 'cooked_chicken', name: 'Roasted Chicken', cat: 'prepped', img: '../imgs/ingredients/cooked_chicken.png' },
             { id: 'cooked_fish', name: 'Seared Fish', cat: 'prepped', img: '../imgs/ingredients/cooked_fish.png' },
-            { id: 'beef_stew', name: 'Beef Stew', cat: 'prepped', img: '../imgs/ingredients/beef_stew.png' },
-            { id: 'chicken_soup', name: 'Chicken Soup', cat: 'prepped', img: '../imgs/ingredients/chicken_soup.png' },
+            { id: 'cheese_sauce', name: 'Cheese Sauce', cat: 'prepped', img: '../imgs/ingredients/cheese_sauce.png' },
+            { id: 'tomato_soup', name: 'Tomato Soup', cat: 'prepped', img: '../imgs/ingredients/tomato_soup.png' },
+            { id: 'vegetable_curry', name: 'Vegetable Curry', cat: 'prepped', img: '../imgs/ingredients/vegetable_curry.png' },
+            { id: 'mashed_potatoes', name: 'Mashed Potatoes', cat: 'prepped', img: '../imgs/ingredients/mashed_potatoes.png' },
+            { id: 'side_salad', name: 'Side Salad', cat: 'prepped', img: '../imgs/ingredients/side_salad.png' },
+            { id: 'beef_steak_sauce', name: 'Steak with Sauce', cat: 'prepped', img: '../imgs/ingredients/beef_steak_sauce.png' },
+            { id: 'sushi_rolls', name: 'Sushi Rolls', cat: 'prepped', img: '../imgs/ingredients/sushi_rolls.png' },
+
+            { id: 'fried_egg', name: 'Fried Egg', cat: 'prepped', img: '../imgs/ingredients/fried_egg.png' },
+            { id: 'scrambled_eggs', name: 'Scrambled Eggs', cat: 'prepped', img: '../imgs/ingredients/scrambled_eggs.png' },
+            { id: 'toast_with_butter', name: 'Toast with Butter', cat: 'prepped', img: '../imgs/ingredients/toast_with_butter.png' },
+            { id: 'grilled_cheese', name: 'Grilled Cheese', cat: 'prepped', img: '../imgs/ingredients/grilled_cheese.png' },
+            { id: 'simple_salad', name: 'Simple Salad', cat: 'prepped', img: '../imgs/ingredients/simple_salad.png' },
+            { id: 'pancakes', name: 'Pancakes', cat: 'prepped', img: '../imgs/ingredients/pancakes.png' },
+            { id: 'french_fries', name: 'French Fries', cat: 'prepped', img: '../imgs/ingredients/french_fries.png' },
             { id: 'omelette', name: 'Omelette', cat: 'prepped', img: '../imgs/ingredients/omelette.png' },
+            { id: 'fruit_bowl', name: 'Fruit Bowl', cat: 'prepped', img: '../imgs/ingredients/fruit_bowl.png' },
+            { id: 'spaghetti_aglio_olio', name: 'Spaghetti Aglio e Olio', cat: 'prepped', img: '../imgs/ingredients/spaghetti_aglio_olio.png' },
+            { id: 'chicken_stir_fry', name: 'Chicken Stir-Fry', cat: 'prepped', img: '../imgs/ingredients/chicken_stir_fry.png' },
+            { id: 'beef_burger', name: 'Beef Burger', cat: 'prepped', img: '../imgs/ingredients/beef_burger.png' },
+            { id: 'caesar_salad', name: 'Caesar Salad', cat: 'prepped', img: '../imgs/ingredients/caesar_salad.png' },
             { id: 'fried_rice', name: 'Fried Rice', cat: 'prepped', img: '../imgs/ingredients/fried_rice.png' },
-            { id: 'hamburger', name: 'Hamburger', cat: 'prepped', img: '../imgs/ingredients/hamburger.png' },
-            { id: 'pasta_bolognese', name: 'Pasta Bolognese', cat: 'prepped', img: '../imgs/ingredients/pasta_bolognese.png' },
-            { id: 'steak_frites', name: 'Steak Frites', cat: 'prepped', img: '../imgs/ingredients/steak_frites.png' },
             { id: 'fish_and_chips', name: 'Fish & Chips', cat: 'prepped', img: '../imgs/ingredients/fish_and_chips.png' },
-            { id: 'meatball_pasta', name: 'Meatball Pasta', cat: 'prepped', img: '../imgs/ingredients/meatball_pasta.png' },
-            { id: 'bistrox_masterpiece', name: 'BistroX Masterpiece', cat: 'prepped', img: '../imgs/ingredients/bistrox_masterpiece.png' }
-        ];
-
-        function updateToolColors() {
-            if(unlockedPerks.includes('golden_tools')) {
-                db.items['knife'].img = '../imgs/ingredients/golden_knife.png';
-                db.items['pan'].img = '../imgs/ingredients/golden_pan.png';
-                db.items['pot'].img = '../imgs/ingredients/golden_pot.png';
-                db.items['bowl'].img = '../imgs/ingredients/golden_bowl.png';
-            }
-        }
-
-        masterItems.forEach(i => db.items[i.id] = i);
-
-        const theories = [
-            [['onion', 'knife'], 'slice', 'sliced_onion', ['onion'], 'Precision cut applied.'],
-            [['potato', 'knife'], 'slice', 'sliced_potato', ['potato'], 'Tuber sliced.'],
-            [['tomato', 'knife'], 'slice', 'sliced_tomato', ['tomato'], 'Tomato chopped.'],
-            [['lettuce', 'knife'], 'slice', 'sliced_lettuce', ['lettuce'], 'Greens shredded.'],
-            [['garlic', 'knife'], 'slice', 'chopped_garlic', ['garlic'], 'Garlic minced.'],
-            [['mushroom', 'knife'], 'slice', 'sliced_mushroom', ['mushroom'], 'Mushroom prepped.'],
-            [['bread', 'knife'], 'slice', 'sliced_bread', ['bread'], 'Bread portioned.'],
-            [['beef', 'knife'], 'slice', 'sliced_beef', ['beef'], 'Meat cut into strips.'],
-            [['chicken', 'knife'], 'slice', 'sliced_chicken', ['chicken'], 'Poultry diced.'],
-            [['fish', 'knife'], 'slice', 'sliced_fish', ['fish'], 'Fish filleted.'],
-            [['banana', 'knife'], 'slice', 'sliced_banana', ['banana'], 'Banana perfectly sliced.'],
-            [['apple', 'knife'], 'slice', 'sliced_apple', ['apple'], 'Apple wedged.'],
-            [['peanut', 'knife'], 'slice', 'crushed_peanut', ['peanut'], 'Peanuts thoroughly crushed.'],
-
-            [['egg', 'water', 'pot'], 'boil', 'boiled_egg', ['egg', 'water'], 'Egg hard boiled.'],
-            [['potato', 'water', 'pot'], 'boil', 'boiled_potato', ['potato', 'water'], 'Potato softened.'],
-            [['rice', 'water', 'pot'], 'boil', 'boiled_rice', ['rice', 'water'], 'Rice cooked fluffy.'],
-            [['pasta_dry', 'water', 'pot'], 'boil', 'pasta', ['pasta_dry', 'water'], 'Pasta al dente.'],
-            [['sliced_tomato', 'water', 'pot'], 'boil', 'tomato_soup', ['sliced_tomato', 'water'], 'Tomato soup simmered.'],
-            [['seared_beef', 'boiled_potato', 'water', 'pot'], 'boil', 'beef_stew', ['seared_beef', 'boiled_potato', 'water'], 'Stew reduced.'],
-            [['cooked_chicken', 'fried_onion', 'water', 'pot'], 'boil', 'chicken_soup', ['cooked_chicken', 'fried_onion', 'water'], 'Soup broth rich.'],
-            [['pasta', 'tomato_soup', 'seared_beef', 'water', 'pot'], 'boil', 'pasta_bolognese', ['pasta', 'tomato_soup', 'seared_beef', 'water'], 'Bolognese simmered.'],
-            [['pasta', 'tomato_soup', 'seared_beef', 'water', 'pot'], 'boil', 'meatball_pasta', ['pasta', 'tomato_soup', 'seared_beef', 'water'], 'Meatballs stewed.'],
-            [['cheese', 'milk', 'pot'], 'boil', 'cheese_sauce', ['cheese', 'milk'], 'Rich cheese sauce melted.'],
-            [['pasta', 'cheese_sauce', 'pot'], 'boil', 'mac_and_cheese', ['pasta', 'cheese_sauce'], 'Mac & Cheese combined perfectly.'],
-
-            [['sliced_onion', 'oil', 'pan'], 'cook', 'fried_onion', ['sliced_onion', 'oil'], 'Onions caramelized.'],
-            [['beef', 'oil', 'pan'], 'cook', 'seared_beef', ['beef', 'oil'], 'Beef seared medium rare.'],
-            [['egg', 'oil', 'pan'], 'cook', 'fried_egg', ['egg', 'oil'], 'Sunny side up egg.'],
-            [['sliced_potato', 'oil', 'pan'], 'cook', 'french_fries', ['sliced_potato', 'oil'], 'Fries golden crisp.'],
-            [['sliced_mushroom', 'oil', 'pan'], 'cook', 'sauteed_mushroom', ['sliced_mushroom', 'oil'], 'Mushrooms sautéed.'],
-            [['chicken', 'oil', 'pan'], 'cook', 'cooked_chicken', ['chicken', 'oil'], 'Chicken roasted.'],
-            [['fish', 'oil', 'pan'], 'cook', 'cooked_fish', ['fish', 'oil'], 'Fish cooked perfectly.'],
-            [['mixed_egg', 'oil', 'pan'], 'cook', 'omelette', ['mixed_egg', 'oil'], 'Omelette folded.'],
-            [['sliced_bread', 'chopped_garlic', 'oil', 'pan'], 'cook', 'garlic_bread', ['sliced_bread', 'chopped_garlic', 'oil'], 'Garlic bread toasted.'],
-            [['sliced_bread', 'cheese', 'oil', 'pan'], 'cook', 'grilled_cheese', ['sliced_bread', 'cheese', 'oil'], 'Cheese melted beautifully.'],
-            [['seared_beef', 'sliced_bread', 'oil', 'pan'], 'cook', 'hamburger', ['seared_beef', 'sliced_bread', 'oil'], 'Burger assembled and warmed.'],
-            [['boiled_rice', 'mixed_egg', 'oil', 'pan'], 'cook', 'fried_rice', ['boiled_rice', 'mixed_egg', 'oil'], 'Fried rice tossed in wok.'],
-            [['sliced_bread', 'peanut_butter', 'sliced_banana', 'pan'], 'cook', 'pbj_sandwich', ['sliced_bread', 'peanut_butter', 'sliced_banana'], 'Peanut Butter Sandwich toasted.'],
-            
-            [['egg', 'bowl'], 'mix', 'mixed_egg', ['egg'], 'Egg beaten.'],
-            [['boiled_potato', 'bowl'], 'mix', 'mashed_potatoes', ['boiled_potato'], 'Potatoes mashed smooth.'],
-            [['sliced_lettuce', 'sliced_tomato', 'bowl'], 'mix', 'side_salad', ['sliced_lettuce', 'sliced_tomato'], 'Salad tossed.'],
-            [['seared_beef', 'french_fries', 'bowl'], 'mix', 'steak_frites', ['seared_beef', 'french_fries'], 'Bistro classic plated.'],
-            [['cooked_fish', 'french_fries', 'bowl'], 'mix', 'fish_and_chips', ['cooked_fish', 'french_fries'], 'Pub classic plated.'],
-            [['crushed_peanut', 'bowl'], 'mix', 'peanut_butter', ['crushed_peanut'], 'Peanuts churned into creamy butter.'],
-            [['sliced_banana', 'milk', 'bowl'], 'mix', 'banana_smoothie', ['sliced_banana', 'milk'], 'Banana Smoothie blended.'],
-            [['sliced_apple', 'sliced_banana', 'bowl'], 'mix', 'fruit_salad', ['sliced_apple', 'sliced_banana'], 'Fruit salad gently tossed.'],
-            [['seared_beef', 'cooked_chicken', 'cooked_fish', 'french_fries', 'side_salad', 'bowl'], 'mix', 'bistrox_masterpiece', ['seared_beef', 'cooked_chicken', 'cooked_fish', 'french_fries', 'side_salad'], 'The absolute zenith of culinary art.']
-        ];
-        
-        theories.forEach(t => db.theories.push({ reqs: t[0], action: t[1], result: t[2], consumes: t[3], msg: t[4] }));
-
-        const levels = [
-            { id: 'sliced_onion', name: 'Sliced Onion', hints: ["1. Find ONION in Veggies.", "2. Find CHEF KNIFE in Tools.", "3. Place both on Board and click SLICE."] },
-            { id: 'boiled_egg', name: 'Boiled Egg', hints: ["1. Need EGG (Meats), WATER (Pantry), and POT (Tools).", "2. Place all 3 on Board and click BOIL."] },
-            { id: 'fried_onion', name: 'Fried Onion', hints: ["1. Slice an ONION first.", "2. Clear board.", "3. Combine SLICED ONION + OIL + PAN.", "4. Click COOK."] },
-            { id: 'seared_beef', name: 'Seared Beef', hints: ["1. Combine RAW BEEF + OIL + PAN.", "2. Click COOK."] },
-            { id: 'mashed_potatoes', name: 'Mashed Potatoes', hints: ["1. Boil a POTATO first (Potato + Water + Pot + Boil).", "2. Combine BOILED POTATO + BOWL.", "3. Click MIX."] },
-            { id: 'french_fries', name: 'French Fries', hints: ["1. Slice a POTATO.", "2. Combine SLICED POTATO + OIL + PAN.", "3. Click COOK."] },
-            { id: 'fried_egg', name: 'Fried Egg', hints: ["1. Combine RAW EGG + OIL + PAN.", "2. Click COOK."] },
-            { id: 'chopped_garlic', name: 'Minced Garlic', hints: ["1. Combine GARLIC + KNIFE.", "2. Click SLICE."] },
-            { id: 'sauteed_mushroom', name: 'Sautéed Mushroom', hints: ["1. Slice MUSHROOM first.", "2. Combine SLICED MUSHROOM + OIL + PAN.", "3. Click COOK."] },
-            { id: 'boiled_rice', name: 'Fluffy Rice', hints: ["1. Combine RICE + WATER + POT.", "2. Click BOIL."] },
-
-            { id: 'omelette', name: 'Omelette', hints: ["1. Mix RAW EGG in a BOWL to get Beaten Egg.", "2. Combine BEATEN EGG + OIL + PAN.", "3. Click COOK."] },
-            { id: 'side_salad', name: 'Side Salad', hints: ["1. Slice LETTUCE.", "2. Slice TOMATO.", "3. Combine both slices + BOWL.", "4. Click MIX."] },
-            { id: 'tomato_soup', name: 'Tomato Soup', hints: ["1. Slice TOMATO.", "2. Combine SLICED TOMATO + WATER + POT.", "3. Click BOIL."] },
-            { id: 'garlic_bread', name: 'Garlic Bread', hints: ["1. Slice BREAD.", "2. Slice GARLIC.", "3. Combine SLICED BREAD + MINCED GARLIC + OIL + PAN.", "4. Click COOK."] },
-            { id: 'grilled_cheese', name: 'Grilled Cheese', hints: ["1. Slice BREAD.", "2. Combine SLICED BREAD + CHEESE BLOCK + OIL + PAN.", "3. Click COOK."] },
-            { id: 'pasta', name: 'Cooked Pasta', hints: ["1. Combine DRY PASTA + WATER + POT.", "2. Click BOIL."] },
-            { id: 'cooked_chicken', name: 'Roasted Chicken', hints: ["1. Combine RAW CHICKEN + OIL + PAN.", "2. Click COOK."] },
-            { id: 'cooked_fish', name: 'Seared Fish', hints: ["1. Combine RAW FISH + OIL + PAN.", "2. Click COOK."] },
-            { id: 'fried_rice', name: 'Fried Rice', hints: ["1. Boil RICE.", "2. Mix EGG in BOWL.", "3. Combine BOILED RICE + BEATEN EGG + OIL + PAN.", "4. Click COOK."] },
-            { id: 'hamburger', name: 'Hamburger', hints: ["1. Slice BREAD.", "2. Cook RAW BEEF (Sear it).", "3. Combine SLICED BREAD + SEARED BEEF + OIL + PAN.", "4. Click COOK."] },
-
-            { id: 'beef_stew', name: 'Beef Stew', hints: ["1. Sear RAW BEEF.", "2. Boil POTATO.", "3. Combine SEARED BEEF + BOILED POTATO + WATER + POT.", "4. Click BOIL."] },
-            { id: 'chicken_soup', name: 'Chicken Soup', hints: ["1. Cook CHICKEN.", "2. Slice & Fry ONION.", "3. Combine COOKED CHICKEN + FRIED ONION + WATER + POT.", "4. Click BOIL."] },
-            { id: 'steak_frites', name: 'Steak Frites', hints: ["1. Sear BEEF.", "2. Make FRENCH FRIES (Slice Potato -> Cook with Oil/Pan).", "3. Combine SEARED BEEF + FRIES + BOWL.", "4. Click MIX."] },
-            { id: 'fish_and_chips', name: 'Fish & Chips', hints: ["1. Cook FISH.", "2. Make FRENCH FRIES.", "3. Combine COOKED FISH + FRIES + BOWL.", "4. Click MIX."] },
-            { id: 'pasta_bolognese', name: 'Pasta Bolognese', hints: ["1. Boil PASTA.", "2. Make TOMATO SOUP.", "3. Sear BEEF.", "4. Combine PASTA + SOUP + BEEF + WATER + POT.", "5. Click BOIL."] },
-            { id: 'mac_and_cheese', name: 'Mac & Cheese', hints: ["1. Boil DRY PASTA to Cooked Pasta.", "2. Boil CHEESE + MILK in POT to get Cheese Sauce.", "3. Combine PASTA + CHEESE SAUCE + POT.", "4. Click BOIL."] },
-            { id: 'pbj_sandwich', name: 'PB & Banana Sandwich', hints: ["1. Slice PEANUT to Crushed Peanut, then MIX in BOWL to get Peanut Butter.", "2. Slice BANANA.", "3. Slice BREAD.", "4. Combine BREAD + PEANUT BUTTER + SLICED BANANA + PAN.", "5. Click COOK."] },
-            { id: 'banana_smoothie', name: 'Banana Smoothie', hints: ["1. Slice BANANA.", "2. Combine SLICED BANANA + MILK + BOWL.", "3. Click MIX."] },
-            { id: 'fruit_salad', name: 'Fruit Salad', hints: ["1. Slice APPLE.", "2. Slice BANANA.", "3. Combine SLICED APPLE + SLICED BANANA + BOWL.", "4. Click MIX."] },
-            { id: 'cheese_sauce', name: 'Fondue Cheese Sauce', hints: ["1. Combine CHEESE + MILK + POT.", "2. Click BOIL."] },
-
-            { id: 'meatball_pasta', name: 'Meatball Pasta', hints: ["Requires exact same components as Bolognese: Pasta, Tomato Soup, Seared Beef, Water, Pot -> BOIL."] },
-            { id: 'hamburger', name: 'Double Hamburger', hints: ["See Hamburger."] },
-            { id: 'omelette', name: 'Fluffy Omelette', hints: ["See Omelette."] },
-            { id: 'fried_rice', name: 'Special Fried Rice', hints: ["See Fried Rice."] },
-            { id: 'grilled_cheese', name: 'Ultimate Grilled Cheese', hints: ["See Grilled Cheese."] },
-            { id: 'garlic_bread', name: 'Artisan Garlic Bread', hints: ["See Garlic Bread."] },
-            { id: 'beef_stew', name: 'Winter Beef Stew', hints: ["See Beef Stew."] },
-            { id: 'side_salad', name: 'Garden Salad', hints: ["See Side Salad."] },
-            { id: 'french_fries', name: 'Loaded Fries', hints: ["See French Fries."] },
-            { id: 'bistrox_masterpiece', name: 'BistroX Masterpiece', hints: ["1. Prepare: Seared Beef, Cooked Chicken, Cooked Fish, French Fries, and Side Salad.", "2. Place all 5 on the board with a BOWL.", "3. Click MIX.", "Good luck Chef."] }
+            { id: 'chicken_wrap', name: 'Chicken Wrap', cat: 'prepped', img: '../imgs/ingredients/chicken_wrap.png' },
+            { id: 'pasta_alfredo', name: 'Pasta Alfredo', cat: 'prepped', img: '../imgs/ingredients/pasta_alfredo.png' },
+            { id: 'chicken_parmesan', name: 'Chicken Parmesan', cat: 'prepped', img: '../imgs/ingredients/chicken_parmesan.png' },
+            { id: 'pad_thai', name: 'Pad Thai', cat: 'prepped', img: '../imgs/ingredients/pad_thai.png' },
+            { id: 'lasagna', name: 'Lasagna', cat: 'prepped', img: '../imgs/ingredients/lasagna.png' },
+            { id: 'butter_chicken', name: 'Butter Chicken', cat: 'prepped', img: '../imgs/ingredients/butter_chicken.png' },
+            { id: 'ramen', name: 'Ramen', cat: 'prepped', img: '../imgs/ingredients/ramen.png' },
+            { id: 'bbq_ribs', name: 'BBQ Ribs', cat: 'prepped', img: '../imgs/ingredients/bbq_ribs.png' },
+            { id: 'risotto', name: 'Risotto', cat: 'prepped', img: '../imgs/ingredients/risotto.png' },
+            { id: 'tacos', name: 'Tacos', cat: 'prepped', img: '../imgs/ingredients/tacos.png' },
+            { id: 'salmon_teriyaki', name: 'Salmon Teriyaki', cat: 'prepped', img: '../imgs/ingredients/salmon_teriyaki.png' },
+            { id: 'duck_confit', name: 'Duck Confit', cat: 'prepped', img: '../imgs/ingredients/duck_confit.png' },
+            { id: 'lobster_bisque', name: 'Lobster Bisque', cat: 'prepped', img: '../imgs/ingredients/lobster_bisque.png' },
+            { id: 'eggs_benedict', name: 'Eggs Benedict', cat: 'prepped', img: '../imgs/ingredients/eggs_benedict.png' },
+            { id: 'stuffed_chicken', name: 'Stuffed Chicken Breast', cat: 'prepped', img: '../imgs/ingredients/stuffed_chicken.png' },
+            { id: 'seafood_paella', name: 'Seafood Paella', cat: 'prepped', img: '../imgs/ingredients/seafood_paella.png' },
+            { id: 'lamb_chops', name: 'Lamb Chops with Herbs', cat: 'prepped', img: '../imgs/ingredients/lamb_chops.png' },
+            { id: 'gnocchi', name: 'Gnocchi', cat: 'prepped', img: '../imgs/ingredients/gnocchi.png' },
+            { id: 'chicken_katsu', name: 'Chicken Katsu Curry', cat: 'prepped', img: '../imgs/ingredients/chicken_katsu.png' },
+            { id: 'beef_wellington', name: 'Beef Wellington', cat: 'prepped', img: '../imgs/ingredients/beef_wellington.png' },
+            { id: 'full_course_steak', name: 'Full Course Steak Dinner', cat: 'prepped', img: '../imgs/ingredients/full_course_steak.png' },
+            { id: 'sushi_platter', name: 'Sushi Platter Deluxe', cat: 'prepped', img: '../imgs/ingredients/sushi_platter.png' },
+            { id: 'coq_au_vin', name: 'Coq au Vin', cat: 'prepped', img: '../imgs/ingredients/coq_au_vin.png' },
+            { id: 'bouillabaisse', name: 'Bouillabaisse', cat: 'prepped', img: '../imgs/ingredients/bouillabaisse.png' },
+            { id: 'rack_of_lamb', name: 'Rack of Lamb', cat: 'prepped', img: '../imgs/ingredients/rack_of_lamb.png' },
+            { id: 'truffle_pasta', name: 'Truffle Pasta', cat: 'prepped', img: '../imgs/ingredients/truffle_pasta.png' },
+            { id: 'peking_duck', name: 'Peking Duck', cat: 'prepped', img: '../imgs/ingredients/peking_duck.png' },
+            { id: 'dim_sum', name: 'Dim Sum Set', cat: 'prepped', img: '../imgs/ingredients/dim_sum.png' },
+            { id: 'osso_bucco', name: 'Osso Bucco', cat: 'prepped', img: '../imgs/ingredients/osso_bucco.png' },
+            { id: 'caviar_risotto', name: 'Caviar Risotto', cat: 'prepped', img: '../imgs/ingredients/caviar_risotto.png' }
         ];
 
         function generateLevels() {
-            const catMap = ['easy', 'medium', 'hard', 'impossible'];
-            for(let c=0; c<4; c++) {
+            const catMap = ['easy', 'medium', 'hard', 'impossible', 'executive'];
+            const tierStyles = [
+                { bg: '#111111', color: '#CD7F32', name: 'Commis Chef' },      
+                { bg: '#0A0A0A', color: '#C0C0C0', name: 'Chef de Partie' }, 
+                { bg: '#000000', color: '#FFD700', name: 'Sous Chef' },      
+                { bg: '#050508', color: '#E5E4E2', name: 'Head Chef' },      
+                { bg: '#08040C', color: '#B9F2FF', name: 'Executive Chef' }  
+            ];
+
+            for(let c=0; c<5; c++) {
                 const grid = document.getElementById(`grid-${catMap[c]}`);
+                if(!grid) continue;
                 grid.innerHTML = '';
+                let tStyle = tierStyles[c];
+
                 for(let i=0; i<10; i++) {
                     let lvlNum = (c * 10) + i + 1;
+                    if(lvlNum > 50) break;
                     let lvlData = levels[lvlNum - 1];
                     let isUnlocked = (lvlNum <= maxUnlockedLevel);
+                    let rankClass = `rank-${catMap[c]}`;
                     let card = document.createElement('div');
-                    card.className = `level-card ${isUnlocked ? '' : 'locked'}`;
+                    card.className = `level-card ${rankClass} ${isUnlocked ? '' : 'locked'}`;
                     
+                    let starsEarned = userLevelStars[lvlData.id] || 0;
+                    let starDisplay = '';
+                    if (starsEarned > 0) {
+                        starDisplay = '<div style="margin-top: 10px; display:flex; gap:2px; justify-content:center;">';
+                        for(let s=0; s<5; s++) {
+                            if(s < starsEarned) starDisplay += '<span style="color: #FFD700; font-size:14px; text-shadow: 0 1px 3px rgba(0,0,0,0.2);">⭐</span>';
+                            else starDisplay += '<span style="filter: grayscale(100%); opacity: 0.3; font-size:14px;">⭐</span>';
+                        }
+                        starDisplay += '</div>';
+                    }
+
                     if (isUnlocked) {
                         card.onclick = () => startLevel(lvlNum, lvlData);
                         card.innerHTML = `
                             <img src="${db.items[lvlData.id].img}" alt="Dish">
                             <h4>${lvlData.name}</h4>
                             <p>Level ${lvlNum}</p>
+                            ${starDisplay}
                         `;
                     } else {
+                        card.style.opacity = '1';
+                        card.style.padding = '0';
                         card.innerHTML = `
-                            <div class="lock-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
-                            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%231A1A1A'/></svg>" alt="Locked">
-                            <h4 style="color:#666;">Classified</h4>
-                            <p style="color:#888;">Level ${lvlNum}</p>
+                            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, ${tStyle.bg}dd 0%, ${tStyle.bg}ff 100%); z-index: 5; display: flex; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(4px); border: 1px solid ${tStyle.color}30; border-radius: 24px;">
+                                <div style="background: ${tStyle.color}15; padding: 15px; border-radius: 50%; border: 1px solid ${tStyle.color}80; margin-bottom: 12px; box-shadow: 0 0 25px ${tStyle.color}40; display: flex; align-items: center; justify-content: center;">
+                                    <img src="../imgs/icons/lock.png" alt="Locked" style="width: 24px; height: 24px; object-fit: contain; filter: drop-shadow(0 0 8px ${tStyle.color}); margin: 0; padding: 0; border: none; background: transparent; box-shadow: none;" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg viewBox=\\'0 0 24 24\\' fill=\\'${tStyle.color.replace('#','%23')}\\' xmlns=\\'http://www.w3.org/2000/svg\\'><rect x=\\'3\\' y=\\'11\\' width=\\'18\\' height=\\'11\\' rx=\\'2\\' ry=\\'2\\'/><path d=\\'M7 11V7a5 5 0 0110 0v4\\' fill=\\'none\\' stroke=\\'${tStyle.color.replace('#','%23')}\\' stroke-width=\\'2\\'/></svg>'">
+                                </div>
+                                <span style="color: ${tStyle.color}; font-family: var(--font-geo); font-size: 0.95rem; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; text-shadow: 0 2px 10px ${tStyle.color}60;">Level ${lvlNum}</span>
+                                <span style="color: ${tStyle.color}; opacity: 0.8; font-family: var(--font-main); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; margin-top: 6px; font-weight: 600;">${tStyle.name}</span>
+                            </div>
+                            <div style="padding: 2.5rem 1.5rem; display: flex; flex-direction: column; align-items: center; width: 100%; height: 100%;">
+                                <img src="${db.items[lvlData.id].img}" alt="Locked Background" style="filter: grayscale(100%) brightness(0.2); opacity: 0.3; transform: scale(0.9); margin-bottom: 1.5rem; border-radius: 16px;">
+                                <h4 style="color: var(--game-text-muted); opacity: 0.2; font-size: 1.05rem; margin-bottom: 0.5rem; font-family: var(--font-geo); font-weight: 700; letter-spacing: 1px;">Classified</h4>
+                                <p style="color: var(--game-text-muted); opacity: 0.1; font-family: var(--font-main); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Unknown Recipe</p>
+                            </div>
                         `;
-                        card.onclick = () => notify("ACCESS DENIED: Recipe locked. Complete previous timelines first.", "error");
+                        card.onclick = () => notify(`ACCESS DENIED: ${tStyle.name} clearance required. Complete previous timelines.`, "error");
                     }
                     grid.appendChild(card);
                 }
             }
         }
 
-        
         let sessionInventory = []; 
         let stagingArea = [];
         let currentFilter = 'all';
         let currentSearch = '';
 
+        function updateTimerDisplay() {
+            let mins = Math.floor(remainingSeconds / 60);
+            let secs = remainingSeconds % 60;
+            let display = document.getElementById('levelTimerDisplay');
+            if (display) {
+                display.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                if (remainingSeconds <= 15) {
+                    display.style.color = 'var(--danger)';
+                    display.classList.add('attention-pulse');
+                } else {
+                    display.style.color = 'var(--primary)';
+                    display.classList.remove('attention-pulse');
+                }
+            }
+        }
+
+        function levelFailed() {
+            clearCurrentAction();
+            notify("SERVICE FAILED: Time has run out.", "error");
+            document.getElementById('failOverlay').classList.add('active');
+        }
+
+        function retryLevel() {
+            document.getElementById('failOverlay').classList.remove('active');
+            let lvlData = levels[currentPlayingLevelNum - 1];
+            startLevel(currentPlayingLevelNum, lvlData);
+        }
+
         function startLevel(num, data) {
+            clearCurrentAction();
             currentPlayingLevelNum = num;
             targetLevelId = data.id;
             document.getElementById('targetDishName').textContent = data.name;
             
-            const hintList = document.getElementById('hintContent');
+            const hintList = document.getElementById('hintContentBase');
             hintList.innerHTML = '';
             data.hints.forEach(h => {
                 let li = document.createElement('li');
                 li.textContent = h;
                 hintList.appendChild(li);
             });
+            
+            updateHintUI();
 
             sessionInventory = masterItems.filter(i => i.cat !== 'prepped').map(i => i.id);
             stagingArea = [];
@@ -1890,17 +1969,38 @@
             renderStaging();
             switchScreen('screen-play');
             
-            currentLevelStartTime = Date.now(); // Start timer
+            currentLevelStartTime = Date.now();
+            
+            clearInterval(levelTimerInterval);
+            let catIndex = Math.floor((num - 1) / 10);
+            const timeLimits = [60, 120, 180, 240, 300]; 
+            remainingSeconds = timeLimits[catIndex];
+            updateTimerDisplay();
+
+            levelTimerInterval = setInterval(() => {
+                if (document.getElementById('screen-play').classList.contains('active') && 
+                    !document.getElementById('gameOverlay').classList.contains('active') && 
+                    !document.getElementById('failOverlay').classList.contains('active') && 
+                    !document.getElementById('hintModal').classList.contains('active') && 
+                    !document.getElementById('offlineModal').classList.contains('active')) {
+                    
+                    remainingSeconds--;
+                    updateTimerDisplay();
+                    
+                    if (remainingSeconds <= 0) {
+                        clearInterval(levelTimerInterval);
+                        levelFailed();
+                    }
+                }
+            }, 1000);
+
             notify(`SYSTEM: Kitchen prepared for ${data.name}. Good luck.`, 'info');
         }
 
-        
         function setCategory(cat) {
             currentFilter = cat;
             document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
-            const buttons = Array.from(document.querySelectorAll('.cat-btn'));
-            const targetBtn = buttons.find(btn => btn.getAttribute('onclick') === `setCategory('${cat}')`);
-            if (targetBtn) targetBtn.classList.add('active');
+            event.target.classList.add('active');
             renderPantry();
         }
 
@@ -1996,72 +2096,233 @@
 
         function performAction(actionStr) {
             if (stagingArea.length === 0) { notify("ERROR: Prep table is empty. Place ingredients and tools first.", "error"); return; }
+            if (isActionAnimating) return;
 
             let success = false;
+            let bestMatch = null;
+            let maxStars = 0;
+            let maxScore = -1;
 
             for (let t of db.theories) {
                 if (t.action === actionStr) {
-                    if (stagingArea.length === t.reqs.length) {
-                        let hasAll = t.reqs.every(req => stagingArea.includes(req));
-                        if (hasAll) {
-                            success = true;
-                            playActionSound(actionStr); 
-                            
-                            if (!sessionInventory.includes(t.result)) {
-                                sessionInventory.push(t.result);
+                    let reqCounts = {};
+                    t.reqs.forEach(r => reqCounts[r] = (reqCounts[r] || 0) + 1);
+                    
+                    let stageCounts = {};
+                    stagingArea.forEach(s => stageCounts[s] = (stageCounts[s] || 0) + 1);
+                    
+                    let hasAll = true;
+                    for (let r in reqCounts) {
+                        if ((stageCounts[r] || 0) < reqCounts[r]) {
+                            hasAll = false; break;
+                        }
+                    }
+
+                    if (hasAll) {
+                        let stagingCopy = [...stagingArea];
+                        t.reqs.forEach(r => {
+                            let idx = stagingCopy.indexOf(r);
+                            if(idx > -1) stagingCopy.splice(idx, 1);
+                        });
+
+                        let hasSaltOrCheeseOrButter = false;
+                        let hasBlackPepper = false;
+                        let validExtras = true;
+
+                        for (let ex of stagingCopy) {
+                            if (ex === 'salt') hasSaltOrCheeseOrButter = true;
+                            else if (ex === 'cheese' && !t.reqs.includes('cheese')) hasSaltOrCheeseOrButter = true;
+                            else if (ex === 'butter' && !t.reqs.includes('butter')) hasSaltOrCheeseOrButter = true;
+                            else if (ex === 'black_pepper') hasBlackPepper = true;
+                            else {
+                                validExtras = false; break;
                             }
-                            stagingArea = []; 
+                        }
+
+                        if (validExtras) {
+                            let earnedStars = 3;
+                            if (hasSaltOrCheeseOrButter) earnedStars++;
+                            if (hasBlackPepper) earnedStars++;
                             
-                            let resultName = db.items[t.result].name;
-                            notify(`SYNTHESIS COMPLETE: ${t.msg} [${resultName}] safely stored in your PREPPED inventory.`, 'success');
-                            
-                            renderPantry();
-                            renderStaging();
-                            checkWin(t.result);
-                            break;
+                            earnedStars = Math.min(5, earnedStars);
+                            let theoryScore = (t.reqs.length * 10) + earnedStars;
+
+                            if (theoryScore > maxScore) {
+                                maxScore = theoryScore;
+                                maxStars = earnedStars;
+                                bestMatch = t;
+                            }
                         }
                     }
                 }
             }
 
-            if (!success) { notify(`SYNTHESIS FAILED: Incorrect combination for ${actionStr.toUpperCase()}. Ingredients wasted.`, "error"); }
+            if (bestMatch) {
+                isActionAnimating = true;
+                playActionSound(actionStr); 
+                
+                let btnList = document.querySelectorAll('.game-actions .action-btn');
+                btnList.forEach(b => { b.style.opacity = '0.5'; b.disabled = true; });
+                
+                let stagingEl = document.getElementById('stagingArea');
+                stagingEl.style.pointerEvents = 'none';
+
+                let progContainer = document.createElement('div');
+                progContainer.id = 'actionProgressBarContainer';
+                progContainer.style.position = 'absolute';
+                progContainer.style.bottom = '20px';
+                progContainer.style.left = '50%';
+                progContainer.style.transform = 'translateX(-50%)';
+                progContainer.style.width = '80%';
+                progContainer.style.height = '10px';
+                progContainer.style.background = 'rgba(0,0,0,0.1)';
+                progContainer.style.border = '1px solid var(--game-border)';
+                progContainer.style.borderRadius = '5px';
+                progContainer.style.overflow = 'hidden';
+                progContainer.style.zIndex = '100';
+                
+                let progBar = document.createElement('div');
+                progBar.style.width = '0%';
+                progBar.style.height = '100%';
+                progBar.style.background = 'var(--primary)';
+                progBar.style.transition = 'width 4s linear';
+                progBar.style.boxShadow = '0 0 10px var(--primary)';
+                
+                let progLabel = document.createElement('div');
+                progLabel.id = 'actionProgressLabel';
+                progLabel.style.position = 'absolute';
+                progLabel.style.bottom = '40px';
+                progLabel.style.left = '50%';
+                progLabel.style.transform = 'translateX(-50%)';
+                progLabel.style.fontFamily = 'var(--font-geo)';
+                progLabel.style.fontWeight = '800';
+                progLabel.style.color = 'var(--primary)';
+                progLabel.style.textTransform = 'uppercase';
+                progLabel.style.letterSpacing = '3px';
+                progLabel.textContent = actionStr.toUpperCase() + 'ING...';
+
+                progContainer.appendChild(progBar);
+                stagingEl.appendChild(progContainer);
+                stagingEl.appendChild(progLabel);
+
+                setTimeout(() => { progBar.style.width = '100%'; }, 50);
+
+                actionTimeout = setTimeout(() => {
+                    isActionAnimating = false;
+                    btnList.forEach(b => { b.style.opacity = '1'; b.disabled = false; });
+                    stagingEl.style.pointerEvents = 'auto';
+                    if (progContainer) progContainer.remove();
+                    if (progLabel) progLabel.remove();
+                    
+                    if (!sessionInventory.includes(bestMatch.result)) {
+                        sessionInventory.push(bestMatch.result);
+                    }
+                    stagingArea = []; 
+                    
+                    let resultName = db.items[bestMatch.result].name;
+                    let isWin = (bestMatch.result === targetLevelId);
+                    
+                    if (!isWin) {
+                        let starStr = '⭐'.repeat(maxStars);
+                        let popup = document.createElement('div');
+                        popup.className = 'synth-popup';
+                        popup.innerHTML = `${starStr} ${resultName} Created! Moved to Prepped ⭐`;
+                        document.querySelector('.board-wrapper').appendChild(popup);
+                        setTimeout(() => popup.remove(), 2500);
+
+                        let prepBtn = document.getElementById('preppedBtn');
+                        if(prepBtn) {
+                            prepBtn.classList.remove('attention-pulse');
+                            void prepBtn.offsetWidth; 
+                            prepBtn.classList.add('attention-pulse');
+                        }
+
+                        notify(`SYNTHESIS COMPLETE: ${bestMatch.msg} [${starStr}]`, 'success');
+                    }
+                    
+                    renderPantry();
+                    renderStaging();
+                    if (isWin) {
+                        checkWin(bestMatch.result, maxStars);
+                    }
+                }, 4000);
+            } else {
+                notify(`SYNTHESIS FAILED: Incorrect combination for ${actionStr.toUpperCase()}. Ingredients wasted.`, "error");
+            }
         }
 
-        function checkWin(resId) {
+        function checkWin(resId, stars) {
             if (resId === targetLevelId) {
-                playActionSound('success'); 
-
+                clearInterval(levelTimerInterval);
+                playActionSound('magic'); 
+                
                 let timeTaken = (Date.now() - currentLevelStartTime) / 1000;
                 if (timeTaken < userFastestTime) {
                     userFastestTime = timeTaken;
                 }
 
-                let reward = 0;
-                if (currentPlayingLevelNum <= 10) {
-                    reward = 1000 + (currentPlayingLevelNum - 1) * 1000;
-                } else if (currentPlayingLevelNum <= 20) {
-                    reward = 10000 + (currentPlayingLevelNum - 11) * 5000;
-                } else if (currentPlayingLevelNum <= 30) {
-                    reward = 50000 + (currentPlayingLevelNum - 21) * 10000;
-                } else {
-                    reward = 150000 + (currentPlayingLevelNum - 31) * 50000;
+                if (!userLevelStars[resId] || stars > userLevelStars[resId]) {
+                    userLevelStars[resId] = stars;
                 }
+
+                let baseReward = 0;
+                if (currentPlayingLevelNum <= 10) {
+                    baseReward = 1000 + (currentPlayingLevelNum - 1) * 1000;
+                } else if (currentPlayingLevelNum <= 20) {
+                    baseReward = 10000 + (currentPlayingLevelNum - 11) * 5000;
+                } else if (currentPlayingLevelNum <= 30) {
+                    baseReward = 50000 + (currentPlayingLevelNum - 21) * 10000;
+                } else if (currentPlayingLevelNum <= 40) {
+                    baseReward = 150000 + (currentPlayingLevelNum - 31) * 50000;
+                } else {
+                    baseReward = 300000 + (currentPlayingLevelNum - 41) * 100000;
+                }
+
+                let multiplier = 1.0;
+                if (stars === 4) multiplier = 1.5;
+                if (stars === 5) multiplier = 2.0;
                 
+                let reward = Math.floor(baseReward * multiplier);
                 userBalance += reward;
                 
-                if (currentPlayingLevelNum === maxUnlockedLevel && maxUnlockedLevel < 40) {
+                let oldMax = maxUnlockedLevel;
+                if (currentPlayingLevelNum === maxUnlockedLevel && maxUnlockedLevel < 50) {
                     maxUnlockedLevel++;
                 }
                 
+                let newlyUnlockedBadge = badges.find(b => b.reqLevel === maxUnlockedLevel && maxUnlockedLevel !== oldMax);
+
                 saveUserData();
                 generateLevels(); 
                 updateBalanceUI();
+                renderBadges();
                 
-                notify(`LEVEL COMPLETE: ${reward.toLocaleString()} Kyats added to your balance.`, 'success');
+                if (newlyUnlockedBadge) {
+                    notify(`CHAPTER COMPLETE: 🏆 ${newlyUnlockedBadge.name} Badge Unlocked!`, 'success');
+                } else {
+                    notify(`LEVEL COMPLETE: ${reward.toLocaleString()} Kyats added to your balance.`, 'success');
+                }
 
                 setTimeout(() => {
-                    document.getElementById('overlayTitle').textContent = "Masterpiece Created.";
-                    document.getElementById('overlaySub').textContent = db.items[resId].name + " Unlocked • Timeline Advancing";
+                    playActionSound('success');
+
+                    document.getElementById('overlayDishImg').src = db.items[resId].img;
+                    
+                    let starHtml = '';
+                    for(let i=0; i<5; i++) {
+                        if(i < stars) starHtml += '<span style="color: #FFD700;">⭐</span>';
+                        else starHtml += '<span style="filter: grayscale(100%); opacity: 0.3; text-shadow: none;">⭐</span>';
+                    }
+                    document.getElementById('overlayStarsDisplay').innerHTML = starHtml;
+
+                    if (newlyUnlockedBadge) {
+                        document.getElementById('overlayTitle').textContent = `🏆 ${newlyUnlockedBadge.name} 🏆`;
+                        document.getElementById('overlaySub').textContent = "Chapter Completed • Badge Unlocked!";
+                    } else {
+                        document.getElementById('overlayTitle').textContent = "Masterpiece Created.";
+                        let starText = stars === 5 ? "PERFECT MASTERPIECE" : (stars === 4 ? "GOURMET DISH" : "STANDARD DISH");
+                        document.getElementById('overlaySub').textContent = db.items[resId].name + ` • ${starText}`;
+                    }
                     document.getElementById('overlayReward').textContent = `+${reward.toLocaleString()} Kyats`;
                     document.getElementById('gameOverlay').classList.add('active');
                 }, 800);

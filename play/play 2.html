@@ -91,8 +91,8 @@
 
         .game-app { position: relative; width: 100vw; height: 100vh; background: var(--game-bg); overflow: hidden; }
 
-        .game-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; flex-direction: column; background: var(--game-bg); animation: fadeIn 0.5s ease-out forwards; }
-        .game-screen.active { display: flex; }
+        .game-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; background: var(--game-bg); opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.5s cubic-bezier(0.19, 1, 0.22, 1), visibility 0.5s, transform 0.5s cubic-bezier(0.19, 1, 0.22, 1); transform: translateY(15px); z-index: 1; }
+        .game-screen.active { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); z-index: 5; }
 
         .game-header { padding: 1.5rem 4rem; background: var(--game-panel); border-bottom: 1px solid var(--game-border); display: flex; justify-content: space-between; align-items: center; z-index: 10; transition: background 0.5s;}
         .game-header h2 { font-size: 1.2rem; color: var(--secondary); text-transform: uppercase; letter-spacing: 4px; font-weight: 600;}
@@ -102,7 +102,7 @@
         .tips-btn:hover { background: var(--primary); color: var(--white); border-color: var(--primary); }
         .header-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; align-items: center; }
 
-        .main-menu { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-left: 8%; background: url('https://images.unsplash.com/photo-1495521821757-a1efb6729352?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat; }
+        .main-menu { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-left: 8%; background: url('../imgs/web-banners/kitchen.png') center/cover no-repeat; }
         .menu-gradient-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(to right, var(--game-bg) 0%, var(--game-bg) 35%, transparent 100%); z-index: 1; pointer-events: none; opacity: 0.95; transition: background 0.5s;}
         .menu-container { position: relative; z-index: 2; display: flex; flex-direction: row; align-items: center; justify-content: flex-start; gap: 8rem; max-width: 1200px; }
         .menu-brand-block { display: flex; flex-direction: column; width: 100%; max-width: 500px; }
@@ -158,7 +158,6 @@
 
         .cooking-zone { flex: 1; padding: 2rem 4rem; display: flex; flex-direction: column; background: var(--game-bg); overflow-y: auto; position: relative; }
 
-        /* Animation Popup for Prep Actions */
         .synth-popup {
             position: absolute;
             top: 50%; left: 50%;
@@ -187,16 +186,16 @@
         }
 
         .attention-pulse {
-            animation: severePulse 1.5s cubic-bezier(0.19, 1, 0.22, 1) 2 !important;
+            animation: severePulse 1.5s cubic-bezier(0.19, 1, 0.22, 1) infinite !important;
         }
 
         @keyframes severePulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(197, 160, 89, 0.8); }
-            50% { transform: scale(1.15); box-shadow: 0 0 0 20px rgba(197, 160, 89, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(197, 160, 89, 0); }
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.8); }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(230, 57, 70, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(230, 57, 70, 0); }
         }
 
-        .inventory-panel { flex: none; width: 450px; min-width: 300px; max-width: 700px; background: var(--game-panel); display: flex; flex-direction: column; position: relative; z-index: 10; transition: background 0.5s; overflow: hidden;}
+        .inventory-panel { flex: none; width: 550px; min-width: 350px; max-width: 800px; background: var(--game-panel); display: flex; flex-direction: column; position: relative; z-index: 10; transition: background 0.5s; overflow: hidden;}
         .inventory-panel.dragging { transition: none; user-select: none; }
         
         .resizer { width: 14px; background: var(--game-border); cursor: col-resize; display: flex; align-items: center; justify-content: center; transition: background 0.3s, width 0.3s; z-index: 15; position: relative; border-left: 1px solid rgba(0,0,0,0.05); border-right: 1px solid rgba(0,0,0,0.05);}
@@ -235,24 +234,19 @@
         .action-btn.clear:hover { background: rgba(230, 57, 70, 0.1); border-color: var(--danger); color: var(--danger); box-shadow: 0 8px 20px rgba(230, 57, 70, 0.15); }
         .game-actions .action-btn { flex: 1; min-width: 100px; }
 
-        .pantry-header { padding: 2rem; border-bottom: 1px solid var(--game-border); background: var(--game-panel); flex-shrink: 0;}
+        .pantry-header { padding: 1.5rem 1.5rem 0 1.5rem; background: var(--game-panel); flex-shrink: 0;}
         .pantry-search { width: 100%; padding: 1rem 1.5rem; background: var(--game-bg); border: 1px solid var(--game-border); border-radius: 30px; color: var(--secondary); font-family: var(--font-main); font-size: 0.95rem; outline: none; transition: var(--transition); margin-bottom: 1.5rem;}
-        .pantry-search:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(197, 160, 89, 0.1); background: var(--game-panel); }
         
-        .pantry-categories-wrapper { display: flex; align-items: center; width: 100%; gap: 1rem; position: relative;}
-
-        .pantry-scroll-mask { flex: 1; overflow: hidden; position: relative; -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%); mask-image: linear-gradient(to right, black 85%, transparent 100%); }
-        .pantry-categories { display: flex; gap: 0.6rem; overflow-x: auto; padding-bottom: 12px; flex: 1; scroll-behavior: smooth; padding-right: 3rem; }
-        .pantry-categories::-webkit-scrollbar { display: block; height: 8px; }
-        .pantry-categories::-webkit-scrollbar-track { background: var(--game-bg); border-radius: 10px; border: 1px solid var(--game-border); }
-        .pantry-categories::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; border: 1px solid var(--game-bg); }
-        .pantry-categories::-webkit-scrollbar-thumb:hover { background: var(--secondary); }
+        .inventory-body { display: flex; flex: 1; overflow: hidden; border-top: 1px solid var(--game-border); }
+        .pantry-sidebar { width: 150px; border-right: 1px solid var(--game-border); background: var(--game-panel); display: flex; flex-direction: column; flex-shrink: 0; z-index: 10;}
+        .pantry-categories { display: flex; flex-direction: column; gap: 0.5rem; overflow-y: auto; padding: 1.5rem 1rem; flex: 1; }
+        .pantry-categories::-webkit-scrollbar { display: none; }
+        .inventory-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: var(--game-panel); }
         
-        .pantry-fixed-prep { padding-left: 1rem; border-left: 2px solid var(--game-border); padding-bottom: 12px; flex-shrink: 0; z-index: 10; }
-        .cat-btn { background: transparent; border: 1px solid var(--game-border); color: var(--game-text-muted); padding: 0.6rem 1.2rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; transition: var(--transition); cursor: pointer;}
-        .cat-btn.active, .cat-btn:hover { background: rgba(197, 160, 89, 0.1); color: var(--primary); border-color: var(--primary); }
+        .cat-btn { background: transparent; border: 1px solid transparent; color: var(--game-text-muted); padding: 0.8rem 1rem; border-radius: 12px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; text-align: left; transition: var(--transition); cursor: pointer; width: 100%; }
+        .cat-btn.active, .cat-btn:hover { background: rgba(197, 160, 89, 0.1); color: var(--primary); border-color: rgba(197, 160, 89, 0.2); }
 
-        .prepped-btn { background: var(--primary) !important; color: var(--white) !important; border-color: var(--primary) !important; font-weight: 800; animation: pulsePrepped 2s infinite; }
+        .prepped-btn { background: var(--primary) !important; color: var(--white) !important; border-color: var(--primary) !important; font-weight: 800; margin-top: auto; text-align: center; animation: pulsePrepped 2s infinite; }
         @keyframes pulsePrepped { 0% { box-shadow: 0 0 0 0 rgba(197, 160, 89, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(197, 160, 89, 0); } 100% { box-shadow: 0 0 0 0 rgba(197, 160, 89, 0); } }
 
         .inventory-grid { flex: 1; overflow-y: auto; padding: 2rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 1.2rem; align-content: flex-start; }
@@ -285,7 +279,7 @@
         .info-wrapper { position: absolute; top: 1rem; right: 1rem; z-index: 10; }
         .info-icon { width: 24px; height: 24px; border-radius: 50%; background: var(--game-bg); border: 1px solid var(--game-border); color: var(--game-text-muted); display: flex; align-items: center; justify-content: center; font-family: var(--font-main); font-size: 0.85rem; cursor: help; font-weight: bold; transition: var(--transition); }
         .info-icon:hover { background: var(--primary); color: var(--white); border-color: var(--primary); }
-        .info-tooltip { position: absolute; top: 100%; right: 0; margin-top: 0.5rem; background: var(--secondary); color: var(--white); padding: 1rem; border-radius: 8px; font-size: 0.75rem; width: 220px; text-align: left; opacity: 0; visibility: hidden; transition: var(--transition); box-shadow: 0 10px 20px rgba(0,0,0,0.2); pointer-events: none; font-family: var(--font-main); font-weight: 400; line-height: 1.5; }
+        .info-tooltip { position: absolute; top: 100%; right: 0; margin-top: 0.5rem; background: var(--game-text); color: var(--game-bg); padding: 1rem; border-radius: 8px; font-size: 0.75rem; width: 220px; text-align: left; opacity: 0; visibility: hidden; transition: var(--transition); box-shadow: 0 10px 20px rgba(0,0,0,0.2); pointer-events: none; font-family: var(--font-main); font-weight: 500; line-height: 1.5; z-index: 100;}
         .info-wrapper:hover .info-tooltip { opacity: 1; visibility: visible; transform: translateY(0); }
 
         .lb-layout { display: flex; flex-direction: column; flex: 1; padding: 2rem 4rem; background: var(--game-bg); align-items: center;}
@@ -304,7 +298,7 @@
 
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; opacity: 0; transition: opacity 0.3s; }
         .modal-overlay.active { display: flex; opacity: 1; }
-        .modal-box { background: var(--game-panel); border: 1px solid var(--game-border); border-radius: 16px; width: 100%; max-width: 500px; padding: 3rem; text-align: center; transform: translateY(20px); transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1); box-shadow: 0 30px 60px rgba(0,0,0,0.2); max-height: 90vh; display: flex; flex-direction: column;}
+        .modal-box { background: var(--game-panel); border: 1px solid var(--game-border); border-radius: 16px; width: 100%; max-width: 600px; padding: 3rem; text-align: center; transform: translateY(20px); transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1); box-shadow: 0 30px 60px rgba(0,0,0,0.2); max-height: 90vh; display: flex; flex-direction: column;}
         .modal-overlay.active .modal-box { transform: translateY(0); }
         .modal-box h2 { font-size: 2rem; color: var(--secondary); margin-bottom: 1.5rem; font-family: var(--font-geo); text-transform: uppercase; letter-spacing: 2px; flex-shrink: 0;}
         .hint-list { text-align: left; background: var(--game-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--game-border); margin-bottom: 1.5rem; overflow-y: auto; list-style: none; flex: 1;}
@@ -335,21 +329,26 @@
         .setting-group input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; background: var(--primary); border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.3); transition: var(--transition);}
         .setting-group input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); background: var(--secondary); }
         
-        .game-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0, 0.8); z-index: 100; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; backdrop-filter: blur(10px); padding: 20px;}
+        .game-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--game-bg); z-index: 100; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px;}
         .game-overlay.active { display: flex; animation: fadeIn 0.6s cubic-bezier(0.19, 1, 0.22, 1); }
-        .overlay-msg { font-size: 4rem; font-weight: 800; color: var(--game-panel); margin-bottom: 0.5rem; letter-spacing: -1px;}
+        .overlay-msg { font-size: 4rem; font-weight: 800; color: var(--secondary); margin-bottom: 0.5rem; letter-spacing: -1px; }
         .overlay-sub { font-family: var(--font-geo); font-size: 1.2rem; color: var(--primary); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 4px; font-weight: 600; }
-        .reward-text { font-family: var(--font-geo); font-size: 2rem; color: var(--primary); font-weight: 900; margin-bottom: 3rem; text-shadow: 0 5px 15px rgba(197,160,89, 0.3); animation: floatUp 2s ease infinite alternate; }
+        .reward-text { font-family: var(--font-geo); font-size: 2rem; color: var(--primary); font-weight: 900; margin-bottom: 3rem; animation: floatUp 2s ease infinite alternate; }
+        
+        .dish-showcase { position: relative; width: 220px; height: 220px; margin-bottom: 2rem; display: flex; align-items: center; justify-content: center; }
+        .dish-showcase::before { content: ''; position: absolute; width: 100%; height: 100%; background: radial-gradient(circle, var(--primary) 0%, transparent 70%); opacity: 0.2; animation: pulseGlow 2s infinite alternate; z-index: 0; }
+        .dish-showcase img { width: 180px; height: 180px; object-fit: contain; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.15)); animation: floatUp 2s ease infinite alternate; z-index: 1; position: relative; }
+        @keyframes pulseGlow { 0% { transform: scale(0.8); opacity: 0.1; } 100% { transform: scale(1.2); opacity: 0.3; } }
         @keyframes floatUp { 0% { transform: translateY(0); } 100% { transform: translateY(-10px); } }
 
         .gfx-medium .level-card, .gfx-medium .action-btn, .gfx-medium .item-slot, .gfx-medium .toast, .gfx-medium .modal-box, .gfx-medium .staging-area, .gfx-medium .setting-group, .gfx-medium .lb-panel { box-shadow: none !important; }
         .gfx-medium .menu-gradient-overlay { background: var(--game-bg); opacity: 0.85; }
-        .gfx-medium .modal-overlay, .gfx-medium .game-overlay { backdrop-filter: none !important; background-color: var(--secondary); opacity: 0.98;}
+        .gfx-medium .modal-overlay, .gfx-medium .game-overlay { backdrop-filter: none !important; opacity: 0.98;}
 
         .gfx-low .level-card, .gfx-low .action-btn, .gfx-low .item-slot, .gfx-low .toast, .gfx-low .modal-box, .gfx-low .staging-area, .gfx-low .setting-group, .gfx-low .lb-panel { box-shadow: none !important; }
         .gfx-low .menu-gradient-overlay { display: none !important; }
         .gfx-low .main-menu { background: var(--game-bg) !important; }
-        .gfx-low .modal-overlay, .gfx-low .game-overlay { backdrop-filter: none !important; background-color: var(--secondary); opacity: 0.98; }
+        .gfx-low .modal-overlay, .gfx-low .game-overlay { backdrop-filter: none !important; opacity: 0.98; }
         .gfx-low * { animation-duration: 0.01s !important; transition-duration: 0.01s !important; }
 
         .badge-card { background: linear-gradient(145deg, var(--game-panel), var(--game-bg)); border: 1px solid var(--game-border); border-radius: 20px; padding: 2.5rem 1.5rem; text-align: center; transition: var(--transition); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 15px 35px rgba(0,0,0,0.04); position: relative; overflow: hidden; }
@@ -365,6 +364,7 @@
             .cooking-zone { flex: 0 0 50%; border-right: none; padding: 2rem; border-bottom: 4px solid var(--game-border); }
             .inventory-panel { flex: 1; width: 100% !important; max-width: 100% !important; border-left: none; }
             .game-actions { flex-wrap: nowrap; }
+            .desktop-only-balance { right: 2rem !important; }
         }
         
         @media (max-width: 768px) {
@@ -403,21 +403,26 @@
             .game-actions .action-btn { width: 100%; min-width: 0; padding: 0.8rem 0.2rem; font-size: 0.7rem; margin: 0;}
             .game-actions .action-btn.clear { grid-column: span 3; }
             
-            .pantry-header { padding: 1rem; }
-            .pantry-categories-wrapper { flex-direction: column; align-items: stretch; gap: 0.8rem; }
-            .pantry-scroll-mask { mask-image: none; -webkit-mask-image: none; }
-            .pantry-categories { padding-right: 0; padding-bottom: 5px;}
-            .pantry-fixed-prep { border-left: none; padding-left: 0; border-top: 1px solid var(--game-border); padding-top: 0.8rem; text-align: center;}
-            .prepped-btn { width: 100%; }
+            .pantry-header { padding: 1rem 1rem 0 1rem; }
+            .inventory-body { flex-direction: column; }
+            .pantry-sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--game-border); flex-shrink: 0;}
+            .pantry-categories { flex-direction: row; overflow-x: auto; padding: 1rem; gap: 0.5rem; }
+            .cat-btn { width: auto; white-space: nowrap; padding: 0.6rem 1.2rem; text-align: center; border-radius: 20px; border: 1px solid var(--game-border); }
+            .prepped-btn { margin-top: 0; }
 
             .inventory-grid { padding: 1rem; gap: 0.8rem; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
             .item-slot span { font-size: 0.65rem; }
             
             .modal-box { padding: 1.5rem; width: 90%; }
-            .overlay-msg { font-size: 2.5rem; color: var(--white); }
+            .overlay-msg { font-size: 2.5rem; }
 
             .setting-group { padding: 1rem; }
             .doc-content h2 { font-size: 2rem; }
+
+            .desktop-only-balance { top: 1rem !important; right: 1rem !important; gap: 0.5rem !important; }
+            .desktop-only-balance .balance-badge { padding: 0.5rem 1rem; font-size: 0.85rem; }
+            .desktop-only-balance button { width: 36px !important; height: 36px !important; }
+            .desktop-only-balance svg { width: 16px; height: 16px; }
         }
 
         @media (max-width: 480px) {
@@ -446,9 +451,9 @@
             .game-actions .action-btn.primary { grid-column: span 2; }
             
             .inventory-panel { flex: 1; }
-            .pantry-header { padding: 0.6rem; }
+            .pantry-header { padding: 0.6rem 0.6rem 0 0.6rem; }
             .pantry-search { padding: 0.6rem; font-size: 0.85rem; margin-bottom: 0.6rem; border-radius: 12px;}
-            .pantry-categories { gap: 0.3rem; }
+            .pantry-categories { padding: 0.6rem; gap: 0.3rem; }
             .cat-btn { padding: 0.4rem 0.6rem; font-size: 0.6rem; border-radius: 8px;}
             
             .inventory-grid { padding: 0.6rem; gap: 0.5rem; grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); }
@@ -487,9 +492,22 @@
     <div id="toastContainer"></div>
 
     <div id="hintModal" class="modal-overlay">
-        <div class="modal-box">
+        <div class="modal-box" style="max-width: 600px;">
             <h2>Chef's Guide</h2>
-            <ul id="hintContent" class="hint-list"></ul>
+            <div style="text-align: left; background: var(--game-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--game-border); margin-bottom: 1.5rem; overflow-y: auto; max-height: 50vh;">
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem; font-family: var(--font-geo); text-transform: uppercase; letter-spacing: 1px;">Base Recipe (⭐⭐⭐) - FREE</h4>
+                <ul id="hintContentBase" class="hint-list" style="margin-bottom: 1.5rem; padding: 0; background: transparent; border: none; overflow: visible;"></ul>
+                
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem; font-family: var(--font-geo); text-transform: uppercase; letter-spacing: 1px;">Gourmet Upgrade (⭐⭐⭐⭐)</h4>
+                <div id="hintContent4Star" style="margin-bottom: 1.5rem; font-family: var(--font-main); color: var(--game-text-muted); font-size: 0.95rem;">
+                    <button class="action-btn" onclick="buyStarHint(4)" style="width: 100%; font-size: 0.8rem;">Unlock 4-Star Secrets (10,000 K)</button>
+                </div>
+                
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem; font-family: var(--font-geo); text-transform: uppercase; letter-spacing: 1px;">Masterpiece Upgrade (⭐⭐⭐⭐⭐)</h4>
+                <div id="hintContent5Star" style="font-family: var(--font-main); color: var(--game-text-muted); font-size: 0.95rem;">
+                    <button class="action-btn" onclick="buyStarHint(5)" style="width: 100%; font-size: 0.8rem;">Unlock 5-Star Secrets (20,000 K)</button>
+                </div>
+            </div>
             <button class="action-btn primary" style="flex: none; width: 100%; border-radius: 30px; padding: 1rem;" onclick="document.getElementById('hintModal').classList.remove('active')">Understood</button>
         </div>
     </div>
@@ -511,16 +529,32 @@
     <main id="gameApp" class="game-app gfx-high font-size-medium">
         
         <div id="gameOverlay" class="game-overlay">
+            <div class="dish-showcase">
+                <img id="overlayDishImg" src="" alt="Dish">
+            </div>
+            <div id="overlayStarsDisplay" style="color: #FFD700; font-size: 2.5rem; margin-bottom: 0.5rem; letter-spacing: 5px; text-shadow: 0 4px 10px rgba(0,0,0,0.5);">⭐⭐⭐</div>
             <h2 id="overlayTitle" class="overlay-msg">Masterpiece Created.</h2>
             <p id="overlaySub" class="overlay-sub">Timeline Unlocked</p>
             <div id="overlayReward" class="reward-text">+1,000 Kyats</div>
             <button class="action-btn primary" style="flex: none; padding: 1rem 2rem; border-radius: 30px; width: 100%; max-width: 300px; font-size: 0.95rem; box-shadow: 0 5px 25px rgba(197, 160, 89, 0.5);" onclick="switchScreen('screen-recipes'); document.getElementById('gameOverlay').classList.remove('active');">Continue Journey</button>
         </div>
 
+        <div id="failOverlay" class="game-overlay">
+            <h2 class="overlay-msg" style="color: var(--danger) !important;">Service Failed.</h2>
+            <p class="overlay-sub">Time has run out.</p>
+            <button class="action-btn primary" style="flex: none; padding: 1rem 2rem; border-radius: 30px; width: 100%; max-width: 300px; font-size: 0.95rem; box-shadow: 0 5px 25px rgba(197, 160, 89, 0.5); margin-bottom: 1rem;" onclick="retryLevel()">Retry Level</button>
+            <button class="action-btn clear" style="flex: none; padding: 1rem 2rem; border-radius: 30px; width: 100%; max-width: 300px; font-size: 0.95rem;" onclick="switchScreen('screen-recipes'); document.getElementById('failOverlay').classList.remove('active');">Return to Menu</button>
+        </div>
+
         <div id="screen-main" class="game-screen main-menu active">
             <div class="menu-gradient-overlay"></div>
             
-            <div style="position: absolute; top: 2rem; right: 4rem; z-index: 10;" class="desktop-only-balance">
+            <div style="position: absolute; top: 2rem; right: 4rem; z-index: 10; display: flex; align-items: center; gap: 1rem;" class="desktop-only-balance">
+                <button class="action-btn" onclick="toggleFullScreen()" style="padding: 0; border-radius: 50%; min-width: unset; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; background: rgba(197, 160, 89, 0.1); backdrop-filter: blur(5px); border-color: var(--primary); color: var(--primary); box-shadow: 0 4px 10px rgba(197, 160, 89, 0.15);" title="Toggle Fullscreen">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+                    </svg>
+                </button>
                 <div class="balance-badge" title="Your Kyat Balance">
                     <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v12M8 12h8"/></svg>
                     <span class="ui-balance-display">0</span> K
@@ -592,7 +626,7 @@
                         <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v12M8 12h8"/></svg>
                         <span class="ui-balance-display">0</span> K
                     </div>
-                    <button class="game-close-btn tips-btn" id="tipsBtn" onclick="buyHint()">Tips</button>
+                    <button class="game-close-btn tips-btn" onclick="document.getElementById('hintModal').classList.add('active')">Tips</button>
                     <button class="game-close-btn" onclick="openStore('screen-play')">Store</button>
                     <button class="game-close-btn" onclick="openSettings('screen-play')">Settings</button>
                     <button class="game-close-btn" style="color:var(--danger); border-color:var(--danger);" onclick="abandonKitchen()">Abandon</button>
@@ -605,6 +639,10 @@
                         <div>
                             <h4>Target Masterpiece</h4>
                             <p id="targetDishName">Fried Onion</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <h4>Time Remaining</h4>
+                            <p id="levelTimerDisplay" style="color: var(--primary); font-size: 1.8rem; font-family: var(--font-geo); font-weight: 800; letter-spacing: 1px; margin: 0; transition: color 0.3s;">00:00</p>
                         </div>
                     </div>
                     
@@ -627,31 +665,29 @@
                 <div class="inventory-panel" id="inventoryPanel">
                     <div class="pantry-header">
                         <input type="text" id="pantrySearch" class="pantry-search" placeholder="Search globally..." onkeyup="renderPantry()">
-                        
-                        <div class="pantry-categories-wrapper">
-                            <div class="pantry-scroll-mask">
-                                <div class="pantry-categories" id="pantryCategories">
-                                    <button class="cat-btn active" onclick="setCategory('all')">All</button>
-                                    <button class="cat-btn" onclick="setCategory('tools')">Tools</button>
-                                    <button class="cat-btn" onclick="setCategory('pantry')">Pantry</button>
-                                    <button class="cat-btn" onclick="setCategory('raw_veg')">Veggies</button>
-                                    <button class="cat-btn" onclick="setCategory('raw_meat')">Meats</button>
-                                    <button class="cat-btn" onclick="setCategory('fruits')">Fruits</button>
-                                    <button class="cat-btn" onclick="setCategory('nuts')">Nuts</button>
-                                </div>
-                            </div>
-                            <div class="pantry-fixed-prep">
+                    </div>
+                    
+                    <div class="inventory-body">
+                        <div class="pantry-sidebar">
+                            <div class="pantry-categories" id="pantryCategories">
+                                <button class="cat-btn active" onclick="setCategory('all')">All</button>
+                                <button class="cat-btn" onclick="setCategory('tools')">Tools</button>
+                                <button class="cat-btn" onclick="setCategory('pantry')">Pantry</button>
+                                <button class="cat-btn" onclick="setCategory('raw_veg')">Veggies</button>
+                                <button class="cat-btn" onclick="setCategory('raw_meat')">Meats</button>
+                                <button class="cat-btn" onclick="setCategory('fruits')">Fruits</button>
+                                <button class="cat-btn" onclick="setCategory('nuts')">Nuts</button>
                                 <button id="preppedBtn" class="cat-btn prepped-btn" onclick="setCategory('prepped')">Prepped ⭐</button>
                             </div>
                         </div>
-                    </div>
 
-                    <div id="searchFeedback" style="display:none; padding: 1.5rem 2rem 0; color: var(--primary); font-family: var(--font-geo); font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px;"></div>
-
-                    <div class="inventory-grid" id="inventoryGrid"></div>
-
-                    <div id="resetSearchContainer" style="display:none; padding: 0 2rem 2rem; width: 100%;">
-                        <button class="action-btn clear" onclick="resetSearch()" style="width: 100%; border-radius: 30px;">Reset Search</button>
+                        <div class="inventory-main">
+                            <div id="searchFeedback" style="display:none; padding: 1.5rem 2rem 0; color: var(--primary); font-family: var(--font-geo); font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px;"></div>
+                            <div class="inventory-grid" id="inventoryGrid"></div>
+                            <div id="resetSearchContainer" style="display:none; padding: 0 2rem 2rem; width: 100%;">
+                                <button class="action-btn clear" onclick="resetSearch()" style="width: 100%; border-radius: 30px;">Reset Search</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -882,6 +918,9 @@
         let currentLevelStartTime = 0;
         let userFastestTime = Infinity;
 
+        let levelTimerInterval = null;
+        let remainingSeconds = 0;
+
         let userBalance = 0;
         let unlockedThemes = ['classic'];
         let unlockedPerks = [];
@@ -894,19 +933,20 @@
             sfxVol: 80,
             bgmVol: 50,
             bgmTrack: 0,
-            hasBoughtTips: false
+            hasBoughtTips4Star: false,
+            hasBoughtTips5Star: false
         };
 
         const themes = [
             { id: 'classic', name: 'Bistro Classic', desc: 'The default light bread and charcoal aesthetic.', price: 0, type: 'theme', tier: 'Classic', colors: { 'game-bg': '#FDFBF7', 'game-panel': '#FFFFFF', 'game-border': '#E8E3D9', 'primary': '#C5A059', 'secondary': '#1A1A1A', 'game-text': '#2C2C2C', 'game-text-muted': '#737373' } },
-            { id: 'budget', name: 'Starter Budget', desc: 'A cheap, simple aesthetic designed for beginners.', price: 1000, type: 'theme', tier: 'Classic', colors: { 'game-bg': '#E8E8E8', 'game-panel': '#F5F5F5', 'game-border': '#CCCCCC', 'primary': '#666666', 'secondary': '#333333', 'game-text': '#444444', 'game-text-muted': '#888888' } },
-            { id: 'dark', name: 'Midnight Service', desc: 'A sleek, low-light kitchen designed for night owls.', price: 1100, type: 'theme', tier: 'Classic', colors: { 'game-bg': '#121212', 'game-panel': '#1E1E1E', 'game-border': '#333333', 'primary': '#D4B271', 'secondary': '#FFFFFF', 'game-text': '#E5E5E5', 'game-text-muted': '#888888' } },
-            { id: 'ocean', name: 'Ocean Blue', desc: 'Calm and refreshing aquatic kitchen vibes.', price: 1600, type: 'theme', tier: 'Premium', colors: { 'game-bg': '#F0F8FF', 'game-panel': '#FFFFFF', 'game-border': '#B0E0E6', 'primary': '#008080', 'secondary': '#003366', 'game-text': '#004080', 'game-text-muted': '#6699CC' } },
-            { id: 'cyberpunk', name: 'Terminal Hacker', desc: 'High contrast futuristic neon prep station.', price: 2000, type: 'theme', tier: 'Premium', colors: { 'game-bg': '#0D0E15', 'game-panel': '#151828', 'game-border': '#00FFCC', 'primary': '#FF007F', 'secondary': '#00FFCC', 'game-text': '#E0E0E0', 'game-text-muted': '#00AA88' } },
-            { id: 'navy', name: 'Admiral Navy', desc: 'Sophisticated deep blue with prestigious gold accents.', price: 2200, type: 'theme', tier: 'Premium', colors: { 'game-bg': '#0A1128', 'game-panel': '#121C3A', 'game-border': '#D4AF37', 'primary': '#D4AF37', 'secondary': '#FFFFFF', 'game-text': '#F0F0F0', 'game-text-muted': '#8B9DC3' } },
-            { id: 'sakura', name: 'Sakura Bakery', desc: 'Bright pinks and soft whites for a sweet environment.', price: 1200, type: 'theme', tier: 'Deluxe', colors: { 'game-bg': '#FFF0F5', 'game-panel': '#FFFFFF', 'game-border': '#FFB7C5', 'primary': '#FF69B4', 'secondary': '#2D0A16', 'game-text': '#4A0E2E', 'game-text-muted': '#9C6B83' } },
-            { id: 'chocolate', name: 'Rich Chocolate', desc: 'Warm cocoa tones for a sweet, cozy kitchen.', price: 1500, type: 'theme', tier: 'Deluxe', colors: { 'game-bg': '#FDF8F5', 'game-panel': '#FFFFFF', 'game-border': '#E8DCC8', 'primary': '#8B5A2B', 'secondary': '#3E2723', 'game-text': '#4E342E', 'game-text-muted': '#8D6E63' } },
-            { id: 'royal', name: 'Royal Obsidian', desc: 'The absolute premium aesthetic with dark gold elements.', price: 2500, type: 'theme', tier: 'Deluxe', colors: { 'game-bg': '#0A0A0A', 'game-panel': '#141414', 'game-border': '#4A3B18', 'primary': '#D4AF37', 'secondary': '#FFFFFF', 'game-text': '#F0F0F0', 'game-text-muted': '#A0A0A0' } }
+            { id: 'budget', name: 'Starter Budget', desc: 'A cheap, simple aesthetic designed for beginners.', price: 200000, type: 'theme', tier: 'Classic', colors: { 'game-bg': '#E8E8E8', 'game-panel': '#F5F5F5', 'game-border': '#CCCCCC', 'primary': '#666666', 'secondary': '#333333', 'game-text': '#444444', 'game-text-muted': '#888888' } },
+            { id: 'dark', name: 'Midnight Service', desc: 'A sleek, low-light kitchen designed for night owls.', price: 25000, type: 'theme', tier: 'Classic', colors: { 'game-bg': '#121212', 'game-panel': '#1E1E1E', 'game-border': '#333333', 'primary': '#D4B271', 'secondary': '#FFFFFF', 'game-text': '#E5E5E5', 'game-text-muted': '#888888' } },
+            { id: 'ocean', name: 'Ocean Blue', desc: 'Calm and refreshing aquatic kitchen vibes.', price: 45000, type: 'theme', tier: 'Premium', colors: { 'game-bg': '#F0F8FF', 'game-panel': '#FFFFFF', 'game-border': '#B0E0E6', 'primary': '#008080', 'secondary': '#003366', 'game-text': '#004080', 'game-text-muted': '#6699CC' } },
+            { id: 'cyberpunk', name: 'Terminal Hacker', desc: 'High contrast futuristic neon prep station.', price: 35000, type: 'theme', tier: 'Premium', colors: { 'game-bg': '#0D0E15', 'game-panel': '#151828', 'game-border': '#00FFCC', 'primary': '#FF007F', 'secondary': '#00FFCC', 'game-text': '#E0E0E0', 'game-text-muted': '#00AA88' } },
+            { id: 'navy', name: 'Admiral Navy', desc: 'Sophisticated deep blue with prestigious gold accents.', price: 45000, type: 'theme', tier: 'Premium', colors: { 'game-bg': '#0A1128', 'game-panel': '#121C3A', 'game-border': '#D4AF37', 'primary': '#D4AF37', 'secondary': '#FFFFFF', 'game-text': '#F0F0F0', 'game-text-muted': '#8B9DC3' } },
+            { id: 'sakura', name: 'Sakura Bakery', desc: 'Bright pinks and soft whites for a sweet environment.', price: 150000, type: 'theme', tier: 'Deluxe', colors: { 'game-bg': '#FFF0F5', 'game-panel': '#FFFFFF', 'game-border': '#FFB7C5', 'primary': '#FF69B4', 'secondary': '#2D0A16', 'game-text': '#4A0E2E', 'game-text-muted': '#9C6B83' } },
+            { id: 'chocolate', name: 'Rich Chocolate', desc: 'Warm cocoa tones for a sweet, cozy kitchen.', price: 150000, type: 'theme', tier: 'Deluxe', colors: { 'game-bg': '#FDF8F5', 'game-panel': '#FFFFFF', 'game-border': '#E8DCC8', 'primary': '#8B5A2B', 'secondary': '#3E2723', 'game-text': '#4E342E', 'game-text-muted': '#8D6E63' } },
+            { id: 'royal', name: 'Royal Obsidian', desc: 'The absolute premium aesthetic with dark gold elements.', price: 100000, type: 'theme', tier: 'Deluxe', colors: { 'game-bg': '#0A0A0A', 'game-panel': '#141414', 'game-border': '#4A3B18', 'primary': '#D4AF37', 'secondary': '#FFFFFF', 'game-text': '#F0F0F0', 'game-text-muted': '#A0A0A0' } }
         ];
 
         const perks = [
@@ -924,32 +964,26 @@
         ];
 
         const bgmTracks = [
-            { name: 'Bossa Nova Default', url: 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=bossa-nova-111059.mp3' },
-            { name: 'Acoustic Breeze', url: 'https://cdn.pixabay.com/download/audio/2021/11/25/audio_91b3cb0024.mp3?filename=acoustic-breeze-1000.mp3' },
-            { name: 'Jazz French', url: 'https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=jazz-french-1002.mp3' },
-            { name: 'Lofi Study', url: 'https://cdn.pixabay.com/download/audio/2021/08/04/audio_062b0834ba.mp3?filename=lofi-study-112191.mp3' },
-            { name: 'Piano Moment', url: 'https://cdn.pixabay.com/download/audio/2022/02/07/audio_5ea28ebce3.mp3?filename=piano-moment-9835.mp3' },
-            { name: 'Ambient Chill', url: 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_e6ab44d03e.mp3?filename=ambient-chill-1100.mp3' }
+            { name: 'Velvet Morning', url: '../mp3/chill.mp3' },
+            { name: 'Lavender Drift', url: '../mp3/genshin.mp3' },
+            { name: 'Golden Hour Waltz', url: '../mp3/pool.mp3' },
+            { name: 'Carefree', url: '../mp3/care.mp3' },
+            { name: 'Jazz Noir', url: '../mp3/jazz.mp3' },
+            { name: 'Sonic Impact', url: '../mp3/sea.mp3' },
+            { name: 'Adrenaline Loop', url: '../mp3/roi.mp3' },
+            { name: 'Sugar Rush', url: '../mp3/flux.mp3' }
         ];
 
         let masterSFXVolume = 0.8;
         let bgmStarted = false;
 
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const uiClickSound = new Audio('../mp3/click.mp3');
+
         function playClick() {
             if(masterSFXVolume <= 0) return;
-            if(audioCtx.state === 'suspended') audioCtx.resume();
-            const oscillator = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            oscillator.type = 'sine';
-            oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.05);
-            gainNode.gain.setValueAtTime(masterSFXVolume * 0.3, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
-            oscillator.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            oscillator.start();
-            oscillator.stop(audioCtx.currentTime + 0.05);
+            let snd = uiClickSound.cloneNode();
+            snd.volume = masterSFXVolume * 0.5;
+            snd.play().catch(e => {});
         }
 
         const bgmAudio = new Audio(bgmTracks[appConfig.bgmTrack].url);
@@ -957,11 +991,12 @@
         bgmAudio.volume = 0.5;
 
         const sfxURLs = {
-            slice: 'https://actions.google.com/sounds/v1/tools/cutting_vegetables.ogg',
-            cook: 'https://actions.google.com/sounds/v1/water/crackle_and_hiss.ogg',
-            boil: 'https://actions.google.com/sounds/v1/water/water_boiling.ogg',
-            mix: 'https://actions.google.com/sounds/v1/water/water_slosh.ogg',
-            success: 'https://actions.google.com/sounds/v1/cartoon/cartoon_success_fanfare.ogg'
+            slice: '../mp3/slice.mp3',
+            cook: '../mp3/cook.mp3',
+            boil: '../mp3/boil.mp3',
+            mix: '../mp3/mix.mp3',
+            magic: '../mp3/magic.mp3',
+            success: '../mp3/success.wav',
         };
         const sfxAudio = {};
         for (let key in sfxURLs) { sfxAudio[key] = new Audio(sfxURLs[key]); }
@@ -1074,8 +1109,8 @@
             document.addEventListener('mousemove', (e) => {
                 if (!isDragging) return;
                 let newWidth = window.innerWidth - e.clientX;
-                if (newWidth < 300) newWidth = 300;
-                if (newWidth > 700) newWidth = 700;
+                if (newWidth < 350) newWidth = 350;
+                if (newWidth > 800) newWidth = 800;
                 inventoryPanel.style.width = newWidth + 'px';
             });
 
@@ -1134,8 +1169,7 @@
             
             applyTheme(activeTheme, false);
             updateBalanceUI();
-            updateToolColors();
-            updateTipsButton();
+            updateHintUI();
         }
 
         function saveUserData() {
@@ -1243,6 +1277,7 @@
         function startGame() { switchScreen('screen-recipes'); }
 
         function abandonKitchen() {
+            clearInterval(levelTimerInterval);
             switchScreen('screen-recipes');
             notify("ACTION: Kitchen abandoned. All ingredients and progress reset.", 'error');
         }
@@ -1327,7 +1362,6 @@
                 playActionSound('success'); 
                 
                 if (type === 'theme') applyTheme(id);
-                if (type === 'perk' && id === 'golden_tools') updateToolColors();
 
                 saveUserData();
                 updateBalanceUI();
@@ -1338,29 +1372,29 @@
             }
         }
 
-        function updateTipsButton() {
-            const btn = document.getElementById('tipsBtn');
-            if (btn) {
-                btn.textContent = appConfig.hasBoughtTips ? "Tips" : "Tips (1599 K)";
+        function updateHintUI() {
+            let h4 = document.getElementById('hintContent4Star');
+            if (appConfig.hasBoughtTips4Star) {
+                h4.innerHTML = `<ul class="hint-list" style="margin:0; padding:0; background:transparent; border:none;"><li>Enhance the base recipe with <strong>Sea Salt</strong>, or use <strong>Cheese / Butter</strong> (if not already required).</li></ul>`;
+            }
+            let h5 = document.getElementById('hintContent5Star');
+            if (appConfig.hasBoughtTips5Star) {
+                h5.innerHTML = `<ul class="hint-list" style="margin:0; padding:0; background:transparent; border:none;"><li>Achieve flawless perfection by adding <strong>Black Pepper</strong> on top of a 4-star recipe.</li></ul>`;
             }
         }
 
-        function buyHint() {
-            if (appConfig.hasBoughtTips) {
-                document.getElementById('hintModal').classList.add('active');
-                return;
-            }
-            const hintCost = 1599;
-            if (userBalance >= hintCost) {
-                userBalance -= hintCost;
-                appConfig.hasBoughtTips = true;
+        function buyStarHint(tier) {
+            let cost = tier === 4 ? 10000 : 20000;
+            if (userBalance >= cost) {
+                userBalance -= cost;
+                if (tier === 4) appConfig.hasBoughtTips4Star = true;
+                if (tier === 5) appConfig.hasBoughtTips5Star = true;
                 saveUserData();
                 updateBalanceUI();
-                updateTipsButton();
-                document.getElementById('hintModal').classList.add('active');
-                notify(`TRANSACTION SUCCESS: Lifetime Tips access unlocked for ${hintCost.toLocaleString()} K.`, 'success');
+                updateHintUI();
+                notify(`TRANSACTION SUCCESS: ${tier}-Star secrets unlocked permanently!`, 'success');
             } else {
-                notify(`TRANSACTION FAILED: Insufficient funds. You need ${hintCost.toLocaleString()} K to unlock tips.`, 'error');
+                notify(`TRANSACTION FAILED: Insufficient funds. You need ${cost.toLocaleString()} K.`, 'error');
             }
         }
 
@@ -1496,6 +1530,9 @@
             { id: 'pan', name: 'Frying Pan', cat: 'tools', img: '../imgs/ingredients/pan.png' },
             { id: 'pot', name: 'Cooking Pot', cat: 'tools', img: '../imgs/ingredients/pot.png' },
             { id: 'bowl', name: 'Mixing Bowl', cat: 'tools', img: '../imgs/ingredients/bowl.png' },
+            
+            { id: 'salt', name: 'Sea Salt', cat: 'pantry', img: '../imgs/ingredients/salt.png' },
+            { id: 'black_pepper', name: 'Black Pepper', cat: 'pantry', img: '../imgs/ingredients/black_pepper.png' },
             { id: 'oil', name: 'Olive Oil', cat: 'pantry', img: '../imgs/ingredients/oil.png' },
             { id: 'water', name: 'Water', cat: 'pantry', img: '../imgs/ingredients/water.png' },
             { id: 'pasta_dry', name: 'Dry Pasta', cat: 'pantry', img: '../imgs/ingredients/pasta_dry.png' },
@@ -1507,9 +1544,11 @@
             { id: 'flour', name: 'Flour', cat: 'pantry', img: '../imgs/ingredients/flour.png' },
             { id: 'soy_sauce', name: 'Soy Sauce', cat: 'pantry', img: '../imgs/ingredients/soy_sauce.png' },
             { id: 'wine', name: 'Cooking Wine', cat: 'pantry', img: '../imgs/ingredients/wine.png' },
+            
             { id: 'banana', name: 'Banana', cat: 'fruits', img: '../imgs/ingredients/banana.png' },
             { id: 'apple', name: 'Apple', cat: 'fruits', img: '../imgs/ingredients/apple.png' },
             { id: 'peanut', name: 'Peanut', cat: 'nuts', img: '../imgs/ingredients/peanut.png' },
+            
             { id: 'onion', name: 'Onion', cat: 'raw_veg', img: '../imgs/ingredients/onion.png' },
             { id: 'potato', name: 'Potato', cat: 'raw_veg', img: '../imgs/ingredients/potato.png' },
             { id: 'tomato', name: 'Tomato', cat: 'raw_veg', img: '../imgs/ingredients/tomato.png' },
@@ -1518,6 +1557,7 @@
             { id: 'mushroom', name: 'Mushroom', cat: 'raw_veg', img: '../imgs/ingredients/mushroom.png' },
             { id: 'seaweed', name: 'Seaweed', cat: 'raw_veg', img: '../imgs/ingredients/seaweed.png' },
             { id: 'truffle', name: 'Black Truffle', cat: 'raw_veg', img: '../imgs/ingredients/truffle.png' },
+            
             { id: 'beef', name: 'Raw Beef', cat: 'raw_meat', img: '../imgs/ingredients/beef.png' },
             { id: 'chicken', name: 'Raw Chicken', cat: 'raw_meat', img: '../imgs/ingredients/chicken.png' },
             { id: 'fish', name: 'Raw Fish', cat: 'raw_meat', img: '../imgs/ingredients/fish.png' },
@@ -1604,98 +1644,86 @@
             { id: 'caviar_risotto', name: 'Caviar Risotto', cat: 'prepped', img: '../imgs/ingredients/caviar_risotto.png' }
         ];
 
-        function updateToolColors() {
-            if(unlockedPerks.includes('golden_tools')) {
-                db.items['knife'].img = '../imgs/ingredients/golden_knife.png';
-                db.items['pan'].img = '../imgs/ingredients/golden_pan.png';
-                db.items['pot'].img = '../imgs/ingredients/golden_pot.png';
-                db.items['bowl'].img = '../imgs/ingredients/golden_bowl.png';
-            }
-        }
-
         masterItems.forEach(i => db.items[i.id] = i);
 
         const theories = [
-            [['bread', 'knife'], 'slice', 'sliced_bread', ['bread'], 'Bread portioned.'],
-            [['egg', 'bowl'], 'mix', 'beaten_egg', ['egg'], 'Egg beaten.'],
-            [['lettuce', 'knife'], 'slice', 'sliced_lettuce', ['lettuce'], 'Lettuce chopped.'],
-            [['tomato', 'knife'], 'slice', 'sliced_tomato', ['tomato'], 'Tomato sliced.'],
-            [['potato', 'knife'], 'slice', 'sliced_potato', ['potato'], 'Potato sliced into fries.'],
-            [['apple', 'knife'], 'slice', 'sliced_apple', ['apple'], 'Apple wedged.'],
-            [['banana', 'knife'], 'slice', 'sliced_banana', ['banana'], 'Banana sliced.'],
-            [['garlic', 'knife'], 'slice', 'chopped_garlic', ['garlic'], 'Garlic minced.'],
-            [['onion', 'knife'], 'slice', 'sliced_onion', ['onion'], 'Onion sliced.'],
-            [['chicken', 'knife'], 'slice', 'sliced_chicken', ['chicken'], 'Chicken sliced.'],
-            [['mushroom', 'knife'], 'slice', 'sliced_mushroom', ['mushroom'], 'Mushrooms sliced.'],
-            [['peanut', 'knife'], 'slice', 'crushed_peanut', ['peanut'], 'Peanuts crushed.'],
-            
-            [['flour', 'milk', 'egg', 'bowl'], 'mix', 'pancake_batter', ['flour', 'milk', 'egg'], 'Pancake batter mixed.'],
-            [['rice', 'water', 'pot'], 'boil', 'boiled_rice', ['rice', 'water'], 'Rice boiled fluffy.'],
-            [['pasta_dry', 'water', 'pot'], 'boil', 'cooked_pasta', ['pasta_dry', 'water'], 'Pasta cooked al dente.'],
-            [['tomato', 'water', 'pot'], 'boil', 'tomato_soup', ['tomato', 'water'], 'Tomato soup simmered.'],
-            [['cheese', 'milk', 'pot'], 'boil', 'cheese_sauce', ['cheese', 'milk'], 'Cheese sauce melted.'],
-            [['potato', 'water', 'pot'], 'boil', 'boiled_potato', ['potato', 'water'], 'Potato boiled.'],
-            [['egg', 'water', 'pot'], 'boil', 'boiled_egg', ['egg', 'water'], 'Egg boiled.'],
-            [['potato', 'onion', 'water', 'pot'], 'boil', 'vegetable_curry', ['potato', 'onion', 'water'], 'Vegetable curry brewed.'],
-            
-            [['beef', 'oil', 'pan'], 'cook', 'seared_beef', ['beef', 'oil'], 'Beef seared.'],
-            [['chicken', 'oil', 'pan'], 'cook', 'cooked_chicken', ['chicken', 'oil'], 'Chicken cooked.'],
-            [['fish', 'oil', 'pan'], 'cook', 'cooked_fish', ['fish', 'oil'], 'Fish cooked golden.'],
-            
-            [['egg', 'oil', 'pan'], 'cook', 'fried_egg', ['egg', 'oil'], 'Egg fried perfectly.'],
-            [['beaten_egg', 'butter', 'pan'], 'cook', 'scrambled_eggs', ['beaten_egg', 'butter'], 'Eggs scrambled fluffy.'],
-            [['sliced_bread', 'butter', 'pan'], 'cook', 'toast_with_butter', ['sliced_bread', 'butter'], 'Toast buttered and grilled.'],
-            [['sliced_bread', 'cheese', 'butter', 'pan'], 'cook', 'grilled_cheese', ['sliced_bread', 'cheese', 'butter'], 'Grilled cheese melted.'],
-            [['sliced_lettuce', 'sliced_tomato', 'bowl'], 'mix', 'simple_salad', ['sliced_lettuce', 'sliced_tomato'], 'Simple salad tossed.'],
-            [['pancake_batter', 'butter', 'pan'], 'cook', 'pancakes', ['pancake_batter', 'butter'], 'Pancakes flipped golden.'],
-            [['sliced_potato', 'oil', 'pan'], 'cook', 'french_fries', ['sliced_potato', 'oil'], 'Fries crisped.'],
-            [['beaten_egg', 'cheese', 'oil', 'pan'], 'cook', 'omelette', ['beaten_egg', 'cheese', 'oil'], 'Cheese omelette folded.'],
-            [['sliced_apple', 'sliced_banana', 'bowl'], 'mix', 'fruit_bowl', ['sliced_apple', 'sliced_banana'], 'Fruit bowl prepared.'],
+            [['onion', 'knife'], 'slice', 'sliced_onion', true, "Onion sliced correctly."],
+            [['potato', 'knife'], 'slice', 'sliced_potato', true, "Potato sliced into wedges."],
+            [['tomato', 'knife'], 'slice', 'sliced_tomato', true, "Tomato sliced cleanly."],
+            [['lettuce', 'knife'], 'slice', 'sliced_lettuce', true, "Lettuce chopped for salad."],
+            [['garlic', 'knife'], 'slice', 'chopped_garlic', true, "Garlic finely minced."],
+            [['mushroom', 'knife'], 'slice', 'sliced_mushroom', true, "Mushroom sliced perfectly."],
+            [['bread', 'knife'], 'slice', 'sliced_bread', true, "Bread sliced into portions."],
+            [['beef', 'knife'], 'slice', 'sliced_beef', true, "Beef sliced into thin strips."],
+            [['chicken', 'knife'], 'slice', 'sliced_chicken', true, "Chicken diced evenly."],
+            [['fish', 'knife'], 'slice', 'sliced_fish', true, "Fish filleted properly."],
+            [['banana', 'knife'], 'slice', 'sliced_banana', true, "Banana sliced uniformly."],
+            [['apple', 'knife'], 'slice', 'sliced_apple', true, "Apple cut into crisp slices."],
+            [['peanut', 'knife'], 'slice', 'crushed_peanut', true, "Peanuts crushed thoroughly."],
 
-            [['cooked_pasta', 'chopped_garlic', 'oil', 'pan'], 'cook', 'spaghetti_aglio_olio', ['cooked_pasta', 'chopped_garlic', 'oil'], 'Aglio e Olio tossed.'],
-            [['sliced_chicken', 'sliced_onion', 'soy_sauce', 'pan'], 'cook', 'chicken_stir_fry', ['sliced_chicken', 'sliced_onion', 'soy_sauce'], 'Chicken stir-fried.'],
-            [['sliced_bread', 'seared_beef', 'cheese', 'bowl'], 'mix', 'beef_burger', ['sliced_bread', 'seared_beef', 'cheese'], 'Burger assembled.'],
-            [['sliced_lettuce', 'cooked_chicken', 'cheese', 'bowl'], 'mix', 'caesar_salad', ['sliced_lettuce', 'cooked_chicken', 'cheese'], 'Caesar salad tossed.'],
-            [['boiled_rice', 'beaten_egg', 'soy_sauce', 'pan'], 'cook', 'fried_rice', ['boiled_rice', 'beaten_egg', 'soy_sauce'], 'Rice wok-fried.'],
-            [['cooked_fish', 'french_fries', 'bowl'], 'mix', 'fish_and_chips', ['cooked_fish', 'french_fries'], 'Fish and chips plated.'],
-            [['sliced_bread', 'cooked_chicken', 'sliced_lettuce', 'bowl'], 'mix', 'chicken_wrap', ['sliced_bread', 'cooked_chicken', 'sliced_lettuce'], 'Chicken wrap rolled.'],
-            [['cooked_pasta', 'cheese_sauce', 'bowl'], 'mix', 'pasta_alfredo', ['cooked_pasta', 'cheese_sauce'], 'Alfredo pasta coated.'],
-            
-            [['cooked_chicken', 'tomato_soup', 'cheese', 'pan'], 'cook', 'chicken_parmesan', ['cooked_chicken', 'tomato_soup', 'cheese'], 'Chicken parm baked.'],
-            [['seared_beef', 'butter', 'soy_sauce', 'pan'], 'cook', 'beef_steak_sauce', ['seared_beef', 'butter', 'soy_sauce'], 'Steak glazed in sauce.'],
-            [['boiled_rice', 'fish', 'seaweed', 'knife'], 'slice', 'sushi_rolls', ['boiled_rice', 'fish', 'seaweed'], 'Sushi rolled and sliced.'],
-            [['cooked_pasta', 'beaten_egg', 'crushed_peanut', 'soy_sauce', 'pan'], 'cook', 'pad_thai', ['cooked_pasta', 'beaten_egg', 'crushed_peanut', 'soy_sauce'], 'Pad Thai stir-fried.'],
-            [['cooked_pasta', 'seared_beef', 'cheese_sauce', 'tomato_soup', 'bowl'], 'mix', 'lasagna', ['cooked_pasta', 'seared_beef', 'cheese_sauce', 'tomato_soup'], 'Lasagna layered.'],
-            [['sliced_chicken', 'butter', 'tomato_soup', 'pot'], 'boil', 'butter_chicken', ['sliced_chicken', 'butter', 'tomato_soup'], 'Butter chicken simmered.'],
-            [['cooked_pasta', 'seared_beef', 'boiled_egg', 'water', 'pot'], 'boil', 'ramen', ['cooked_pasta', 'seared_beef', 'boiled_egg', 'water'], 'Ramen bowl assembled.'],
-            [['beef', 'soy_sauce', 'tomato_soup', 'pan'], 'cook', 'bbq_ribs', ['beef', 'soy_sauce', 'tomato_soup'], 'BBQ ribs glazed.'],
-            [['rice', 'butter', 'cheese', 'water', 'pot'], 'boil', 'risotto', ['rice', 'butter', 'cheese', 'water'], 'Creamy risotto cooked.'],
-            [['sliced_bread', 'seared_beef', 'sliced_lettuce', 'cheese', 'bowl'], 'mix', 'tacos', ['sliced_bread', 'seared_beef', 'sliced_lettuce', 'cheese'], 'Tacos folded.'],
+            [['egg', 'bowl'], 'mix', 'beaten_egg', true, "Egg beaten to a smooth texture."],
+            [['flour', 'milk', 'egg', 'bowl'], 'mix', 'pancake_batter', true, "Pancake batter mixed nicely."],
+            [['sliced_lettuce', 'sliced_tomato', 'bowl'], 'mix', 'simple_salad', true, "Simple fresh salad assembled."],
+            [['sliced_apple', 'sliced_banana', 'bowl'], 'mix', 'fruit_bowl', true, "Fruit bowl prepared beautifully."],
+            [['sliced_bread', 'seared_beef', 'cheese', 'bowl'], 'mix', 'beef_burger', true, "Beef burger fully constructed."],
+            [['sliced_lettuce', 'cooked_chicken', 'cheese', 'bowl'], 'mix', 'caesar_salad', true, "Caesar salad mixed with perfection."],
+            [['sliced_bread', 'sliced_lettuce', 'cooked_chicken', 'bowl'], 'mix', 'chicken_wrap', true, "Chicken wrap folded tight."],
+            [['cooked_pasta', 'cheese_sauce', 'bowl'], 'mix', 'pasta_alfredo', true, "Pasta Alfredo tossed rich and creamy."],
+            [['cooked_pasta', 'seared_beef', 'cheese_sauce', 'tomato_soup', 'bowl'], 'mix', 'lasagna', true, "Lasagna layers arranged."],
+            [['sliced_bread', 'seared_beef', 'sliced_lettuce', 'cheese', 'bowl'], 'mix', 'tacos', true, "Tacos assembled brilliantly."],
+            [['toast_with_butter', 'boiled_egg', 'cheese_sauce', 'bowl'], 'mix', 'eggs_benedict', true, "Eggs Benedict plated masterfully."],
+            [['cooked_chicken', 'vegetable_curry', 'boiled_rice', 'bowl'], 'mix', 'chicken_katsu', true, "Chicken Katsu Curry served."],
+            [['beef_steak_sauce', 'mashed_potatoes', 'simple_salad', 'bowl'], 'mix', 'full_course_steak', true, "Full Course Steak Dinner ready."],
+            [['sushi_rolls', 'fish', 'seaweed', 'bowl'], 'mix', 'sushi_platter', true, "Sushi Platter Deluxe arranged neatly."],
+            [['seared_fish', 'french_fries', 'bowl'], 'mix', 'fish_and_chips', true, "Classic Fish & Chips plated."],
+            [['risotto', 'caviar', 'bowl'], 'mix', 'caviar_risotto', true, "Luxury Caviar Risotto plated."],
 
-            [['fish', 'soy_sauce', 'wine', 'pan'], 'cook', 'salmon_teriyaki', ['fish', 'soy_sauce', 'wine'], 'Salmon glazed in teriyaki.'],
-            [['duck', 'oil', 'pot'], 'boil', 'duck_confit', ['duck', 'oil'], 'Duck slow-cooked in oil.'],
-            [['lobster', 'water', 'milk', 'pot'], 'boil', 'lobster_bisque', ['lobster', 'water', 'milk'], 'Lobster bisque reduced.'],
-            [['toast_with_butter', 'boiled_egg', 'cheese_sauce', 'bowl'], 'mix', 'eggs_benedict', ['toast_with_butter', 'boiled_egg', 'cheese_sauce'], 'Eggs benedict plated.'],
-            [['chicken', 'cheese', 'chopped_garlic', 'pan'], 'cook', 'stuffed_chicken', ['chicken', 'cheese', 'chopped_garlic'], 'Stuffed chicken seared.'],
-            [['rice', 'fish', 'lobster', 'water', 'pot'], 'boil', 'seafood_paella', ['rice', 'fish', 'lobster', 'water'], 'Paella simmered perfectly.'],
-            [['lamb', 'chopped_garlic', 'butter', 'pan'], 'cook', 'lamb_chops', ['lamb', 'chopped_garlic', 'butter'], 'Lamb chops crusted.'],
-            [['boiled_potato', 'flour', 'egg', 'pot'], 'boil', 'gnocchi', ['boiled_potato', 'flour', 'egg'], 'Gnocchi dumplings cooked.'],
-            [['cooked_chicken', 'vegetable_curry', 'boiled_rice', 'bowl'], 'mix', 'chicken_katsu', ['cooked_chicken', 'vegetable_curry', 'boiled_rice'], 'Katsu curry served.'],
-            [['seared_beef', 'sliced_mushroom', 'sliced_bread', 'pan'], 'cook', 'beef_wellington', ['seared_beef', 'sliced_mushroom', 'sliced_bread'], 'Wellington baked golden.'],
+            [['pasta_dry', 'water', 'pot'], 'boil', 'cooked_pasta', true, "Pasta boiled al dente."],
+            [['potato', 'water', 'pot'], 'boil', 'boiled_potato', true, "Potato boiled soft."],
+            [['rice', 'water', 'pot'], 'boil', 'boiled_rice', true, "Rice boiled fluffy and perfect."],
+            [['egg', 'water', 'pot'], 'boil', 'boiled_egg', true, "Egg hard-boiled."],
+            [['cheese', 'milk', 'pot'], 'boil', 'cheese_sauce', true, "Cheese melted into a rich sauce."],
+            [['tomato', 'water', 'pot'], 'boil', 'tomato_soup', true, "Tomato soup simmered beautifully."],
+            [['sliced_potato', 'sliced_onion', 'water', 'pot'], 'boil', 'vegetable_curry', true, "Vegetable curry boiled tender."],
+            [['boiled_potato', 'butter', 'pot'], 'boil', 'mashed_potatoes', true, "Potatoes mashed smoothly with butter."],
+            [['sliced_chicken', 'tomato_soup', 'butter', 'pot'], 'boil', 'butter_chicken', true, "Butter Chicken stewed perfectly."],
+            [['cooked_pasta', 'seared_beef', 'boiled_egg', 'water', 'pot'], 'boil', 'ramen', true, "Ramen broth and noodles simmered."],
+            [['rice', 'butter', 'cheese', 'water', 'pot'], 'boil', 'risotto', true, "Risotto cooked slowly to creamy perfection."],
+            [['duck', 'oil', 'pot'], 'boil', 'duck_confit', true, "Duck confit slow-cooked in fat."],
+            [['lobster', 'water', 'milk', 'pot'], 'boil', 'lobster_bisque', true, "Lobster bisque reduced perfectly."],
+            [['rice', 'fish', 'lobster', 'water', 'pot'], 'boil', 'seafood_paella', true, "Seafood paella infused with rich flavor."],
+            [['boiled_potato', 'flour', 'egg', 'pot'], 'boil', 'gnocchi', true, "Gnocchi dumplings boiled and floating."],
+            [['chicken', 'wine', 'sliced_mushroom', 'pot'], 'boil', 'coq_au_vin', true, "Coq au Vin braised wonderfully."],
+            [['fish', 'lobster', 'wine', 'tomato_soup', 'pot'], 'boil', 'bouillabaisse', true, "Bouillabaisse seafood stew simmered."],
+            [['flour', 'beef', 'chicken', 'pot'], 'boil', 'dim_sum', true, "Dim Sum dumplings steamed hot."],
+            [['beef', 'wine', 'tomato', 'pot'], 'boil', 'osso_bucco', true, "Osso Bucco braised until tender."],
 
-            [['boiled_potato', 'milk', 'bowl'], 'mix', 'mashed_potatoes', ['boiled_potato', 'milk'], 'Potatoes mashed smooth.'],
-            [['beef_steak_sauce', 'mashed_potatoes', 'side_salad', 'bowl'], 'mix', 'full_course_steak', ['beef_steak_sauce', 'mashed_potatoes', 'side_salad'], 'Full course steak served.'],
-            [['sushi_rolls', 'fish', 'seaweed', 'bowl'], 'mix', 'sushi_platter', ['sushi_rolls', 'fish', 'seaweed'], 'Deluxe sushi arranged.'],
-            [['chicken', 'wine', 'sliced_mushroom', 'pot'], 'boil', 'coq_au_vin', ['chicken', 'wine', 'sliced_mushroom'], 'Coq au vin braised.'],
-            [['fish', 'lobster', 'wine', 'tomato_soup', 'pot'], 'boil', 'bouillabaisse', ['fish', 'lobster', 'wine', 'tomato_soup'], 'Bouillabaisse stewed.'],
-            [['lamb', 'butter', 'wine', 'chopped_garlic', 'pan'], 'cook', 'rack_of_lamb', ['lamb', 'butter', 'wine', 'chopped_garlic'], 'Rack of lamb roasted.'],
-            [['cooked_pasta', 'cheese', 'truffle', 'pan'], 'cook', 'truffle_pasta', ['cooked_pasta', 'cheese', 'truffle'], 'Truffle pasta tossed.'],
-            [['duck', 'soy_sauce', 'sliced_bread', 'pan'], 'cook', 'peking_duck', ['duck', 'soy_sauce', 'sliced_bread'], 'Peking duck wraps ready.'],
-            [['flour', 'beef', 'chicken', 'pot'], 'boil', 'dim_sum', ['flour', 'beef', 'chicken'], 'Dim sum steamed.'],
-            [['beef', 'wine', 'tomato', 'pot'], 'boil', 'osso_bucco', ['beef', 'wine', 'tomato'], 'Osso Bucco tenderized.'],
-            [['risotto', 'caviar', 'bowl'], 'mix', 'caviar_risotto', ['risotto', 'caviar'], 'Caviar risotto elegantly plated.']
+            [['egg', 'oil', 'pan'], 'cook', 'fried_egg', true, "Egg fried nicely sunny-side up."],
+            [['beaten_egg', 'butter', 'pan'], 'cook', 'scrambled_eggs', true, "Eggs scrambled softly with butter."],
+            [['sliced_bread', 'butter', 'pan'], 'cook', 'toast_with_butter', true, "Bread toasted golden with butter."],
+            [['sliced_bread', 'cheese', 'butter', 'pan'], 'cook', 'grilled_cheese', true, "Grilled cheese sandwich melted perfectly."],
+            [['pancake_batter', 'butter', 'pan'], 'cook', 'pancakes', true, "Pancakes flipped golden brown."],
+            [['sliced_potato', 'oil', 'pan'], 'cook', 'french_fries', true, "Fries deep-fried crispy."],
+            [['beaten_egg', 'cheese', 'oil', 'pan'], 'cook', 'omelette', true, "Omelette folded cleanly with cheese."],
+            [['cooked_pasta', 'chopped_garlic', 'oil', 'pan'], 'cook', 'spaghetti_aglio_olio', true, "Spaghetti Aglio e Olio tossed beautifully."],
+            [['sliced_chicken', 'sliced_onion', 'soy_sauce', 'pan'], 'cook', 'chicken_stir_fry', true, "Chicken stir-fried fast and hot."],
+            [['beef', 'oil', 'pan'], 'cook', 'seared_beef', true, "Beef seared with a strong crust."],
+            [['chicken', 'oil', 'pan'], 'cook', 'cooked_chicken', true, "Chicken roasted and cooked through."],
+            [['fish', 'oil', 'pan'], 'cook', 'cooked_fish', true, "Fish pan-seared flaky and tender."],
+            [['boiled_rice', 'beaten_egg', 'soy_sauce', 'pan'], 'cook', 'fried_rice', true, "Fried rice tossed perfectly in the wok."],
+            [['cooked_chicken', 'tomato_soup', 'cheese', 'pan'], 'cook', 'chicken_parmesan', true, "Chicken Parmesan baked and melted."],
+            [['seared_beef', 'butter', 'soy_sauce', 'pan'], 'cook', 'beef_steak_sauce', true, "Beef steak glazed with rich sauce."],
+            [['cooked_pasta', 'beaten_egg', 'crushed_peanut', 'soy_sauce', 'pan'], 'cook', 'pad_thai', true, "Pad Thai tossed with sweet and savory notes."],
+            [['beef', 'tomato_soup', 'soy_sauce', 'pan'], 'cook', 'bbq_ribs', true, "BBQ Ribs glazed in thick sauce."],
+            [['fish', 'soy_sauce', 'wine', 'pan'], 'cook', 'salmon_teriyaki', true, "Salmon Teriyaki glazed and shiny."],
+            [['chicken', 'cheese', 'chopped_garlic', 'pan'], 'cook', 'stuffed_chicken', true, "Chicken breast stuffed and seared."],
+            [['lamb', 'chopped_garlic', 'butter', 'pan'], 'cook', 'lamb_chops', true, "Lamb chops seared with garlic butter."],
+            [['seared_beef', 'sliced_mushroom', 'sliced_bread', 'pan'], 'cook', 'beef_wellington', true, "Beef Wellington crusted beautifully."],
+            [['lamb', 'butter', 'wine', 'chopped_garlic', 'pan'], 'cook', 'rack_of_lamb', true, "Rack of Lamb roasted with a wine glaze."],
+            [['cooked_pasta', 'cheese', 'truffle', 'pan'], 'cook', 'truffle_pasta', true, "Truffle Pasta tossed richly."],
+            [['duck', 'soy_sauce', 'sliced_bread', 'pan'], 'cook', 'peking_duck', true, "Peking Duck roasted crispy."]
         ];
-        
+
         theories.forEach(t => db.theories.push({ reqs: t[0], action: t[1], result: t[2], consumes: t[3], msg: t[4] }));
 
         const levels = [
@@ -1795,12 +1823,39 @@
         let currentFilter = 'all';
         let currentSearch = '';
 
+        function updateTimerDisplay() {
+            let mins = Math.floor(remainingSeconds / 60);
+            let secs = remainingSeconds % 60;
+            let display = document.getElementById('levelTimerDisplay');
+            if (display) {
+                display.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                if (remainingSeconds <= 15) {
+                    display.style.color = 'var(--danger)';
+                    display.classList.add('attention-pulse');
+                } else {
+                    display.style.color = 'var(--primary)';
+                    display.classList.remove('attention-pulse');
+                }
+            }
+        }
+
+        function levelFailed() {
+            notify("SERVICE FAILED: Time has run out.", "error");
+            document.getElementById('failOverlay').classList.add('active');
+        }
+
+        function retryLevel() {
+            document.getElementById('failOverlay').classList.remove('active');
+            let lvlData = levels[currentPlayingLevelNum - 1];
+            startLevel(currentPlayingLevelNum, lvlData);
+        }
+
         function startLevel(num, data) {
             currentPlayingLevelNum = num;
             targetLevelId = data.id;
             document.getElementById('targetDishName').textContent = data.name;
             
-            const hintList = document.getElementById('hintContent');
+            const hintList = document.getElementById('hintContentBase');
             hintList.innerHTML = '';
             data.hints.forEach(h => {
                 let li = document.createElement('li');
@@ -1821,6 +1876,30 @@
             switchScreen('screen-play');
             
             currentLevelStartTime = Date.now();
+            
+            clearInterval(levelTimerInterval);
+            let catIndex = Math.floor((num - 1) / 10);
+            const timeLimits = [60, 120, 180, 240, 300]; 
+            remainingSeconds = timeLimits[catIndex];
+            updateTimerDisplay();
+
+            levelTimerInterval = setInterval(() => {
+                if (document.getElementById('screen-play').classList.contains('active') && 
+                    !document.getElementById('gameOverlay').classList.contains('active') && 
+                    !document.getElementById('failOverlay').classList.contains('active') && 
+                    !document.getElementById('hintModal').classList.contains('active') && 
+                    !document.getElementById('offlineModal').classList.contains('active')) {
+                    
+                    remainingSeconds--;
+                    updateTimerDisplay();
+                    
+                    if (remainingSeconds <= 0) {
+                        clearInterval(levelTimerInterval);
+                        levelFailed();
+                    }
+                }
+            }, 1000);
+
             notify(`SYSTEM: Kitchen prepared for ${data.name}. Good luck.`, 'info');
         }
 
@@ -1925,74 +2004,132 @@
             if (stagingArea.length === 0) { notify("ERROR: Prep table is empty. Place ingredients and tools first.", "error"); return; }
 
             let success = false;
+            let bestMatch = null;
+            let maxStars = 0;
+            let maxScore = -1;
 
             for (let t of db.theories) {
                 if (t.action === actionStr) {
-                    if (stagingArea.length === t.reqs.length) {
-                        let hasAll = t.reqs.every(req => stagingArea.includes(req));
-                        if (hasAll) {
-                            success = true;
-                            playActionSound(actionStr); 
-                            
-                            if (!sessionInventory.includes(t.result)) {
-                                sessionInventory.push(t.result);
-                            }
-                            stagingArea = []; 
-                            
-                            let resultName = db.items[t.result].name;
-                            let isWin = (t.result === targetLevelId);
-                            
-                            if (!isWin) {
-                                let popup = document.createElement('div');
-                                popup.className = 'synth-popup';
-                                popup.innerHTML = `⭐ ${resultName} Created! Moved to Prepped ⭐`;
-                                document.querySelector('.board-wrapper').appendChild(popup);
-                                setTimeout(() => popup.remove(), 2500);
-
-                                let prepBtn = document.getElementById('preppedBtn');
-                                if(prepBtn) {
-                                    prepBtn.classList.remove('attention-pulse');
-                                    void prepBtn.offsetWidth; 
-                                    prepBtn.classList.add('attention-pulse');
-                                }
-
-                                notify(`SYNTHESIS COMPLETE: ${t.msg} [${resultName}] sent to PREPPED ⭐ tab.`, 'success');
-                            }
-                            
-                            renderPantry();
-                            renderStaging();
-                            checkWin(t.result);
-                            break;
+                    let reqCounts = {};
+                    t.reqs.forEach(r => reqCounts[r] = (reqCounts[r] || 0) + 1);
+                    
+                    let stageCounts = {};
+                    stagingArea.forEach(s => stageCounts[s] = (stageCounts[s] || 0) + 1);
+                    
+                    let hasAll = true;
+                    for (let r in reqCounts) {
+                        if ((stageCounts[r] || 0) < reqCounts[r]) {
+                            hasAll = false; break;
                         }
                     }
+
+                    if (hasAll) {
+                        let stagingCopy = [...stagingArea];
+                        t.reqs.forEach(r => {
+                            let idx = stagingCopy.indexOf(r);
+                            if(idx > -1) stagingCopy.splice(idx, 1);
+                        });
+
+                        let hasSaltOrCheeseOrButter = false;
+                        let hasBlackPepper = false;
+                        let validExtras = true;
+
+                        for (let ex of stagingCopy) {
+                            if (ex === 'salt') hasSaltOrCheeseOrButter = true;
+                            else if (ex === 'cheese' && !t.reqs.includes('cheese')) hasSaltOrCheeseOrButter = true;
+                            else if (ex === 'butter' && !t.reqs.includes('butter')) hasSaltOrCheeseOrButter = true;
+                            else if (ex === 'black_pepper') hasBlackPepper = true;
+                            else {
+                                validExtras = false; break;
+                            }
+                        }
+
+                        if (validExtras) {
+                            let earnedStars = 3;
+                            if (hasSaltOrCheeseOrButter) earnedStars++;
+                            if (hasBlackPepper) earnedStars++;
+                            
+                            earnedStars = Math.min(5, earnedStars);
+                            let theoryScore = (t.reqs.length * 10) + earnedStars;
+
+                            if (theoryScore > maxScore) {
+                                maxScore = theoryScore;
+                                maxStars = earnedStars;
+                                bestMatch = t;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (bestMatch) {
+                success = true;
+                playActionSound(actionStr); 
+                
+                if (!sessionInventory.includes(bestMatch.result)) {
+                    sessionInventory.push(bestMatch.result);
+                }
+                stagingArea = []; 
+                
+                let resultName = db.items[bestMatch.result].name;
+                let isWin = (bestMatch.result === targetLevelId);
+                
+                if (!isWin) {
+                    let starStr = '⭐'.repeat(maxStars);
+                    let popup = document.createElement('div');
+                    popup.className = 'synth-popup';
+                    popup.innerHTML = `${starStr} ${resultName} Created! Moved to Prepped ⭐`;
+                    document.querySelector('.board-wrapper').appendChild(popup);
+                    setTimeout(() => popup.remove(), 2500);
+
+                    let prepBtn = document.getElementById('preppedBtn');
+                    if(prepBtn) {
+                        prepBtn.classList.remove('attention-pulse');
+                        void prepBtn.offsetWidth; 
+                        prepBtn.classList.add('attention-pulse');
+                    }
+
+                    notify(`SYNTHESIS COMPLETE: ${bestMatch.msg} [${starStr}]`, 'success');
+                }
+                
+                renderPantry();
+                renderStaging();
+                if (isWin) {
+                    checkWin(bestMatch.result, maxStars);
                 }
             }
 
             if (!success) { notify(`SYNTHESIS FAILED: Incorrect combination for ${actionStr.toUpperCase()}. Ingredients wasted.`, "error"); }
         }
 
-        function checkWin(resId) {
+        function checkWin(resId, stars) {
             if (resId === targetLevelId) {
-                playActionSound('success'); 
+                clearInterval(levelTimerInterval);
+                playActionSound('magic'); 
                 
                 let timeTaken = (Date.now() - currentLevelStartTime) / 1000;
                 if (timeTaken < userFastestTime) {
                     userFastestTime = timeTaken;
                 }
 
-                let reward = 0;
+                let baseReward = 0;
                 if (currentPlayingLevelNum <= 10) {
-                    reward = 1000 + (currentPlayingLevelNum - 1) * 1000;
+                    baseReward = 1000 + (currentPlayingLevelNum - 1) * 1000;
                 } else if (currentPlayingLevelNum <= 20) {
-                    reward = 10000 + (currentPlayingLevelNum - 11) * 5000;
+                    baseReward = 10000 + (currentPlayingLevelNum - 11) * 5000;
                 } else if (currentPlayingLevelNum <= 30) {
-                    reward = 50000 + (currentPlayingLevelNum - 21) * 10000;
+                    baseReward = 50000 + (currentPlayingLevelNum - 21) * 10000;
                 } else if (currentPlayingLevelNum <= 40) {
-                    reward = 150000 + (currentPlayingLevelNum - 31) * 50000;
+                    baseReward = 150000 + (currentPlayingLevelNum - 31) * 50000;
                 } else {
-                    reward = 300000 + (currentPlayingLevelNum - 41) * 100000;
+                    baseReward = 300000 + (currentPlayingLevelNum - 41) * 100000;
                 }
+
+                let multiplier = 1.0;
+                if (stars === 4) multiplier = 1.5;
+                if (stars === 5) multiplier = 2.0;
                 
+                let reward = Math.floor(baseReward * multiplier);
                 userBalance += reward;
                 
                 let oldMax = maxUnlockedLevel;
@@ -2014,16 +2151,36 @@
                 }
 
                 setTimeout(() => {
+                    playActionSound('success');
+
+                    document.getElementById('overlayDishImg').src = db.items[resId].img;
+                    document.getElementById('overlayStarsDisplay').textContent = '⭐'.repeat(stars);
+
                     if (newlyUnlockedBadge) {
                         document.getElementById('overlayTitle').textContent = `🏆 ${newlyUnlockedBadge.name} 🏆`;
                         document.getElementById('overlaySub').textContent = "Chapter Completed • Badge Unlocked!";
                     } else {
                         document.getElementById('overlayTitle').textContent = "Masterpiece Created.";
-                        document.getElementById('overlaySub').textContent = db.items[resId].name + " Unlocked • Timeline Advancing";
+                        let starText = stars === 5 ? "PERFECT MASTERPIECE" : (stars === 4 ? "GOURMET DISH" : "STANDARD DISH");
+                        document.getElementById('overlaySub').textContent = db.items[resId].name + ` • ${starText}`;
                     }
                     document.getElementById('overlayReward').textContent = `+${reward.toLocaleString()} Kyats`;
                     document.getElementById('gameOverlay').classList.add('active');
                 }, 800);
+            }
+        }
+        
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen().catch(err => {
+                        notify(`SYSTEM ERROR: Cannot enable full-screen mode.`, "error");
+                    });
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
             }
         }
 
