@@ -84,6 +84,21 @@
         .loader-slogan span { color: var(--primary); font-weight: 700; }
         @keyframes pulseText { 0% { opacity: 0.5; } 100% { opacity: 1; } }
 
+        /* Universal Safe Bottom Spacing for All Scrollable Areas */
+        .doc-content::after,
+        .recipe-grid-container::after,
+        .cooking-zone::after,
+        .inventory-grid::after,
+        .hint-list::after {
+            content: '';
+            display: block;
+            height: 6rem;
+            width: 100%;
+            grid-column: 1 / -1;
+            flex-shrink: 0;
+            pointer-events: none;
+        }
+
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--game-border); border-radius: 10px; }
@@ -125,7 +140,6 @@
         .icon-btn { padding: 0.5rem !important; border-radius: 50% !important; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3) !important; }
         .icon-btn svg { width: 18px; height: 18px; }
 
-        /* Rank Styles for Tabs */
         .difficulty-tabs { 
             display: flex; gap: 1rem; margin-bottom: 2rem; padding-bottom: 0.5rem; 
             flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none;
@@ -138,14 +152,14 @@
         .diff-tab.rank-impossible.active { background: linear-gradient(145deg, #1f2226, #121417); border-color: #8892b0; color: #e5e4e2; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); font-weight: 800; transform: translateY(-2px); }
         .diff-tab.rank-executive.active { background: linear-gradient(145deg, #0a0a0a, #000000); border-color: #ffd700; color: #ffd700; box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2); font-weight: 800; transform: translateY(-2px); }
 
-        /* Rank Styles for Cards */
         .recipe-grid-container { flex: 1; overflow-y: auto; padding-right: 1rem; padding-bottom: 2rem; }
         .recipe-grid { display: none; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 2.5rem; animation: fadeIn 0.4s ease-out; }
         .recipe-grid.active { display: grid; }
 
         .level-card, .badge-card { background: linear-gradient(145deg, var(--game-panel), var(--game-bg)); border: 1px solid var(--game-border); border-radius: 24px; padding: 2.5rem 1.5rem; text-align: center; cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; box-shadow: 0 15px 35px rgba(0,0,0,0.04); }
         .level-card:hover, .badge-card:hover { border-color: var(--primary); transform: translateY(-10px); box-shadow: 0 25px 50px rgba(197, 160, 89, 0.2); }
-        .level-card.locked, .badge-card.locked { opacity: 0.6; cursor: not-allowed; background: var(--game-bg);}
+        .level-card.locked, .badge-card.locked { cursor: not-allowed; background: var(--game-bg);}
+        .level-card.locked { opacity: 0.6; }
         .level-card.locked:hover, .badge-card.locked:hover { transform: none; border-color: var(--game-border); box-shadow: 0 10px 20px rgba(0,0,0,0.02); }
         
         .level-card.rank-easy, .badge-card.rank-easy { background: linear-gradient(145deg, #ffffff, #f4f0ec); border-color: #dcb897; }
@@ -171,14 +185,13 @@
         .level-card h4, .badge-card h4 { font-size: 1.05rem; margin-bottom: 0.5rem; color: var(--secondary); font-family: var(--font-geo); font-weight: 700; letter-spacing: 1px;}
         .level-card p, .badge-card p { font-family: var(--font-main); font-size: 0.75rem; color: var(--game-text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600;}
 
-        /* --- RECIPE MENU SPECIFIC REDESIGN OVERRIDES --- */
         #screen-recipes .recipe-layout {
             padding: 0;
         }
         #screen-recipes .difficulty-tabs {
             border-bottom: 1px solid var(--game-border);
             padding: 0 4rem; 
-            margin-bottom: 1.5rem; /* Adjusted to balance the extra padding-top added below */
+            margin-bottom: 1.5rem;
             gap: 3rem;
         }
         #screen-recipes .diff-tab {
@@ -194,12 +207,11 @@
             content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 3px;
             background: var(--secondary); display: block; border-radius: 3px 3px 0 0;
         }
-        /* Completely remove the visual rank cues from tabs in Recipe screen */
         #screen-recipes .diff-tab[class*="rank-"] { background: transparent; box-shadow: none; border-color: transparent; color: var(--game-text-muted); }
         #screen-recipes .diff-tab[class*="rank-"].active { color: var(--secondary); background: transparent; }
 
         #screen-recipes .recipe-grid-container {
-            padding: 15px 4rem 4rem; /* Padding top prevents cards from clipping during hover transform */
+            padding: 15px 4rem 4rem;
         }
         #screen-recipes .recipe-grid {
             gap: 2.5rem;
@@ -265,7 +277,6 @@
         
         #screen-recipes .level-card.locked { opacity: 0.8; cursor: not-allowed; border-color: var(--game-border); }
         #screen-recipes .level-card.locked:hover { transform: none; border-color: var(--game-border); box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
-        /* --- END RECIPE MENU REDESIGN --- */
 
         .play-layout { display: flex; flex: 1; height: calc(100vh - 90px); position: relative; overflow: hidden; }
 
@@ -473,7 +484,6 @@
             .inventory-panel { flex: 1; width: 100% !important; max-width: 100% !important; border-left: none; }
             .game-actions { flex-wrap: nowrap; }
             
-            /* Recipe Menu Adjustments */
             #screen-recipes .difficulty-tabs { padding: 0 2rem; }
             #screen-recipes .recipe-grid-container { padding: 15px 2rem 2rem; }
             #screen-recipes .recipe-grid { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
@@ -531,7 +541,6 @@
             .setting-group { padding: 1rem; }
             .doc-content h2 { font-size: 2rem; }
             
-            /* Recipe Menu Adjustments */
             #screen-recipes .difficulty-tabs { padding: 0 1.5rem; gap: 1.5rem; margin-bottom: 1rem; }
             #screen-recipes .recipe-grid-container { padding: 15px 1.5rem 2rem; }
             #screen-recipes .recipe-grid { grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
@@ -589,7 +598,6 @@
             .overlay-sub { font-size: 0.9rem; margin-bottom: 1rem;}
             .reward-text { font-size: 1.5rem; margin-bottom: 1.5rem;}
             
-            /* Recipe Menu Adjustments */
             #screen-recipes .difficulty-tabs { padding: 0 1rem; gap: 1rem; margin-bottom: 1rem; }
             #screen-recipes .recipe-grid-container { padding: 15px 1rem 2rem; }
             #screen-recipes .recipe-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
@@ -691,7 +699,7 @@
 
             <div class="menu-container">
                 <div class="menu-brand-block reveal">
-                    <span class="brand-tag">THE PREMIER CULINARY SIMULATION ENGINE</span>
+                    <span class="brand-tag">CHEF DASHBOARD</span>
                     <div class="menu-brand">
                         <h1 style="white-space: nowrap; display: inline-block;">BISTRO<strong>X</strong></h1>
                         <p>An interactive image-based cooking game. Select visual ingredients, experiment with real cooking methods, and discover new dishes based entirely on your choices.</p>
@@ -705,7 +713,7 @@
                         <button class="menu-btn" onclick="switchScreen('screen-badges')">Badges</button>
                         <button class="menu-btn" onclick="openStore('screen-main')">Themes & Store</button>
                         <button class="menu-btn" onclick="openLeaderboard()">Leaderboards</button>
-                        <button class="menu-btn" onclick="window.location.href='learn.html'">Learn</button>
+                        <button class="menu-btn" onclick="window.location.href='../learn/learn.html'">Learn</button>
                         <button class="menu-btn" onclick="openSettings('screen-main')">Settings</button>
                         <button class="menu-btn" onclick="switchScreen('screen-terms')">Terms</button>
                         <button class="menu-btn" onclick="switchScreen('screen-credits')">Credit</button>
@@ -859,7 +867,7 @@
                 </div>
                 <button class="game-close-btn" onclick="closeStore()">Return</button>
             </div>
-            <div class="doc-scroll" style="padding-bottom: 2rem;">
+            <div class="doc-scroll">
                 <div class="doc-content" style="max-width: 1000px;">
                     <h2>The Exchange</h2>
                     <p class="lead">Exchange your hard-earned Kyats for premium aesthetic themes and functional kitchen upgrades.</p>
@@ -1078,14 +1086,12 @@
     </main>
 
     <script>
-        // Setup Dynamic Backgrounds for Main Menu
         const menuBgs = [
             '../imgs/web-banners/kitchen1.png',
             '../imgs/web-banners/kitchen2.jpg',
             '../imgs/web-banners/kitchen3.jpg'
         ];
         
-        // Preload images for smooth transition
         menuBgs.forEach(src => {
             const img = new Image();
             img.src = src;
@@ -1094,7 +1100,6 @@
         let currentBgIndex = 0;
         let isBg1Active = true;
         
-        // Initialize first background immediately
         const bg1 = document.getElementById('mainMenuBg1');
         const bg2 = document.getElementById('mainMenuBg2');
 
@@ -1306,7 +1311,6 @@
                     e.preventDefault();
                     toggleFullScreen(true);
                 } else if (e.key.toLowerCase() === 'f') {
-                    // Only intercept if we are actively playing
                     if (document.getElementById('screen-play').classList.contains('active')) {
                         e.preventDefault();
                         const searchInput = document.getElementById('pantrySearch');
@@ -1840,8 +1844,8 @@
                     <div class="badge-card ${rankClass} ${isUnlocked ? '' : 'locked'}">
                         ${lockOverlay}
                         <img src="${b.img}" alt="${b.name}">
-                        <h4>${b.name}</h4>
-                        <p>${isUnlocked ? b.desc : 'Complete ' + reqChapter + ' to unlock.'}</p>
+                        <h4 style="position: relative; z-index: 20;">${b.name}</h4>
+                        <p style="position: relative; z-index: 20;">${isUnlocked ? b.desc : 'Complete ' + reqChapter + ' to unlock.'}</p>
                     </div>
                 `;
             });
@@ -1929,6 +1933,8 @@
             { id: 'sliced_onion', name: 'Sliced Onion', cat: 'prepped', img: '../imgs/ingredients/sliced_onion.png' },
             { id: 'sliced_potato', name: 'Sliced Potato', cat: 'prepped', img: '../imgs/ingredients/sliced_potato.png' },
             { id: 'sliced_tomato', name: 'Sliced Tomato', cat: 'prepped', img: '../imgs/ingredients/sliced_tomato.png' },
+
+
             { id: 'sliced_lettuce', name: 'Chopped Lettuce', cat: 'prepped', img: '../imgs/ingredients/sliced_lettuce.png' },
             { id: 'chopped_garlic', name: 'Minced Garlic', cat: 'prepped', img: '../imgs/ingredients/chopped_garlic.png' },
             { id: 'sliced_mushroom', name: 'Sliced Mushroom', cat: 'prepped', img: '../imgs/ingredients/sliced_mushroom.png' },
@@ -2277,7 +2283,6 @@
             let catIndex = Math.floor((num - 1) / 10);
             const timeLimits = [60, 120, 180, 240, 300]; 
             
-            // LOGIC HOOK: Time Extension Perk
             let bonusTime = unlockedPerks.includes('time_extension') ? 30 : 0;
             remainingSeconds = timeLimits[catIndex] + bonusTime;
             
@@ -2379,7 +2384,6 @@
         }
 
         function moveToBoard(id) {
-            // LOGIC HOOK: Expanded Prep Table Perk
             let maxCapacity = unlockedPerks.includes('expanded_table') ? 9 : 6;
             
             if (stagingArea.length >= maxCapacity) { 
@@ -2388,7 +2392,6 @@
             }
             stagingArea.push(id);
             
-            // Auto-clear search when an item is selected to ready up for the next search
             const searchInput = document.getElementById('pantrySearch');
             if (searchInput && searchInput.value.trim() !== '') {
                 searchInput.value = '';
@@ -2488,7 +2491,6 @@
                 let stagingEl = document.getElementById('stagingArea');
                 stagingEl.style.pointerEvents = 'none';
                 
-                // LOGIC HOOK: Synthesis Accelerator Perk
                 let synthDuration = unlockedPerks.includes('fast_synth') ? 1500 : 4000;
 
                 let progContainer = document.createElement('div');
