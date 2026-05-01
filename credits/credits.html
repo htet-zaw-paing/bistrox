@@ -1209,6 +1209,9 @@
         function handlePlayNow() {
             if (localStorage.getItem('bx_currentUser')) {
                 notify('Kitchen loading... Preparing ingredients.');
+                setTimeout(() => {
+                    window.location.href = '../play/play.html';
+                }, 1500);
             } else {
                 openAuthModal('login');
             }
