@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Terms & Documentation | BistroX</title>
+        <title>Support | BistroX</title>
         <link rel="icon" href="../imgs/web-banners/logo.png">
         <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Jost:wght@400;500;600;700&display=swap');
@@ -134,7 +134,7 @@
         .dropdown-menu::before { content: ''; position: absolute; top: -15px; left: 0; width: 100%; height: 15px; background: transparent; }
         .nav-item-dropdown:hover .dropdown-menu { display: flex; animation: fadeIn 0.3s ease forwards; }
         .dropdown-menu a { padding: 0.8rem 1.8rem; font-size: 0.75rem; text-align: left; width: 100%; }
-        .dropdown-menu a:hover { background: #FAFAFA; color: var(--primary); }
+        .dropdown-menu a:hover, .dropdown-menu a.active { background: #FAFAFA; color: var(--primary); }
 
         .header-actions { display: flex; align-items: center; gap: 1rem; z-index: 1002; }
         .hamburger { display: none; flex-direction: column; gap: 6px; cursor: pointer; padding: 5px; z-index: 1002; }
@@ -182,166 +182,249 @@
         .auth-toggle span { color: var(--primary); cursor: pointer; font-weight: 700; text-decoration: underline; transition: var(--transition); }
         .auth-toggle span:hover { color: var(--secondary); }
 
-
-        
-        .legal-wrapper {
-            padding: 160px 10% 100px;
-            background: var(--bg-alt);
+        .support-wrapper {
+            padding: 140px 10% 80px;
             min-height: 100vh;
+            background: var(--bg-alt);
         }
 
-        .legal-header {
+        .support-header {
             text-align: center;
-            margin-bottom: 4rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            margin-bottom: 3rem;
         }
 
-        .legal-header h1 {
-            font-size: 4rem;
+        .support-header h1 {
+            font-size: 3.5rem;
             color: var(--secondary);
             margin-bottom: 1rem;
-            line-height: 1.1;
         }
 
-        .legal-header p {
+        .support-header p {
             font-family: var(--font-geo);
             font-size: 1.1rem;
             color: var(--text-muted);
-            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        .legal-last-updated {
-            font-family: var(--font-geo);
-            display: inline-block;
-            background: rgba(197, 160, 89, 0.1);
-            color: var(--primary);
-            padding: 0.5rem 1.2rem;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 2rem;
-        }
-
-        .legal-container {
+        .support-layout {
             display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 5rem;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
             max-width: 1400px;
             margin: 0 auto;
-            align-items: start;
         }
 
-        .legal-sidebar {
-            position: sticky;
-            top: 120px;
+        .chat-container {
             background: var(--white);
-            padding: 2rem;
             border-radius: 12px;
-            border: 1px solid #EAEAEA;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.03);
-        }
-
-        .legal-sidebar nav {
+            box-shadow: 0 20px 50px rgba(0,0,0,0.06);
             display: flex;
             flex-direction: column;
+            height: 650px;
+            border: 1px solid #EAEAEA;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .chat-top-bar {
+            background: var(--secondary);
+            color: var(--white);
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .bot-avatar {
+            width: 45px;
+            height: 45px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(197, 160, 89, 0.3);
+        }
+
+        .bot-avatar svg { width: 24px; height: 24px; fill: white; }
+
+        .bot-info h3 { font-size: 1.1rem; margin: 0; letter-spacing: 0; color: white;}
+        .bot-info p { font-family: var(--font-geo); font-size: 0.8rem; color: #AAAAAA; margin: 0; text-transform: uppercase; letter-spacing: 1px;}
+
+        .chat-messages {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            background: #FAFAFA;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .message {
+            display: flex;
+            flex-direction: column;
+            max-width: 80%;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .message.bot { align-self: flex-start; }
+        .message.user { align-self: flex-end; }
+
+        .message-bubble {
+            padding: 1rem 1.5rem;
+            border-radius: 18px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .message.bot .message-bubble {
+            background: var(--white);
+            color: var(--secondary);
+            border: 1px solid #EAEAEA;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+        }
+
+        .message.user .message-bubble {
+            background: var(--secondary);
+            color: var(--white);
+            border-bottom-right-radius: 4px;
+        }
+
+        .message-time {
+            font-family: var(--font-geo);
+            font-size: 0.7rem;
+            color: #AAAAAA;
+            margin-top: 5px;
+            align-self: flex-start;
+        }
+        .message.user .message-time { align-self: flex-end; }
+        
+        .chat-link-btn {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--white) !important;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-family: var(--font-geo);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.8rem;
+            margin-right: 0.5rem;
+            border: 1px solid var(--primary);
+            transition: var(--transition);
+        }
+        .chat-link-btn:hover {
+            background: var(--secondary);
+            border-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .chat-input-area {
+            display: flex;
+            padding: 1.5rem;
+            background: var(--white);
+            border-top: 1px solid #EAEAEA;
             gap: 1rem;
         }
 
-        .legal-sidebar a {
+        .chat-input {
+            flex: 1;
+            background: #F5F5F5;
+            border: 1px solid #EAEAEA;
+            padding: 1rem 1.5rem;
+            border-radius: 30px;
             font-family: var(--font-main);
-            color: var(--text-muted);
-            text-decoration: none;
             font-size: 0.95rem;
-            font-weight: 600;
-            padding: 0.8rem 1rem;
-            border-radius: 6px;
+            outline: none;
             transition: var(--transition);
-            border-left: 3px solid transparent;
         }
-
-        .legal-sidebar a:hover, .legal-sidebar a.active {
-            background: #FAFAFA;
-            color: var(--secondary);
-            border-left-color: var(--primary);
-        }
-
-        .legal-content {
+        
+        .chat-input:focus {
             background: var(--white);
-            padding: 4rem;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(197, 160, 89, 0.1);
+        }
+
+        .send-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .send-btn:hover { background: var(--secondary); transform: scale(1.05); }
+        .send-btn svg { width: 20px; height: 20px; fill: white; }
+
+        .notices-sidebar {
+            background: var(--white);
+            padding: 2.5rem 2rem;
             border-radius: 12px;
             border: 1px solid #EAEAEA;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.03);
+            border-top: 4px solid var(--secondary);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.04);
+            height: fit-content;
+            animation: fadeIn 1s ease-out;
         }
 
-        .legal-section {
-            margin-bottom: 5rem;
-        }
-
-        .legal-section:last-child {
-            margin-bottom: 0;
-        }
-
-        .legal-section h2 {
-            font-size: 2.5rem;
-            color: var(--secondary);
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid #F5F5F5;
-        }
-
-        .legal-section h3 {
-            font-size: 1.5rem;
-            color: var(--secondary);
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .legal-section p {
+        .notice-tag {
             font-family: var(--font-geo);
-            font-size: 1.05rem;
-            color: var(--text-muted);
-            line-height: 1.9;
-            margin-bottom: 1.5rem;
-        }
-
-        .legal-section ul {
-            margin-bottom: 1.5rem;
-            padding-left: 1.5rem;
-        }
-
-        .legal-section li {
-            font-family: var(--font-geo);
-            font-size: 1.05rem;
-            color: var(--text-muted);
-            line-height: 1.9;
-            margin-bottom: 0.5rem;
-        }
-
-        .legal-section strong {
-            color: var(--secondary);
+            color: var(--primary);
+            font-size: 0.75rem;
             font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            display: block;
         }
 
-        .info-box {
-            background: #F9F9F9;
-            border-left: 4px solid var(--primary);
-            padding: 1.5rem 2rem;
-            margin: 2rem 0;
-            border-radius: 0 8px 8px 0;
-        }
-
-        .info-box p {
-            margin-bottom: 0;
-            font-size: 1rem;
+        .notices-sidebar h3 {
+            font-size: 1.6rem;
             color: var(--secondary);
+            margin-bottom: 2rem;
+            line-height: 1.2;
         }
 
+        .notice-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+            align-items: flex-start;
+        }
 
-        /* --- Footer --- */
+        .notice-icon {
+            color: var(--primary);
+            margin-top: 2px;
+        }
+        .notice-icon svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+        .notice-text h4 {
+            font-size: 0.95rem;
+            color: var(--secondary);
+            margin-bottom: 0.3rem;
+            letter-spacing: 0;
+        }
+
+        .notice-text p {
+            font-family: var(--font-geo);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
         footer { padding: 120px 10% 60px; background: var(--white); color: var(--text-dark); border-top: 1px solid #F5F5F5; }
         .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4rem; padding-bottom: 80px; }
         .footer-title { font-family: var(--font-geo); color: #161616; font-size: 0.85rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem; }
@@ -366,15 +449,12 @@
             header { padding: 1.2rem 5%; }
             .footer-grid { grid-template-columns: 1fr 1fr 1fr; gap: 3rem; }
             .footer-logo-block { grid-column: 1 / -1; margin-top: 2rem; }
-            .legal-container { gap: 3rem; }
         }
 
         @media (max-width: 1024px) {
             .footer-grid { grid-template-columns: 1fr 1fr; }
-            .legal-container { grid-template-columns: 1fr; }
-            .legal-sidebar { display: none; }
-            .legal-content { padding: 3rem; }
-            .legal-header h1 { font-size: 3.2rem; }
+            .support-layout { grid-template-columns: 1fr; } 
+            .notices-sidebar { order: -1; border-left: none; border-top: 4px solid var(--primary); }
         }
 
         @media (max-width: 968px) {
@@ -433,14 +513,12 @@
 
         @media (max-width: 600px) {
             .footer-grid { gap: 2.5rem; }
-            .legal-wrapper { padding: 120px 5% 60px; }
-            .legal-content { padding: 2rem 1.5rem; }
-            .legal-header h1 { font-size: 2.5rem; }
-            .legal-section h2 { font-size: 1.8rem; }
-            .legal-section h3 { font-size: 1.3rem; }
-            .legal-section p, .legal-section li { font-size: 0.95rem; line-height: 1.7; }
-            .info-box { padding: 1rem 1.2rem; }
-            .info-box p { font-size: 0.9rem; }
+            .support-wrapper { padding: 100px 5% 60px; }
+            .support-header h1 { font-size: 2.5rem; }
+            .chat-container { height: 500px; }
+            .chat-messages { padding: 1rem; }
+            .message-bubble { padding: 0.8rem 1.2rem; font-size: 0.9rem; }
+            .notices-sidebar { padding: 1.5rem; }
         }
 
         @media (max-width: 400px) {
@@ -529,8 +607,7 @@
                     </div>
                     <div class="checkbox-group">
                         <input type="checkbox" id="regTerms">
-                        <label for="regTerms">I agree to the <a href="#terms"
-                                onclick="closeAuthModal()"
+                        <label for="regTerms">I agree to the <a href="#"
                                 style="color: var(--primary); font-weight: 700;">Terms</a>
                             and browser local storage usage.</label>
                     </div>
@@ -574,7 +651,7 @@
                 <ul id="navList">
                     <li class="nav-item-dropdown">
                         <div class="nav-link-wrap">
-                            <a href="../index.html">Home <span
+                            <a href="../">Home <span
                                     class="desktop-arrow">&blacktriangledown;</span></a>
                             <svg class="chevron desktop-hidden"
                                 viewBox="0 0 24 24" fill="none"
@@ -584,17 +661,17 @@
                                     points="9 18 15 12 9 6"></polyline></svg>
                         </div>
                         <div class="dropdown-menu">
-                            <a href="../index.html#mechanics">Gameplay</a>
-                            <a href="../index.html#ingredients">Ingredients</a>
-                            <a href="../index.html#recipes">Masterpieces</a>
-                            <a href="../index.html#dev">Developer</a>
-                            <a href="../index.html#contact">Help</a>
+                            <a href="../#mechanics">Gameplay</a>
+                            <a href="../#ingredients">Ingredients</a>
+                            <a href="../#recipes">Masterpieces</a>
+                            <a href="../#dev">Developer</a>
+                            <a href="../#contact">Help</a>
                         </div>
                     </li>
 
                     <li class="nav-item-dropdown">
                         <div class="nav-link-wrap">
-                            <a href="../about/about.html">About <span
+                            <a href="../about/">About <span
                                     class="desktop-arrow">&blacktriangledown;</span></a>
                             <svg class="chevron desktop-hidden"
                                 viewBox="0 0 24 24" fill="none"
@@ -604,14 +681,14 @@
                                     points="9 18 15 12 9 6"></polyline></svg>
                         </div>
                         <div class="dropdown-menu">
-                            <a href="../about.html#about-game">game</a>
-                            <a href="../about.html#dev">developer</a>
+                            <a href="../#about-game">game</a>
+                            <a href="../#dev">developer</a>
                         </div>
                     </li>
 
                     <li class="nav-item-dropdown">
                         <div class="nav-link-wrap">
-                            <a href="../learn/learn.html">Learn <span
+                            <a href="../learn/">Learn <span
                                     class="desktop-arrow">&blacktriangledown;</span></a>
                             <svg class="chevron desktop-hidden"
                                 viewBox="0 0 24 24" fill="none"
@@ -621,13 +698,13 @@
                                     points="9 18 15 12 9 6"></polyline></svg>
                         </div>
                         <div class="dropdown-menu">
-                            <a href="../learn/learn.html#recipes">Recipes</a>
-                            <a href="../learn/learn.html#game">Game</a>
+                            <a href="../learn/#recipes">Recipes</a>
+                            <a href="../learn/#game">Game</a>
                         </div>
                     </li>
                     <li class="nav-item-dropdown">
                         <div class="nav-link-wrap">
-                            <a href="../support/support.html">Support <span
+                            <a href="./" class="active">Support <span
                                     class="desktop-arrow">&blacktriangledown;</span></a>
                             <svg class="chevron desktop-hidden"
                                 viewBox="0 0 24 24" fill="none"
@@ -637,8 +714,8 @@
                                     points="9 18 15 12 9 6"></polyline></svg>
                         </div>
                         <div class="dropdown-menu">
-                            <a href="../support/support.html">Chat Assistant</a>
-                            <a href="../faqs/faqs.html">FAQs</a>
+                            <a href="../support/">Chat Assistant</a>
+                            <a href="../faqs/">FAQs</a>
                         </div>
                     </li>
                 </ul>
@@ -748,191 +825,94 @@
             </div>
         </header>
 
-        <main class="legal-wrapper">
-
-            <div class="legal-header reveal">
-                <span class="legal-last-updated">Last Updated: March 2026</span>
-                <h1>Legal & Documentation</h1>
-                <p>Comprehensive information regarding your usage, privacy, and
-                    data on the BistroX digital cooking platform. We believe in
-                    complete transparency and a pure, tracker-free web
-                    experience.</p>
+        <main class="support-wrapper">
+            <div class="support-header reveal">
+                <h1>Assistant Support</h1>
+                <p>Need guidance in the kitchen? Our automated assistant is here
+                    to help with recipes, gameplay mechanics, and technical
+                    inquiries.</p>
             </div>
 
-            <div class="legal-container">
+            <div class="support-layout">
 
-                <aside class="legal-sidebar desktop-only reveal">
-                    <nav id="legalNav">
-                        <a href="#terms" class="active">Terms of Use</a>
-                        <a href="#privacy">Data Privacy</a>
-                        <a href="#local-storage">Local Storage Info</a>
-                        <a href="#cookies">Browser Cookies</a>
-                    </nav>
-                </aside>
-
-                <div class="legal-content reveal">
-
-                    <section id="terms" class="legal-section">
-                        <h2>Terms of Use</h2>
-                        <p>Welcome to BistroX. By accessing or using our
-                            image-based cooking game, you agree to be bound by
-                            these Terms of Use. If you disagree with any part of
-                            these terms, you may not access the service.</p>
-
-                        <h3>1. Nature of the Service</h3>
-                        <p>BistroX is a fully frontend, browser-based simulation
-                            game designed for educational and entertainment
-                            purposes. It simulates the culinary arts through
-                            visual interactions and logic-based mechanics. The
-                            recipes and combinations presented in the game are
-                            stylized interpretations and should be executed in
-                            real life with appropriate culinary care and food
-                            safety standards.</p>
-
-                        <h3>2. Intellectual Property Rights</h3>
-                        <p>The service and its original content, features, and
-                            functionality are and will remain the exclusive
-                            property of Htet Zaw Paing and its licensors. The
-                            visual assets, including all SVG illustrations,
-                            structural code (HTML/CSS/JS), and proprietary game
-                            logic are protected by copyright laws.</p>
-                        <ul>
-                            <li><strong>Permitted Use:</strong> You are granted
-                                a limited, non-exclusive, non-transferable
-                                license to play the game and interact with the
-                                interface for personal, non-commercial use.</li>
-                            <li><strong>Restrictions:</strong> You may not
-                                reverse-engineer, clone, distribute, or create
-                                derivative works from our specific code
-                                structure or design system without explicit
-                                permission.</li>
-                        </ul>
-
-                        <h3>3. User Conduct & Accounts</h3>
-                        <p>While BistroX does not utilize a remote backend
-                            server, you have the ability to create "Accounts"
-                            via your browser's local environment. You are solely
-                            responsible for maintaining the security of your
-                            local device. We are not liable for any lost
-                            progress resulting from browser cache clears or
-                            device changes.</p>
-                    </section>
-
-                    <section id="privacy" class="legal-section">
-                        <h2>Data Privacy Policy</h2>
-                        <p>At BistroX, we take a radical approach to your
-                            privacy: <strong>We do not collect it.</strong>
-                            Because our application is engineered as a pure
-                            frontend experience, your data fundamentally never
-                            leaves your device.</p>
-
-                        <h3>1. Information We Do Not Collect</h3>
-                        <p>Unlike traditional web applications, BistroX operates
-                            without a centralized database. Therefore, we
-                            absolutely <strong>do not</strong> harvest,
-                            transmit, or store:</p>
-                        <ul>
-                            <li>Your IP Address</li>
-                            <li>Your Geolocation data</li>
-                            <li>Personal Identifiable Information (PII)</li>
-                            <li>Cross-site browsing history</li>
-                            <li>Email addresses or phone numbers</li>
-                        </ul>
-
-                        <h3>2. External Links and APIs</h3>
-                        <p>Our platform may contain links to external sites
-                            (such as GitHub, LinkedIn, or Unsplash for
-                            placeholder images). If you click on a third-party
-                            link, you will be directed to that site. We strongly
-                            advise you to review the Privacy Policy of these
-                            external sites, as we have no control over their
-                            practices.</p>
-
-                        <div class="info-box">
-                            <p><strong>The Privacy Guarantee:</strong> When you
-                                play BistroX, the game logic executes entirely
-                                within the RAM and CPU of your own computer or
-                                mobile device. No data is sent to a BistroX
-                                server during gameplay.</p>
+                <div class="chat-container reveal">
+                    <div class="chat-top-bar">
+                        <div class="bot-avatar">
+                            <svg viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2C8.686 2 6 4.686 6 8c0 1.313.42 2.526 1.134 3.513C6.46 12.392 6 13.642 6 15c0 3.314 2.686 6 6 6s6-2.686 6-6c0-1.358-.46-2.608-1.134-3.487C17.58 10.526 18 9.313 18 8c0-3.314-2.686-6-6-6zm0 2c2.206 0 4 1.794 4 4 0 .964-.344 1.848-.916 2.535l-.46.547.46.547c.572.687.916 1.57.916 2.535 0 2.206-1.794 4-4 4s-4-1.794-4-4c0-.965.344-1.848.916-2.535l.46-.547-.46-.547A3.987 3.987 0 0 1 8 8c0-2.206 1.794-4 4-4z" />
+                            </svg>
                         </div>
-                    </section>
-
-                    <section id="local-storage" class="legal-section">
-                        <h2>Local Storage Information</h2>
-                        <p>To provide you with a seamless, persistent gaming
-                            experience without requiring a backend database,
-                            BistroX heavily utilizes the <strong>HTML5 Web
-                                Storage API</strong> (specifically
-                            `localStorage`). This section details exactly how
-                            and why we use it.</p>
-
-                        <h3>1. What is Local Storage?</h3>
-                        <p>Local Storage is an industry-standard web technology
-                            that allows websites to store text-based data
-                            locally within your web browser. This data persists
-                            even after you close the browser window or restart
-                            your computer, allowing you to return to your game
-                            exactly where you left off.</p>
-
-                        <h3>2. How BistroX Uses Your Local Storage</h3>
-                        <p>We use local storage strictly for functional gameplay
-                            purposes. Specifically, we store:</p>
-                        <ul>
-                            <li><strong>`bx_users`:</strong> An encrypted array
-                                containing the usernames and passwords you
-                                create locally to access your profile.</li>
-                            <li><strong>`bx_currentUser`:</strong> A simple
-                                string indicating which chef profile is
-                                currently "logged in" to the session.</li>
-                            <li><strong>Game State Data:</strong> Arrays
-                                tracking which specific ingredients you have
-                                unlocked, which recipes you have mastered, and
-                                your current inventory.</li>
-                        </ul>
-
-                        <h3>3. Managing Your Storage</h3>
-                        <p>Because this data lives on your device, you have
-                            total control over it. You can delete your BistroX
-                            data at any time by clearing your browser's site
-                            data or cache. <strong>Warning:</strong> Doing so
-                            will permanently erase your created profiles,
-                            unlocked recipes, and game progress, as we have no
-                            remote backup to restore from.</p>
-                    </section>
-
-                    <section id="cookies" class="legal-section">
-                        <h2>Browser Cookies</h2>
-                        <p>Transparency regarding tracking is a core philosophy
-                            of the BistroX development team. We have designed
-                            our system to operate entirely independently of
-                            traditional HTTP cookies.</p>
-
-                        <h3>1. Zero Tracking Policy</h3>
-                        <p>BistroX does <strong>not</strong> use cookies for
-                            tracking, analytics, advertising, or remarketing.
-                            When you visit our website, we do not drop tracking
-                            pixels or third-party analytical scripts (like
-                            Google Analytics or Meta Pixel) onto your
-                            machine.</p>
-
-                        <h3>2. Functional vs. Tracking</h3>
-                        <p>Many modern websites use cookies to track user
-                            behavior across the internet to serve targeted
-                            advertisements. Because BistroX relies on the
-                            aforementioned `localStorage` for maintaining your
-                            session state (like keeping you logged in as a
-                            specific Chef), we have successfully eliminated the
-                            need for standard session cookies entirely.</p>
-
-                        <div class="info-box">
-                            <p><strong>Summary:</strong> You can browse, play,
-                                and interact with BistroX with complete peace of
-                                mind. Your culinary journey is a private
-                                experience between you and your browser.</p>
+                        <div class="bot-info">
+                            <h3>Bread Assistant</h3>
+                            <p>Online • Auto-Reply System</p>
                         </div>
-                    </section>
+                    </div>
 
+                    <div class="chat-messages" id="chatMessages">
+                    </div>
+
+                    <div class="chat-input-area">
+                        <input type="text" class="chat-input" id="chatInput"
+                            placeholder="Type a message (e.g. support, recipe, hello)..."
+                            autocomplete="off">
+                        <button class="send-btn" id="sendBtn"
+                            onclick="handleSend()">
+                            <svg viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
+
+                <div class="notices-sidebar reveal">
+                    <span class="notice-tag">Legal & Terms</span>
+                    <h3>Conditions of Use</h3>
+
+                    <div class="notice-item">
+                        <div class="notice-icon"><svg
+                                viewBox="0 0 24 24"><circle cx="12" cy="12"
+                                    r="10"></circle><line x1="12" y1="8" x2="12"
+                                    y2="12"></line><line x1="12" y1="16"
+                                    x2="12.01" y2="16"></line></svg></div>
+                        <div class="notice-text">
+                            <h4>Automated System</h4>
+                            <p>This is an auto-generated reply machine based on
+                                predefined keywords. It is not monitored by a
+                                live human agent.</p>
+                        </div>
+                    </div>
+
+                    <div class="notice-item">
+                        <div class="notice-icon"><svg viewBox="0 0 24 24"><path
+                                    d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line
+                                    x1="12" y1="9" x2="12" y2="13"></line><line
+                                    x1="12" y1="17" x2="12.01"
+                                    y2="17"></line></svg></div>
+                        <div class="notice-text">
+                            <h4>No Liability</h4>
+                            <p>Any side effects, miscommunications, or culinary
+                                disasters resulting from following this bot's
+                                advice will not be our responsibility.</p>
+                        </div>
+                    </div>
+
+                    <div class="notice-item">
+                        <div class="notice-icon"><svg viewBox="0 0 24 24"><path
+                                    d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline
+                                    points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+                        <div class="notice-text">
+                            <h4>Support Purpose Only</h4>
+                            <p>This assistant is designed strictly for BistroX
+                                gameplay and technical support inquiries. Please
+                                refrain from providing personal information.</p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </main>
 
@@ -946,19 +926,27 @@
                                 Play</a></li>
                         <li><a href="#" onclick="openAuthModal('login')">Log
                                 In</a></li>
-                        <li><a href="../index.html#">Recipe Theories</a></li>
-                        <li><a href="../index.html#ingredients">Ingredients
+                        <li><a href="../#">Recipe Theories</a></li>
+                        <li><a href="../#ingredients">Ingredients
                                 List</a></li>
-                        <li><a href="../index.html#contact">Submit Idea</a></li>
+                        <li><a href="../#contact">Submit Idea</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="footer-title">Privacy</h4>
                     <ul class="footer-links">
-                        <li><a href="#terms">Terms of Use</a></li>
-                        <li><a href="#privacy">Data Privacy</a></li>
-                        <li><a href="#local-storage">Local Storage Info</a></li>
-                        <li><a href="#cookies">Browser Cookies</a></li>
+                        <li><a
+                                href="../terms-conditions/#terms">Terms
+                                of Use</a></li>
+                        <li><a
+                                href="../terms-conditions/#privacy">Data
+                                Privacy</a></li>
+                        <li><a
+                                href="../terms-conditions/#local-storage">Local
+                                Storage Info</a></li>
+                        <li><a
+                                href="../terms-conditions/#cookies">Browser
+                                Cookies</a></li>
                     </ul>
                 </div>
                 <div>
@@ -966,19 +954,15 @@
                     <ul class="footer-links">
                         <li><a href="https://www.htetzawpaing.site"
                                 target="_blank">Developer</a></li>
-                        <li><a href="../learn/learn.html">How to Play
+                        <li><a href="../learn/">How to Play
                                 Guide</a></li>
-                        <li><a href="../faqs/faqs.html">FAQ's</a></li>
-                        <li><a href="../credits/credits.html">Credits</a></li>
+                        <li><a href="../faqs/">FAQ's</a></li>
+                        <li><a href="../credits/">Credits</a></li>
                     </ul>
                 </div>
                 <div class="footer-logo-block">
-                    <a href="index.html" class="footer-logo">
-                        <img src="../imgs/web-banners/logo.png"
-                            alt="BistroX Logo"
-                            style="width: 32px; height: 32px; object-fit: contain;">
-                        <div class="logo-text">BISTRO<span>X</span></div>
-                    </a>
+                    <a href="../"
+                        class="footer-logo">BISTRO<span>X</span></a>
                     <p
                         class="footer-slogan">"Master the ingredients. Discover the recipe."</p>
                     <p class="footer-desc">An interactive image-based cooking
@@ -1058,7 +1042,6 @@
                         await Promise.all(imagePromises);
                         window.location.href = href;
                     } catch (error) {
-                        console.error("Preload engine encountered an issue, falling back:", error);
                         window.location.href = href;
                     }
                 });
@@ -1090,7 +1073,7 @@
             checkAuthState();
             initObserver();
             initMobileMenu();
-            initScrollSpy();
+            initChat(); 
         });
 
         function checkAuthState() {
@@ -1176,9 +1159,11 @@
         function handlePlayNow() {
             if (localStorage.getItem('bx_currentUser')) {
                 notify('Kitchen loading... Preparing ingredients.');
+        
                 setTimeout(() => {
-                    window.location.href = '../play/play.html';
-                }, 1500);
+                    window.location.href = '../play/';
+                }, 1000);
+        
             } else {
                 openAuthModal('login');
             }
@@ -1189,8 +1174,7 @@
             const nav = document.getElementById('mainNav');
 
             hamburger.addEventListener('click', () => {
-                hamburger.classList.toggle('active');
-                nav.classList.toggle('active');
+                hamburger.classList.toggle('active'); nav.classList.toggle('active');
             });
             
             const dropdownWraps = document.querySelectorAll('.nav-item-dropdown .nav-link-wrap');
@@ -1213,8 +1197,7 @@
             document.querySelectorAll('.dropdown-menu a').forEach(link => {
                 link.addEventListener('click', () => {
                     if (window.innerWidth <= 968 && !link.getAttribute('href').startsWith('index.html')) {
-                        hamburger.classList.remove('active');
-                        nav.classList.remove('active');
+                        hamburger.classList.remove('active'); nav.classList.remove('active');
                     }
                 });
             });
@@ -1240,43 +1223,98 @@
             }, revealOptions);
             document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
         }
+        
+        function initChat() {
+            setTimeout(() => {
+                appendMessage("bot", "Hey chief, I'm Bread, How can I help you?");
+            }, 800);
 
-        function initScrollSpy() {
-            const sections = document.querySelectorAll('.legal-section');
-            const navLinks = document.querySelectorAll('.legal-sidebar a');
-
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href').substring(1);
-                    const targetSection = document.getElementById(targetId);
-                    
-                    if (targetSection) {
-                        window.scrollTo({
-                            top: targetSection.offsetTop - 120,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-
-            window.addEventListener('scroll', () => {
-                let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    if (scrollY >= sectionTop - 150) {
-                        current = section.getAttribute('id');
-                    }
-                });
-
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href').substring(1) === current) {
-                        link.classList.add('active');
-                    }
-                });
+            const inputField = document.getElementById('chatInput');
+            inputField.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    handleSend();
+                }
             });
         }
+
+        function handleSend() {
+            const inputField = document.getElementById('chatInput');
+            const userText = inputField.value.trim();
+
+            if (userText === "") return;
+
+            appendMessage("user", userText);
+            inputField.value = "";
+
+            setTimeout(() => {
+                const reply = determineBotReply(userText.toLowerCase());
+                appendMessage("bot", reply);
+            }, 600); 
+        }
+
+        function determineBotReply(input) {
+            if (input.includes("what is bistrox") || input.includes("about bistrox")) {
+                return "BistroX is an interactive image-based cooking game where you combine ingredients to discover new recipes.<br><a href='../about/' class='chat-link-btn'>About BistroX</a>";
+            }
+            if (input.includes("developer") || input.includes("who made") || input.includes("who is the developer") || input.includes("htet zaw paing")) {
+                return "BistroX is developed by Htet Zaw Paing, a software engineer who builds modern and futuristic websites.<br><a href='../credits/' class='chat-link-btn'>Credits</a><a href='https://www.htetzawpaing.site' target='_blank' class='chat-link-btn'>Developer Site</a>";
+            }
+            if (input.includes("how to play") || input.includes("how do i play") || input.includes("rules")) {
+                return "To play, you combine different ingredients to master new recipes.<br><a href='../learn/' class='chat-link-btn'>Learn to Play</a><a href='#' onclick='handlePlayNow(); return false;' class='chat-link-btn'>Play Now</a>";
+            }
+            if (input.includes("your name") || input.includes("who are you")) {
+                return "I am Bread, your automated kitchen assistant! I'm here to help you navigate BistroX.";
+            }
+            if (input.includes("privacy policy") || input.includes("terms") || input.includes("documentation") || input.includes("legal")) {
+                return "Yes, we have comprehensive documentation. You can review our policies in the terms and conditions.<br><a href='../terms-conditions/' class='chat-link-btn'>Terms & Conditions</a>";
+            }
+            if (input.includes("support") || input.includes("help") || input.includes("issue")) {
+                return "What kind of support do you want? I can help with account issues, gameplay questions, or recipes.";
+            }
+            if (input.includes("hello") || input.includes("hi") || input.includes("hey")) {
+                return "Hello chief, how can I help you in the kitchen today?";
+            }
+            if (input.includes("recipe") || input.includes("cook") || input.includes("dish")) {
+                return "To discover new dishes, try combining ingredients on the Home page, or check out our Learn section for specific Masterpieces!<br><a href='../learn/#recipes' class='chat-link-btn'>View Recipes</a>";
+            }
+            if (input.includes("ingredient") || input.includes("tomato") || input.includes("meat")) {
+                return "We have fresh ingredients ready! The key to a great dish is pairing the right components with the correct cooking method.";
+            }
+            if (input.includes("account") || input.includes("login") || input.includes("password")) {
+                return "Your progress is saved locally in your browser. If you need to access it, ensure you login using the button at the top right!";
+            }
+            if (input.includes("bug") || input.includes("error") || input.includes("broken")) {
+                return "Oh no! If something is burning in the kitchen, please use the contact form on the Home page to report the bug to our Lead Developer.<br><a href='../#contact' class='chat-link-btn'>Report Bug</a>";
+            }
+            if (input.includes("thank")) {
+                return "You're very welcome, chief! Happy cooking!";
+            }
+            
+            return "I am a simple automated Bread machine. Could you please rephrase that? Try asking about 'BistroX', 'how to play', 'developer', 'privacy policy', or 'recipes'.";
+        }
+
+        function appendMessage(senderType, text) {
+            const chatMessages = document.getElementById('chatMessages');
+            
+            const msgDiv = document.createElement('div');
+            msgDiv.classList.add('message', senderType);
+            
+            const bubble = document.createElement('div');
+            bubble.classList.add('message-bubble');
+            bubble.innerHTML = text; 
+            
+            const time = document.createElement('div');
+            time.classList.add('message-time');
+            const now = new Date();
+            time.textContent = now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0');
+            
+            msgDiv.appendChild(bubble);
+            msgDiv.appendChild(time);
+            chatMessages.appendChild(msgDiv);
+            
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
     </script>
     </body>
 </html>

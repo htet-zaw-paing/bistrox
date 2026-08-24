@@ -3,11 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Learn | Master the Kitchen</title>
+<title>FAQs | BistroX Support</title>
 <link rel="icon" href="../imgs/web-banners/logo.png">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Jost:wght@400;500;600;700&display=swap');
-
 :root {
     --primary: #C5A059;
     --secondary: #1A1A1A;
@@ -77,9 +76,7 @@ body[data-auth="user"] .show-on-guest-flex { display: none !important; }
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), visibility 0.8s;
 }
-.loader-container.hidden {
-    opacity: 0; visibility: hidden; pointer-events: none;
-}
+.loader-container.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 .pan-wrapper { position: relative; width: 200px; height: 150px; }
 .pan {
     position: absolute; bottom: 20px; left: 40px;
@@ -187,263 +184,177 @@ nav a:hover, nav a.active { color: var(--primary); }
 .auth-toggle { margin-top: 2rem; font-size: 0.9rem; color: var(--text-muted); }
 .auth-toggle span { color: var(--primary); cursor: pointer; font-weight: 700; text-decoration: underline; transition: var(--transition); }
 .auth-toggle span:hover { color: var(--secondary); }
-.learn-hero {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 80px 10% 0;
-    background: linear-gradient(rgba(20, 20, 20, 0.75), rgba(20, 20, 20, 0.85)), url('../imgs/web-banners/learn-banner.png') center/cover no-repeat fixed;
-    border-bottom: 1px solid #1A1A1A;
-}
-.learn-hero h1 {
-    font-size: 5rem;
-    color: var(--white);
-    margin-bottom: 1.5rem;
-}
-.learn-hero p {
-    font-family: var(--font-geo);
-    font-size: 1.2rem;
-    color: #E5E5E5;
-    max-width: 700px;
-    margin: 0 auto;
-    line-height: 1.8;
-}
-.recipe-section {
-    padding: 100px 10%;
-    background: var(--white);
-    border-bottom: 1px solid #F5F5F5;
-}
-.recipe-section:nth-child(even) {
+
+.faq-hero {
+    padding: 180px 10% 80px;
     background: var(--bg-alt);
+    text-align: center;
+    border-bottom: 1px solid #EAEAEA;
 }
-.recipe-container {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-.recipe-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    align-items: center;
-}
-.recipe-section:nth-child(even) .recipe-grid {
-    grid-template-columns: 1fr 1fr;
-    direction: rtl;
-}
-.recipe-section:nth-child(even) .recipe-content,
-.recipe-section:nth-child(even) .recipe-visuals {
-    direction: ltr;
-}
-.recipe-content h2 {
-    font-size: 3rem;
+.faq-hero h1 {
+    font-size: 4rem;
     color: var(--secondary);
     margin-bottom: 1rem;
-    line-height: 1.1;
 }
-.recipe-tags {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
-}
-.recipe-tag {
+.faq-hero p {
     font-family: var(--font-geo);
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--primary);
-    background: rgba(197, 160, 89, 0.1);
-    padding: 0.4rem 1rem;
-    border-radius: 4px;
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto;
 }
-.recipe-desc {
-    font-family: var(--font-geo);
+.faq-container {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 5rem 5%;
+}
+.search-wrapper {
+    position: relative;
+    margin-bottom: 4rem;
+}
+.search-input {
+    width: 100%;
+    padding: 1.4rem 1.8rem;
+    border: 2px solid var(--accent);
+    border-radius: 12px;
     font-size: 1.1rem;
-    color: var(--text-muted);
-    margin-bottom: 3rem;
-}
-.step-list {
-    list-style: none;
-    counter-reset: step-counter;
-}
-.step-item {
-    position: relative;
-    padding-left: 4rem;
-    margin-bottom: 2.5rem;
-}
-.step-item::before {
-    counter-increment: step-counter;
-    content: "0" counter(step-counter);
-    position: absolute;
-    left: 0;
-    top: -5px;
     font-family: var(--font-main);
-    font-weight: 900;
-    font-size: 1.8rem;
-    color: var(--primary);
-    opacity: 0.3;
-}
-.step-item h4 {
-    font-size: 1.2rem;
-    color: var(--secondary);
-    margin-bottom: 0.5rem;
-}
-.step-item p {
-    font-family: var(--font-geo);
-    font-size: 1rem;
-    color: var(--text-muted);
-    line-height: 1.7;
-}
-.slider-wrapper {
-    position: relative;
-    width: 100%;
-    background: var(--white);
-    padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.08);
-}
-.slider-container {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    border-radius: 8px;
-    background: #F0F0F0;
-    aspect-ratio: 4/3;
-}
-.slider-track {
-    display: flex;
-    height: 100%;
-    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-}
-.slide {
-    min-width: 100%;
-    height: 100%;
-    position: relative;
-}
-.slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-.slide-label {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 2rem 1.5rem 1.5rem;
-    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-    color: white;
-    font-family: var(--font-geo);
-    font-size: 1.2rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
-.slider-controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    margin-top: 1.5rem;
-}
-.control-btn {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background: var(--bg-alt);
-    color: var(--secondary);
-    border: 1px solid #EAEAEA;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    outline: none;
     transition: var(--transition);
+    background: var(--white);
+    color: var(--secondary);
 }
-.control-btn svg {
-    width: 20px;
-    height: 20px;
-    stroke: currentColor;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+.search-input::placeholder { color: #A0A0A0; }
+.search-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 15px 30px rgba(197, 160, 89, 0.1);
+}
+.search-icon {
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    stroke: #A0A0A0;
     fill: none;
-}
-.control-btn:hover {
-    background: var(--primary);
-    color: white;
-    border-color: var(--primary);
-    transform: scale(1.05);
-}
-.slider-dots {
-    display: flex;
-    gap: 6px;
-}
-.dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #D9D9D9;
+    pointer-events: none;
     transition: var(--transition);
 }
-.dot.active {
-    background: var(--primary);
-    transform: scale(1.3);
-}
-.formula-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 2.5rem;
-    margin-top: 4rem;
-}
-.formula-card {
+.search-input:focus + .search-icon { stroke: var(--primary); }
+.search-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    width: 100%;
     background: var(--white);
-    border: 1px solid #EAEAEA;
+    border: 1px solid var(--accent);
     border-radius: 12px;
-    padding: 2.5rem 2rem;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-    transition: var(--transition);
-    display: flex;
-    flex-direction: column;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    display: none;
+    z-index: 100;
+    max-height: 350px;
+    overflow-y: auto;
+    padding: 0.5rem 0;
 }
-.formula-card:hover {
-    border-color: var(--primary);
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(197, 160, 89, 0.1);
-}
-.formula-card h4 {
-    color: var(--secondary);
-    font-family: var(--font-geo);
-    font-size: 1.3rem;
-    margin-bottom: 1.5rem;
-    border-bottom: 2px solid #F5F5F5;
-    padding-bottom: 0.8rem;
-    letter-spacing: 1px;
-}
-.formula-step {
+.search-dropdown.show { display: block; animation: fadeIn 0.3s ease; }
+.dropdown-item {
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    border-bottom: 1px solid #F5F5F5;
     font-family: var(--font-main);
-    font-size: 0.95rem;
-    color: var(--text-muted);
-    margin-bottom: 0.8rem;
-    padding-left: 1.8rem;
-    position: relative;
-    line-height: 1.6;
+    font-size: 1rem;
+    color: var(--secondary);
+    transition: var(--transition);
     font-weight: 500;
 }
-.formula-step::before {
-    content: '>';
-    position: absolute;
-    left: 0;
-    top: -2px;
+.dropdown-item:last-child { border-bottom: none; }
+.dropdown-item:hover {
+    background: var(--bg-alt);
     color: var(--primary);
-    font-weight: 900;
+    padding-left: 2rem;
+}
+.faq-category { margin-bottom: 4rem; }
+.category-title {
     font-family: var(--font-geo);
     font-size: 1.2rem;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 800;
 }
+.faq-item {
+    border: 1px solid var(--accent);
+    border-radius: 10px;
+    margin-bottom: 1.2rem;
+    background: var(--white);
+    overflow: hidden;
+    transition: var(--transition);
+}
+.faq-item.active {
+    border-color: var(--primary);
+    box-shadow: 0 10px 25px rgba(197, 160, 89, 0.1);
+}
+.faq-question {
+    padding: 1.5rem 2rem;
+    font-family: var(--font-main);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--secondary);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
+    transition: var(--transition);
+}
+.faq-question:hover { color: var(--primary); }
+.faq-question svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--secondary);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    flex-shrink: 0;
+}
+.faq-item.active .faq-question svg {
+    transform: rotate(180deg);
+    stroke: var(--primary);
+}
+.faq-item.active .faq-question { color: var(--primary); }
+.faq-answer {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    padding: 0 2rem;
+    font-family: var(--font-geo);
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+}
+.faq-item.active .faq-answer {
+    max-height: 800px;
+    opacity: 1;
+    padding: 0 2rem 1.5rem 2rem;
+}
+.no-results {
+    display: none;
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-muted);
+    font-family: var(--font-main);
+    font-size: 1.2rem;
+    background: var(--bg-alt);
+    border-radius: 12px;
+    border: 1px dashed var(--accent);
+}
+
 footer { padding: 120px 10% 60px; background: var(--white); color: var(--text-dark); border-top: 1px solid #F5F5F5; }
 .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4rem; padding-bottom: 80px; }
 .footer-title { font-family: var(--font-geo); color: #161616; font-size: 0.85rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem; }
@@ -466,14 +377,10 @@ footer { padding: 120px 10% 60px; background: var(--white); color: var(--text-da
     header { padding: 1.2rem 5%; }
     .footer-grid { grid-template-columns: 1fr 1fr 1fr; gap: 3rem; }
     .footer-logo-block { grid-column: 1 / -1; margin-top: 2rem; }
-    .recipe-grid { gap: 3rem; }
 }
 @media (max-width: 1024px) {
     .footer-grid { grid-template-columns: 1fr 1fr; }
-    .learn-hero h1 { font-size: 3.5rem; }
-    .recipe-grid, .recipe-section:nth-child(even) .recipe-grid { grid-template-columns: 1fr; direction: ltr; gap: 3rem; }
-    .recipe-visuals { order: -1; }
-    .recipe-section { padding: 80px 5%; }
+    .faq-hero h1 { font-size: 3.5rem; }
 }
 @media (max-width: 968px) {
     .desktop-only { display: none !important; }
@@ -518,9 +425,11 @@ footer { padding: 120px 10% 60px; background: var(--white); color: var(--text-da
 }
 @media (max-width: 600px) {
     .footer-grid { gap: 2.5rem; }
-    .learn-hero h1 { font-size: 2.5rem; }
-    .recipe-content h2 { font-size: 2.2rem; }
-    .slider-wrapper { padding: 1rem; }
+    .faq-hero h1 { font-size: 2.5rem; }
+    .faq-question { font-size: 1rem; padding: 1.2rem; }
+    .faq-answer { font-size: 0.95rem; padding: 0 1.2rem; }
+    .faq-item.active .faq-answer { padding: 0 1.2rem 1.2rem 1.2rem; }
+    .search-input { padding: 1.2rem; font-size: 1rem; }
 }
 @media (max-width: 400px) {
     html { font-size: 14px; }
@@ -597,15 +506,14 @@ footer { padding: 120px 10% 60px; background: var(--white); color: var(--text-da
 </div>
 
 <header>
-    <a href="../index.html" class="logo">
+    <a href="../" class="logo">
         <img src="../imgs/web-banners/logo.png" alt="BistroX Logo" style="width: 28px; height: 28px; object-fit: contain;">
         <div class="logo-text">BISTRO<span>X</span></div>
     </a>
-
     <nav id="mainNav">
         <div class="mobile-nav-top desktop-hidden">
             <div class="mobile-nav-header">
-                <a href="../index.html" class="logo">
+                <a href="../" class="logo">
                     <img src="../imgs/web-banners/logo.png" alt="BistroX Logo" style="width: 24px; height: 24px; object-fit: contain;">
                     <div class="logo-text">BISTRO<span>X</span></div>
                 </a>
@@ -614,55 +522,51 @@ footer { padding: 120px 10% 60px; background: var(--white); color: var(--text-da
                 </button>
             </div>
         </div>
-
         <ul id="navList">
             <li class="nav-item-dropdown">
                 <div class="nav-link-wrap">
-                    <a href="../index.html">Home <span class="desktop-arrow">&blacktriangledown;</span></a>
+                    <a href="../">Home <span class="desktop-arrow">&blacktriangledown;</span></a>
                     <svg class="chevron desktop-hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </div>
                 <div class="dropdown-menu">
-                    <a href="../index.html#mechanics">Gameplay</a>
-                    <a href="../index.html#ingredients">Ingredients</a>
-                    <a href="../index.html#recipes">Masterpieces</a>
-                    <a href="../index.html#dev">Developer</a>
-                    <a href="../index.html#contact">Help</a>
-                </div>
-            </li>
-
-            <li class="nav-item-dropdown">
-                <div class="nav-link-wrap">
-                    <a href="../about/about.html">About <span class="desktop-arrow">&blacktriangledown;</span></a>
-                    <svg class="chevron desktop-hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </div>
-                <div class="dropdown-menu">
-                    <a href="../about/about.html#about-game">game</a>
-                    <a href="../about/about.html#dev">developer</a>
-                </div>
-            </li>
-
-            <li class="nav-item-dropdown">
-                <div class="nav-link-wrap">
-                    <a href="learn.html" class="active">Learn <span class="desktop-arrow">&blacktriangledown;</span></a>
-                    <svg class="chevron desktop-hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </div>
-                <div class="dropdown-menu">
-                    <a href="#mohinga">Recipes</a>
-                    <a href="#game">Game</a>
+                    <a href="../#mechanics">Gameplay</a>
+                    <a href="../#ingredients">Ingredients</a>
+                    <a href="../#recipes">Masterpieces</a>
+                    <a href="../#dev">Developer</a>
+                    <a href="../#contact">Help</a>
                 </div>
             </li>
             <li class="nav-item-dropdown">
                 <div class="nav-link-wrap">
-                    <a href="../support/support.html">Support <span class="desktop-arrow">&blacktriangledown;</span></a>
+                    <a href="../about/">About <span class="desktop-arrow">&blacktriangledown;</span></a>
                     <svg class="chevron desktop-hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </div>
                 <div class="dropdown-menu">
-                    <a href="../support/support.html">Chat Assistant</a>
-                    <a href="../faqs/faqs.html">FAQs</a>
+                    <a href="../about/#about-game">game</a>
+                    <a href="../about/#dev">developer</a>
+                </div>
+            </li>
+            <li class="nav-item-dropdown">
+                <div class="nav-link-wrap">
+                    <a href="../learn/">Learn <span class="desktop-arrow">&blacktriangledown;</span></a>
+                    <svg class="chevron desktop-hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
+                <div class="dropdown-menu">
+                    <a href="../learn/#mohinga">Recipes</a>
+                    <a href="../learn/#game">Game</a>
+                </div>
+            </li>
+            <li class="nav-item-dropdown">
+                <div class="nav-link-wrap">
+                    <a href="./" class="active">Support <span class="desktop-arrow">&blacktriangledown;</span></a>
+                    <svg class="chevron desktop-hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
+                <div class="dropdown-menu">
+                    <a href="../support/">Chat Assistant</a>
+                    <a href="#faqSearch">FAQs</a>
                 </div>
             </li>
         </ul>
-
         <div class="mobile-utils desktop-hidden">
             <div class="mobile-util-item show-on-guest-flex" id="mobGuestLogin" onclick="openAuthModal('login')">
                 <span>Login</span>
@@ -681,7 +585,6 @@ footer { padding: 120px 10% 60px; background: var(--white); color: var(--text-da
                 <svg viewBox="0 0 24 24" fill="none" stroke="#d93025" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
             </div>
         </div>
-
         <div class="mobile-socials desktop-hidden">
             <a href="https://github.com" target="_blank" class="social-icon">
                 <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" /></svg>
@@ -694,7 +597,6 @@ footer { padding: 120px 10% 60px; background: var(--white); color: var(--text-da
             </a>
         </div>
     </nav>
-
     <div class="header-actions">
         <div id="guestActions" class="show-on-guest-flex desktop-only" style="gap: 0.5rem; align-items: center;">
             <button class="cta-btn btn-text" onclick="openAuthModal('login')">
@@ -706,9 +608,7 @@ footer { padding: 120px 10% 60px; background: var(--white); color: var(--text-da
                 Register
             </button>
         </div>
-
         <button class="cta-btn" id="playBtn" onclick="handlePlayNow()">Play Now</button>
-
         <div class="user-menu show-on-user desktop-only" id="userMenu">
             <button class="user-icon-btn" onclick="toggleUserDropdown()">
                 <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" /></svg>
@@ -718,259 +618,103 @@ footer { padding: 120px 10% 60px; background: var(--white); color: var(--text-da
                 <a href="#" class="dropdown-link logout-btn" onclick="handleLogout()">Log Out</a>
             </div>
         </div>
-
         <div class="hamburger" id="hamburgerBtn">
             <span></span><span></span><span></span>
         </div>
     </div>
 </header>
 
-<section class="learn-hero">
-    <h1 class="reveal">Master The Art of Plating.</h1>
-    <p class="reveal">Before stepping into the competitive kitchen, understand the philosophy of ingredient pairing. Review our masterclass guides below to learn exactly how top-tier dishes are structured, prepped, and perfected.</p>
+<section class="faq-hero">
+    <h1 class="reveal">How Can We Help?</h1>
+    <p class="reveal">Find simple answers to the most common questions about playing BistroX.</p>
 </section>
 
-<section class="recipe-section reveal" id="mohinga">
-    <div class="recipe-container">
-        <div class="recipe-grid">
-            <div class="recipe-content">
-                <h2>Mohinga</h2>
-                <div class="recipe-tags">
-                    <span class="recipe-tag">Traditional</span>
-                    <span class="recipe-tag">Soup</span>
-                    <span class="recipe-tag">Iconic</span>
-                </div>
-                <p class="recipe-desc">Myanmar's beloved rice noodle and fish soup, enriched with lemongrass and crispy fritters.</p>
-                <ul class="step-list">
-                    <li class="step-item">
-                        <h4>The Broth</h4>
-                        <p>Slow-cook catfish to form a rich, umami-packed base broth, thickened beautifully with roasted rice and chickpea flour.</p>
-                    </li>
-                    <li class="step-item">
-                        <h4>The Aromatics</h4>
-                        <p>Infuse the soup with copious amounts of fresh lemongrass, ginger, and garlic for that authentic, zestful backbone.</p>
-                    </li>
-                    <li class="step-item">
-                        <h4>The Assembly</h4>
-                        <p>Pour the hot broth over thin rice noodles and garnish heavily with crispy split pea fritters, a hard-boiled egg, and a squeeze of lime.</p>
-                    </li>
-                </ul>
+<section class="faq-container">
+    <div class="search-wrapper reveal">
+        <input type="text" class="search-input" id="faqSearch" placeholder="Type a question or keyword here...">
+        <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <div class="search-dropdown" id="searchDropdown"></div>
+    </div>
+
+    <div class="no-results" id="noResultsMsg">
+        We could not find an answer for that. Please try different words or contact support.
+    </div>
+
+    <div class="faq-category reveal">
+        <h3 class="category-title">Getting Started</h3>
+        
+        <div class="faq-item">
+            <button class="faq-question">What is BistroX?<svg viewBox="0 0 24 24" fill="none"><polyline points="6 9 12 15 18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline></svg></button>
+            <div class="faq-answer">
+                <p>BistroX is a visual cooking game you play right in your browser. You pick pictures of ingredients, mix them together, and the game creates a picture of a final dish based on your choices.</p>
             </div>
-            <div class="recipe-visuals">
-                <div class="slider-wrapper" id="slider1">
-                    <div class="slider-container">
-                        <div class="slider-track">
-                            <div class="slide">
-                                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'><rect width='800' height='600' fill='%233d4043'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='48' fill='%23aeb5bd' font-weight='bold'>Fresh Catfish</text></svg>" alt="Catfish">
-                                <div class="slide-label">1. Fresh Catfish</div>
-                            </div>
-                            <div class="slide">
-                                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'><rect width='800' height='600' fill='%23d3e3cd'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='48' fill='%2358824b' font-weight='bold'>Lemongrass</text></svg>" alt="Lemongrass">
-                                <div class="slide-label">2. Lemongrass</div>
-                            </div>
-                            <div class="slide">
-                                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'><rect width='800' height='600' fill='%23faf5ef'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='48' fill='%23bdae9c' font-weight='bold'>Thin Rice Noodles</text></svg>" alt="Rice Noodles">
-                                <div class="slide-label">3. Thin Rice Noodles</div>
-                            </div>
-                            <div class="slide">
-                                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'><rect width='800' height='600' fill='%23cf9536'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='48' fill='%23fce2b8' font-weight='bold'>Split Pea Fritters</text></svg>" alt="Fritters">
-                                <div class="slide-label">4. Split Pea Fritters</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slider-controls">
-                        <button class="control-btn prev-btn"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
-                        <div class="slider-dots"></div>
-                        <button class="control-btn next-btn"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
-                    </div>
-                </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">How much does it cost?<svg viewBox="0 0 24 24" fill="none"><polyline points="6 9 12 15 18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline></svg></button>
+            <div class="faq-answer">
+                <p>It is 100% free. There are no hidden fees, and you do not need to buy anything to play.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">Do I need to download an app?<svg viewBox="0 0 24 24" fill="none"><polyline points="6 9 12 15 18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline></svg></button>
+            <div class="faq-answer">
+                <p>No download is needed. You can play it completely online using any normal web browser on your phone, tablet, or computer.</p>
             </div>
         </div>
     </div>
-</section>
 
-<section class="recipe-section reveal" id="lahpet-thoke">
-    <div class="recipe-container">
-        <div class="recipe-grid">
-            <div class="recipe-content">
-                <h2>Lahpet Thoke</h2>
-                <div class="recipe-tags">
-                    <span class="recipe-tag">Salad</span>
-                    <span class="recipe-tag">Fermented</span>
-                    <span class="recipe-tag">Umami</span>
-                </div>
-                <p class="recipe-desc">A unique, savory fermented tea leaf salad mixed with crunchy roasted peanuts and fried garlic.</p>
-                <ul class="step-list">
-                    <li class="step-item">
-                        <h4>The Tea Leaves</h4>
-                        <p>Select high-quality fermented tea leaves (Lahpet), ensuring a perfect balance of tartness, bitterness, and rich earthiness.</p>
-                    </li>
-                    <li class="step-item">
-                        <h4>The Crunch</h4>
-                        <p>Toast a mixture of peanuts, sesame seeds, and assorted fried beans to create a robust textural contrast.</p>
-                    </li>
-                    <li class="step-item">
-                        <h4>The Toss</h4>
-                        <p>Combine everything with fresh sliced tomatoes, shredded cabbage, a generous drizzle of garlic oil, and a pinch of dried shrimp.</p>
-                    </li>
-                </ul>
+    <div class="faq-category reveal">
+        <h3 class="category-title">Game Rules</h3>
+        
+        <div class="faq-item">
+            <button class="faq-question">How do I cook a dish?<svg viewBox="0 0 24 24" fill="none"><polyline points="6 9 12 15 18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline></svg></button>
+            <div class="faq-answer">
+                <p>First, pick the items you want to use. Then, select a tool like a pan or a pot. Finally, click the cook button to see what you made.</p>
             </div>
-            <div class="recipe-visuals">
-                <div class="slider-wrapper" id="slider2">
-                    <div class="slider-container">
-                        <div class="slider-track">
-                            <div class="slide">
-                                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'><rect width='800' height='600' fill='%232e3a2e'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='48' fill='%2388c988' font-weight='bold'>Fermented Tea Leaves</text></svg>" alt="Tea Leaves">
-                                <div class="slide-label">1. Fermented Tea Leaves</div>
-                            </div>
-                            <div class="slide">
-                                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'><rect width='800' height='600' fill='%23a67c52'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='48' fill='%23422d19' font-weight='bold'>Roasted Peanuts</text></svg>" alt="Peanuts">
-                                <div class="slide-label">2. Roasted Peanuts</div>
-                            </div>
-                            <div class="slide">
-                                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'><rect width='800' height='600' fill='%23e8e6e1'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='48' fill='%238c8675' font-weight='bold'>Garlic Oil</text></svg>" alt="Garlic Oil">
-                                <div class="slide-label">3. Garlic Oil</div>
-                            </div>
-                            <div class="slide">
-                                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'><rect width='800' height='600' fill='%23d94838'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='48' fill='%235c150e' font-weight='bold'>Fresh Tomatoes</text></svg>" alt="Tomatoes">
-                                <div class="slide-label">4. Fresh Tomatoes</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slider-controls">
-                        <button class="control-btn prev-btn"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
-                        <div class="slider-dots"></div>
-                        <button class="control-btn next-btn"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
-                    </div>
-                </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">Where can I find the recipes?<svg viewBox="0 0 24 24" fill="none"><polyline points="6 9 12 15 18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline></svg></button>
+            <div class="faq-answer">
+                <p>You can go to the "Learn" page to see a list of exact steps for many dishes. You can also guess and mix different items yourself to find secret meals.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">What if I make a bad dish?<svg viewBox="0 0 24 24" fill="none"><polyline points="6 9 12 15 18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline></svg></button>
+            <div class="faq-answer">
+                <p>If you mix the wrong things, the game will tell you it failed. Do not worry! Just clear your tools and try a different mix.</p>
             </div>
         </div>
     </div>
-</section>
 
-<section class="recipe-section reveal" id="signature-soup">
-    <div class="recipe-container">
-        <div class="recipe-grid">
-            <div class="recipe-content">
-                <h2>BISTROX's Signature Soup</h2>
-                <div class="recipe-tags">
-                    <span class="recipe-tag">Exclusive</span>
-                    <span class="recipe-tag">Comfort</span>
-                    <span class="recipe-tag">Secret</span>
-                </div>
-                <p class="recipe-desc">Our exclusive, closely-guarded recipe featuring a perfect blend of rich, comforting flavors.</p>
-                <ul class="step-list">
-                    <li class="step-item">
-                        <h4>The Foundation</h4>
-                        <p>Begin with a meticulously slow-roasted bone and root vegetable broth, simmered for 24 hours to extract maximum depth.</p>
-                    </li>
-                    <li class="step-item">
-                        <h4>The Secret Blend</h4>
-                        <p>Bloom our closely-guarded proprietary spice blend in browned butter to release its deeply aromatic essential oils.</p>
-                    </li>
-                    <li class="step-item">
-                        <h4>The Finish</h4>
-                        <p>Vigorously whisk in a velvety swirl of heavy cream and finish with delicate micro-herbs right before serving.</p>
-                    </li>
-                </ul>
+    <div class="faq-category reveal">
+        <h3 class="category-title">Account & Saving</h3>
+        
+        <div class="faq-item">
+            <button class="faq-question">How do I save my game progress?<svg viewBox="0 0 24 24" fill="none"><polyline points="6 9 12 15 18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline></svg></button>
+            <div class="faq-answer">
+                <p>All you need to do is click "Register" and make an account. When you log in, the game saves your items and money straight to your web browser automatically.</p>
             </div>
-            <div class="recipe-visuals">
-                <div class="slider-wrapper" id="slider3">
-                    <div class="slider-container">
-                        <div class="slider-track">
-                            <div class="slide">
-                                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'><rect width='800' height='600' fill='%23b56a28'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='48' fill='%23472608' font-weight='bold'>Rich Broth Base</text></svg>" alt="Rich Broth">
-                                <div class="slide-label">1. Rich Broth Base</div>
-                            </div>
-                            <div class="slide">
-                                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'><rect width='800' height='600' fill='%235c3a21'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='48' fill='%23c99a73' font-weight='bold'>Toasted Spices</text></svg>" alt="Spices">
-                                <div class="slide-label">2. Toasted Secret Spices</div>
-                            </div>
-                            <div class="slide">
-                                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'><rect width='800' height='600' fill='%23fffdd0'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='48' fill='%23c7b952' font-weight='bold'>Heavy Cream</text></svg>" alt="Cream">
-                                <div class="slide-label">3. Heavy Cream</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slider-controls">
-                        <button class="control-btn prev-btn"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
-                        <div class="slider-dots"></div>
-                        <button class="control-btn next-btn"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
-                    </div>
-                </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">Can I play my saved game on a different device?<svg viewBox="0 0 24 24" fill="none"><polyline points="6 9 12 15 18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline></svg></button>
+            <div class="faq-answer">
+                <p>No. Your game saves are kept safely inside the exact phone or computer you used to play. If you change devices, you will start a new game.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">Do I need the internet to play?<svg viewBox="0 0 24 24" fill="none"><polyline points="6 9 12 15 18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline></svg></button>
+            <div class="faq-answer">
+                <p>Yes, you need to be connected to the internet to load the game pictures and save your progress properly.</p>
             </div>
         </div>
     </div>
-</section>
 
-<section class="recipe-section reveal" id="steak">
-    <div class="recipe-container">
-        <div class="recipe-grid">
-            <div class="recipe-content">
-                <h2>Garlic Butter Steak</h2>
-                <div class="recipe-tags">
-                    <span class="recipe-tag">Premium</span>
-                    <span class="recipe-tag">Grill</span>
-                    <span class="recipe-tag">Classic</span>
-                </div>
-                <p class="recipe-desc">Premium beef cut elevated with crushed garlic, butter, and high heat.</p>
-                <ul class="step-list">
-                    <li class="step-item">
-                        <h4>The Sear</h4>
-                        <p>Heat a cast-iron skillet until smoking. Sear the heavily salted prime cut to develop a deep, beautifully caramelized crust.</p>
-                    </li>
-                    <li class="step-item">
-                        <h4>The Baste</h4>
-                        <p>Lower the heat, drop in a generous block of butter, crushed garlic cloves, and fresh thyme. Continually spoon the foaming butter over the meat.</p>
-                    </li>
-                    <li class="step-item">
-                        <h4>The Rest</h4>
-                        <p>Crucially, let the steak rest on a board for at least 10 minutes before slicing to lock in the savory juices.</p>
-                    </li>
-                </ul>
-            </div>
-            <div class="recipe-visuals">
-                <div class="slider-wrapper" id="slider4">
-                    <div class="slider-container">
-                        <div class="slider-track">
-                            <div class="slide">
-                                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'><rect width='800' height='600' fill='%238b2522'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='48' fill='%23f59e9d' font-weight='bold'>Prime Beef Cut</text></svg>" alt="Beef Cut">
-                                <div class="slide-label">1. Prime Beef Cut</div>
-                            </div>
-                            <div class="slide">
-                                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'><rect width='800' height='600' fill='%23f5db73'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='48' fill='%239e8003' font-weight='bold'>Butter Block</text></svg>" alt="Butter">
-                                <div class="slide-label">2. Butter Block</div>
-                            </div>
-                            <div class="slide">
-                                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'><rect width='800' height='600' fill='%23e8e0cc'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='48' fill='%23877959' font-weight='bold'>Garlic Cloves</text></svg>" alt="Garlic Cloves">
-                                <div class="slide-label">3. Crushed Garlic Cloves</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slider-controls">
-                        <button class="control-btn prev-btn"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
-                        <div class="slider-dots"></div>
-                        <button class="control-btn next-btn"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="recipe-section reveal" id="game">
-    <div class="recipe-container">
-        <div class="recipe-content" style="max-width:100%;">
-            <h2 style="text-align: center;">Engine Recipes</h2>
-            <div class="recipe-tags" style="justify-content: center;">
-                <span class="recipe-tag">Formulas</span>
-                <span class="recipe-tag">Mechanics</span>
-                <span class="recipe-tag">Cheatsheet</span>
-            </div>
-            <p class="recipe-desc" style="text-align: center; max-width: 800px; margin: 0 auto;">Master the engine combinations to execute perfect services. These are the exact ingredient and action sequences required in the kitchen.</p>
-            <div class="formula-grid" id="formulaGrid"></div>
-        </div>
-    </div>
 </section>
 
 <footer>
@@ -980,31 +724,31 @@ footer { padding: 120px 10% 60px; background: var(--white); color: var(--text-da
             <ul class="footer-links">
                 <li><a href="#" onclick="openAuthModal('register')">Register to Play</a></li>
                 <li><a href="#" onclick="openAuthModal('login')">Log In</a></li>
-                <li><a href="../index.html#">Recipe Theories</a></li>
-                <li><a href="../index.html#ingredients">Ingredients List</a></li>
-                <li><a href="../index.html#contact">Submit Idea</a></li>
+                <li><a href="../#">Recipe Theories</a></li>
+                <li><a href="../#ingredients">Ingredients List</a></li>
+                <li><a href="../#contact">Submit Idea</a></li>
             </ul>
         </div>
         <div>
             <h4 class="footer-title">Privacy</h4>
             <ul class="footer-links">
-                <li><a href="../terms-conditions/terms-conditions.html#terms">Terms of Use</a></li>
-                <li><a href="../terms-conditions/terms-conditions.html#privacy">Data Privacy</a></li>
-                <li><a href="../terms-conditions/terms-conditions.html#local-storage">Local Storage Info</a></li>
-                <li><a href="../terms-conditions/terms-conditions.html#cookies">Browser Cookies</a></li>
+                <li><a href="../terms-conditions/#terms">Terms of Use</a></li>
+                <li><a href="../terms-conditions/#privacy">Data Privacy</a></li>
+                <li><a href="../terms-conditions/#local-storage">Local Storage Info</a></li>
+                <li><a href="../terms-conditions/#cookies">Browser Cookies</a></li>
             </ul>
         </div>
         <div>
             <h4 class="footer-title">Links</h4>
             <ul class="footer-links">
                 <li><a href="https://www.htetzawpaing.site" target="_blank">Developer</a></li>
-                <li><a href="../learn/learn.html">How to Play Guide</a></li>
-                <li><a href="../faqs/faqs.html">FAQ's</a></li>
-                <li><a href="../credits/credits.html">Credits</a></li>
+                <li><a href="../learn/">How to Play Guide</a></li>
+                <li><a href="./">FAQ's</a></li>
+                <li><a href="../credits/">Credits</a></li>
             </ul>
         </div>
         <div class="footer-logo-block">
-            <a href="index.html" class="footer-logo">
+            <a href="../" class="footer-logo">
                 <img src="../imgs/web-banners/logo.png" alt="BistroX Logo" style="width: 32px; height: 32px; object-fit: contain;">
                 <div class="logo-text">BISTRO<span>X</span></div>
             </a>
@@ -1034,14 +778,12 @@ window.addEventListener('load', () => {
     const loader = document.getElementById('globalLoader');
     if (loader) loader.classList.add('hidden');
 });
-
 window.addEventListener('pageshow', (e) => {
     if (e.persisted) {
         const loader = document.getElementById('globalLoader');
         if (loader) loader.classList.add('hidden');
     }
 });
-
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', async function(e) {
@@ -1077,7 +819,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
-
 function notify(message) {
     const container = document.getElementById('toastContainer');
     const toast = document.createElement('div');
@@ -1089,23 +830,18 @@ function notify(message) {
         setTimeout(() => toast.remove(), 500);
     }, 3500);
 }
-
 window.addEventListener('scroll', () => {
     const btn = document.getElementById('scrollTopBtn');
     if (window.scrollY > 400) btn.classList.add('visible');
     else btn.classList.remove('visible');
 });
-
 function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
-
 window.addEventListener('DOMContentLoaded', () => {
     checkAuthState();
     initMobileMenu();
-    initSliders();
-    initGameRecipes();
     initObserver();
+    initFAQ();
 });
-
 function checkAuthState() {
     const currentUser = localStorage.getItem('bx_currentUser');
     const displayUser = document.getElementById('displayUser');
@@ -1118,15 +854,12 @@ function checkAuthState() {
         document.body.setAttribute('data-auth', 'guest');
     }
 }
-
 function openAuthModal(mode = 'login') {
     document.getElementById('authOverlay').style.display = 'flex';
     toggleAuthMode(mode);
     closeMobileMenu();
 }
-
 function closeAuthModal() { document.getElementById('authOverlay').style.display = 'none'; }
-
 function toggleAuthMode(mode) {
     if (typeof mode === 'object' && mode.preventDefault) {
         mode.preventDefault();
@@ -1136,7 +869,6 @@ function toggleAuthMode(mode) {
     if (mode === 'register') { loginF.style.display = 'none'; regF.style.display = 'block'; }
     else { loginF.style.display = 'block'; regF.style.display = 'none'; }
 }
-
 function handleRegister() {
     const user = document.getElementById('regUser').value.trim();
     const pass = document.getElementById('regPass').value;
@@ -1156,7 +888,6 @@ function handleRegister() {
     notify('Account created! Please sign in to cook.');
     toggleAuthMode('login');
 }
-
 function handleLogin() {
     const user = document.getElementById('loginUser').value.trim();
     const pass = document.getElementById('loginPass').value;
@@ -1168,7 +899,6 @@ function handleLogin() {
         notify(`Welcome to the kitchen, Chef ${user}!`);
     } else { notify('Invalid username or password.'); }
 }
-
 function handleLogout() {
     localStorage.removeItem('bx_currentUser');
     checkAuthState();
@@ -1176,20 +906,17 @@ function handleLogout() {
     closeMobileMenu();
     notify('Successfully signed out.');
 }
-
 function toggleUserDropdown() { document.getElementById('userDropdown').classList.toggle('active'); }
-
 function handlePlayNow() {
     if (localStorage.getItem('bx_currentUser')) {
         notify('Kitchen loading... Preparing ingredients.');
         setTimeout(() => {
-            window.location.href = '../play/play.html';
+            window.location.href = '../play/';
         }, 1000);
     } else {
         openAuthModal('login');
     }
 }
-
 function initMobileMenu() {
     const hamburger = document.getElementById('hamburgerBtn');
     const nav = document.getElementById('mainNav');
@@ -1219,20 +946,17 @@ function initMobileMenu() {
         });
     });
 }
-
 function closeMobileMenu() {
     const hamburger = document.getElementById('hamburgerBtn');
     const nav = document.getElementById('mainNav');
     if(hamburger) hamburger.classList.remove('active');
     if(nav) nav.classList.remove('active');
 }
-
 window.addEventListener('click', (e) => {
     const menu = document.getElementById('userMenu');
     const dropdown = document.getElementById('userDropdown');
     if (menu && !menu.contains(e.target)) dropdown.classList.remove('active');
 });
-
 function initObserver() {
     const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
     const revealObserver = new IntersectionObserver((entries) => {
@@ -1240,75 +964,79 @@ function initObserver() {
     }, revealOptions);
     document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
 }
-
-function initSliders() {
-    const sliders = document.querySelectorAll('.slider-wrapper');
-    sliders.forEach(wrapper => {
-        const track = wrapper.querySelector('.slider-track');
-        const slides = wrapper.querySelectorAll('.slide');
-        const nextBtn = wrapper.querySelector('.next-btn');
-        const prevBtn = wrapper.querySelector('.prev-btn');
-        const dotsContainer = wrapper.querySelector('.slider-dots');
-        let currentIndex = 0;
-        let autoSlideInterval;
-        const slideCount = slides.length;
-        for(let i = 0; i < slideCount; i++) {
-            const dot = document.createElement('div');
-            dot.classList.add('dot');
-            if(i === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => goToSlide(i));
-            dotsContainer.appendChild(dot);
-        }
-        const dots = dotsContainer.querySelectorAll('.dot');
-        const updateSlider = () => {
-            track.style.transform = `translateX(-${currentIndex * 100}%)`;
-            dots.forEach(d => d.classList.remove('active'));
-            dots[currentIndex].classList.add('active');
-        };
-        const nextSlide = () => {
-            currentIndex = (currentIndex + 1) % slideCount;
-            updateSlider();
-        };
-        const prevSlide = () => {
-            currentIndex = (currentIndex - 1 + slideCount) % slideCount;
-            updateSlider();
-        };
-        const goToSlide = (index) => {
-            currentIndex = index;
-            updateSlider();
-        };
-        const startAutoSlide = () => {
-            autoSlideInterval = setInterval(nextSlide, 3500);
-        };
-        const stopAutoSlide = () => {
-            clearInterval(autoSlideInterval);
-        };
-        nextBtn.addEventListener('click', () => { nextSlide(); stopAutoSlide(); startAutoSlide(); });
-        prevBtn.addEventListener('click', () => { prevSlide(); stopAutoSlide(); startAutoSlide(); });
-        wrapper.addEventListener('mouseenter', stopAutoSlide);
-        wrapper.addEventListener('mouseleave', startAutoSlide);
-        startAutoSlide();
-    });
-}
-
-const gameRecipes=[{name:'Fried Egg',hints:['Needs EGG and OIL.','Place in PAN.','Click COOK.']},{name:'Scrambled Eggs',hints:['MIX EGG in BOWL to get Beaten Egg.','COOK Beaten Egg + BUTTER in PAN.']},{name:'Toast with Butter',hints:['SLICE BREAD with KNIFE.','COOK Sliced Bread + BUTTER in PAN.']},{name:'Grilled Cheese',hints:['SLICE BREAD with KNIFE.','COOK Sliced Bread + CHEESE + BUTTER in PAN.']},{name:'Boiled Rice',hints:['Combine RICE + WATER in POT.','Click BOIL.']},{name:'Simple Salad',hints:['SLICE LETTUCE and TOMATO.','MIX both slices in BOWL.']},{name:'Pancakes',hints:['MIX FLOUR + MILK + EGG in BOWL for batter.','COOK Batter + BUTTER in PAN.']},{name:'French Fries',hints:['SLICE POTATO.','COOK Sliced Potato + OIL in PAN.']},{name:'Omelette',hints:['MIX EGG in BOWL.','COOK Beaten Egg + CHEESE + OIL in PAN.']},{name:'Fruit Bowl',hints:['SLICE APPLE and BANANA.','MIX slices in BOWL.']},{name:'Spaghetti Aglio e Olio',hints:['BOIL PASTA_DRY + WATER in POT.','SLICE GARLIC.','COOK Cooked Pasta + Minced Garlic + OIL in PAN.']},{name:'Chicken Stir-Fry',hints:['SLICE CHICKEN and ONION.','COOK both with SOY SAUCE in PAN.']},{name:'Beef Burger',hints:['SLICE BREAD.','COOK BEEF + OIL in PAN (Seared Beef).','MIX Sliced Bread + Seared Beef + CHEESE in BOWL.']},{name:'Caesar Salad',hints:['SLICE LETTUCE.','COOK CHICKEN + OIL in PAN.','MIX Sliced Lettuce + Roasted Chicken + CHEESE in BOWL.']},{name:'Fried Rice',hints:['BOIL RICE + WATER in POT.','MIX EGG in BOWL.','COOK Boiled Rice + Beaten Egg + SOY SAUCE in PAN.']},{name:'Tomato Soup',hints:['Combine TOMATO + WATER in POT.','Click BOIL.']},{name:'Fish and Chips',hints:['COOK FISH + OIL in PAN.','SLICE POTATO, then COOK with OIL in PAN.','MIX Seared Fish + Fries in BOWL.']},{name:'Chicken Wrap',hints:['SLICE BREAD and LETTUCE.','COOK CHICKEN + OIL in PAN.','MIX Bread Slice + Chopped Lettuce + Roasted Chicken in BOWL.']},{name:'Pasta Alfredo',hints:['BOIL PASTA_DRY + WATER in POT.','BOIL CHEESE + MILK in POT (Sauce).','MIX Cooked Pasta + Cheese Sauce in BOWL.']},{name:'Vegetable Curry',hints:['SLICE POTATO and ONION.','BOIL Potato + Onion + WATER in POT.']},{name:'Chicken Parmesan',hints:['COOK CHICKEN + OIL in PAN.','BOIL TOMATO + WATER in POT (Soup).','COOK Roasted Chicken + Soup + CHEESE in PAN.']},{name:'Beef Steak with Sauce',hints:['COOK BEEF + OIL in PAN (Seared Beef).','COOK Seared Beef + BUTTER + SOY SAUCE in PAN.']},{name:'Sushi Rolls',hints:['BOIL RICE + WATER in POT.','Use KNIFE to SLICE Boiled Rice + FISH + SEAWEED.']},{name:'Pad Thai',hints:['BOIL PASTA_DRY. MIX EGG. SLICE PEANUT.','COOK Cooked Pasta + Beaten Egg + Crushed Peanut + SOY SAUCE in PAN.']},{name:'Lasagna',hints:['BOIL PASTA_DRY. COOK BEEF (Seared).','BOIL CHEESE + MILK (Sauce). BOIL TOMATO + WATER (Soup).','MIX all 4 components in BOWL.']},{name:'Butter Chicken',hints:['SLICE CHICKEN.','BOIL TOMATO + WATER (Soup).','BOIL Sliced Chicken + Soup + BUTTER in POT.']},{name:'Ramen',hints:['BOIL PASTA_DRY. COOK BEEF. BOIL EGG.','BOIL Cooked Pasta + Seared Beef + Boiled Egg + WATER in POT.']},{name:'BBQ Ribs',hints:['BOIL TOMATO + WATER (Soup).','COOK BEEF + Soup + SOY SAUCE in PAN.']},{name:'Risotto',hints:['BOIL RICE + BUTTER + CHEESE + WATER in POT.']},{name:'Tacos',hints:['SLICE BREAD and LETTUCE. COOK BEEF.','MIX Bread Slice + Seared Beef + Chopped Lettuce + CHEESE in BOWL.']},{name:'Beef Wellington',hints:['COOK BEEF. SLICE MUSHROOM. SLICE BREAD.','COOK Seared Beef + Sliced Mushroom + Bread Slice in PAN.']},{name:'Full Course Steak',hints:['Make BEEF STEAK WITH SAUCE, MASHED POTATOES, and SIMPLE SALAD.','MIX all 3 in BOWL.']}];
-
-function initGameRecipes() {
-    const grid = document.getElementById('formulaGrid');
-    if(!grid) return;
-    gameRecipes.forEach(recipe => {
-        let card = document.createElement('div');
-        card.className = 'formula-card reveal';
-        let title = document.createElement('h4');
-        title.textContent = recipe.name;
-        card.appendChild(title);
-        recipe.hints.forEach(hint => {
-            let step = document.createElement('div');
-            step.className = 'formula-step';
-            step.textContent = hint.replace(/^\d+\.\s*/, '');
-            card.appendChild(step);
+function initFAQ() {
+    const items = document.querySelectorAll('.faq-item');
+    items.forEach(item => {
+        const questionBtn = item.querySelector('.faq-question');
+        questionBtn.addEventListener('click', () => {
+            const isActive = item.classList.contains('active');
+            items.forEach(otherItem => {
+                otherItem.classList.remove('active');
+            });
+            if (!isActive) {
+                item.classList.add('active');
+            }
         });
-        grid.appendChild(card);
+    });
+
+    const searchInput = document.getElementById('faqSearch');
+    const searchDropdown = document.getElementById('searchDropdown');
+    const noResultsMsg = document.getElementById('noResultsMsg');
+
+    searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        searchDropdown.innerHTML = '';
+        let matchCount = 0;
+
+        items.forEach(item => {
+            const qText = item.querySelector('.faq-question').textContent.toLowerCase();
+            const aText = item.querySelector('.faq-answer').textContent.toLowerCase();
+
+            if (query === '') {
+                item.style.display = 'block';
+                item.classList.remove('active');
+            } else if (qText.includes(query) || aText.includes(query)) {
+                item.style.display = 'block';
+                matchCount++;
+
+                const dropItem = document.createElement('div');
+                dropItem.className = 'dropdown-item';
+                dropItem.textContent = item.querySelector('.faq-question').textContent;
+                dropItem.addEventListener('click', () => {
+                    searchInput.value = '';
+                    searchDropdown.classList.remove('show');
+                    items.forEach(i => i.classList.remove('active'));
+                    item.classList.add('active');
+                    setTimeout(() => {
+                        const yOffset = -120;
+                        const y = item.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                        window.scrollTo({top: y, behavior: 'smooth'});
+                    }, 300);
+                });
+                searchDropdown.appendChild(dropItem);
+            } else {
+                item.style.display = 'none';
+                item.classList.remove('active');
+            }
+        });
+
+        if (query !== '' && searchDropdown.children.length > 0) {
+            searchDropdown.classList.add('show');
+        } else {
+            searchDropdown.classList.remove('show');
+        }
+
+        if (matchCount === 0 && query !== '') {
+            noResultsMsg.style.display = 'block';
+        } else {
+            noResultsMsg.style.display = 'none';
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!searchInput.contains(e.target) && !searchDropdown.contains(e.target)) {
+            searchDropdown.classList.remove('show');
+        }
     });
 }
 </script>

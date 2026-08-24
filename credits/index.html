@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Support | BistroX</title>
+        <title>Credits & Acknowledgments | BistroX</title>
         <link rel="icon" href="../imgs/web-banners/logo.png">
         <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Jost:wght@400;500;600;700&display=swap');
@@ -18,8 +18,10 @@
             --white: #ffffff;
             --glass: rgba(255, 255, 255, 0.9);
             --transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-            --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+            
+            --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
             --font-geo: 'Jost', system-ui, sans-serif;
+            
             --bg-alt: #FAFAFA;
         }
 
@@ -88,18 +90,11 @@
             position: absolute; bottom: 20px; left: 40px; transform-origin: 0% 50%;
             animation: panToss 1.2s ease-in-out infinite;
         }
-        .pan-base {
-            width: 80px; height: 25px; background: var(--white);
-            border-radius: 0 0 20px 20px; box-shadow: inset -5px -5px 10px rgba(0,0,0,0.1);
-        }
-        .pan-handle {
-            position: absolute; top: 5px; right: 100%; width: 60px; height: 10px;
-            background: var(--accent); border-radius: 10px 0 0 10px;
-        }
+        .pan-base { width: 80px; height: 25px; background: var(--white); border-radius: 0 0 20px 20px; box-shadow: inset -5px -5px 10px rgba(0,0,0,0.1); }
+        .pan-handle { position: absolute; top: 5px; right: 100%; width: 60px; height: 10px; background: var(--accent); border-radius: 10px 0 0 10px; }
         .food {
-            position: absolute; bottom: 35px; left: 65px; width: 25px; height: 25px;
-            background: var(--primary); border-radius: 50%;
-            animation: foodFlip 1.2s ease-in-out infinite; box-shadow: 0 5px 15px rgba(197, 160, 89, 0.4);
+            position: absolute; bottom: 35px; left: 65px; width: 25px; height: 25px; background: var(--primary);
+            border-radius: 50%; animation: foodFlip 1.2s ease-in-out infinite; box-shadow: 0 5px 15px rgba(197, 160, 89, 0.4);
         }
         @keyframes panToss { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-15deg); } }
         @keyframes foodFlip { 0%, 100% { transform: translateY(0) rotate(0deg) scale(1); } 50% { transform: translateY(-70px) rotate(180deg) scale(1.1); } }
@@ -182,247 +177,181 @@
         .auth-toggle span { color: var(--primary); cursor: pointer; font-weight: 700; text-decoration: underline; transition: var(--transition); }
         .auth-toggle span:hover { color: var(--secondary); }
 
-        .support-wrapper {
-            padding: 140px 10% 80px;
-            min-height: 100vh;
+        
+        .credits-hero {
+            padding: 180px 10% 100px;
             background: var(--bg-alt);
-        }
-
-        .support-header {
             text-align: center;
-            margin-bottom: 3rem;
+            border-bottom: 1px solid #EAEAEA;
         }
 
-        .support-header h1 {
-            font-size: 3.5rem;
+        .credits-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .credits-hero h1 {
+            font-size: 4rem;
             color: var(--secondary);
             margin-bottom: 1rem;
+            line-height: 1.1;
         }
 
-        .support-header p {
+        .credits-hero p {
             font-family: var(--font-geo);
             font-size: 1.1rem;
             color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .support-layout {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 3rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .chat-container {
-            background: var(--white);
-            border-radius: 12px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.06);
-            display: flex;
-            flex-direction: column;
-            height: 650px;
-            border: 1px solid #EAEAEA;
-            overflow: hidden;
-            animation: fadeIn 0.8s ease-out;
-        }
-
-        .chat-top-bar {
-            background: var(--secondary);
-            color: var(--white);
-            padding: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .bot-avatar {
-            width: 45px;
-            height: 45px;
-            background: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 10px rgba(197, 160, 89, 0.3);
-        }
-
-        .bot-avatar svg { width: 24px; height: 24px; fill: white; }
-
-        .bot-info h3 { font-size: 1.1rem; margin: 0; letter-spacing: 0; color: white;}
-        .bot-info p { font-family: var(--font-geo); font-size: 0.8rem; color: #AAAAAA; margin: 0; text-transform: uppercase; letter-spacing: 1px;}
-
-        .chat-messages {
-            flex: 1;
-            padding: 2rem;
-            overflow-y: auto;
-            background: #FAFAFA;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .message {
-            display: flex;
-            flex-direction: column;
-            max-width: 80%;
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        .message.bot { align-self: flex-start; }
-        .message.user { align-self: flex-end; }
-
-        .message-bubble {
-            padding: 1rem 1.5rem;
-            border-radius: 18px;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .message.bot .message-bubble {
-            background: var(--white);
-            color: var(--secondary);
-            border: 1px solid #EAEAEA;
-            border-bottom-left-radius: 4px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
-        }
-
-        .message.user .message-bubble {
-            background: var(--secondary);
-            color: var(--white);
-            border-bottom-right-radius: 4px;
-        }
-
-        .message-time {
-            font-family: var(--font-geo);
-            font-size: 0.7rem;
-            color: #AAAAAA;
-            margin-top: 5px;
-            align-self: flex-start;
-        }
-        .message.user .message-time { align-self: flex-end; }
-        
-        .chat-link-btn {
-            display: inline-block;
-            background: var(--primary);
-            color: var(--white) !important;
-            padding: 0.6rem 1.2rem;
-            border-radius: 25px;
-            text-decoration: none;
-            font-family: var(--font-geo);
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 0.8rem;
-            margin-right: 0.5rem;
-            border: 1px solid var(--primary);
-            transition: var(--transition);
-        }
-        .chat-link-btn:hover {
-            background: var(--secondary);
-            border-color: var(--secondary);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .chat-input-area {
-            display: flex;
-            padding: 1.5rem;
-            background: var(--white);
-            border-top: 1px solid #EAEAEA;
-            gap: 1rem;
-        }
-
-        .chat-input {
-            flex: 1;
-            background: #F5F5F5;
-            border: 1px solid #EAEAEA;
-            padding: 1rem 1.5rem;
-            border-radius: 30px;
-            font-family: var(--font-main);
-            font-size: 0.95rem;
-            outline: none;
-            transition: var(--transition);
+            line-height: 1.8;
+            margin-bottom: 2rem;
         }
         
-        .chat-input:focus {
-            background: var(--white);
-            border-color: var(--primary);
-            box-shadow: 0 0 10px rgba(197, 160, 89, 0.1);
-        }
-
-        .send-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .send-btn:hover { background: var(--secondary); transform: scale(1.05); }
-        .send-btn svg { width: 20px; height: 20px; fill: white; }
-
-        .notices-sidebar {
-            background: var(--white);
-            padding: 2.5rem 2rem;
-            border-radius: 12px;
-            border: 1px solid #EAEAEA;
-            border-top: 4px solid var(--secondary);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.04);
-            height: fit-content;
-            animation: fadeIn 1s ease-out;
-        }
-
-        .notice-tag {
+        .detail-tag {
             font-family: var(--font-geo);
             color: var(--primary);
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             margin-bottom: 1rem;
             display: block;
         }
 
-        .notices-sidebar h3 {
-            font-size: 1.6rem;
-            color: var(--secondary);
-            margin-bottom: 2rem;
-            line-height: 1.2;
+        .credits-section {
+            padding: 80px 10% 120px;
+            background: var(--white);
         }
 
-        .notice-item {
+        .credits-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .credits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .credit-card {
+            padding: 3rem 2.5rem;
+            background: var(--bg-alt);
+            border: 1px solid #EAEAEA;
+            border-radius: 12px;
+            transition: var(--transition);
+            text-align: left;
             display: flex;
-            gap: 15px;
-            margin-bottom: 1.5rem;
+            flex-direction: column;
+        }
+
+        .credit-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            background: var(--white);
+        }
+
+        .credit-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--white);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            color: var(--primary);
+            border: 1px solid #EEE;
+            transition: var(--transition);
+        }
+
+        .credit-card:hover .credit-icon {
+            background: var(--primary);
+            color: var(--white);
+            transform: scale(1.1);
+        }
+
+        .credit-icon svg {
+            width: 26px;
+            height: 26px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .credit-card h3 {
+            font-size: 1.4rem;
+            color: var(--secondary);
+            margin-bottom: 0.8rem;
+            letter-spacing: -0.02em;
+        }
+
+        .credit-card p {
+            font-family: var(--font-geo);
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin-bottom: 0;
+            line-height: 1.6;
+        }
+
+        .legal-meta {
+            margin-top: auto;
+            padding-top: 1.5rem;
+            border-top: 1px solid #EAEAEA;
+            font-family: var(--font-geo);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .legal-meta div {
+            margin-bottom: 0.5rem;
+            display: flex;
             align-items: flex-start;
         }
 
-        .notice-icon {
-            color: var(--primary);
-            margin-top: 2px;
-        }
-        .notice-icon svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; }
-
-        .notice-text h4 {
-            font-size: 0.95rem;
+        .legal-meta span {
+            font-weight: 700;
             color: var(--secondary);
-            margin-bottom: 0.3rem;
-            letter-spacing: 0;
+            width: 85px;
+            flex-shrink: 0;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            margin-top: 3px;
         }
 
-        .notice-text p {
+        .credit-card a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+
+        .credit-card a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        .compliance-notice {
+            max-width: 1200px;
+            margin: 4rem auto 0;
+            padding: 2rem 2.5rem;
+            background: var(--bg-alt);
+            border-left: 4px solid var(--secondary);
+            border-radius: 0 8px 8px 0;
             font-family: var(--font-geo);
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             color: var(--text-muted);
-            line-height: 1.6;
+            line-height: 1.8;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .compliance-notice strong {
+            color: var(--secondary);
+            font-weight: 700;
         }
 
         footer { padding: 120px 10% 60px; background: var(--white); color: var(--text-dark); border-top: 1px solid #F5F5F5; }
@@ -453,8 +382,7 @@
 
         @media (max-width: 1024px) {
             .footer-grid { grid-template-columns: 1fr 1fr; }
-            .support-layout { grid-template-columns: 1fr; } 
-            .notices-sidebar { order: -1; border-left: none; border-top: 4px solid var(--primary); }
+            .credits-hero h1 { font-size: 3.5rem; }
         }
 
         @media (max-width: 968px) {
@@ -513,12 +441,10 @@
 
         @media (max-width: 600px) {
             .footer-grid { gap: 2.5rem; }
-            .support-wrapper { padding: 100px 5% 60px; }
-            .support-header h1 { font-size: 2.5rem; }
-            .chat-container { height: 500px; }
-            .chat-messages { padding: 1rem; }
-            .message-bubble { padding: 0.8rem 1.2rem; font-size: 0.9rem; }
-            .notices-sidebar { padding: 1.5rem; }
+            .credits-hero { padding: 140px 5% 80px; }
+            .credits-hero h1 { font-size: 2.5rem; }
+            .credits-section { padding: 60px 5% 80px; }
+            .credits-grid { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 400px) {
@@ -526,7 +452,6 @@
             .logo { font-size: 1.3rem; }
             .cta-btn { padding: 0.6rem 1.2rem; font-size: 0.7rem; }
         }
-
     </style>
     </head>
     <body data-auth="guest">
@@ -560,8 +485,7 @@
                     onclick="closeAuthModal()">&times;</span>
                 <div id="loginForm" class="auth-form">
                     <span class="detail-tag"
-                        style="color:var(--primary); font-family:var(--font-geo); font-size:0.85rem; font-weight:700; text-transform:uppercase; letter-spacing:3px; margin-bottom:1rem; display:block;">Welcome
-                        Back</span>
+                        style="margin-bottom: 1rem;">Welcome Back</span>
                     <h2>Login to Kitchen</h2>
                     <p
                         style="color: var(--text-muted); margin-bottom: 2.5rem;">Access
@@ -583,8 +507,7 @@
                             account</span></div>
                 </div>
                 <div id="registerForm" class="auth-form" style="display: none;">
-                    <span class="detail-tag"
-                        style="color:var(--primary); font-family:var(--font-geo); font-size:0.85rem; font-weight:700; text-transform:uppercase; letter-spacing:3px; margin-bottom:1rem; display:block;">Join
+                    <span class="detail-tag" style="margin-bottom: 1rem;">Join
                         BistroX</span>
                     <h2>Create Profile</h2>
                     <p
@@ -607,7 +530,8 @@
                     </div>
                     <div class="checkbox-group">
                         <input type="checkbox" id="regTerms">
-                        <label for="regTerms">I agree to the <a href="#"
+                        <label for="regTerms">I agree to the <a
+                                href="terms-conditions.html"
                                 style="color: var(--primary); font-weight: 700;">Terms</a>
                             and browser local storage usage.</label>
                     </div>
@@ -651,7 +575,7 @@
                 <ul id="navList">
                     <li class="nav-item-dropdown">
                         <div class="nav-link-wrap">
-                            <a href="../index.html">Home <span
+                            <a href="../">Home <span
                                     class="desktop-arrow">&blacktriangledown;</span></a>
                             <svg class="chevron desktop-hidden"
                                 viewBox="0 0 24 24" fill="none"
@@ -661,17 +585,17 @@
                                     points="9 18 15 12 9 6"></polyline></svg>
                         </div>
                         <div class="dropdown-menu">
-                            <a href="../index.html#mechanics">Gameplay</a>
-                            <a href="../index.html#ingredients">Ingredients</a>
-                            <a href="../index.html#recipes">Masterpieces</a>
-                            <a href="../index.html#dev">Developer</a>
-                            <a href="../index.html#contact">Help</a>
+                            <a href="../#mechanics">Gameplay</a>
+                            <a href="../#ingredients">Ingredients</a>
+                            <a href="../#recipes">Masterpieces</a>
+                            <a href="../#dev">Developer</a>
+                            <a href="../#contact">Help</a>
                         </div>
                     </li>
 
                     <li class="nav-item-dropdown">
                         <div class="nav-link-wrap">
-                            <a href="../about/about.html">About <span
+                            <a href="../about/">About <span
                                     class="desktop-arrow">&blacktriangledown;</span></a>
                             <svg class="chevron desktop-hidden"
                                 viewBox="0 0 24 24" fill="none"
@@ -681,14 +605,14 @@
                                     points="9 18 15 12 9 6"></polyline></svg>
                         </div>
                         <div class="dropdown-menu">
-                            <a href="../about.html#about-game">game</a>
-                            <a href="../about.html#dev">developer</a>
+                            <a href="../about/#about-game">game</a>
+                            <a href="../about/#dev">developer</a>
                         </div>
                     </li>
 
                     <li class="nav-item-dropdown">
                         <div class="nav-link-wrap">
-                            <a href="../learn/learn.html">Learn <span
+                            <a href="../learn/">Learn <span
                                     class="desktop-arrow">&blacktriangledown;</span></a>
                             <svg class="chevron desktop-hidden"
                                 viewBox="0 0 24 24" fill="none"
@@ -698,13 +622,14 @@
                                     points="9 18 15 12 9 6"></polyline></svg>
                         </div>
                         <div class="dropdown-menu">
-                            <a href="../learn/learn.html#recipes">Recipes</a>
-                            <a href="../learn/learn.html#game">Game</a>
+                            <a href="../learn/#mohinga">Recipes</a>
+                            <a href="../learn/#game">Game</a>
                         </div>
                     </li>
+
                     <li class="nav-item-dropdown">
                         <div class="nav-link-wrap">
-                            <a href="support.html" class="active">Support <span
+                            <a href="../support/">Support <span
                                     class="desktop-arrow">&blacktriangledown;</span></a>
                             <svg class="chevron desktop-hidden"
                                 viewBox="0 0 24 24" fill="none"
@@ -714,8 +639,8 @@
                                     points="9 18 15 12 9 6"></polyline></svg>
                         </div>
                         <div class="dropdown-menu">
-                            <a href="support.html">Chat Assistant</a>
-                            <a href="../faqs/faqs.html">FAQs</a>
+                            <a href="../support/">Chat Assistant</a>
+                            <a href="../faqs/">FAQs</a>
                         </div>
                     </li>
                 </ul>
@@ -804,8 +729,10 @@
                         Register
                     </button>
                 </div>
+
                 <button class="cta-btn" id="playBtn"
                     onclick="handlePlayNow()">Play Now</button>
+
                 <div class="user-menu show-on-user desktop-only" id="userMenu">
                     <button class="user-icon-btn"
                         onclick="toggleUserDropdown()">
@@ -813,107 +740,218 @@
                                 d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" /></svg>
                     </button>
                     <div class="user-dropdown" id="userDropdown">
-                        <div class="user-dropdown-header"><p
-                                id="displayUser">User: Loading...</p></div>
+                        <div class="user-dropdown-header">
+                            <p id="displayUser">User: Loading...</p>
+                        </div>
                         <a href="#" class="dropdown-link logout-btn"
                             onclick="handleLogout()">Log Out</a>
                     </div>
                 </div>
+
                 <div class="hamburger" id="hamburgerBtn">
                     <span></span><span></span><span></span>
                 </div>
             </div>
         </header>
 
-        <main class="support-wrapper">
-            <div class="support-header reveal">
-                <h1>Assistant Support</h1>
-                <p>Need guidance in the kitchen? Our automated assistant is here
-                    to help with recipes, gameplay mechanics, and technical
-                    inquiries.</p>
-            </div>
-
-            <div class="support-layout">
-
-                <div class="chat-container reveal">
-                    <div class="chat-top-bar">
-                        <div class="bot-avatar">
-                            <svg viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2C8.686 2 6 4.686 6 8c0 1.313.42 2.526 1.134 3.513C6.46 12.392 6 13.642 6 15c0 3.314 2.686 6 6 6s6-2.686 6-6c0-1.358-.46-2.608-1.134-3.487C17.58 10.526 18 9.313 18 8c0-3.314-2.686-6-6-6zm0 2c2.206 0 4 1.794 4 4 0 .964-.344 1.848-.916 2.535l-.46.547.46.547c.572.687.916 1.57.916 2.535 0 2.206-1.794 4-4 4s-4-1.794-4-4c0-.965.344-1.848.916-2.535l.46-.547-.46-.547A3.987 3.987 0 0 1 8 8c0-2.206 1.794-4 4-4z" />
-                            </svg>
-                        </div>
-                        <div class="bot-info">
-                            <h3>Bread Assistant</h3>
-                            <p>Online • Auto-Reply System</p>
-                        </div>
-                    </div>
-
-                    <div class="chat-messages" id="chatMessages">
-                    </div>
-
-                    <div class="chat-input-area">
-                        <input type="text" class="chat-input" id="chatInput"
-                            placeholder="Type a message (e.g. support, recipe, hello)..."
-                            autocomplete="off">
-                        <button class="send-btn" id="sendBtn"
-                            onclick="handleSend()">
-                            <svg viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
-                            </svg>
-                        </button>
-                    </div>
+        <main>
+            <section class="credits-hero">
+                <div class="credits-hero-content">
+                    <span class="detail-tag reveal">Legal & Compliance</span>
+                    <h1 class="reveal">Intellectual Property<br>&
+                        Attributions.</h1>
+                    <p class="reveal">This document formally outlines the
+                        acknowledgments, copyright attributions, and licensing
+                        agreements for all third-party intellectual property
+                        integrated within the BistroX enterprise application
+                        infrastructure.</p>
                 </div>
+            </section>
 
-                <div class="notices-sidebar reveal">
-                    <span class="notice-tag">Legal & Terms</span>
-                    <h3>Conditions of Use</h3>
+            <section class="credits-section">
+                <div class="credits-container reveal">
 
-                    <div class="notice-item">
-                        <div class="notice-icon"><svg
-                                viewBox="0 0 24 24"><circle cx="12" cy="12"
-                                    r="10"></circle><line x1="12" y1="8" x2="12"
-                                    y2="12"></line><line x1="12" y1="16"
-                                    x2="12.01" y2="16"></line></svg></div>
-                        <div class="notice-text">
-                            <h4>Automated System</h4>
-                            <p>This is an auto-generated reply machine based on
-                                predefined keywords. It is not monitored by a
-                                live human agent.</p>
+                    <div class="credits-grid">
+
+                        <div class="credit-card">
+                            <div class="credit-icon">
+                                <svg viewBox="0 0 24 24"><path
+                                        d="M9 18V5l12-2v13"></path><circle
+                                        cx="6" cy="18" r="3"></circle><circle
+                                        cx="18" cy="16" r="3"></circle></svg>
+                            </div>
+                            <h3>Audio & Soundscapes</h3>
+                            <p style="margin-bottom: 1.5rem;">Environmental
+                                audio engineering and interactive UI sound
+                                effects utilized across the application
+                                interface.</p>
+                            <div class="legal-meta">
+                                <div><span>Entity:</span> <div><a
+                                            href="https://pixabay.com/"
+                                            target="_blank">Pixabay</a></div></div>
+                                <div><span>License:</span> <div>Content License
+                                        Agreement</div></div>
+                                <div><span>Rights:</span> <div>All audio
+                                        intellectual property remains with the
+                                        original creators. Used strictly under
+                                        compliance with platform
+                                        terms.</div></div>
+                            </div>
                         </div>
+
+                        <div class="credit-card">
+                            <div class="credit-icon">
+                                <svg viewBox="0 0 24 24"><path
+                                        d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline
+                                        points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line
+                                        x1="12" y1="22.08" x2="12"
+                                        y2="12"></line></svg>
+                            </div>
+                            <h3>Procedural Generation</h3>
+                            <p style="margin-bottom: 1.5rem;">Synthetic,
+                                high-definition visual assets generated
+                                procedurally to represent diverse culinary
+                                elements.</p>
+                            <div class="legal-meta">
+                                <div><span>Entity:</span> <div><a
+                                            href="https://gemini.google.com/"
+                                            target="_blank">Gemini Nano
+                                            Banana</a></div></div>
+                                <div><span>License:</span> <div>Generative AI
+                                        Terms of Service</div></div>
+                                <div><span>Rights:</span> <div>Output generated
+                                        legally via authorized API integration.
+                                        Rights to generated topology are
+                                        maintained per Google LLC
+                                        agreements.</div></div>
+                            </div>
+                        </div>
+
+                        <div class="credit-card">
+                            <div class="credit-icon">
+                                <svg viewBox="0 0 24 24"><polygon
+                                        points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline
+                                        points="2 17 12 22 22 17"></polyline><polyline
+                                        points="2 12 12 17 22 12"></polyline></svg>
+                            </div>
+                            <h3>Vector Iconography</h3>
+                            <p style="margin-bottom: 1.5rem;">Minimalist vector
+                                and UI iconography deployed for application
+                                wayfinding and user experience flow.</p>
+                            <div class="legal-meta">
+                                <div><span>Entity:</span> <div><a
+                                            href="https://www.flaticon.com/"
+                                            target="_blank">Flaticon</a></div></div>
+                                <div><span>License:</span> <div>Flaticon Basic
+                                        License</div></div>
+                                <div><span>Rights:</span> <div>Icons attributed
+                                        to respective original authors.
+                                        Unauthorized redistribution of these
+                                        specific vector files is
+                                        prohibited.</div></div>
+                            </div>
+                        </div>
+
+                        <div class="credit-card">
+                            <div class="credit-icon">
+                                <svg viewBox="0 0 24 24"><path
+                                        d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle
+                                        cx="12" cy="13" r="4"></circle></svg>
+                            </div>
+                            <h3>Photographic Assets</h3>
+                            <p style="margin-bottom: 1.5rem;">High-resolution
+                                raster photography illustrating raw pantry
+                                inventory and foundational ingredient
+                                textures.</p>
+                            <div class="legal-meta">
+                                <div><span>Entity:</span> <div><a
+                                            href="https://www.google.com/imghp"
+                                            target="_blank">Google Search</a>,
+                                        <a href="https://www.freepik.com/"
+                                            target="_blank">Freepik</a>, <a
+                                            href="https://www.pexels.com/"
+                                            target="_blank">Pexels</a></div></div>
+                                <div><span>License:</span> <div>Free Use / Fair
+                                        Use Act</div></div>
+                                <div><span>Rights:</span> <div>Copyrights of
+                                        individual photographs are retained
+                                        entirely by the original stock
+                                        photographers and respective
+                                        agencies.</div></div>
+                            </div>
+                        </div>
+
+                        <div class="credit-card">
+                            <div class="credit-icon">
+                                <svg viewBox="0 0 24 24"><rect x="2" y="3"
+                                        width="20" height="14" rx="2"
+                                        ry="2"></rect><line x1="8" y1="21"
+                                        x2="16" y2="21"></line><line x1="12"
+                                        y1="17" x2="12" y2="21"></line></svg>
+                            </div>
+                            <h3>Architectural UX Design</h3>
+                            <p style="margin-bottom: 1.5rem;">Core interface
+                                structuring, typographic hierarchies, and
+                                minimalist aesthetic philosophies referenced
+                                during initial wireframing.</p>
+                            <div class="legal-meta">
+                                <div><span>Entity:</span> <div><a
+                                            href="https://grok.com/"
+                                            target="_blank">Grok</a>, <a
+                                            href="https://www.apple.com/"
+                                            target="_blank">Apple
+                                            Inc.</a></div></div>
+                                <div><span>License:</span> <div>Inspirational
+                                        Reference Only</div></div>
+                                <div><span>Rights:</span> <div>Trademarks, UI
+                                        patents, and brand identities belong
+                                        exclusively to their corporate entities.
+                                        No proprietary source code was
+                                        cloned.</div></div>
+                            </div>
+                        </div>
+
+                        <div class="credit-card">
+                            <div class="credit-icon">
+                                <svg viewBox="0 0 24 24"><polyline
+                                        points="16 18 22 12 16 6"></polyline><polyline
+                                        points="8 6 2 12 8 18"></polyline></svg>
+                            </div>
+                            <h3>Technical Engineering</h3>
+                            <p style="margin-bottom: 1.5rem;">Code syntaxes,
+                                logic deployment references, and algorithmic
+                                problem-solving paradigms guiding the frontend
+                                build.</p>
+                            <div class="legal-meta">
+                                <div><span>Entity:</span> <div><a
+                                            href="https://www.w3schools.com/"
+                                            target="_blank">W3Schools</a>, <a
+                                            href="https://www.freecodecamp.org/"
+                                            target="_blank">freeCodeCamp</a></div></div>
+                                <div><span>License:</span> <div>Open Educational
+                                        Resources</div></div>
+                                <div><span>Rights:</span> <div>Methodologies
+                                        utilized under standard open-source
+                                        educational guidelines. We deeply thank
+                                        the open-source web
+                                        community.</div></div>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div class="notice-item">
-                        <div class="notice-icon"><svg viewBox="0 0 24 24"><path
-                                    d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line
-                                    x1="12" y1="9" x2="12" y2="13"></line><line
-                                    x1="12" y1="17" x2="12.01"
-                                    y2="17"></line></svg></div>
-                        <div class="notice-text">
-                            <h4>No Liability</h4>
-                            <p>Any side effects, miscommunications, or culinary
-                                disasters resulting from following this bot's
-                                advice will not be our responsibility.</p>
-                        </div>
+                    <div class="compliance-notice reveal">
+                        <strong>Corporate Disclaimer:</strong> All third-party
+                        trademarks, logos, and brand names are the property of
+                        their respective owners. All company, product, and
+                        service names used in this web application are for
+                        identification and educational purposes only. Use of
+                        these names, trademarks, and brands does not imply
+                        endorsement by BistroX Systems.
                     </div>
 
-                    <div class="notice-item">
-                        <div class="notice-icon"><svg viewBox="0 0 24 24"><path
-                                    d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline
-                                    points="22 4 12 14.01 9 11.01"></polyline></svg></div>
-                        <div class="notice-text">
-                            <h4>Support Purpose Only</h4>
-                            <p>This assistant is designed strictly for BistroX
-                                gameplay and technical support inquiries. Please
-                                refrain from providing personal information.</p>
-                        </div>
-                    </div>
                 </div>
-
-            </div>
+            </section>
         </main>
 
         <footer>
@@ -926,26 +964,26 @@
                                 Play</a></li>
                         <li><a href="#" onclick="openAuthModal('login')">Log
                                 In</a></li>
-                        <li><a href="../index.html#">Recipe Theories</a></li>
-                        <li><a href="../index.html#ingredients">Ingredients
+                        <li><a href="../#">Recipe Theories</a></li>
+                        <li><a href="../#ingredients">Ingredients
                                 List</a></li>
-                        <li><a href="../index.html#contact">Submit Idea</a></li>
+                        <li><a href="../#contact">Submit Idea</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="footer-title">Privacy</h4>
                     <ul class="footer-links">
                         <li><a
-                                href="../terms-conditions/terms-conditions.html#terms">Terms
+                                href="../terms-conditions/#terms">Terms
                                 of Use</a></li>
                         <li><a
-                                href="../terms-conditions/terms-conditions.html#privacy">Data
+                                href="../terms-conditions/#privacy">Data
                                 Privacy</a></li>
                         <li><a
-                                href="../terms-conditions/terms-conditions.html#local-storage">Local
+                                href="../terms-conditions/#local-storage">Local
                                 Storage Info</a></li>
                         <li><a
-                                href="../terms-conditions/terms-conditions.html#cookies">Browser
+                                href="../terms-conditions/#cookies">Browser
                                 Cookies</a></li>
                     </ul>
                 </div>
@@ -954,15 +992,19 @@
                     <ul class="footer-links">
                         <li><a href="https://www.htetzawpaing.site"
                                 target="_blank">Developer</a></li>
-                        <li><a href="../learn/learn.html">How to Play
+                        <li><a href="../learn/">How to Play
                                 Guide</a></li>
-                        <li><a href="../faqs/faqs.html">FAQ's</a></li>
-                        <li><a href="../credits/credits.html">Credits</a></li>
+                        <li><a href="../faqs/">FAQ's</a></li>
+                        <li><a href="../credits/">Credits</a></li>
                     </ul>
                 </div>
                 <div class="footer-logo-block">
-                    <a href="../index.html"
-                        class="footer-logo">BISTRO<span>X</span></a>
+                    <a href="index.html" class="footer-logo">
+                        <img src="../imgs/web-banners/logo.png"
+                            alt="BistroX Logo"
+                            style="width: 32px; height: 32px; object-fit: contain;">
+                        <div class="logo-text">BISTRO<span>X</span></div>
+                    </a>
                     <p
                         class="footer-slogan">"Master the ingredients. Discover the recipe."</p>
                     <p class="footer-desc">An interactive image-based cooking
@@ -1012,7 +1054,7 @@
             document.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', async function(e) {
                     const href = this.getAttribute('href');
-                    if (!href || href.startsWith('#') || href.startsWith('http') || this.hasAttribute('target')) return;
+                    if (!href || href.startsWith('#') || href.startsWith('http') || this.hasAttribute('target') || href.startsWith('javascript:')) return;
                     e.preventDefault();
                     
                     const loader = document.getElementById('globalLoader');
@@ -1042,6 +1084,7 @@
                         await Promise.all(imagePromises);
                         window.location.href = href;
                     } catch (error) {
+                        console.error("Preload engine encountered an issue, falling back:", error);
                         window.location.href = href;
                     }
                 });
@@ -1073,7 +1116,6 @@
             checkAuthState();
             initObserver();
             initMobileMenu();
-            initChat(); 
         });
 
         function checkAuthState() {
@@ -1104,8 +1146,13 @@
             }
             const loginF = document.getElementById('loginForm');
             const regF = document.getElementById('registerForm');
-            if (mode === 'register') { loginF.style.display = 'none'; regF.style.display = 'block'; }
-            else { loginF.style.display = 'block'; regF.style.display = 'none'; }
+            if (mode === 'register') {
+                loginF.style.display = 'none';
+                regF.style.display = 'block';
+            } else {
+                loginF.style.display = 'block';
+                regF.style.display = 'none';
+            }
         }
 
         function handleRegister() {
@@ -1141,9 +1188,12 @@
 
             if (found) {
                 localStorage.setItem('bx_currentUser', user);
-                closeAuthModal(); checkAuthState();
+                closeAuthModal();
+                checkAuthState();
                 notify(`Welcome to the kitchen, Chef ${user}!`);
-            } else { notify('Invalid username or password.'); }
+            } else {
+                notify('Invalid username or password.');
+            }
         }
 
         function handleLogout() {
@@ -1159,11 +1209,9 @@
         function handlePlayNow() {
             if (localStorage.getItem('bx_currentUser')) {
                 notify('Kitchen loading... Preparing ingredients.');
-        
                 setTimeout(() => {
-                    window.location.href = '../play/play.html';
-                }, 1000);
-        
+                    window.location.href = '../play/';
+                }, 1500);
             } else {
                 openAuthModal('login');
             }
@@ -1174,7 +1222,8 @@
             const nav = document.getElementById('mainNav');
 
             hamburger.addEventListener('click', () => {
-                hamburger.classList.toggle('active'); nav.classList.toggle('active');
+                hamburger.classList.toggle('active');
+                nav.classList.toggle('active');
             });
             
             const dropdownWraps = document.querySelectorAll('.nav-item-dropdown .nav-link-wrap');
@@ -1197,7 +1246,8 @@
             document.querySelectorAll('.dropdown-menu a').forEach(link => {
                 link.addEventListener('click', () => {
                     if (window.innerWidth <= 968 && !link.getAttribute('href').startsWith('index.html')) {
-                        hamburger.classList.remove('active'); nav.classList.remove('active');
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
                     }
                 });
             });
@@ -1213,106 +1263,19 @@
         window.addEventListener('click', (e) => {
             const menu = document.getElementById('userMenu');
             const dropdown = document.getElementById('userDropdown');
-            if (menu && !menu.contains(e.target)) dropdown.classList.remove('active');
+            if (menu && !menu.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
         });
 
         function initObserver() {
             const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
             const revealObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add("active"); });
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add("active");
+                });
             }, revealOptions);
             document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
-        }
-        
-        function initChat() {
-            setTimeout(() => {
-                appendMessage("bot", "Hey chief, I'm Bread, How can I help you?");
-            }, 800);
-
-            const inputField = document.getElementById('chatInput');
-            inputField.addEventListener('keypress', function (e) {
-                if (e.key === 'Enter') {
-                    handleSend();
-                }
-            });
-        }
-
-        function handleSend() {
-            const inputField = document.getElementById('chatInput');
-            const userText = inputField.value.trim();
-
-            if (userText === "") return;
-
-            appendMessage("user", userText);
-            inputField.value = "";
-
-            setTimeout(() => {
-                const reply = determineBotReply(userText.toLowerCase());
-                appendMessage("bot", reply);
-            }, 600); 
-        }
-
-        function determineBotReply(input) {
-            if (input.includes("what is bistrox") || input.includes("about bistrox")) {
-                return "BistroX is an interactive image-based cooking game where you combine ingredients to discover new recipes.<br><a href='../about/about.html' class='chat-link-btn'>About BistroX</a>";
-            }
-            if (input.includes("developer") || input.includes("who made") || input.includes("who is the developer") || input.includes("htet zaw paing")) {
-                return "BistroX is developed by Htet Zaw Paing, a software engineer who builds modern and futuristic websites.<br><a href='../credits/credits.html' class='chat-link-btn'>Credits</a><a href='https://www.htetzawpaing.site' target='_blank' class='chat-link-btn'>Developer Site</a>";
-            }
-            if (input.includes("how to play") || input.includes("how do i play") || input.includes("rules")) {
-                return "To play, you combine different ingredients to master new recipes.<br><a href='../learn/learn.html' class='chat-link-btn'>Learn to Play</a><a href='#' onclick='handlePlayNow(); return false;' class='chat-link-btn'>Play Now</a>";
-            }
-            if (input.includes("your name") || input.includes("who are you")) {
-                return "I am Bread, your automated kitchen assistant! I'm here to help you navigate BistroX.";
-            }
-            if (input.includes("privacy policy") || input.includes("terms") || input.includes("documentation") || input.includes("legal")) {
-                return "Yes, we have comprehensive documentation. You can review our policies in the terms and conditions.<br><a href='../terms-conditions/terms-conditions.html' class='chat-link-btn'>Terms & Conditions</a>";
-            }
-            if (input.includes("support") || input.includes("help") || input.includes("issue")) {
-                return "What kind of support do you want? I can help with account issues, gameplay questions, or recipes.";
-            }
-            if (input.includes("hello") || input.includes("hi") || input.includes("hey")) {
-                return "Hello chief, how can I help you in the kitchen today?";
-            }
-            if (input.includes("recipe") || input.includes("cook") || input.includes("dish")) {
-                return "To discover new dishes, try combining ingredients on the Home page, or check out our Learn section for specific Masterpieces!<br><a href='../learn/learn.html#recipes' class='chat-link-btn'>View Recipes</a>";
-            }
-            if (input.includes("ingredient") || input.includes("tomato") || input.includes("meat")) {
-                return "We have fresh ingredients ready! The key to a great dish is pairing the right components with the correct cooking method.";
-            }
-            if (input.includes("account") || input.includes("login") || input.includes("password")) {
-                return "Your progress is saved locally in your browser. If you need to access it, ensure you login using the button at the top right!";
-            }
-            if (input.includes("bug") || input.includes("error") || input.includes("broken")) {
-                return "Oh no! If something is burning in the kitchen, please use the contact form on the Home page to report the bug to our Lead Developer.<br><a href='../index.html#contact' class='chat-link-btn'>Report Bug</a>";
-            }
-            if (input.includes("thank")) {
-                return "You're very welcome, chief! Happy cooking!";
-            }
-            
-            return "I am a simple automated Bread machine. Could you please rephrase that? Try asking about 'BistroX', 'how to play', 'developer', 'privacy policy', or 'recipes'.";
-        }
-
-        function appendMessage(senderType, text) {
-            const chatMessages = document.getElementById('chatMessages');
-            
-            const msgDiv = document.createElement('div');
-            msgDiv.classList.add('message', senderType);
-            
-            const bubble = document.createElement('div');
-            bubble.classList.add('message-bubble');
-            bubble.innerHTML = text; 
-            
-            const time = document.createElement('div');
-            time.classList.add('message-time');
-            const now = new Date();
-            time.textContent = now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0');
-            
-            msgDiv.appendChild(bubble);
-            msgDiv.appendChild(time);
-            chatMessages.appendChild(msgDiv);
-            
-            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
     </script>

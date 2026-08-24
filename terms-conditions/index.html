@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Credits & Acknowledgments | BistroX</title>
+        <title>Terms & Documentation | BistroX</title>
         <link rel="icon" href="../imgs/web-banners/logo.png">
         <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Jost:wght@400;500;600;700&display=swap');
@@ -18,10 +18,8 @@
             --white: #ffffff;
             --glass: rgba(255, 255, 255, 0.9);
             --transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-            
-            --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-main: 'Inter', system-ui, -apple-system, sans-serif;
             --font-geo: 'Jost', system-ui, sans-serif;
-            
             --bg-alt: #FAFAFA;
         }
 
@@ -90,11 +88,18 @@
             position: absolute; bottom: 20px; left: 40px; transform-origin: 0% 50%;
             animation: panToss 1.2s ease-in-out infinite;
         }
-        .pan-base { width: 80px; height: 25px; background: var(--white); border-radius: 0 0 20px 20px; box-shadow: inset -5px -5px 10px rgba(0,0,0,0.1); }
-        .pan-handle { position: absolute; top: 5px; right: 100%; width: 60px; height: 10px; background: var(--accent); border-radius: 10px 0 0 10px; }
+        .pan-base {
+            width: 80px; height: 25px; background: var(--white);
+            border-radius: 0 0 20px 20px; box-shadow: inset -5px -5px 10px rgba(0,0,0,0.1);
+        }
+        .pan-handle {
+            position: absolute; top: 5px; right: 100%; width: 60px; height: 10px;
+            background: var(--accent); border-radius: 10px 0 0 10px;
+        }
         .food {
-            position: absolute; bottom: 35px; left: 65px; width: 25px; height: 25px; background: var(--primary);
-            border-radius: 50%; animation: foodFlip 1.2s ease-in-out infinite; box-shadow: 0 5px 15px rgba(197, 160, 89, 0.4);
+            position: absolute; bottom: 35px; left: 65px; width: 25px; height: 25px;
+            background: var(--primary); border-radius: 50%;
+            animation: foodFlip 1.2s ease-in-out infinite; box-shadow: 0 5px 15px rgba(197, 160, 89, 0.4);
         }
         @keyframes panToss { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-15deg); } }
         @keyframes foodFlip { 0%, 100% { transform: translateY(0) rotate(0deg) scale(1); } 50% { transform: translateY(-70px) rotate(180deg) scale(1.1); } }
@@ -129,7 +134,7 @@
         .dropdown-menu::before { content: ''; position: absolute; top: -15px; left: 0; width: 100%; height: 15px; background: transparent; }
         .nav-item-dropdown:hover .dropdown-menu { display: flex; animation: fadeIn 0.3s ease forwards; }
         .dropdown-menu a { padding: 0.8rem 1.8rem; font-size: 0.75rem; text-align: left; width: 100%; }
-        .dropdown-menu a:hover, .dropdown-menu a.active { background: #FAFAFA; color: var(--primary); }
+        .dropdown-menu a:hover { background: #FAFAFA; color: var(--primary); }
 
         .header-actions { display: flex; align-items: center; gap: 1rem; z-index: 1002; }
         .hamburger { display: none; flex-direction: column; gap: 6px; cursor: pointer; padding: 5px; z-index: 1002; }
@@ -177,183 +182,166 @@
         .auth-toggle span { color: var(--primary); cursor: pointer; font-weight: 700; text-decoration: underline; transition: var(--transition); }
         .auth-toggle span:hover { color: var(--secondary); }
 
+
         
-        .credits-hero {
-            padding: 180px 10% 100px;
+        .legal-wrapper {
+            padding: 160px 10% 100px;
             background: var(--bg-alt);
+            min-height: 100vh;
+        }
+
+        .legal-header {
             text-align: center;
-            border-bottom: 1px solid #EAEAEA;
-        }
-
-        .credits-hero-content {
+            margin-bottom: 4rem;
             max-width: 800px;
-            margin: 0 auto;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .credits-hero h1 {
+        .legal-header h1 {
             font-size: 4rem;
             color: var(--secondary);
             margin-bottom: 1rem;
             line-height: 1.1;
         }
 
-        .credits-hero p {
+        .legal-header p {
             font-family: var(--font-geo);
             font-size: 1.1rem;
             color: var(--text-muted);
             line-height: 1.8;
-            margin-bottom: 2rem;
         }
-        
-        .detail-tag {
+
+        .legal-last-updated {
             font-family: var(--font-geo);
+            display: inline-block;
+            background: rgba(197, 160, 89, 0.1);
             color: var(--primary);
-            font-size: 0.85rem;
+            padding: 0.5rem 1.2rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 1rem;
-            display: block;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
         }
 
-        .credits-section {
-            padding: 80px 10% 120px;
-            background: var(--white);
-        }
-
-        .credits-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .credits-grid {
+        .legal-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: 300px 1fr;
+            gap: 5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            align-items: start;
         }
 
-        .credit-card {
-            padding: 3rem 2.5rem;
-            background: var(--bg-alt);
-            border: 1px solid #EAEAEA;
+        .legal-sidebar {
+            position: sticky;
+            top: 120px;
+            background: var(--white);
+            padding: 2rem;
             border-radius: 12px;
-            transition: var(--transition);
-            text-align: left;
+            border: 1px solid #EAEAEA;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.03);
+        }
+
+        .legal-sidebar nav {
             display: flex;
             flex-direction: column;
+            gap: 1rem;
         }
 
-        .credit-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-            background: var(--white);
-        }
-
-        .credit-icon {
-            width: 60px;
-            height: 60px;
-            background: var(--white);
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 2rem;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            color: var(--primary);
-            border: 1px solid #EEE;
-            transition: var(--transition);
-        }
-
-        .credit-card:hover .credit-icon {
-            background: var(--primary);
-            color: var(--white);
-            transform: scale(1.1);
-        }
-
-        .credit-icon svg {
-            width: 26px;
-            height: 26px;
-            stroke: currentColor;
-            fill: none;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .credit-card h3 {
-            font-size: 1.4rem;
-            color: var(--secondary);
-            margin-bottom: 0.8rem;
-            letter-spacing: -0.02em;
-        }
-
-        .credit-card p {
-            font-family: var(--font-geo);
+        .legal-sidebar a {
+            font-family: var(--font-main);
             color: var(--text-muted);
-            font-size: 1.05rem;
-            margin-bottom: 0;
-            line-height: 1.6;
-        }
-
-        .legal-meta {
-            margin-top: auto;
-            padding-top: 1.5rem;
-            border-top: 1px solid #EAEAEA;
-            font-family: var(--font-geo);
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            line-height: 1.7;
-        }
-
-        .legal-meta div {
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: flex-start;
-        }
-
-        .legal-meta span {
-            font-weight: 700;
-            color: var(--secondary);
-            width: 85px;
-            flex-shrink: 0;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 1px;
-            margin-top: 3px;
-        }
-
-        .credit-card a {
-            color: var(--primary);
             text-decoration: none;
-            font-weight: 700;
-            transition: var(--transition);
-        }
-
-        .credit-card a:hover {
-            color: var(--secondary);
-            text-decoration: underline;
-        }
-
-        .compliance-notice {
-            max-width: 1200px;
-            margin: 4rem auto 0;
-            padding: 2rem 2.5rem;
-            background: var(--bg-alt);
-            border-left: 4px solid var(--secondary);
-            border-radius: 0 8px 8px 0;
-            font-family: var(--font-geo);
             font-size: 0.95rem;
-            color: var(--text-muted);
-            line-height: 1.8;
-            animation: fadeIn 1s ease-out;
+            font-weight: 600;
+            padding: 0.8rem 1rem;
+            border-radius: 6px;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
         }
 
-        .compliance-notice strong {
+        .legal-sidebar a:hover, .legal-sidebar a.active {
+            background: #FAFAFA;
+            color: var(--secondary);
+            border-left-color: var(--primary);
+        }
+
+        .legal-content {
+            background: var(--white);
+            padding: 4rem;
+            border-radius: 12px;
+            border: 1px solid #EAEAEA;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.03);
+        }
+
+        .legal-section {
+            margin-bottom: 5rem;
+        }
+
+        .legal-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .legal-section h2 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #F5F5F5;
+        }
+
+        .legal-section h3 {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .legal-section p {
+            font-family: var(--font-geo);
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .legal-section ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .legal-section li {
+            font-family: var(--font-geo);
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 1.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .legal-section strong {
             color: var(--secondary);
             font-weight: 700;
         }
 
+        .info-box {
+            background: #F9F9F9;
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .info-box p {
+            margin-bottom: 0;
+            font-size: 1rem;
+            color: var(--secondary);
+        }
+
+
+        /* --- Footer --- */
         footer { padding: 120px 10% 60px; background: var(--white); color: var(--text-dark); border-top: 1px solid #F5F5F5; }
         .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4rem; padding-bottom: 80px; }
         .footer-title { font-family: var(--font-geo); color: #161616; font-size: 0.85rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem; }
@@ -378,11 +366,15 @@
             header { padding: 1.2rem 5%; }
             .footer-grid { grid-template-columns: 1fr 1fr 1fr; gap: 3rem; }
             .footer-logo-block { grid-column: 1 / -1; margin-top: 2rem; }
+            .legal-container { gap: 3rem; }
         }
 
         @media (max-width: 1024px) {
             .footer-grid { grid-template-columns: 1fr 1fr; }
-            .credits-hero h1 { font-size: 3.5rem; }
+            .legal-container { grid-template-columns: 1fr; }
+            .legal-sidebar { display: none; }
+            .legal-content { padding: 3rem; }
+            .legal-header h1 { font-size: 3.2rem; }
         }
 
         @media (max-width: 968px) {
@@ -441,10 +433,14 @@
 
         @media (max-width: 600px) {
             .footer-grid { gap: 2.5rem; }
-            .credits-hero { padding: 140px 5% 80px; }
-            .credits-hero h1 { font-size: 2.5rem; }
-            .credits-section { padding: 60px 5% 80px; }
-            .credits-grid { grid-template-columns: 1fr; }
+            .legal-wrapper { padding: 120px 5% 60px; }
+            .legal-content { padding: 2rem 1.5rem; }
+            .legal-header h1 { font-size: 2.5rem; }
+            .legal-section h2 { font-size: 1.8rem; }
+            .legal-section h3 { font-size: 1.3rem; }
+            .legal-section p, .legal-section li { font-size: 0.95rem; line-height: 1.7; }
+            .info-box { padding: 1rem 1.2rem; }
+            .info-box p { font-size: 0.9rem; }
         }
 
         @media (max-width: 400px) {
@@ -452,6 +448,7 @@
             .logo { font-size: 1.3rem; }
             .cta-btn { padding: 0.6rem 1.2rem; font-size: 0.7rem; }
         }
+
     </style>
     </head>
     <body data-auth="guest">
@@ -485,7 +482,8 @@
                     onclick="closeAuthModal()">&times;</span>
                 <div id="loginForm" class="auth-form">
                     <span class="detail-tag"
-                        style="margin-bottom: 1rem;">Welcome Back</span>
+                        style="color:var(--primary); font-family:var(--font-geo); font-size:0.85rem; font-weight:700; text-transform:uppercase; letter-spacing:3px; margin-bottom:1rem; display:block;">Welcome
+                        Back</span>
                     <h2>Login to Kitchen</h2>
                     <p
                         style="color: var(--text-muted); margin-bottom: 2.5rem;">Access
@@ -507,7 +505,8 @@
                             account</span></div>
                 </div>
                 <div id="registerForm" class="auth-form" style="display: none;">
-                    <span class="detail-tag" style="margin-bottom: 1rem;">Join
+                    <span class="detail-tag"
+                        style="color:var(--primary); font-family:var(--font-geo); font-size:0.85rem; font-weight:700; text-transform:uppercase; letter-spacing:3px; margin-bottom:1rem; display:block;">Join
                         BistroX</span>
                     <h2>Create Profile</h2>
                     <p
@@ -530,8 +529,8 @@
                     </div>
                     <div class="checkbox-group">
                         <input type="checkbox" id="regTerms">
-                        <label for="regTerms">I agree to the <a
-                                href="terms-conditions.html"
+                        <label for="regTerms">I agree to the <a href="#terms"
+                                onclick="closeAuthModal()"
                                 style="color: var(--primary); font-weight: 700;">Terms</a>
                             and browser local storage usage.</label>
                     </div>
@@ -575,7 +574,7 @@
                 <ul id="navList">
                     <li class="nav-item-dropdown">
                         <div class="nav-link-wrap">
-                            <a href="../index.html">Home <span
+                            <a href="../">Home <span
                                     class="desktop-arrow">&blacktriangledown;</span></a>
                             <svg class="chevron desktop-hidden"
                                 viewBox="0 0 24 24" fill="none"
@@ -585,17 +584,17 @@
                                     points="9 18 15 12 9 6"></polyline></svg>
                         </div>
                         <div class="dropdown-menu">
-                            <a href="../index.html#mechanics">Gameplay</a>
-                            <a href="../index.html#ingredients">Ingredients</a>
-                            <a href="../index.html#recipes">Masterpieces</a>
-                            <a href="../index.html#dev">Developer</a>
-                            <a href="../index.html#contact">Help</a>
+                            <a href="../#mechanics">Gameplay</a>
+                            <a href="../#ingredients">Ingredients</a>
+                            <a href="../#recipes">Masterpieces</a>
+                            <a href="../#dev">Developer</a>
+                            <a href="../#contact">Help</a>
                         </div>
                     </li>
 
                     <li class="nav-item-dropdown">
                         <div class="nav-link-wrap">
-                            <a href="../about/about.html">About <span
+                            <a href="../about/">About <span
                                     class="desktop-arrow">&blacktriangledown;</span></a>
                             <svg class="chevron desktop-hidden"
                                 viewBox="0 0 24 24" fill="none"
@@ -605,14 +604,14 @@
                                     points="9 18 15 12 9 6"></polyline></svg>
                         </div>
                         <div class="dropdown-menu">
-                            <a href="../about/about.html#about-game">game</a>
-                            <a href="../about/about.html#dev">developer</a>
+                            <a href="../#about-game">game</a>
+                            <a href="../#dev">developer</a>
                         </div>
                     </li>
 
                     <li class="nav-item-dropdown">
                         <div class="nav-link-wrap">
-                            <a href="../learn/learn.html">Learn <span
+                            <a href="../learn/">Learn <span
                                     class="desktop-arrow">&blacktriangledown;</span></a>
                             <svg class="chevron desktop-hidden"
                                 viewBox="0 0 24 24" fill="none"
@@ -622,14 +621,13 @@
                                     points="9 18 15 12 9 6"></polyline></svg>
                         </div>
                         <div class="dropdown-menu">
-                            <a href="../learn/learn.html#mohinga">Recipes</a>
-                            <a href="../learn/learn.html#game">Game</a>
+                            <a href="../learn/#recipes">Recipes</a>
+                            <a href="../learn/#game">Game</a>
                         </div>
                     </li>
-
                     <li class="nav-item-dropdown">
                         <div class="nav-link-wrap">
-                            <a href="../support/support.html">Support <span
+                            <a href="../support/">Support <span
                                     class="desktop-arrow">&blacktriangledown;</span></a>
                             <svg class="chevron desktop-hidden"
                                 viewBox="0 0 24 24" fill="none"
@@ -639,8 +637,8 @@
                                     points="9 18 15 12 9 6"></polyline></svg>
                         </div>
                         <div class="dropdown-menu">
-                            <a href="../support/support.html">Chat Assistant</a>
-                            <a href="../faqs/faqs.html">FAQs</a>
+                            <a href="../support/">Chat Assistant</a>
+                            <a href="../faqs/">FAQs</a>
                         </div>
                     </li>
                 </ul>
@@ -729,10 +727,8 @@
                         Register
                     </button>
                 </div>
-
                 <button class="cta-btn" id="playBtn"
                     onclick="handlePlayNow()">Play Now</button>
-
                 <div class="user-menu show-on-user desktop-only" id="userMenu">
                     <button class="user-icon-btn"
                         onclick="toggleUserDropdown()">
@@ -740,218 +736,204 @@
                                 d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" /></svg>
                     </button>
                     <div class="user-dropdown" id="userDropdown">
-                        <div class="user-dropdown-header">
-                            <p id="displayUser">User: Loading...</p>
-                        </div>
+                        <div class="user-dropdown-header"><p
+                                id="displayUser">User: Loading...</p></div>
                         <a href="#" class="dropdown-link logout-btn"
                             onclick="handleLogout()">Log Out</a>
                     </div>
                 </div>
-
                 <div class="hamburger" id="hamburgerBtn">
                     <span></span><span></span><span></span>
                 </div>
             </div>
         </header>
 
-        <main>
-            <section class="credits-hero">
-                <div class="credits-hero-content">
-                    <span class="detail-tag reveal">Legal & Compliance</span>
-                    <h1 class="reveal">Intellectual Property<br>&
-                        Attributions.</h1>
-                    <p class="reveal">This document formally outlines the
-                        acknowledgments, copyright attributions, and licensing
-                        agreements for all third-party intellectual property
-                        integrated within the BistroX enterprise application
-                        infrastructure.</p>
-                </div>
-            </section>
+        <main class="legal-wrapper">
 
-            <section class="credits-section">
-                <div class="credits-container reveal">
+            <div class="legal-header reveal">
+                <span class="legal-last-updated">Last Updated: March 2026</span>
+                <h1>Legal & Documentation</h1>
+                <p>Comprehensive information regarding your usage, privacy, and
+                    data on the BistroX digital cooking platform. We believe in
+                    complete transparency and a pure, tracker-free web
+                    experience.</p>
+            </div>
 
-                    <div class="credits-grid">
+            <div class="legal-container">
 
-                        <div class="credit-card">
-                            <div class="credit-icon">
-                                <svg viewBox="0 0 24 24"><path
-                                        d="M9 18V5l12-2v13"></path><circle
-                                        cx="6" cy="18" r="3"></circle><circle
-                                        cx="18" cy="16" r="3"></circle></svg>
-                            </div>
-                            <h3>Audio & Soundscapes</h3>
-                            <p style="margin-bottom: 1.5rem;">Environmental
-                                audio engineering and interactive UI sound
-                                effects utilized across the application
-                                interface.</p>
-                            <div class="legal-meta">
-                                <div><span>Entity:</span> <div><a
-                                            href="https://pixabay.com/"
-                                            target="_blank">Pixabay</a></div></div>
-                                <div><span>License:</span> <div>Content License
-                                        Agreement</div></div>
-                                <div><span>Rights:</span> <div>All audio
-                                        intellectual property remains with the
-                                        original creators. Used strictly under
-                                        compliance with platform
-                                        terms.</div></div>
-                            </div>
+                <aside class="legal-sidebar desktop-only reveal">
+                    <nav id="legalNav">
+                        <a href="#terms" class="active">Terms of Use</a>
+                        <a href="#privacy">Data Privacy</a>
+                        <a href="#local-storage">Local Storage Info</a>
+                        <a href="#cookies">Browser Cookies</a>
+                    </nav>
+                </aside>
+
+                <div class="legal-content reveal">
+
+                    <section id="terms" class="legal-section">
+                        <h2>Terms of Use</h2>
+                        <p>Welcome to BistroX. By accessing or using our
+                            image-based cooking game, you agree to be bound by
+                            these Terms of Use. If you disagree with any part of
+                            these terms, you may not access the service.</p>
+
+                        <h3>1. Nature of the Service</h3>
+                        <p>BistroX is a fully frontend, browser-based simulation
+                            game designed for educational and entertainment
+                            purposes. It simulates the culinary arts through
+                            visual interactions and logic-based mechanics. The
+                            recipes and combinations presented in the game are
+                            stylized interpretations and should be executed in
+                            real life with appropriate culinary care and food
+                            safety standards.</p>
+
+                        <h3>2. Intellectual Property Rights</h3>
+                        <p>The service and its original content, features, and
+                            functionality are and will remain the exclusive
+                            property of Htet Zaw Paing and its licensors. The
+                            visual assets, including all SVG illustrations,
+                            structural code (HTML/CSS/JS), and proprietary game
+                            logic are protected by copyright laws.</p>
+                        <ul>
+                            <li><strong>Permitted Use:</strong> You are granted
+                                a limited, non-exclusive, non-transferable
+                                license to play the game and interact with the
+                                interface for personal, non-commercial use.</li>
+                            <li><strong>Restrictions:</strong> You may not
+                                reverse-engineer, clone, distribute, or create
+                                derivative works from our specific code
+                                structure or design system without explicit
+                                permission.</li>
+                        </ul>
+
+                        <h3>3. User Conduct & Accounts</h3>
+                        <p>While BistroX does not utilize a remote backend
+                            server, you have the ability to create "Accounts"
+                            via your browser's local environment. You are solely
+                            responsible for maintaining the security of your
+                            local device. We are not liable for any lost
+                            progress resulting from browser cache clears or
+                            device changes.</p>
+                    </section>
+
+                    <section id="privacy" class="legal-section">
+                        <h2>Data Privacy Policy</h2>
+                        <p>At BistroX, we take a radical approach to your
+                            privacy: <strong>We do not collect it.</strong>
+                            Because our application is engineered as a pure
+                            frontend experience, your data fundamentally never
+                            leaves your device.</p>
+
+                        <h3>1. Information We Do Not Collect</h3>
+                        <p>Unlike traditional web applications, BistroX operates
+                            without a centralized database. Therefore, we
+                            absolutely <strong>do not</strong> harvest,
+                            transmit, or store:</p>
+                        <ul>
+                            <li>Your IP Address</li>
+                            <li>Your Geolocation data</li>
+                            <li>Personal Identifiable Information (PII)</li>
+                            <li>Cross-site browsing history</li>
+                            <li>Email addresses or phone numbers</li>
+                        </ul>
+
+                        <h3>2. External Links and APIs</h3>
+                        <p>Our platform may contain links to external sites
+                            (such as GitHub, LinkedIn, or Unsplash for
+                            placeholder images). If you click on a third-party
+                            link, you will be directed to that site. We strongly
+                            advise you to review the Privacy Policy of these
+                            external sites, as we have no control over their
+                            practices.</p>
+
+                        <div class="info-box">
+                            <p><strong>The Privacy Guarantee:</strong> When you
+                                play BistroX, the game logic executes entirely
+                                within the RAM and CPU of your own computer or
+                                mobile device. No data is sent to a BistroX
+                                server during gameplay.</p>
                         </div>
+                    </section>
 
-                        <div class="credit-card">
-                            <div class="credit-icon">
-                                <svg viewBox="0 0 24 24"><path
-                                        d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline
-                                        points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line
-                                        x1="12" y1="22.08" x2="12"
-                                        y2="12"></line></svg>
-                            </div>
-                            <h3>Procedural Generation</h3>
-                            <p style="margin-bottom: 1.5rem;">Synthetic,
-                                high-definition visual assets generated
-                                procedurally to represent diverse culinary
-                                elements.</p>
-                            <div class="legal-meta">
-                                <div><span>Entity:</span> <div><a
-                                            href="https://gemini.google.com/"
-                                            target="_blank">Gemini Nano
-                                            Banana</a></div></div>
-                                <div><span>License:</span> <div>Generative AI
-                                        Terms of Service</div></div>
-                                <div><span>Rights:</span> <div>Output generated
-                                        legally via authorized API integration.
-                                        Rights to generated topology are
-                                        maintained per Google LLC
-                                        agreements.</div></div>
-                            </div>
+                    <section id="local-storage" class="legal-section">
+                        <h2>Local Storage Information</h2>
+                        <p>To provide you with a seamless, persistent gaming
+                            experience without requiring a backend database,
+                            BistroX heavily utilizes the <strong>HTML5 Web
+                                Storage API</strong> (specifically
+                            `localStorage`). This section details exactly how
+                            and why we use it.</p>
+
+                        <h3>1. What is Local Storage?</h3>
+                        <p>Local Storage is an industry-standard web technology
+                            that allows websites to store text-based data
+                            locally within your web browser. This data persists
+                            even after you close the browser window or restart
+                            your computer, allowing you to return to your game
+                            exactly where you left off.</p>
+
+                        <h3>2. How BistroX Uses Your Local Storage</h3>
+                        <p>We use local storage strictly for functional gameplay
+                            purposes. Specifically, we store:</p>
+                        <ul>
+                            <li><strong>`bx_users`:</strong> An encrypted array
+                                containing the usernames and passwords you
+                                create locally to access your profile.</li>
+                            <li><strong>`bx_currentUser`:</strong> A simple
+                                string indicating which chef profile is
+                                currently "logged in" to the session.</li>
+                            <li><strong>Game State Data:</strong> Arrays
+                                tracking which specific ingredients you have
+                                unlocked, which recipes you have mastered, and
+                                your current inventory.</li>
+                        </ul>
+
+                        <h3>3. Managing Your Storage</h3>
+                        <p>Because this data lives on your device, you have
+                            total control over it. You can delete your BistroX
+                            data at any time by clearing your browser's site
+                            data or cache. <strong>Warning:</strong> Doing so
+                            will permanently erase your created profiles,
+                            unlocked recipes, and game progress, as we have no
+                            remote backup to restore from.</p>
+                    </section>
+
+                    <section id="cookies" class="legal-section">
+                        <h2>Browser Cookies</h2>
+                        <p>Transparency regarding tracking is a core philosophy
+                            of the BistroX development team. We have designed
+                            our system to operate entirely independently of
+                            traditional HTTP cookies.</p>
+
+                        <h3>1. Zero Tracking Policy</h3>
+                        <p>BistroX does <strong>not</strong> use cookies for
+                            tracking, analytics, advertising, or remarketing.
+                            When you visit our website, we do not drop tracking
+                            pixels or third-party analytical scripts (like
+                            Google Analytics or Meta Pixel) onto your
+                            machine.</p>
+
+                        <h3>2. Functional vs. Tracking</h3>
+                        <p>Many modern websites use cookies to track user
+                            behavior across the internet to serve targeted
+                            advertisements. Because BistroX relies on the
+                            aforementioned `localStorage` for maintaining your
+                            session state (like keeping you logged in as a
+                            specific Chef), we have successfully eliminated the
+                            need for standard session cookies entirely.</p>
+
+                        <div class="info-box">
+                            <p><strong>Summary:</strong> You can browse, play,
+                                and interact with BistroX with complete peace of
+                                mind. Your culinary journey is a private
+                                experience between you and your browser.</p>
                         </div>
-
-                        <div class="credit-card">
-                            <div class="credit-icon">
-                                <svg viewBox="0 0 24 24"><polygon
-                                        points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline
-                                        points="2 17 12 22 22 17"></polyline><polyline
-                                        points="2 12 12 17 22 12"></polyline></svg>
-                            </div>
-                            <h3>Vector Iconography</h3>
-                            <p style="margin-bottom: 1.5rem;">Minimalist vector
-                                and UI iconography deployed for application
-                                wayfinding and user experience flow.</p>
-                            <div class="legal-meta">
-                                <div><span>Entity:</span> <div><a
-                                            href="https://www.flaticon.com/"
-                                            target="_blank">Flaticon</a></div></div>
-                                <div><span>License:</span> <div>Flaticon Basic
-                                        License</div></div>
-                                <div><span>Rights:</span> <div>Icons attributed
-                                        to respective original authors.
-                                        Unauthorized redistribution of these
-                                        specific vector files is
-                                        prohibited.</div></div>
-                            </div>
-                        </div>
-
-                        <div class="credit-card">
-                            <div class="credit-icon">
-                                <svg viewBox="0 0 24 24"><path
-                                        d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle
-                                        cx="12" cy="13" r="4"></circle></svg>
-                            </div>
-                            <h3>Photographic Assets</h3>
-                            <p style="margin-bottom: 1.5rem;">High-resolution
-                                raster photography illustrating raw pantry
-                                inventory and foundational ingredient
-                                textures.</p>
-                            <div class="legal-meta">
-                                <div><span>Entity:</span> <div><a
-                                            href="https://www.google.com/imghp"
-                                            target="_blank">Google Search</a>,
-                                        <a href="https://www.freepik.com/"
-                                            target="_blank">Freepik</a>, <a
-                                            href="https://www.pexels.com/"
-                                            target="_blank">Pexels</a></div></div>
-                                <div><span>License:</span> <div>Free Use / Fair
-                                        Use Act</div></div>
-                                <div><span>Rights:</span> <div>Copyrights of
-                                        individual photographs are retained
-                                        entirely by the original stock
-                                        photographers and respective
-                                        agencies.</div></div>
-                            </div>
-                        </div>
-
-                        <div class="credit-card">
-                            <div class="credit-icon">
-                                <svg viewBox="0 0 24 24"><rect x="2" y="3"
-                                        width="20" height="14" rx="2"
-                                        ry="2"></rect><line x1="8" y1="21"
-                                        x2="16" y2="21"></line><line x1="12"
-                                        y1="17" x2="12" y2="21"></line></svg>
-                            </div>
-                            <h3>Architectural UX Design</h3>
-                            <p style="margin-bottom: 1.5rem;">Core interface
-                                structuring, typographic hierarchies, and
-                                minimalist aesthetic philosophies referenced
-                                during initial wireframing.</p>
-                            <div class="legal-meta">
-                                <div><span>Entity:</span> <div><a
-                                            href="https://grok.com/"
-                                            target="_blank">Grok</a>, <a
-                                            href="https://www.apple.com/"
-                                            target="_blank">Apple
-                                            Inc.</a></div></div>
-                                <div><span>License:</span> <div>Inspirational
-                                        Reference Only</div></div>
-                                <div><span>Rights:</span> <div>Trademarks, UI
-                                        patents, and brand identities belong
-                                        exclusively to their corporate entities.
-                                        No proprietary source code was
-                                        cloned.</div></div>
-                            </div>
-                        </div>
-
-                        <div class="credit-card">
-                            <div class="credit-icon">
-                                <svg viewBox="0 0 24 24"><polyline
-                                        points="16 18 22 12 16 6"></polyline><polyline
-                                        points="8 6 2 12 8 18"></polyline></svg>
-                            </div>
-                            <h3>Technical Engineering</h3>
-                            <p style="margin-bottom: 1.5rem;">Code syntaxes,
-                                logic deployment references, and algorithmic
-                                problem-solving paradigms guiding the frontend
-                                build.</p>
-                            <div class="legal-meta">
-                                <div><span>Entity:</span> <div><a
-                                            href="https://www.w3schools.com/"
-                                            target="_blank">W3Schools</a>, <a
-                                            href="https://www.freecodecamp.org/"
-                                            target="_blank">freeCodeCamp</a></div></div>
-                                <div><span>License:</span> <div>Open Educational
-                                        Resources</div></div>
-                                <div><span>Rights:</span> <div>Methodologies
-                                        utilized under standard open-source
-                                        educational guidelines. We deeply thank
-                                        the open-source web
-                                        community.</div></div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="compliance-notice reveal">
-                        <strong>Corporate Disclaimer:</strong> All third-party
-                        trademarks, logos, and brand names are the property of
-                        their respective owners. All company, product, and
-                        service names used in this web application are for
-                        identification and educational purposes only. Use of
-                        these names, trademarks, and brands does not imply
-                        endorsement by BistroX Systems.
-                    </div>
+                    </section>
 
                 </div>
-            </section>
+            </div>
         </main>
 
         <footer>
@@ -964,27 +946,19 @@
                                 Play</a></li>
                         <li><a href="#" onclick="openAuthModal('login')">Log
                                 In</a></li>
-                        <li><a href="../index.html#">Recipe Theories</a></li>
-                        <li><a href="../index.html#ingredients">Ingredients
+                        <li><a href="../#">Recipe Theories</a></li>
+                        <li><a href="../#ingredients">Ingredients
                                 List</a></li>
-                        <li><a href="../index.html#contact">Submit Idea</a></li>
+                        <li><a href="../#contact">Submit Idea</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="footer-title">Privacy</h4>
                     <ul class="footer-links">
-                        <li><a
-                                href="../terms-conditions/terms-conditions.html#terms">Terms
-                                of Use</a></li>
-                        <li><a
-                                href="../terms-conditions/terms-conditions.html#privacy">Data
-                                Privacy</a></li>
-                        <li><a
-                                href="../terms-conditions/terms-conditions.html#local-storage">Local
-                                Storage Info</a></li>
-                        <li><a
-                                href="../terms-conditions/terms-conditions.html#cookies">Browser
-                                Cookies</a></li>
+                        <li><a href="#terms">Terms of Use</a></li>
+                        <li><a href="#privacy">Data Privacy</a></li>
+                        <li><a href="#local-storage">Local Storage Info</a></li>
+                        <li><a href="#cookies">Browser Cookies</a></li>
                     </ul>
                 </div>
                 <div>
@@ -992,10 +966,10 @@
                     <ul class="footer-links">
                         <li><a href="https://www.htetzawpaing.site"
                                 target="_blank">Developer</a></li>
-                        <li><a href="../learn/learn.html">How to Play
+                        <li><a href="../learn/">How to Play
                                 Guide</a></li>
-                        <li><a href="../faqs/faqs.html">FAQ's</a></li>
-                        <li><a href="../credits/credits.html">Credits</a></li>
+                        <li><a href="../faqs/">FAQ's</a></li>
+                        <li><a href="../credits/">Credits</a></li>
                     </ul>
                 </div>
                 <div class="footer-logo-block">
@@ -1054,7 +1028,7 @@
             document.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', async function(e) {
                     const href = this.getAttribute('href');
-                    if (!href || href.startsWith('#') || href.startsWith('http') || this.hasAttribute('target') || href.startsWith('javascript:')) return;
+                    if (!href || href.startsWith('#') || href.startsWith('http') || this.hasAttribute('target')) return;
                     e.preventDefault();
                     
                     const loader = document.getElementById('globalLoader');
@@ -1116,6 +1090,7 @@
             checkAuthState();
             initObserver();
             initMobileMenu();
+            initScrollSpy();
         });
 
         function checkAuthState() {
@@ -1146,13 +1121,8 @@
             }
             const loginF = document.getElementById('loginForm');
             const regF = document.getElementById('registerForm');
-            if (mode === 'register') {
-                loginF.style.display = 'none';
-                regF.style.display = 'block';
-            } else {
-                loginF.style.display = 'block';
-                regF.style.display = 'none';
-            }
+            if (mode === 'register') { loginF.style.display = 'none'; regF.style.display = 'block'; }
+            else { loginF.style.display = 'block'; regF.style.display = 'none'; }
         }
 
         function handleRegister() {
@@ -1188,12 +1158,9 @@
 
             if (found) {
                 localStorage.setItem('bx_currentUser', user);
-                closeAuthModal();
-                checkAuthState();
+                closeAuthModal(); checkAuthState();
                 notify(`Welcome to the kitchen, Chef ${user}!`);
-            } else {
-                notify('Invalid username or password.');
-            }
+            } else { notify('Invalid username or password.'); }
         }
 
         function handleLogout() {
@@ -1210,7 +1177,7 @@
             if (localStorage.getItem('bx_currentUser')) {
                 notify('Kitchen loading... Preparing ingredients.');
                 setTimeout(() => {
-                    window.location.href = '../play/play.html';
+                    window.location.href = '../play/';
                 }, 1500);
             } else {
                 openAuthModal('login');
@@ -1263,21 +1230,53 @@
         window.addEventListener('click', (e) => {
             const menu = document.getElementById('userMenu');
             const dropdown = document.getElementById('userDropdown');
-            if (menu && !menu.contains(e.target)) {
-                dropdown.classList.remove('active');
-            }
+            if (menu && !menu.contains(e.target)) dropdown.classList.remove('active');
         });
 
         function initObserver() {
             const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
             const revealObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) entry.target.classList.add("active");
-                });
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add("active"); });
             }, revealOptions);
             document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
         }
 
+        function initScrollSpy() {
+            const sections = document.querySelectorAll('.legal-section');
+            const navLinks = document.querySelectorAll('.legal-sidebar a');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    
+                    if (targetSection) {
+                        window.scrollTo({
+                            top: targetSection.offsetTop - 120,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (scrollY >= sectionTop - 150) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').substring(1) === current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        }
     </script>
     </body>
 </html>

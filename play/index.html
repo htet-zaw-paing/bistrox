@@ -84,7 +84,6 @@
         .loader-slogan span { color: var(--primary); font-weight: 700; }
         @keyframes pulseText { 0% { opacity: 0.5; } 100% { opacity: 1; } }
 
-        /* Universal Safe Bottom Spacing for All Scrollable Areas */
         .doc-content::after,
         .recipe-grid-container::after,
         .cooking-zone::after,
@@ -424,6 +423,26 @@
         .modal-overlay.active { display: flex; opacity: 1; }
         .modal-box { background: var(--game-panel); border: 1px solid var(--game-border); border-radius: 16px; width: 100%; max-width: 600px; padding: 3rem; text-align: center; transform: translateY(20px); transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1); box-shadow: 0 30px 60px rgba(0,0,0,0.2); max-height: 90vh; display: flex; flex-direction: column;}
         .modal-overlay.active .modal-box { transform: translateY(0); }
+        .asset-download-modal { z-index: 1000000; }
+        .asset-download-modal .modal-box { max-width: 640px; padding: clamp(2rem, 5vw, 3.5rem); }
+        .asset-download-modal h2 { color: var(--secondary); font-size: clamp(1.6rem, 4vw, 2.4rem); margin-bottom: 1rem; }
+        .asset-download-copy { color: var(--game-text-muted); font-size: 1rem; line-height: 1.7; margin-bottom: 1.5rem; }
+        .asset-download-details { display: flex; justify-content: space-between; gap: 1rem; align-items: center; padding: 1rem 1.25rem; border: 1px solid var(--game-border); border-radius: 12px; background: var(--game-bg); color: var(--game-text-muted); font-family: var(--font-main); font-size: 0.9rem; margin-bottom: 1.5rem; }
+        .asset-download-details strong { color: var(--secondary); font-family: var(--font-geo); font-size: 1.1rem; letter-spacing: 1px; }
+        .asset-download-progress-panel { display: none; text-align: left; margin-bottom: 1.5rem; }
+        .asset-download-progress-row { display: flex; justify-content: space-between; gap: 1rem; align-items: center; color: var(--game-text-muted); font-family: var(--font-main); font-size: 0.8rem; margin-bottom: 0.6rem; }
+        .asset-download-progress-row strong { color: var(--secondary); font-family: var(--font-geo); font-size: 0.9rem; }
+        .asset-download-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin-top: 0.75rem; }
+        .asset-download-stat { border: 1px solid var(--game-border); border-radius: 10px; background: var(--game-panel); padding: 0.7rem 0.8rem; display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
+        .asset-download-stat span { color: var(--game-text-muted); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; }
+        .asset-download-stat strong { color: var(--secondary); font-family: var(--font-geo); font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        @media (max-width: 600px) { .asset-download-stats { grid-template-columns: 1fr; } }
+        .asset-download-progress { width: 100%; height: 12px; overflow: hidden; background: var(--game-border); border-radius: 20px; margin-bottom: 0.75rem; }
+        .asset-download-progress-fill { width: 0; height: 100%; background: linear-gradient(90deg, var(--primary), #e3c27e); border-radius: inherit; transition: width 0.25s ease; }
+        .asset-download-actions { display: flex; gap: 1rem; width: 100%; }
+        .asset-download-actions .action-btn { flex: 1; }
+        .asset-download-failures { display: none; text-align: left; color: var(--danger); background: rgba(230, 57, 70, 0.06); border: 1px solid rgba(230, 57, 70, 0.2); border-radius: 10px; padding: 0.85rem 1rem; margin-bottom: 1.25rem; font-family: var(--font-main); font-size: 0.78rem; line-height: 1.5; max-height: 110px; overflow-y: auto; }
+        @media (max-width: 600px) { .asset-download-actions { flex-direction: column-reverse; } .asset-download-details { align-items: flex-start; flex-direction: column; } }
         .modal-box h2 { font-size: 2rem; color: var(--secondary); margin-bottom: 1.5rem; font-family: var(--font-geo); text-transform: uppercase; letter-spacing: 2px; flex-shrink: 0;}
         .hint-list { text-align: left; background: var(--game-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--game-border); margin-bottom: 1.5rem; overflow-y: auto; list-style: none; flex: 1;}
         .hint-list li { margin-bottom: 1.2rem; color: var(--game-text-muted); font-size: 1rem; padding-left: 1.8rem; position: relative; font-family: var(--font-main); line-height: 1.6;}
@@ -646,12 +665,46 @@
         <div class="modal-box">
             <h2>Offline Synchronization</h2>
             <p style="color:var(--game-text-muted); font-size:1rem; margin-bottom: 1.5rem; line-height: 1.6; font-family: var(--font-main);">
-                Caching core assets allows you to play BistroX without an internet connection.<br><br>
+                The game will download its assets, store them in a service-worker cache, and serve them locally when you return without an internet connection.<br><br>
                 <strong id="offlineSizeEstimate" style="color:var(--secondary); font-size:1.2rem;">Ready to sync...</strong>
             </p>
             <div style="display: flex; gap: 1rem; width: 100%;">
                 <button class="action-btn" style="flex:1;" onclick="document.getElementById('offlineModal').classList.remove('active')">Close</button>
-                <button class="action-btn primary" id="offlineBtnStart" style="flex:1;" onclick="confirmOffline()">Authorize & Cache</button>
+                <button class="action-btn primary" id="offlineBtnStart" style="flex:1;" onclick="confirmOffline()">Download for Offline Use</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="assetDownloadModal" class="modal-overlay asset-download-modal">
+        <div class="modal-box">
+            <h2 id="assetDownloadTitle">Prepare Your Kitchen</h2>
+            <p id="assetDownloadMessage" class="asset-download-copy">This game will now download all images, icons, animations, and sound effects required for the complete BistroX experience.</p>
+            <div class="asset-download-details">
+                <span>Estimated download size</span>
+                <strong id="assetDownloadSize">Calculating...</strong>
+            </div>
+            <div id="assetDownloadProgressPanel" class="asset-download-progress-panel">
+                <div class="asset-download-progress-row">
+                    <span id="assetDownloadStatus">Preparing download...</span>
+                    <strong id="assetDownloadPercent">0%</strong>
+                </div>
+                <div class="asset-download-progress">
+                    <div id="assetDownloadProgressFill" class="asset-download-progress-fill"></div>
+                </div>
+                <div class="asset-download-progress-row">
+                    <span id="assetDownloadCount">0 of 0 assets</span>
+                    <span id="assetDownloadBytes">0 B / 0 B</span>
+                </div>
+                <div class="asset-download-stats">
+                    <div class="asset-download-stat"><span>Download speed</span><strong id="assetDownloadSpeed">0 B/s</strong></div>
+                    <div class="asset-download-stat"><span>Remaining time</span><strong id="assetDownloadRemaining">Calculating...</strong></div>
+                </div>
+            </div>
+            <div id="assetDownloadFailureList" class="asset-download-failures"></div>
+            <div class="asset-download-actions">
+                <button id="assetDownloadDecline" class="action-btn" onclick="declineAssetDownload()">Return Home</button>
+                <button id="assetDownloadSkip" class="action-btn" style="display:none;" onclick="continueWithoutOptionalAssets()">Continue Anyway</button>
+                <button id="assetDownloadAccept" class="action-btn primary" onclick="acceptAssetDownload()" disabled>Download Assets</button>
             </div>
         </div>
     </div>
@@ -677,7 +730,7 @@
         </div>
 
         <div id="screen-main" class="game-screen main-menu active">
-            <div id="mainMenuBg1" class="menu-bg-layer" style="background-image: url('../imgs/web-banners/kitchen1.png'); opacity: 1;"></div>
+            <div id="mainMenuBg1" class="menu-bg-layer" style="opacity: 1;"></div>
             <div id="mainMenuBg2" class="menu-bg-layer" style="opacity: 0;"></div>
             <div class="menu-gradient-overlay"></div>
             
@@ -713,11 +766,11 @@
                         <button class="menu-btn" onclick="switchScreen('screen-badges')">Badges</button>
                         <button class="menu-btn" onclick="openStore('screen-main')">Themes & Store</button>
                         <button class="menu-btn" onclick="openLeaderboard()">Leaderboards</button>
-                        <button class="menu-btn" onclick="window.location.href='../learn/learn.html'">Learn</button>
+                        <button class="menu-btn" onclick="window.location.href='../learn/'">Learn</button>
                         <button class="menu-btn" onclick="openSettings('screen-main')">Settings</button>
                         <button class="menu-btn" onclick="switchScreen('screen-terms')">Terms</button>
                         <button class="menu-btn" onclick="switchScreen('screen-credits')">Credit</button>
-                        <button class="menu-btn quit-btn" onclick="window.location.href='../index.html'">Quit</button>
+                        <button class="menu-btn quit-btn" onclick="window.location.href='../'">Quit</button>
                     </div>
                 </div>
             </div>
@@ -1006,6 +1059,7 @@
                     <div class="setting-group">
                         <label>Cache Assets Locally</label>
                         <button class="action-btn primary" onclick="openOfflineModal()" style="margin-top: 0.5rem; justify-content: center;">Authorize Offline Access</button>
+                        <button class="action-btn clear" onclick="clearCachedAssets()" style="margin-top: 0.5rem; justify-content: center;">Clear Cached Assets</button>
                     </div>
                 </div>
             </div>
@@ -1092,10 +1146,12 @@
             '../imgs/web-banners/kitchen3.jpg'
         ];
         
-        menuBgs.forEach(src => {
-            const img = new Image();
-            img.src = src;
-        });
+        function preloadMenuBackgrounds() {
+            menuBgs.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+        }
 
         let currentBgIndex = 0;
         let isBg1Active = true;
@@ -1226,8 +1282,10 @@
 
         let masterSFXVolume = 0.8;
         let bgmStarted = false;
+        let gameAssetsReady = false;
 
         const uiClickSound = new Audio('../mp3/click.mp3');
+        uiClickSound.preload = 'none';
 
         let isMuted = false;
         function toggleSound(fromKeyboard = false) {
@@ -1268,6 +1326,7 @@
         }
 
         const bgmAudio = new Audio(bgmTracks[appConfig.bgmTrack].url);
+        bgmAudio.preload = 'none';
         bgmAudio.loop = true;
         bgmAudio.volume = 0.5;
 
@@ -1280,7 +1339,10 @@
             success: '../mp3/success.wav',
         };
         const sfxAudio = {};
-        for (let key in sfxURLs) { sfxAudio[key] = new Audio(sfxURLs[key]); }
+        for (let key in sfxURLs) {
+            sfxAudio[key] = new Audio(sfxURLs[key]);
+            sfxAudio[key].preload = 'none';
+        }
 
         function playActionSound(type) {
             if(masterSFXVolume <= 0) return;
@@ -1292,6 +1354,7 @@
         }
 
         document.addEventListener('click', (e) => {
+            if(!gameAssetsReady) return;
             if(e.target.type !== 'range') playClick();
             if(!bgmStarted && !isMuted) {
                 bgmAudio.play().catch(e => {});
@@ -1343,47 +1406,365 @@
             if(bgmStarted && !isMuted) bgmAudio.play().catch(e => {});
         }
 
-        function openOfflineModal() {
-            document.getElementById('offlineModal').classList.add('active');
+        const assetDownloadCacheName = 'bistrox-assets-v1';
+        const assetDownloadStateKey = 'bistrox-assets-downloaded-v1';
+        const assetDownloadProgressStateKey = 'bistrox-assets-progress-v1';
+        let assetDownloadAssets = [];
+        let assetDownloadFailures = [];
+        let assetDownloadCompletedUrls = new Set();
+        let assetDownloadBytesByUrl = new Map();
+        let assetDownloadSessionStartedAt = 0;
+        let assetDownloadSessionStartBytes = 0;
+        let assetDownloadSpeedBps = 0;
+        let serviceWorkerRegistration = null;
+
+        function getAssetDownloadAssets() {
+            const assets = [
+                { url: menuBgs[0], essential: true, label: 'Main menu background' },
+                ...menuBgs.slice(1).map((url, index) => ({ url, essential: false, label: `Menu background ${index + 2}` })),
+                { url: '../imgs/web-banners/logo.png', essential: false, label: 'Logo' },
+                { url: '../imgs/icons/lock.png', essential: false, label: 'Lock icon' },
+                ...badges.map(badge => ({ url: badge.img, essential: false, label: `${badge.name} badge` })),
+                ...bgmTracks.map(track => ({ url: track.url, essential: false, label: `${track.name} music` })),
+                { url: '../mp3/click.mp3', essential: false, label: 'Click sound' },
+                ...Object.entries(sfxURLs).map(([key, url]) => ({ url, essential: false, label: `${key} sound effect` })),
+                ...Object.values(db.items).map(item => ({ url: item.img, essential: false, label: `${item.name} image` }))
+            ];
+            const uniqueAssets = new Map();
+            assets.forEach(asset => {
+                if (!asset.url) return;
+                const existing = uniqueAssets.get(asset.url);
+                uniqueAssets.set(asset.url, existing ? { ...existing, essential: existing.essential || asset.essential } : asset);
+            });
+            return [...uniqueAssets.values()];
         }
 
-        async function confirmOffline() {
-            const btn = document.getElementById('offlineBtnStart');
-            const estimateText = document.getElementById('offlineSizeEstimate');
-            btn.disabled = true;
-            btn.textContent = 'Caching Assets...';
-            estimateText.textContent = 'Downloading and syncing data...';
-            
+        function getAssetDownloadUrls() {
+            return getAssetDownloadAssets().map(asset => asset.url);
+        }
+
+        function formatAssetBytes(bytes) {
+            if (!Number.isFinite(bytes) || bytes <= 0) return '0 B';
+            const units = ['B', 'KB', 'MB', 'GB'];
+            const unitIndex = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1);
+            return `${(bytes / Math.pow(1024, unitIndex)).toFixed(unitIndex === 0 ? 0 : 2)} ${units[unitIndex]}`;
+        }
+
+        async function estimateAssetDownloadSize(assets) {
+            let totalBytes = 0;
+            let knownSizes = 0;
+            await Promise.all(assets.map(async asset => {
+                try {
+                    const response = await fetch(asset.url, { method: 'HEAD', cache: 'no-store', credentials: 'same-origin' });
+                    const contentLength = response.headers.get('content-length');
+                    if (response.ok && contentLength) {
+                        totalBytes += parseInt(contentLength, 10) || 0;
+                        knownSizes += 1;
+                    }
+                } catch (e) {}
+            }));
+            return { totalBytes, knownSizes };
+        }
+
+        function formatRemainingTime(seconds) {
+            if (!Number.isFinite(seconds) || seconds < 0) return 'Calculating...';
+            if (seconds < 60) return `${Math.max(1, Math.ceil(seconds))}s`;
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = Math.ceil(seconds % 60);
+            if (minutes < 60) return `${minutes}m ${remainingSeconds}s`;
+            const hours = Math.floor(minutes / 60);
+            return `${hours}h ${minutes % 60}m`;
+        }
+
+        function setAssetDownloadProgress(completed, total, completedBytes, totalBytes, status) {
+            const percent = total > 0 ? Math.min(100, Math.round((completed / total) * 100)) : 0;
+            const elapsedSeconds = assetDownloadSessionStartedAt > 0 ? Math.max((Date.now() - assetDownloadSessionStartedAt) / 1000, 0.001) : 0;
+            const sessionBytes = Math.max(completedBytes - assetDownloadSessionStartBytes, 0);
+            if (elapsedSeconds > 0 && sessionBytes > 0) assetDownloadSpeedBps = sessionBytes / elapsedSeconds;
+            const effectiveTotalBytes = totalBytes > 0 ? Math.max(totalBytes, completedBytes) : completedBytes;
+            const remainingBytes = Math.max(effectiveTotalBytes - completedBytes, 0);
+            const remainingTime = completed >= total && total > 0 ? 'Complete' : assetDownloadSpeedBps > 0 && remainingBytes > 0 ? formatRemainingTime(remainingBytes / assetDownloadSpeedBps) : 'Calculating...';
+            document.getElementById('assetDownloadProgressFill').style.width = `${percent}%`;
+            document.getElementById('assetDownloadPercent').textContent = `${percent}%`;
+            document.getElementById('assetDownloadCount').textContent = `${completed} of ${total} assets`;
+            document.getElementById('assetDownloadBytes').textContent = `${formatAssetBytes(completedBytes)} / ${effectiveTotalBytes > 0 ? formatAssetBytes(effectiveTotalBytes) : 'Calculating...'}`;
+            document.getElementById('assetDownloadSpeed').textContent = assetDownloadSpeedBps > 0 ? `${formatAssetBytes(assetDownloadSpeedBps)}/s` : 'Calculating...';
+            document.getElementById('assetDownloadRemaining').textContent = remainingTime;
+            document.getElementById('assetDownloadStatus').textContent = status;
+        }
+
+        function showAssetDownloadFailures() {
+            const failureList = document.getElementById('assetDownloadFailureList');
+            if (!assetDownloadFailures.length) {
+                failureList.textContent = '';
+                failureList.style.display = 'none';
+                return;
+            }
+            const visibleFailures = assetDownloadFailures.slice(0, 8).map(failure => `${failure.asset.label}: ${failure.reason}`).join(' | ');
+            const remainingFailures = assetDownloadFailures.length > 8 ? ` | +${assetDownloadFailures.length - 8} more` : '';
+            failureList.textContent = `Failed assets: ${visibleFailures}${remainingFailures}`;
+            failureList.style.display = 'block';
+        }
+
+        function resetAssetDownloadState(clearPersisted = false) {
+            assetDownloadFailures = [];
+            assetDownloadCompletedUrls = new Set();
+            assetDownloadBytesByUrl = new Map();
+            assetDownloadSessionStartedAt = 0;
+            assetDownloadSessionStartBytes = 0;
+            assetDownloadSpeedBps = 0;
+            if (clearPersisted) localStorage.removeItem(assetDownloadProgressStateKey);
+        }
+
+        function saveAssetDownloadProgress() {
+            localStorage.setItem(assetDownloadProgressStateKey, JSON.stringify({
+                completedUrls: [...assetDownloadCompletedUrls],
+                bytesByUrl: Object.fromEntries(assetDownloadBytesByUrl),
+                updatedAt: Date.now()
+            }));
+        }
+
+        async function loadAssetDownloadProgress() {
+            resetAssetDownloadState();
+            if (!('caches' in window)) return;
+            let savedState = null;
             try {
-                const cache = await caches.open('bistrox-offline-v1');
-                let urls = Object.values(db.items).map(i => i.img);
-                urls.push('../imgs/web-banners/logo.png');
-                badges.forEach(b => urls.push(b.img));
-                
-                let totalBytes = 0;
-                for(let url of urls) {
-                    try {
-                        let res = await fetch(url);
-                        if(res.ok) {
-                            let blob = await res.clone().blob();
-                            totalBytes += blob.size;
-                            await cache.put(url, res);
-                        }
-                    } catch(e) {}
-                }
-                let mb = (totalBytes / (1024*1024)).toFixed(2);
-                estimateText.textContent = `Synchronization Complete! Synced: ${mb} MB`;
-                notify("SYSTEM: All assets cached successfully. Ready for offline operation.", "success");
-                btn.textContent = 'Cache Complete';
-            } catch(e) {
-                notify("SYSTEM ERROR: Offline caching sequence failed.", "error");
-                btn.textContent = 'Retry Cache';
-                estimateText.textContent = 'Error occurred during caching.';
-                btn.disabled = false;
+                savedState = JSON.parse(localStorage.getItem(assetDownloadProgressStateKey) || 'null');
+            } catch (e) {}
+            try {
+                const cache = await caches.open(assetDownloadCacheName);
+                const validAssets = new Map(assetDownloadAssets.map(asset => [asset.url, asset]));
+                const savedUrls = savedState && Array.isArray(savedState.completedUrls) ? savedState.completedUrls : localStorage.getItem(assetDownloadStateKey) === 'complete' ? assetDownloadAssets.map(asset => asset.url) : [];
+                const cachedEntries = await Promise.all(savedUrls.filter(url => validAssets.has(url)).map(async url => ({ url, response: await cache.match(url) })));
+                cachedEntries.forEach(entry => {
+                    if (!entry.response) return;
+                    assetDownloadCompletedUrls.add(entry.url);
+                    const bytes = savedState && savedState.bytesByUrl && Number(savedState.bytesByUrl[entry.url]);
+                    if (bytes > 0) assetDownloadBytesByUrl.set(entry.url, bytes);
+                });
+            } catch (e) {}
+        }
+
+        async function registerOfflineServiceWorker() {
+            if (!('serviceWorker' in navigator)) return false;
+            const serviceWorkerPaths = ['../sw.js', './sw.js'];
+            for (const serviceWorkerPath of serviceWorkerPaths) {
+                try {
+                    serviceWorkerRegistration = await navigator.serviceWorker.register(serviceWorkerPath, { scope: '/' });
+                    await navigator.serviceWorker.ready;
+                    const activeWorker = navigator.serviceWorker.controller || serviceWorkerRegistration.active;
+                    if (activeWorker) activeWorker.postMessage({ type: 'CACHE_SHELL', url: window.location.href });
+                    return true;
+                } catch (e) {}
+            }
+            return false;
+        }
+
+        async function clearCachedAssets() {
+            localStorage.removeItem(assetDownloadStateKey);
+            localStorage.removeItem(assetDownloadProgressStateKey);
+            resetAssetDownloadState();
+            if ('caches' in window) {
+                await Promise.all([
+                    caches.delete(assetDownloadCacheName),
+                    caches.delete('bistrox-offline-v1'),
+                    caches.delete('bistrox-shell-v1')
+                ]);
+            }
+            notify('SYSTEM: Cached game assets cleared. A fresh download will start on the next launch.', 'success');
+        }
+
+        async function hasDownloadedAssets() {
+            if (localStorage.getItem(assetDownloadStateKey) !== 'complete') return false;
+            if (!('caches' in window)) return true;
+            try {
+                const cache = await caches.open(assetDownloadCacheName);
+                const essentialAssets = getAssetDownloadAssets().filter(asset => asset.essential);
+                const cachedAssets = await Promise.all(essentialAssets.map(asset => cache.match(asset.url)));
+                return cachedAssets.every(Boolean);
+            } catch (e) {
+                return false;
             }
         }
 
-        window.addEventListener('load', () => {
+        async function openAssetDownloadModal() {
+            const modal = document.getElementById('assetDownloadModal');
+            const acceptButton = document.getElementById('assetDownloadAccept');
+            const skipButton = document.getElementById('assetDownloadSkip');
+            const progressPanel = document.getElementById('assetDownloadProgressPanel');
+            assetDownloadAssets = getAssetDownloadAssets();
+            await loadAssetDownloadProgress();
+            modal.classList.add('active');
+            acceptButton.textContent = assetDownloadCompletedUrls.size === assetDownloadAssets.length && assetDownloadAssets.length > 0 ? 'Assets Ready' : assetDownloadCompletedUrls.size ? 'Resume Download' : 'Download Assets';
+            acceptButton.onclick = acceptAssetDownload;
+            acceptButton.disabled = true;
+            skipButton.style.display = 'none';
+            document.getElementById('assetDownloadFailureList').style.display = 'none';
+            document.getElementById('assetDownloadSize').textContent = 'Calculating...';
+            document.getElementById('assetDownloadSpeed').textContent = '0 B/s';
+            document.getElementById('assetDownloadRemaining').textContent = assetDownloadCompletedUrls.size ? 'Ready to resume' : 'Calculating...';
+            if (assetDownloadCompletedUrls.size) {
+                progressPanel.style.display = 'block';
+                setAssetDownloadProgress(assetDownloadCompletedUrls.size, assetDownloadAssets.length, [...assetDownloadBytesByUrl.values()].reduce((sum, bytes) => sum + bytes, 0), 0, `Resume available: ${assetDownloadCompletedUrls.size} assets already downloaded`);
+                document.getElementById('assetDownloadMessage').textContent = 'A previous download was interrupted. Resume to download only the assets that are still missing.';
+            }
+            const estimate = await estimateAssetDownloadSize(assetDownloadAssets);
+            if (!modal.classList.contains('active')) return;
+            document.getElementById('assetDownloadSize').textContent = estimate.knownSizes === assetDownloadAssets.length && estimate.totalBytes > 0 ? formatAssetBytes(estimate.totalBytes) : estimate.totalBytes > 0 ? `${formatAssetBytes(estimate.totalBytes)}+` : 'Size unavailable';
+            acceptButton.disabled = false;
+        }
+
+        function declineAssetDownload() {
+            window.location.href = '../';
+        }
+
+        function retryFailedAssetDownloads() {
+            const retryAssets = assetDownloadFailures.map(failure => failure.asset);
+            if (!retryAssets.length) return;
+            downloadAssetBatch(retryAssets, true);
+        }
+
+        function continueWithoutOptionalAssets() {
+            const requiredFailures = assetDownloadFailures.filter(failure => failure.asset.essential);
+            if (requiredFailures.length) return;
+            localStorage.setItem(assetDownloadStateKey, 'complete');
+            localStorage.removeItem(assetDownloadProgressStateKey);
+            document.getElementById('assetDownloadModal').classList.remove('active');
+            initializeGame();
+        }
+
+        function updateAssetDownloadControls(requiredFailures, optionalFailures) {
+            const acceptButton = document.getElementById('assetDownloadAccept');
+            const declineButton = document.getElementById('assetDownloadDecline');
+            const skipButton = document.getElementById('assetDownloadSkip');
+            acceptButton.disabled = false;
+            declineButton.disabled = false;
+            if (requiredFailures.length) {
+                document.getElementById('assetDownloadTitle').textContent = 'Required Download Incomplete';
+                document.getElementById('assetDownloadMessage').textContent = 'A launch-critical asset could not be downloaded. Retry the failed files before returning home.';
+                acceptButton.textContent = 'Retry Failed';
+                acceptButton.onclick = retryFailedAssetDownloads;
+                skipButton.style.display = 'none';
+            } else if (optionalFailures.length) {
+                document.getElementById('assetDownloadTitle').textContent = 'Optional Assets Skipped';
+                document.getElementById('assetDownloadMessage').textContent = 'The game can launch, but some optional images or sounds are unavailable. You can retry them or continue without them.';
+                acceptButton.textContent = 'Retry Failed';
+                acceptButton.onclick = retryFailedAssetDownloads;
+                skipButton.style.display = 'block';
+            }
+        }
+
+        async function downloadAssetBatch(assetsToDownload, isRetry = false) {
+            const modal = document.getElementById('assetDownloadModal');
+            const acceptButton = document.getElementById('assetDownloadAccept');
+            const declineButton = document.getElementById('assetDownloadDecline');
+            const skipButton = document.getElementById('assetDownloadSkip');
+            const progressPanel = document.getElementById('assetDownloadProgressPanel');
+            const title = document.getElementById('assetDownloadTitle');
+            const message = document.getElementById('assetDownloadMessage');
+            if (!assetDownloadAssets.length) assetDownloadAssets = getAssetDownloadAssets();
+            assetDownloadFailures = isRetry ? [] : assetDownloadFailures;
+            acceptButton.disabled = true;
+            declineButton.disabled = true;
+            skipButton.style.display = 'none';
+            progressPanel.style.display = 'block';
+            title.textContent = isRetry ? 'Retrying Failed Assets' : 'Downloading Game Assets';
+            message.textContent = 'Please keep this page open while the game downloads its images, icons, animations, and sound effects.';
+            const estimate = await estimateAssetDownloadSize(assetDownloadAssets);
+            let cache = null;
+            try {
+                if ('caches' in window) cache = await caches.open(assetDownloadCacheName);
+            } catch (e) {}
+            let completedBytes = [...assetDownloadBytesByUrl.values()].reduce((sum, bytes) => sum + bytes, 0);
+            assetDownloadSessionStartedAt = Date.now();
+            assetDownloadSessionStartBytes = completedBytes;
+            assetDownloadSpeedBps = 0;
+            setAssetDownloadProgress(assetDownloadCompletedUrls.size + assetDownloadFailures.length, assetDownloadAssets.length, completedBytes, estimate.totalBytes, isRetry ? 'Retrying failed assets...' : 'Preparing download...');
+            for (const asset of assetsToDownload) {
+                try {
+                    const response = await fetch(asset.url, { cache: 'reload', credentials: 'same-origin' });
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    const blob = await response.blob();
+                    assetDownloadCompletedUrls.add(asset.url);
+                    assetDownloadBytesByUrl.set(asset.url, blob.size);
+                    completedBytes = [...assetDownloadBytesByUrl.values()].reduce((sum, bytes) => sum + bytes, 0);
+                    if (cache) {
+                        try {
+                            await cache.put(asset.url, new Response(blob, { headers: response.headers }));
+                        } catch (e) {}
+                    }
+                    saveAssetDownloadProgress();
+                } catch (e) {
+                    assetDownloadFailures.push({ asset, reason: e && e.message ? e.message : 'Request failed' });
+                }
+                const processed = assetDownloadBytesByUrl.size + assetDownloadFailures.length;
+                setAssetDownloadProgress(processed, assetDownloadAssets.length, completedBytes, estimate.totalBytes, `Processed ${processed} of ${assetDownloadAssets.length} assets`);
+            }
+            showAssetDownloadFailures();
+            const requiredFailures = assetDownloadFailures.filter(failure => failure.asset.essential);
+            const optionalFailures = assetDownloadFailures.filter(failure => !failure.asset.essential);
+            if (requiredFailures.length || optionalFailures.length) {
+                updateAssetDownloadControls(requiredFailures, optionalFailures);
+                document.getElementById('assetDownloadStatus').textContent = `${assetDownloadFailures.length} asset${assetDownloadFailures.length === 1 ? '' : 's'} failed`; 
+                return;
+            }
+            localStorage.setItem(assetDownloadStateKey, 'complete');
+            document.getElementById('assetDownloadSize').textContent = formatAssetBytes(completedBytes);
+            setAssetDownloadProgress(assetDownloadAssets.length, assetDownloadAssets.length, completedBytes, completedBytes, 'All game assets downloaded');
+            title.textContent = 'Kitchen Ready';
+            message.textContent = 'Everything required to play BistroX has been downloaded successfully.';
+            acceptButton.textContent = 'Enter Game';
+            acceptButton.disabled = false;
+            acceptButton.onclick = () => {
+                modal.classList.remove('active');
+                initializeGame();
+            };
+        }
+
+        function acceptAssetDownload() {
+            const pendingAssets = assetDownloadAssets.filter(asset => !assetDownloadCompletedUrls.has(asset.url));
+            if (!pendingAssets.length) {
+                localStorage.setItem(assetDownloadStateKey, 'complete');
+                localStorage.removeItem(assetDownloadProgressStateKey);
+                document.getElementById('assetDownloadModal').classList.remove('active');
+                initializeGame();
+                return;
+            }
+            downloadAssetBatch(pendingAssets, false);
+        }
+
+        async function openOfflineModal() {
+            const modal = document.getElementById('offlineModal');
+            const estimateText = document.getElementById('offlineSizeEstimate');
+            modal.classList.add('active');
+            estimateText.textContent = 'Calculating offline package size...';
+            const assets = getAssetDownloadAssets();
+            const estimate = await estimateAssetDownloadSize(assets);
+            if (modal.classList.contains('active')) estimateText.textContent = estimate.totalBytes > 0 ? `${formatAssetBytes(estimate.totalBytes)} available for offline use` : 'Offline package size unavailable';
+        }
+
+        async function confirmOffline() {
+            const offlineModal = document.getElementById('offlineModal');
+            const estimateText = document.getElementById('offlineSizeEstimate');
+            const btn = document.getElementById('offlineBtnStart');
+            btn.disabled = true;
+            btn.textContent = 'Preparing Download...';
+            const registered = await registerOfflineServiceWorker();
+            if (!registered) {
+                estimateText.textContent = 'Offline access requires HTTPS or localhost and a working service worker.';
+                notify('SYSTEM ERROR: Offline synchronization is unavailable in this browser context.', 'error');
+                btn.disabled = false;
+                btn.textContent = 'Download for Offline Use';
+                return;
+            }
+            offlineModal.classList.remove('active');
+            btn.disabled = false;
+            btn.textContent = 'Download for Offline Use';
+            await openAssetDownloadModal();
+        }
+
+        function initializeGame() {
+            gameAssetsReady = true;
             const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
             const keyPrefix = isMac ? 'Cmd' : 'Ctrl';
             const searchInput = document.getElementById('pantrySearch');
@@ -1394,6 +1775,8 @@
             const loader = document.getElementById('globalLoader');
             if (loader) loader.classList.add('hidden');
             setTimeout(() => { document.querySelectorAll('.reveal').forEach(el => el.classList.add('active')); }, 300);
+            preloadMenuBackgrounds();
+            bg1.style.backgroundImage = `url('${menuBgs[0]}')`;
             
             loadUserData();
             generateLevels();
@@ -1403,6 +1786,25 @@
             if(!isMuted) {
                 bgmAudio.play().then(() => { bgmStarted = true; }).catch(() => {});
             }
+        }
+
+        window.addEventListener('load', async () => {
+            if (!requireAuthenticatedUser()) return;
+            await registerOfflineServiceWorker();
+            if (await hasDownloadedAssets()) {
+                initializeGame();
+            } else {
+                openAssetDownloadModal();
+            }
+        });
+
+        window.addEventListener('storage', event => {
+            const authenticatedUser = getAuthenticatedUser();
+            if (event.key === 'bx_currentUser' && (!authenticatedUser || (sessionUser && sessionUser !== authenticatedUser))) redirectToHomeForLogin();
+        });
+
+        window.addEventListener('focus', () => {
+            if (gameAssetsReady) requireAuthenticatedUser();
         });
 
         window.addEventListener('pageshow', (e) => { if (e.persisted) document.getElementById('globalLoader')?.classList.add('hidden'); });
@@ -1437,36 +1839,150 @@
             });
         }
 
+        const homePageUrl = '../';
+        const profileIntegritySalt = 'bistrox-profile-integrity-v1';
+        let loginRedirectStarted = false;
+        let sessionUser = null;
+
+        function getAuthenticatedUser() {
+            const storedUser = localStorage.getItem('bx_currentUser');
+            if (!storedUser || storedUser === 'null' || storedUser === 'undefined') return null;
+            const normalizedUser = storedUser.trim();
+            return /^[A-Za-z0-9_.-]{1,64}$/.test(normalizedUser) ? normalizedUser : null;
+        }
+
+        function redirectToHomeForLogin() {
+            if (loginRedirectStarted) return;
+            loginRedirectStarted = true;
+            try { sessionStorage.setItem('bx_login_required', '1'); } catch (e) {}
+            window.location.replace(homePageUrl);
+        }
+
+        function requireAuthenticatedUser() {
+            const authenticatedUser = getAuthenticatedUser();
+            if (!authenticatedUser || (sessionUser && sessionUser !== authenticatedUser)) {
+                redirectToHomeForLogin();
+                return false;
+            }
+            currentUser = authenticatedUser;
+            sessionUser = authenticatedUser;
+            if (gameAssetsReady && !verifyProfileIntegrity()) return false;
+            return true;
+        }
+
+        function readStoredJSON(key, fallback) {
+            try {
+                const value = localStorage.getItem(key);
+                return value ? JSON.parse(value) : fallback;
+            } catch (e) {
+                return fallback;
+            }
+        }
+
+        function safeInteger(value, fallback, minimum, maximum) {
+            const number = Number(value);
+            if (!Number.isSafeInteger(number)) return fallback;
+            return Math.min(maximum, Math.max(minimum, number));
+        }
+
+        function safeNumber(value, fallback, minimum, maximum) {
+            const number = Number(value);
+            if (!Number.isFinite(number)) return fallback;
+            return Math.min(maximum, Math.max(minimum, number));
+        }
+
+        function profileIntegrityPayload(prefix) {
+            return [
+                localStorage.getItem(prefix + '_progress') || '',
+                localStorage.getItem(prefix + '_balance') || '',
+                localStorage.getItem(prefix + '_fastest_time') || '',
+                localStorage.getItem(prefix + '_levelStars') || '',
+                localStorage.getItem(prefix + '_themes') || '',
+                localStorage.getItem(prefix + '_perks') || '',
+                localStorage.getItem(prefix + '_activeTheme') || '',
+                localStorage.getItem(prefix + '_config') || ''
+            ].join('¦');
+        }
+
+        function profileIntegrityHash(prefix) {
+            const payload = profileIntegritySalt + '¦' + profileIntegrityPayload(prefix);
+            let hash = 2166136261;
+            for (let index = 0; index < payload.length; index += 1) {
+                hash ^= payload.charCodeAt(index);
+                hash = Math.imul(hash, 16777619);
+            }
+            return (hash >>> 0).toString(16).padStart(8, '0');
+        }
+
+        function resetUserStateToDefaults() {
+            maxUnlockedLevel = 1;
+            userBalance = 0;
+            userFastestTime = Infinity;
+            userLevelStars = Object.create(null);
+            unlockedThemes = ['classic'];
+            unlockedPerks = [];
+            activeTheme = 'classic';
+            appConfig = { gfxIndex: 0, fontIndex: 1, sfxVol: 80, bgmVol: 50, bgmTrack: 0, unlockedHints: {} };
+        }
+
+        function verifyProfileIntegrity() {
+            if (!currentUser) return false;
+            const prefix = 'bx_' + currentUser;
+            const storedIntegrity = localStorage.getItem(prefix + '_integrity');
+            if (!storedIntegrity || storedIntegrity === profileIntegrityHash(prefix)) return true;
+            resetUserStateToDefaults();
+            saveUserData();
+            updateBalanceUI();
+            notify('SECURITY: Profile changes outside the game were rejected and the profile was reset.', 'error');
+            return false;
+        }
+
+        function sanitizeUserState(prefix) {
+            maxUnlockedLevel = safeInteger(localStorage.getItem(prefix + '_progress'), 1, 1, 51);
+            userBalance = safeInteger(localStorage.getItem(prefix + '_balance'), 0, 0, 50000000);
+            const fastestTime = Number(localStorage.getItem(prefix + '_fastest_time'));
+            userFastestTime = Number.isFinite(fastestTime) && fastestTime > 0 ? Math.min(fastestTime, 86400) : Infinity;
+
+            const savedStars = readStoredJSON(prefix + '_levelStars', {});
+            userLevelStars = Object.create(null);
+            if (savedStars && typeof savedStars === 'object' && !Array.isArray(savedStars)) {
+                Object.keys(savedStars).slice(0, 200).forEach(key => {
+                    userLevelStars[key] = safeInteger(savedStars[key], 0, 0, 5);
+                });
+            }
+
+            const savedThemes = readStoredJSON(prefix + '_themes', ['classic']);
+            unlockedThemes = Array.isArray(savedThemes) ? [...new Set(savedThemes.filter(themeId => themes.some(theme => theme.id === themeId)))] : ['classic'];
+            if (!unlockedThemes.includes('classic')) unlockedThemes.unshift('classic');
+
+            const savedPerks = readStoredJSON(prefix + '_perks', []);
+            unlockedPerks = Array.isArray(savedPerks) ? [...new Set(savedPerks.filter(perkId => perks.some(perk => perk.id === perkId)))] : [];
+
+            activeTheme = unlockedThemes.includes(localStorage.getItem(prefix + '_activeTheme')) ? localStorage.getItem(prefix + '_activeTheme') : 'classic';
+
+            const savedConfig = readStoredJSON(prefix + '_config', {});
+            if (savedConfig && typeof savedConfig === 'object' && !Array.isArray(savedConfig)) appConfig = { ...appConfig, ...savedConfig };
+            appConfig.gfxIndex = safeInteger(appConfig.gfxIndex, 0, 0, sysSettings.gfx.options.length - 1);
+            appConfig.fontIndex = safeInteger(appConfig.fontIndex, 1, 0, sysSettings.font.options.length - 1);
+            appConfig.sfxVol = safeInteger(appConfig.sfxVol, 80, 0, 100);
+            appConfig.bgmVol = safeInteger(appConfig.bgmVol, 50, 0, 100);
+            appConfig.bgmTrack = safeInteger(appConfig.bgmTrack, 0, 0, bgmTracks.length - 1);
+            appConfig.unlockedHints = appConfig.unlockedHints && typeof appConfig.unlockedHints === 'object' && !Array.isArray(appConfig.unlockedHints) ? appConfig.unlockedHints : {};
+        }
+
         function loadUserData() {
-            currentUser = localStorage.getItem('bx_currentUser');
-            const prefix = currentUser ? 'bx_' + currentUser : 'bx_guest';
-            
-            maxUnlockedLevel = parseInt(localStorage.getItem(prefix + '_progress')) || 1;
-            userBalance = parseInt(localStorage.getItem(prefix + '_balance')) || 0;
-            userFastestTime = parseFloat(localStorage.getItem(prefix + '_fastest_time')) || Infinity;
-            
-            const savedStars = localStorage.getItem(prefix + '_levelStars');
-            userLevelStars = savedStars ? JSON.parse(savedStars) : {};
-
-            const savedThemes = localStorage.getItem(prefix + '_themes');
-            unlockedThemes = savedThemes ? JSON.parse(savedThemes) : ['classic'];
-            
-            const savedPerks = localStorage.getItem(prefix + '_perks');
-            unlockedPerks = savedPerks ? JSON.parse(savedPerks) : [];
-
-            activeTheme = localStorage.getItem(prefix + '_activeTheme') || 'classic';
-
-            const savedConfig = localStorage.getItem(prefix + '_config');
-            if (savedConfig) {
-                appConfig = { ...appConfig, ...JSON.parse(savedConfig) };
-            }
-            if (!appConfig.unlockedHints) appConfig.unlockedHints = {};
-
-            if (!currentUser) {
-                setTimeout(() => notify("SYSTEM: Guest profile loaded. Log in via Home to persist data & purchases.", 'info'), 1500);
+            if (!requireAuthenticatedUser()) return;
+            const prefix = 'bx_' + currentUser;
+            const storedIntegrity = localStorage.getItem(prefix + '_integrity');
+            const integrityFailed = storedIntegrity && storedIntegrity !== profileIntegrityHash(prefix);
+            if (integrityFailed) {
+                resetUserStateToDefaults();
+                notify('SECURITY: Profile data failed integrity verification and was reset.', 'error');
             } else {
-                setTimeout(() => notify(`SYSTEM: Welcome back to the kitchen, Chef ${currentUser}.`, 'success'), 1000);
+                sanitizeUserState(prefix);
             }
+
+            setTimeout(() => notify(`SYSTEM: Welcome back to the kitchen, Chef ${currentUser}.`, 'success'), 1000);
 
             sysSettings.gfx.index = appConfig.gfxIndex;
             sysSettings.font.index = appConfig.fontIndex;
@@ -1487,18 +2003,27 @@
             applyTheme(activeTheme, false);
             updateBalanceUI();
             updateHintUI();
+            if (!storedIntegrity || integrityFailed) saveUserData();
         }
 
         function saveUserData() {
-            const prefix = currentUser ? 'bx_' + currentUser : 'bx_guest';
+            const authenticatedUser = getAuthenticatedUser();
+            if (!currentUser || !authenticatedUser || authenticatedUser !== currentUser) {
+                redirectToHomeForLogin();
+                return;
+            }
+            const prefix = 'bx_' + currentUser;
+            userBalance = safeInteger(userBalance, 0, 0, 50000000);
+            maxUnlockedLevel = safeInteger(maxUnlockedLevel, 1, 1, 51);
             localStorage.setItem(prefix + '_progress', maxUnlockedLevel);
             localStorage.setItem(prefix + '_balance', userBalance);
-            localStorage.setItem(prefix + '_fastest_time', userFastestTime);
+            localStorage.setItem(prefix + '_fastest_time', Number.isFinite(userFastestTime) ? userFastestTime : 'Infinity');
             localStorage.setItem(prefix + '_levelStars', JSON.stringify(userLevelStars));
             localStorage.setItem(prefix + '_themes', JSON.stringify(unlockedThemes));
             localStorage.setItem(prefix + '_perks', JSON.stringify(unlockedPerks));
             localStorage.setItem(prefix + '_activeTheme', activeTheme);
             localStorage.setItem(prefix + '_config', JSON.stringify(appConfig));
+            localStorage.setItem(prefix + '_integrity', profileIntegrityHash(prefix));
         }
 
         function updateBalanceUI() {
@@ -1510,6 +2035,7 @@
         let lbCurrentTab = 'overall';
 
         function openLeaderboard() {
+            if (!requireAuthenticatedUser()) return;
             switchLBTab('overall');
             switchScreen('screen-leaderboard');
         }
@@ -1529,11 +2055,15 @@
                 let key = localStorage.key(i);
                 if(key.startsWith('bx_') && key.endsWith('_progress')) {
                     let username = key.replace('bx_', '').replace('_progress', '');
-                    if (username === 'currentUser' || username === 'users') continue; 
+                    if (username === 'currentUser' || username === 'users') continue;
+                    const profilePrefix = 'bx_' + username;
+                    const profileIntegrity = localStorage.getItem(profilePrefix + '_integrity');
+                    if (!profileIntegrity || profileIntegrity !== profileIntegrityHash(profilePrefix)) continue;
                     
-                    let prog = parseInt(localStorage.getItem('bx_' + username + '_progress')) || 1;
-                    let bal = parseInt(localStorage.getItem('bx_' + username + '_balance')) || 0;
-                    let time = parseFloat(localStorage.getItem('bx_' + username + '_fastest_time')) || Infinity;
+                    let prog = safeInteger(localStorage.getItem(profilePrefix + '_progress'), 1, 1, 51);
+                    let bal = safeInteger(localStorage.getItem(profilePrefix + '_balance'), 0, 0, 50000000);
+                    let timeValue = Number(localStorage.getItem(profilePrefix + '_fastest_time'));
+                    let time = Number.isFinite(timeValue) && timeValue > 0 ? Math.min(timeValue, 86400) : Infinity;
                     
                     users.push({name: username === 'guest' ? 'Guest Chef' : username, progress: prog, balance: bal, time: time});
                     if(username === 'guest') guestIncluded = true;
@@ -1609,9 +2139,10 @@
             document.getElementById(screenId).classList.add('active');
             if(screenId === 'screen-badges') renderBadges();
         }
-        function startGame() { switchScreen('screen-recipes'); }
+        function startGame() { if (requireAuthenticatedUser()) switchScreen('screen-recipes'); }
 
         function abandonKitchen() {
+            if (!requireAuthenticatedUser()) return;
             clearInterval(levelTimerInterval);
             clearCurrentAction();
             switchScreen('screen-recipes');
@@ -1629,6 +2160,7 @@
         }
 
         function openStore(returnTo) {
+            if (!requireAuthenticatedUser()) return;
             returnScreenFromStore = returnTo;
             renderStore();
             switchScreen('screen-store');
@@ -1653,6 +2185,7 @@
         };
 
         function changeSetting(key, dir) {
+            if (!requireAuthenticatedUser()) return;
             let s = sysSettings[key];
             s.index += dir;
             if(s.index < 0) s.index = s.options.length - 1;
@@ -1685,12 +2218,14 @@
         }
 
         function equipThemeUI(id) {
+            if (!requireAuthenticatedUser()) return;
             const t = themes.find(x => x.id === id);
             applyTheme(id);
             notify(`SYSTEM: Aesthetic layout successfully updated to ${t.name}.`, 'success');
         }
 
         function buyItem(id, type) {
+            if (!requireAuthenticatedUser()) return;
             let list = type === 'theme' ? themes : perks;
             let unlockList = type === 'theme' ? unlockedThemes : unlockedPerks;
             
@@ -1734,6 +2269,7 @@
         }
 
         function buyStarHint(tier) {
+            if (!requireAuthenticatedUser()) return;
             let cost = tier === 4 ? 10000 : 20000;
             if (userBalance >= cost) {
                 userBalance -= cost;
@@ -2244,12 +2780,14 @@
         }
 
         function retryLevel() {
+            if (!requireAuthenticatedUser()) return;
             document.getElementById('failOverlay').classList.remove('active');
             let lvlData = levels[currentPlayingLevelNum - 1];
             startLevel(currentPlayingLevelNum, lvlData);
         }
 
         function startLevel(num, data) {
+            if (!requireAuthenticatedUser()) return;
             clearCurrentAction();
             currentPlayingLevelNum = num;
             targetLevelId = data.id;
@@ -2384,6 +2922,7 @@
         }
 
         function moveToBoard(id) {
+            if (!requireAuthenticatedUser()) return;
             let maxCapacity = unlockedPerks.includes('expanded_table') ? 9 : 6;
             
             if (stagingArea.length >= maxCapacity) { 
@@ -2404,6 +2943,7 @@
         }
 
         function moveToPantry(index) {
+            if (!requireAuthenticatedUser()) return;
             stagingArea.splice(index, 1);
             renderPantry();
             renderStaging();
@@ -2419,6 +2959,7 @@
         }
 
         function performAction(actionStr) {
+            if (!requireAuthenticatedUser()) return;
             if (stagingArea.length === 0) { notify("ERROR: Prep table is empty. Place ingredients and tools first.", "error"); return; }
             if (isActionAnimating) return;
 

@@ -2001,33 +2001,33 @@
                 </li>
                 <li class="nav-item-dropdown">
                     <div class="nav-link-wrap">
-                        <a href="./about/about.html">About <span class="desktop-arrow">&blacktriangledown;</span></a>
+                        <a href="./about/">About <span class="desktop-arrow">&blacktriangledown;</span></a>
                         <svg class="chevron desktop-hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
                     </div>
                     <div class="dropdown-menu">
-                        <a href="./about/about.html#about-game">game</a>
-                        <a href="./about/about.html#dev">developer</a>
+                        <a href="./about/#about-game">game</a>
+                        <a href="./about/#dev">developer</a>
                     </div>
                 </li>
                 <li class="nav-item-dropdown">
                     <div class="nav-link-wrap">
-                        <a href="./learn/learn.html">Learn <span class="desktop-arrow">&blacktriangledown;</span></a>
+                        <a href="./learn/">Learn <span class="desktop-arrow">&blacktriangledown;</span></a>
                         <svg class="chevron desktop-hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
                     </div>
                     <div class="dropdown-menu">
-                        <a href="./learn/learn.html#recipes">Recipes</a>
-                        <a href="./learn/learn.html#game">Game</a>
+                        <a href="./learn/#recipes">Recipes</a>
+                        <a href="./learn/#game">Game</a>
                     </div>
                 </li>
                 <li class="nav-item-dropdown">
                     <div class="nav-link-wrap">
-                        <a href="./support/support.html">Support <span
+                        <a href="./support/">Support <span
                                 class="desktop-arrow">&blacktriangledown;</span></a>
                         <svg class="chevron desktop-hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -2035,8 +2035,8 @@
                         </svg>
                     </div>
                     <div class="dropdown-menu">
-                        <a href="./support/support.html">Chat Assistant</a>
-                        <a href="./faqs/faqs.html">FAQs</a>
+                        <a href="./support/">Chat Assistant</a>
+                        <a href="./faqs/">FAQs</a>
                     </div>
                 </li>
             </ul>
@@ -2393,7 +2393,7 @@
                 <ul class="footer-links">
                     <li><a href="#" onclick="openAuthModal('register')">Register to Play</a></li>
                     <li><a href="#" onclick="openAuthModal('login')">Log In</a></li>
-                    <li><a href="./learn/learn.html#recipes">Recipe Theories</a></li>
+                    <li><a href="./learn/#recipes">Recipe Theories</a></li>
                     <li><a href="#ingredients">Ingredients List</a></li>
                     <li><a href="#contact">Submit Idea</a></li>
                 </ul>
@@ -2401,10 +2401,10 @@
             <div>
                 <h4 class="footer-title">Privacy</h4>
                 <ul class="footer-links">
-                    <li><a href="./terms-conditions/terms-conditions.html#terms">Terms of Use</a></li>
-                    <li><a href="./terms-conditions/terms-conditions.html#privacy">Data Privacy</a></li>
-                    <li><a href="./terms-conditions/terms-conditions.html#local-storage">Local Storage Info</a></li>
-                    <li><a href="./terms-conditions/terms-conditions.html#cookies">Browser Cookies</a></li>
+                    <li><a href="./terms-conditions/#terms">Terms of Use</a></li>
+                    <li><a href="./terms-conditions/#privacy">Data Privacy</a></li>
+                    <li><a href="./terms-conditions/#local-storage">Local Storage Info</a></li>
+                    <li><a href="./terms-conditions/#cookies">Browser Cookies</a></li>
                 </ul>
             </div>
             <div>
@@ -2412,9 +2412,9 @@
                 <ul class="footer-links">
                     <li><a href="https://www.htetzawpaing.site" target="_blank" rel="noopener noreferrer">Developer</a>
                     </li>
-                    <li><a href="../learn/learn.html">How to Play Guide</a></li>
-                    <li><a href="../faqs/faqs.html">FAQ's</a></li>
-                    <li><a href="../credits/credits.html">Credits</a></li>
+                    <li><a href="../learn/">How to Play Guide</a></li>
+                    <li><a href="../faqs/">FAQ's</a></li>
+                    <li><a href="../credits/">Credits</a></li>
                 </ul>
             </div>
             <div class="footer-logo-block">
@@ -2646,7 +2646,7 @@
             if (localStorage.getItem('bx_currentUser')) {
                 notify('Kitchen loading... Preparing ingredients.');
                 setTimeout(() => {
-                    window.location.href = './play/play.html';
+                    window.location.href = './play/';
                 }, 1500);
             } else {
                 openAuthModal('login');
