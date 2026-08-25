@@ -40,7 +40,7 @@ self.addEventListener('fetch', event => {
             return networkResponse;
         } catch (error) {
             if (request.mode === 'navigate') {
-                const shellResponse = await caches.match('/');
+                const shellResponse = await caches.match('/index.html');
                 if (shellResponse) return shellResponse;
             }
             return new Response('Offline resource unavailable', { status: 503, headers: { 'Content-Type': 'text/plain' } });
